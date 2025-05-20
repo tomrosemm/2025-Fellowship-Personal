@@ -1,0 +1,9 @@
+<configuration xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="publicTransport.net.xml"/>
+        <route-files value="publicTransport.rou.xml"/>
+        <additional-files value="publicTransport.add.xml"/>
+    </input>
+
+</configuration>

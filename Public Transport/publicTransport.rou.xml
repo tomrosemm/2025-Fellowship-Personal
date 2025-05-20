@@ -1,0 +1,22 @@
+<routes>
+    <vType id="bus" vClass="bus"/>
+    <vType id="tram" vClass="tram"/>
+
+    <route id="busRoute" edges="-E1 -E0 -E3 -E2" color="yellow" repeat="10" cycleTime="140">
+        <stop busStop="A_bus" duration="20.00" until="30.00"/>
+        <stop busStop="B_bus" duration="20.00" until="90.00"/>
+    </route>
+
+    <vehicle id="bus" type="bus" depart="0.00" line="42" route="busRoute"/>
+
+    <flow id="tram1" type="tram" begin="0.00" end="3600.00" period="300.00" line="23">
+        <route edges="-E4" color="cyan"/>
+        <stop busStop="A_tram1" duration="20.00" until="30.00"/>
+        <stop busStop="B_tram1" duration="20.00" until="45.00"/>
+    </flow>
+
+    <personFlow id="AB" begin="0" end="3600" probability="0.1">
+        <personTrip from="-E1" to="-E0" arrivalPos="-20" modes="public"/>
+    </personFlow>
+
+</routes>

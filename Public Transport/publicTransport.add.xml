@@ -1,0 +1,6 @@
+<additionals>
+        <busStop id="A_bus" lane="-E1_1" startPos="14.42" endPos="24.42"/>
+        <busStop id="A_tram1" lane="-E4_0" startPos="13.43" endPos="43.43">
+            <access lane="E1_0" pos="175.00"/>
+        </busStop>
+</additionals>

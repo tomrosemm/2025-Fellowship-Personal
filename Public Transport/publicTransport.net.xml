@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-05-19 22:18:54 by Eclipse SUMO netedit Version 1.23.1
+<neteditConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/neteditConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="C:\Users\trose\Workspace\Fellowship &apos;25 Personal\2025-Fellowship-Personal\Public Transport\publicTransport.net.xml"/>
+    </input>
+
+    <output>
+        <output-file value="C:\Users\trose\Workspace\Fellowship &apos;25 Personal\2025-Fellowship-Personal\Public Transport\publicTransport.net.xml"/>
+    </output>
+
+    <processing>
+        <offset.disable-normalization value="true"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+    </junctions>
+
+    <netedit>
+        <new-network value="false"/>
+    </netedit>
+
+</neteditConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="0.00,0.00" convBoundary="-1.97,-37.74,200.00,0.00" origBoundary="10000000000.00,10000000000.00,-10000000000.00,-10000000000.00" projParameter="!"/>
+
+    <edge id="-E0" from="J1" to="J0" priority="-1">
+        <lane id="-E0_0" index="0" allow="pedestrian" speed="13.89" length="200.00" width="2.00" shape="200.00,4.20 0.00,4.20"/>
+        <lane id="-E0_1" index="1" disallow="pedestrian" speed="13.89" length="200.00" shape="200.00,1.60 0.00,1.60"/>
+    </edge>
+    <edge id="-E1" from="J3" to="J2" priority="-1">
+        <lane id="-E1_0" index="0" allow="tram rail_urban rail rail_electric rail_fast subway" speed="13.89" length="201.90" shape="199.93,-35.71 -1.97,-36.14"/>
+    </edge>
+    <edge id="E0" from="J0" to="J1" priority="-1">
+        <lane id="E0_0" index="0" allow="pedestrian" speed="13.89" length="200.00" width="2.00" shape="0.00,-4.20 200.00,-4.20"/>
+        <lane id="E0_1" index="1" disallow="pedestrian" speed="13.89" length="200.00" shape="0.00,-1.60 200.00,-1.60"/>
+    </edge>
+    <edge id="E1" from="J2" to="J3" priority="-1">
+        <lane id="E1_0" index="0" allow="tram rail_urban rail rail_electric rail_fast subway" speed="13.89" length="201.90" shape="-1.97,-39.34 199.93,-38.91"/>
+    </edge>
+
+    <junction id="J0" type="dead_end" x="0.00" y="0.00" incLanes="-E0_0 -E0_1" intLanes="" shape="0.00,0.00 0.00,5.20 0.00,0.00"/>
+    <junction id="J1" type="dead_end" x="200.00" y="0.00" incLanes="E0_0 E0_1" intLanes="" shape="200.00,0.00 200.00,-5.20 200.00,0.00"/>
+    <junction id="J2" type="dead_end" x="-1.97" y="-37.74" incLanes="-E1_0" intLanes="" shape="-1.97,-37.74 -1.98,-34.54 -1.97,-37.74"/>
+    <junction id="J3" type="dead_end" x="199.93" y="-37.31" incLanes="E1_0" intLanes="" shape="199.93,-37.31 199.94,-40.51 199.93,-37.31"/>
+
+</net>
