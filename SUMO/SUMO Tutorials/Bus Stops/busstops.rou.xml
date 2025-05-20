@@ -1,0 +1,36 @@
+<routes>
+    <vType id="BUS" accel="2.6" decel="4.5" sigma="0" length="12" minGap="3" maxSpeed="70" color="1,1,0" guiShape="bus"/>
+
+    <vehicle id="1" type="BUS" depart="0" color="1,1,0">
+        <route edges="E2 E3 E4 E1 E2"/>
+        <stop busStop="bs_2" duration="20"/>
+        <stop busStop="bs_3" duration="20"/>
+        <stop busStop="bs_4" duration="20"/>
+        <stop busStop="bs_1" duration="20"/>
+    </vehicle>
+
+    <!-- <vehicle id="2" type="BUS" depart="0" color="1,1,0">
+        <route edges="E3 E4 E1 E2"/>
+        <stop busStop="bs_3" duration="20"/>
+        <stop busStop="bs_4" duration="20"/>
+        <stop busStop="bs_1" duration="20"/>
+        <stop busStop="bs_2" duration="20"/>
+    </vehicle>
+
+    <vehicle id="3" type="BUS" depart="0" color="1,1,0">
+        <route edges="E4 E1 E2 E3"/>
+        <stop busStop="bs_4" duration="20"/>
+        <stop busStop="bs_1" duration="20"/>
+        <stop busStop="bs_2" duration="20"/>
+        <stop busStop="bs_3" duration="20"/>
+    </vehicle>
+
+    <vehicle id="4" type="BUS" depart="0" color="1,1,0">
+        <route edges="E1 E2 E3 E4"/>
+        <stop busStop="bs_1" duration="20"/>
+        <stop busStop="bs_2" duration="20"/>
+        <stop busStop="bs_3" duration="20"/>
+        <stop busStop="bs_4" duration="20"/>
+    </vehicle> -->
+    
+</routes>

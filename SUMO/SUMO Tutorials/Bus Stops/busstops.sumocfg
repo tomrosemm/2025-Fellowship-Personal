@@ -1,0 +1,7 @@
+<configuration>
+    <input>
+       <net-file value="busstops.net.xml"/>
+       <route-files value="busstops.rou.xml"/>
+       <additional-files value="busstops.stops.add.xml"/>
+    </input>
+</configuration>
