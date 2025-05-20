@@ -1,0 +1,8 @@
+<configuration xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="threebythreecityblock1.net.xml"/>
+        <route-files value="threebythreecityblock1.rou.xml"/>
+    </input>
+
+</configuration>
