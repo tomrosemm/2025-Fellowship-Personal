@@ -5,4 +5,8 @@
         <route-files value="threebythreecityblock1.rou.xml"/>
     </input>
 
+    <output>
+        <summary-output value="out/summary_out.xml" synonymes="summary" type="FILE"/>
+    </output>
+    
 </configuration>

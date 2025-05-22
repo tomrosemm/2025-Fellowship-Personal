@@ -1,12 +1,12 @@
 <routes>
     <vType id="type1" type="passenger" length="5" accel="3.5" decel="2.2" sigma="1.0">
-        <param key="has.btsender" value="true"/>
-        <param key="has.btreceiver" value="true"/>
+        <param key="has.btsender.device" value="true"/>
+        <param key="has.btreceiver.device" value="true"/>
     </vType>
 
     <vType id="rsu1" type="passenger" length="5" accel="3.5" decel="2.2" sigma="1.0" parking="true">
-        <param key="has.btsender" value="true"/>
-        <param key="has.btreceiver" value="true"/>
+        <param key="has.btsender.device" value="true"/>
+        <param key="has.btreceiver.device" value="true"/>
     </vType>
 
     <flow id="carflow1" type="type1" begin="0" end="0" number="20" from="E1" to="E5"/>

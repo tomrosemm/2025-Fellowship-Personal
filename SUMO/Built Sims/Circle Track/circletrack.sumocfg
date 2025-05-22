@@ -4,4 +4,13 @@
        <route-files value="circletrack.rou.xml"/>
        <additional-files value="circletrack.add.xml"/>
     </input>
+
+    <output>
+        <summary-output value="out/summary_out.xml" synonymes="summary" type="FILE"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="1000"/>
+    </time>
 </configuration>

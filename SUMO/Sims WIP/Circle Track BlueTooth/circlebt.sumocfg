@@ -4,8 +4,14 @@
        <route-files value="circlebt.rou.xml"/>
        <additional-files value="circlebt.add.xml"/>
     </input>
+
+    <output>
+        <summary-output value="out/summary_out.xml" synonymes="summary" type="FILE"/>
+        <bt-output value="out/bt_out.xml" synonymes="bluetooth" type="FILE"/>
+    </output>
+
     <time>
         <begin value="0"/>
-        <end value="1000"/>
+        <end value="10000"/>
     </time>
 </configuration>
