@@ -3,6 +3,7 @@
        <net-file value="circlebt.net.xml"/>
        <route-files value="circlebt.rou.xml"/>
        <additional-files value="circlebt.add.xml"/>
+       <gui-settings-file value="circlebt.viewsettings.xml"/>
     </input>
 
     <output>

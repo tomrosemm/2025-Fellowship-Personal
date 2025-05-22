@@ -29,5 +29,5 @@
 </sumoConfiguration>
 -->
 
-<summary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/summary_file.xsd">
-</summary>
+<lanechanges>
+</lanechanges>

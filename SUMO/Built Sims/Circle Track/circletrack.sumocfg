@@ -3,6 +3,7 @@
        <net-file value="circletrack.net.xml"/>
        <route-files value="circletrack.rou.xml"/>
        <additional-files value="circletrack.add.xml"/>
+       <gui-settings-file value="circletrack.viewsettings.xml"/>
     </input>
 
     <output>

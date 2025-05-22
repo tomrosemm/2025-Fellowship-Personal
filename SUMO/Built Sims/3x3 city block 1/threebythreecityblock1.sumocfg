@@ -3,6 +3,7 @@
     <input>
         <net-file value="threebythreecityblock1.net.xml"/>
         <route-files value="threebythreecityblock1.rou.xml"/>
+        <gui-settings-file value="threebythreecityblock1.viewsettings.xml"/>
     </input>
 
     <output>
