@@ -1,3 +1,4 @@
+<!-- Most of this is unneeded, but looks nice. Mostly just here to set the viewport and delay time-->
 <viewsettings>
     <scheme name="real world">
         <opengl dither="0" fps="0" trueZ="0" drawBoundaries="0" disableDottedContours="0" forceDrawRectangleSelection="0" geometryIndices_show="0" geometryIndices_size="50.00" geometryIndices_color="255,0,128" geometryIndices_bgColor="128,0,0,0" geometryIndices_constantSize="1" geometryIndices_onlySelected="0"/>

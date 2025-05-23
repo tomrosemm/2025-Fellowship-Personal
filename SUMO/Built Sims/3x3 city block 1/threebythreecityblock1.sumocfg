@@ -1,3 +1,4 @@
+<!-- Not sure what the attributes in the config element here are or where they came from, I think I generated this config file from the app. Seems to work though! -->
 <configuration xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
