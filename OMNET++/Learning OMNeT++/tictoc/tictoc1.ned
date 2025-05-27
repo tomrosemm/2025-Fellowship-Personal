@@ -1,12 +1,26 @@
 simple Txc1
 {
     parameters:
-        bool sendMsgOnInit = default(false); // whether the module should send out a message on initialization
-        int limit = default(2);   // another parameter with a default value
+        bool sendMsgOnInit = default(false);
+        int limit = default(2);
         @display("i=block/routing"); // add a default icon
     gates:
         input in;
         output out;
+}
+
+simple Tic1 extends Txc1
+{
+    parameters:
+    	sendMsgOnInit = true;
+    	@display("i=,cyan");
+}
+
+simple Toc1 extends Txc1
+{
+    parameters:
+    	sendMsgOnInit = false;
+    	@display("i=,gold");
 }
 
 //
@@ -16,16 +30,8 @@ simple Txc1
 network Tictoc1
 {
     submodules:
-        tic: Txc1 {
-            parameters:
-                sendMsgOnInit = true;
-                @display("i=,cyan"); // do not change the icon (first arg of i=) just colorize it
-        }
-        toc: Txc1 {
-            parameters:
-                sendMsgOnInit = false;
-                @display("i=,gold"); // here too
-        }
+        tic: Tic1;
+        toc: Toc1;
     connections:
         tic.out --> {  delay = 100ms; } --> toc.in;
         tic.in <-- {  delay = 100ms; } <-- toc.out;

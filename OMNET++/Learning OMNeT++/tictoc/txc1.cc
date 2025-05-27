@@ -19,6 +19,11 @@ using namespace omnetpp;
 class Txc1 : public cSimpleModule
 {
 private:
+    // Set the pointers to nullptr, so that the destructor won't crash
+    // even if initialize() doesn't get called because of a runtime
+    // error or user cancellation during the startup process.
+    cMessage *event = nullptr;  // pointer to the event object which we'll use for timing
+    cMessage *tictocMsg = nullptr;  // variable to remember the message until we send it back
     int counter;
 
   protected:
