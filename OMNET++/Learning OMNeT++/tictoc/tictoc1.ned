@@ -134,6 +134,31 @@ simple Txc10
         output out[];
 }
 
+simple Txc11
+{
+    parameters:
+        @display("i=block/routing");
+    gates:
+        input in[];  // declare in[] and out[] to be vector gates
+        output out[];
+}
+
+simple Txc12
+{
+    parameters:
+        @display("i=block/routing");
+    gates:
+        inout gate[];  // declare two way connections
+}
+
+simple Txc13
+{
+    parameters:
+        @display("i=block/routing");
+    gates:
+        inout gate[];
+}
+
 // Two instances (tic and toc) of Txc1 connected both ways.
 // Tic and toc will pass messages to one another.
 network Tictoc1
@@ -302,4 +327,66 @@ network Tictoc10
 
         tic[4].out++ --> {  delay = 100ms; } --> tic[5].in++;
         tic[4].in++ <-- {  delay = 100ms; } <-- tic[5].out++;
+}
+
+//
+// Using local channel type definition to reduce the redundancy
+// of connection definitions.
+//
+network Tictoc11
+{
+    types:
+        channel Channel extends ned.DelayChannel {
+            delay = 100ms;
+        }
+    submodules:
+        tic[6]: Txc11;
+    connections:
+        tic[0].out++ --> Channel --> tic[1].in++;
+        tic[0].in++ <-- Channel <-- tic[1].out++;
+
+        tic[1].out++ --> Channel --> tic[2].in++;
+        tic[1].in++ <-- Channel <-- tic[2].out++;
+
+        tic[1].out++ --> Channel --> tic[4].in++;
+        tic[1].in++ <-- Channel <-- tic[4].out++;
+
+        tic[3].out++ --> Channel --> tic[4].in++;
+        tic[3].in++ <-- Channel <-- tic[4].out++;
+
+        tic[4].out++ --> Channel --> tic[5].in++;
+        tic[4].in++ <-- Channel <-- tic[5].out++;
+}
+
+// using two way connections to further simplify the network definition
+network Tictoc12
+{
+    types:
+        channel Channel extends ned.DelayChannel {
+            delay = 100ms;
+        }
+    submodules:
+        tic[6]: Txc12;
+    connections:
+        tic[0].gate++ <--> Channel <--> tic[1].gate++;
+        tic[1].gate++ <--> Channel <--> tic[2].gate++;
+        tic[1].gate++ <--> Channel <--> tic[4].gate++;
+        tic[3].gate++ <--> Channel <--> tic[4].gate++;
+        tic[4].gate++ <--> Channel <--> tic[5].gate++;
+}
+
+network Tictoc13
+{
+    types:
+        channel Channel extends ned.DelayChannel {
+            delay = 100ms;
+        }
+    submodules:
+        tic[6]: Txc13;
+    connections:
+        tic[0].gate++ <--> Channel <--> tic[1].gate++;
+        tic[1].gate++ <--> Channel <--> tic[2].gate++;
+        tic[1].gate++ <--> Channel <--> tic[4].gate++;
+        tic[3].gate++ <--> Channel <--> tic[4].gate++;
+        tic[4].gate++ <--> Channel <--> tic[5].gate++;
 }
