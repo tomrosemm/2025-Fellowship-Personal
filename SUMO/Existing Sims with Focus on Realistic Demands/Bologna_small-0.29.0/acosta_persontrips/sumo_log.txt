@@ -1,0 +1,1438 @@
+Loading net-file from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta_persontrips\acosta_peds.net.xml' ... done (33ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta_persontrips\acosta_vtypes.add.xml' ...
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'HDV_6_2'. Starting with SUMO 1.24 this will be an error.
+ done (1ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta_persontrips\acosta_bus_stops.add.xml' ... done (5ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta_persontrips\acosta_tls2.add.xml' ... done (4ms).
+Loading route-files incrementally from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta_persontrips\acosta.rou.xml'
+Loading route-files incrementally from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta_persontrips\persontrips.rou.xml'
+Loading done.
+Simulation started with time: 0.00.
+Warning: Vehicle 'Vittorio_Veneto_1_4' performs emergency braking on lane '18_1' with decel=9.00, wished=4.50, severity=1.00, time=68.00.
+Warning: Person '1361' is jammed on edge ':54_c3', time=1352.00.
+Warning: Person '2868' is jammed on edge ':54_c3', time=1352.00.
+Warning: Person '236' is jammed on edge ':54_c3', time=1524.00.
+Warning: Person '2119' is jammed on edge ':54_c3', time=1524.00.
+Warning: Person '2109' is jammed on edge ':54_c3', time=1528.00.
+Warning: Person '1554' is jammed on edge ':54_c3', time=1529.00.
+Warning: Person '1596' is jammed on edge ':54_c3', time=1529.00.
+Warning: Person '1079' is jammed on edge ':39a_c0', time=1607.00.
+Warning: Person '919' is jammed on edge ':39a_c0', time=1608.00.
+Warning: Person '1913' is jammed on edge ':39a_c0', time=1608.00.
+Warning: Person '1944' is jammed on edge ':39a_c0', time=1612.00.
+Warning: Person '2987' is jammed on edge ':1c_c0', time=1621.00.
+Warning: Person '713' is jammed on edge ':39a_c0', time=1626.00.
+Warning: Person '475' is jammed on edge ':39a_c0', time=1708.00.
+Warning: Vehicle 'Pepoli_10_999' performs emergency braking on lane ':34_0_1' with decel=9.00, wished=4.50, severity=1.00, time=1754.00.
+Warning: Person '3030' is jammed on edge ':54_c3', time=1769.00.
+Warning: Person '3351' is jammed on edge ':54_c3', time=1769.00.
+Warning: Vehicle 'Costa_11_593' performs emergency braking on lane '78[1][1]_1' with decel=9.00, wished=4.50, severity=1.00, time=1771.00.
+Warning: Person '2735' is jammed on edge ':54_c3', time=1772.00.
+Warning: Person '1877' is jammed on edge ':54_c3', time=1772.00.
+Warning: Person '2813' is jammed on edge ':54_c3', time=1773.00.
+Warning: Person '2943' is jammed on edge ':54_c3', time=1773.00.
+Warning: Vehicle 'Vittorio_Veneto_2_372' performs emergency braking on lane ':15_8_0' with decel=9.00, wished=4.50, severity=1.00, time=1778.00.
+Warning: Person '3897' is jammed on edge ':54_c3', time=1793.00.
+Warning: Person '3045' is jammed on edge ':31_c3', time=1987.00.
+Warning: Person '2200' is jammed on edge ':54_c3', time=2007.00.
+Warning: Person '3590' is jammed on edge '189[1][0]+20000', time=2147.00.
+Warning: Person '3341' is jammed on edge '189[1][0]+20000', time=2165.00.
+Warning: Person '4399' is jammed on edge '189[1][0]+20000', time=2166.00.
+Warning: Vehicle 'Silvani_7_903' performs emergency braking on lane ':78_1_1' with decel=9.00, wished=4.50, severity=1.00, time=2166.00.
+Warning: Person '3241' is jammed on edge '189[1][0]+20000', time=2176.00.
+Warning: Person '2028' is jammed on edge '189[1][0]+20000', time=2176.00.
+Warning: Person '3176' is jammed on edge '189[1][0]+20000', time=2177.00.
+Warning: Person '4403' is jammed on edge '189[1][0]+20000', time=2178.00.
+Warning: Person '2735' is jammed on edge ':39a_w0', time=2180.00.
+Warning: Person '2493' is jammed on edge ':39a_c0', time=2206.00.
+Warning: Person '3630' is jammed on edge ':39a_c0', time=2206.00.
+Warning: Person '4150' is jammed on edge '189[1][0]+20000', time=2211.00.
+Warning: Person '4006' is jammed on edge '189[1][0]+20000', time=2211.00.
+Warning: Person '3916' is jammed on edge '189[1][0]+20000', time=2212.00.
+Warning: Person '4319' is jammed on edge '189[1][0]+20000', time=2213.00.
+Warning: Person '4002' is jammed on edge ':39a_c0', time=2213.00.
+Warning: Person '5407' is jammed on edge ':20c_c0', time=2217.00.
+Warning: Person '5334' is jammed on edge ':20c_c0', time=2221.00.
+Warning: Person '4213' is jammed on edge ':39a_c0', time=2228.00.
+Warning: Person '3685' is jammed on edge '189[1][0]+20000', time=2333.00.
+Warning: Person '4392' is jammed on edge '189[1][0]+20000', time=2392.00.
+Warning: Person '4955' is jammed on edge ':1c_c0', time=2421.00.
+Warning: Person '5158' is jammed on edge ':3_c0', time=2422.00.
+Warning: Person '5180' is jammed on edge ':1c_c0', time=2423.00.
+Warning: Person '5026' is jammed on edge ':1c_c0', time=2430.00.
+Warning: Person '5211' is jammed on edge ':1c_c0', time=2435.00.
+Warning: Person '5190' is jammed on edge ':1c_c0', time=2438.00.
+Warning: Person '4326' is jammed on edge ':1c_c0', time=2443.00.
+Warning: Person '4548' is jammed on edge '189[1][0]+20000', time=2449.00.
+Warning: Person '1249' is jammed on edge '189[1][0]+20000', time=2449.00.
+Warning: Person '4093' is jammed on edge '189[1][0]+20000', time=2467.00.
+Warning: Person '3626' is jammed on edge '189[1][0]+20000', time=2467.00.
+Warning: Person '2913' is jammed on edge '189[1][0]+20000', time=2478.00.
+Warning: Person '3011' is jammed on edge '189[1][0]+20000', time=2478.00.
+Warning: Person '2902' is jammed on edge '189[1][0]+20000', time=2479.00.
+Warning: Person '1706' is jammed on edge '189[1][0]+20000', time=2480.00.
+Warning: Person '5179' is jammed on edge '189[1][0]+20000', time=2481.00.
+Warning: Person '4459' is jammed on edge '189[1][0]+20000', time=2482.00.
+Warning: Person '3786' is jammed on edge '189[1][0]+20000', time=2483.00.
+Warning: Person '3185' is jammed on edge '189[1][0]+20000', time=2487.00.
+Warning: Person '4098' is jammed on edge '189[1][0]+20000', time=2513.00.
+Warning: Person '4325' is jammed on edge '189[1][0]+20000', time=2513.00.
+Warning: Person '3721' is jammed on edge '189[1][0]+20000', time=2515.00.
+Warning: Person '4270' is jammed on edge '189[1][0]+20000', time=2515.00.
+Warning: Person '4079' is jammed on edge '189[1][0]+20000', time=2516.00.
+Warning: Person '4565' is jammed on edge '189[1][0]+20000', time=2516.00.
+Warning: Person '4995' is jammed on edge '189[1][0]+20000', time=2517.00.
+Warning: Person '5061' is jammed on edge '189[1][0]+20000', time=2519.00.
+Warning: Person '4211' is jammed on edge '189[1][0]+20000', time=2520.00.
+Warning: Person '2611' is jammed on edge ':1c_c0', time=2551.00.
+Warning: Person '5630' is jammed on edge '189[1][0]+20000', time=2554.00.
+Warning: Person '4840' is jammed on edge ':1c_c0', time=2562.00.
+Warning: Person '3471' is jammed on edge ':1c_c0', time=2563.00.
+Warning: Person '5558' is jammed on edge ':84_w0', time=2573.00.
+Warning: Person '5468' is jammed on edge ':84_w0', time=2576.00.
+Warning: Person '5847' is jammed on edge ':54_c0', time=2588.00.
+Warning: Person '5731' is jammed on edge '189[1][0]+20000', time=2595.00.
+Warning: Person '5739' is jammed on edge '189[1][0]+20000', time=2598.00.
+Warning: Person '5761' is jammed on edge '189[1][0]+20000', time=2607.00.
+Warning: Person '5546' is jammed on edge '189[0]', time=2623.00.
+Warning: Person '6334' is jammed on edge ':20c_c0', time=2628.00.
+Warning: Person '5873' is jammed on edge '189[1][0]+20000', time=2652.00.
+Warning: Person '4812' is jammed on edge ':39a_c0', time=2665.00.
+Warning: Person '5908' is jammed on edge '189[1][0]+20000', time=2666.00.
+Warning: Person '2460' is jammed on edge ':39a_c0', time=2677.00.
+Warning: Person '6144' is jammed on edge ':54_c0', time=2685.00.
+Warning: Person '5913' is jammed on edge ':54_c0', time=2687.00.
+Warning: Person '5973' is jammed on edge ':54_c0', time=2692.00.
+Warning: Person '5120' is jammed on edge '189[1][0]+20000', time=2695.00.
+Warning: Person '3605' is jammed on edge ':54_c0', time=2708.00.
+Warning: Person '5311' is jammed on edge ':54_w1', time=2708.00.
+Warning: Person '5183' is jammed on edge ':54_w1', time=2712.00.
+Warning: Person '5553' is jammed on edge ':54_w1', time=2713.00.
+Warning: Person '5465' is jammed on edge ':54_c0', time=2716.00.
+Warning: Person '5143' is jammed on edge ':54_c0', time=2716.00.
+Warning: Person '4345' is jammed on edge ':54_c3', time=2719.00.
+Warning: Person '4012' is jammed on edge ':54_c3', time=2719.00.
+Warning: Person '5769' is jammed on edge ':54_c3', time=2722.00.
+Warning: Person '5760' is jammed on edge ':54_c0', time=2722.00.
+Warning: Person '5375' is jammed on edge ':54_c0', time=2724.00.
+Warning: Person '5482' is jammed on edge ':54_c1', time=2725.00.
+Warning: Person '5601' is jammed on edge ':54_w1', time=2727.00.
+Warning: Person '5709' is jammed on edge ':54_c0', time=2727.00.
+Warning: Person '1925' is jammed on edge ':54_c3', time=2728.00.
+Warning: Person '5944' is jammed on edge ':54_c0', time=2728.00.
+Warning: Person '3925' is jammed on edge ':54_c3', time=2731.00.
+Warning: Person '5110' is jammed on edge ':54_c3', time=2731.00.
+Warning: Person '4640' is jammed on edge ':54_c0', time=2731.00.
+Warning: Person '6096' is jammed on edge ':54_c1', time=2732.00.
+Warning: Person '6049' is jammed on edge ':54_c1', time=2733.00.
+Warning: Person '4796' is jammed on edge ':54_c3', time=2733.00.
+Warning: Person '4545' is jammed on edge ':54_c3', time=2734.00.
+Warning: Person '6418' is jammed on edge ':54_c3', time=2734.00.
+Warning: Person '4764' is jammed on edge ':54_c3', time=2735.00.
+Warning: Person '5007' is jammed on edge ':54_c0', time=2735.00.
+Warning: Person '5987' is jammed on edge ':54_c1', time=2737.00.
+Warning: Person '6118' is jammed on edge ':54_c1', time=2737.00.
+Warning: Person '6058' is jammed on edge ':54_c1', time=2740.00.
+Warning: Person '3136' is jammed on edge ':54_c3', time=2740.00.
+Warning: Person '4467' is jammed on edge ':54_c0', time=2740.00.
+Warning: Person '4520' is jammed on edge ':54_c0', time=2741.00.
+Warning: Person '4411' is jammed on edge ':54_c3', time=2743.00.
+Warning: Person '5692' is jammed on edge ':54_c1', time=2745.00.
+Warning: Person '5981' is jammed on edge ':54_w1', time=2745.00.
+Warning: Person '6246' is jammed on edge ':54_c3', time=2747.00.
+Warning: Person '5005' is jammed on edge ':54_c0', time=2747.00.
+Warning: Person '5212' is jammed on edge ':54_w1', time=2748.00.
+Warning: Person '4230' is jammed on edge ':54_c3', time=2749.00.
+Warning: Person '6067' is jammed on edge ':54_c1', time=2750.00.
+Warning: Person '6195' is jammed on edge ':54_c1', time=2753.00.
+Warning: Person '5466' is jammed on edge '189[1][0]+20000', time=2753.00.
+Warning: Person '5997' is jammed on edge ':54_c0', time=2754.00.
+Warning: Person '4141' is jammed on edge '189[1][0]+20000', time=2756.00.
+Warning: Person '6146' is jammed on edge '189[1][0]+20000', time=2761.00.
+Warning: Person '6056' is jammed on edge ':54_c1', time=2763.00.
+Warning: Person '6334' is jammed on edge ':54_c1', time=2763.00.
+Warning: Person '4095' is jammed on edge '189[1][0]+20000', time=2769.00.
+Warning: Person '4282' is jammed on edge '189[1][0]+20000', time=2769.00.
+Warning: Person '5778' is jammed on edge ':54_w1', time=2769.00.
+Warning: Person '3383' is jammed on edge '189[1][0]+20000', time=2773.00.
+Warning: Person '4736' is jammed on edge '189[1][0]+20000', time=2773.00.
+Warning: Person '6040' is jammed on edge ':54_c1', time=2778.00.
+Warning: Person '4295' is jammed on edge '189[1][0]+20000', time=2780.00.
+Warning: Person '4005' is jammed on edge '189[1][0]+20000', time=2781.00.
+Warning: Person '3764' is jammed on edge '189[1][0]+20000', time=2781.00.
+Warning: Person '3101' is jammed on edge '189[1][0]+20000', time=2782.00.
+Warning: Person '6011' is jammed on edge ':54_c1', time=2783.00.
+Warning: Person '1358' is jammed on edge '189[1][0]+20000', time=2783.00.
+Warning: Person '4841' is jammed on edge '189[1][0]+20000', time=2783.00.
+Warning: Person '4592' is jammed on edge '189[1][0]+20000', time=2783.00.
+Warning: Person '5647' is jammed on edge ':54_w1', time=2785.00.
+Warning: Person '6454' is jammed on edge ':54_c1', time=2792.00.
+Warning: Person '6736' is jammed on edge ':54_c1', time=2798.00.
+Warning: Person '6038' is jammed on edge ':54_w1', time=2800.00.
+Warning: Person '5962' is jammed on edge ':54_w1', time=2801.00.
+Warning: Person '5955' is jammed on edge ':54_c1', time=2806.00.
+Warning: Person '6024' is jammed on edge ':54_w1', time=2812.00.
+Warning: Person '6279' is jammed on edge '189[0]', time=2814.00.
+Warning: Person '4459' is jammed on edge '189[1][0]+20000', time=2815.00.
+Warning: Person '4859' is jammed on edge '189[1][0]+20000', time=2818.00.
+Warning: Person '6180' is jammed on edge ':54_c1', time=2819.00.
+Warning: Person '4631' is jammed on edge '189[1][0]+20000', time=2819.00.
+Warning: Person '6109' is jammed on edge ':1c_c0', time=2820.00.
+Warning: Person '5342' is jammed on edge ':84_w0', time=2821.00.
+Warning: Person '4548' is jammed on edge '189[1][0]+20000', time=2821.00.
+Warning: Person '5505' is jammed on edge ':54_w1', time=2826.00.
+Warning: Person '5364' is jammed on edge ':54_w1', time=2828.00.
+Warning: Person '6075' is jammed on edge ':54_c1', time=2843.00.
+Warning: Person '6626' is jammed on edge ':54_c1', time=2847.00.
+Warning: Person '6538' is jammed on edge ':54_c1', time=2856.00.
+Warning: Person '6222' is jammed on edge ':54_w1', time=2857.00.
+Warning: Person '6872' is jammed on edge ':54_c1', time=2863.00.
+Warning: Person '6551' is jammed on edge ':54_c1', time=2866.00.
+Warning: Person '5412' is jammed on edge ':54_w1', time=2866.00.
+Warning: Person '6414' is jammed on edge '189[1][0]+20000', time=2868.00.
+Warning: Person '6587' is jammed on edge ':54_c1', time=2870.00.
+Warning: Person '6639' is jammed on edge ':54_c1', time=2870.00.
+Warning: Person '6693' is jammed on edge ':54_c1', time=2870.00.
+Warning: Person '5437' is jammed on edge ':84_w0', time=2875.00.
+Warning: Person '5418' is jammed on edge '189[0]', time=2875.00.
+Warning: Person '4558' is jammed on edge '189[0]', time=2877.00.
+Warning: Person '5334' is jammed on edge '189[0]', time=2878.00.
+Warning: Person '4929' is jammed on edge '189[0]', time=2878.00.
+Warning: Person '5515' is jammed on edge '189[1][0]+20000', time=2878.00.
+Warning: Person '5114' is jammed on edge ':84_w0', time=2879.00.
+Warning: Person '4575' is jammed on edge '189[0]', time=2879.00.
+Warning: Person '5564' is jammed on edge '189[0]', time=2881.00.
+Warning: Person '6226' is jammed on edge ':54_w1', time=2884.00.
+Warning: Person '5524' is jammed on edge ':54_w1', time=2886.00.
+Warning: Person '6982' is jammed on edge ':54_c1', time=2887.00.
+Warning: Person '5909' is jammed on edge ':54_w1', time=2888.00.
+Warning: Person '4216' is jammed on edge ':39a_c0', time=2891.00.
+Warning: Person '6940' is jammed on edge ':39a_c0', time=2894.00.
+Warning: Person '6656' is jammed on edge ':54_c1', time=2896.00.
+Warning: Person '6375' is jammed on edge ':54_c1', time=2896.00.
+Warning: Person '6172' is jammed on edge ':54_c1', time=2907.00.
+Warning: Person '6102' is jammed on edge ':54_c1', time=2920.00.
+Warning: Person '5938' is jammed on edge ':54_w1', time=2921.00.
+Warning: Person '5097' is jammed on edge '189[0]', time=2925.00.
+Warning: Person '7120' is jammed on edge ':54_c1', time=2934.00.
+Warning: Person '7118' is jammed on edge ':54_c1', time=2934.00.
+Warning: Person '6213' is jammed on edge ':54_c1', time=2935.00.
+Warning: Person '6598' is jammed on edge ':46_w1', time=2946.00.
+Warning: Person '7118' is jammed on edge ':54_c1', time=2948.00.
+Warning: Person '5815' is jammed on edge ':54_w1', time=2957.00.
+Warning: Person '5979' is jammed on edge ':54_w1', time=2958.00.
+Warning: Person '5358' is jammed on edge ':54_w1', time=2959.00.
+Warning: Person '6182' is jammed on edge ':54_c1', time=2969.00.
+Warning: Person '6813' is jammed on edge ':54_c1', time=2972.00.
+Warning: Person '4368' is jammed on edge ':46_w0', time=2976.00.
+Warning: Person '7200' is jammed on edge ':54_c1', time=2983.00.
+Warning: Person '6295' is jammed on edge ':54_c1', time=2984.00.
+Warning: Person '6363' is jammed on edge ':54_c1', time=2990.00.
+Warning: Person '6890' is jammed on edge ':54_c1', time=2996.00.
+Warning: Person '6776' is jammed on edge ':54_c1', time=2999.00.
+Warning: Person '6846' is jammed on edge ':54_c1', time=3002.00.
+Warning: Person '7106' is jammed on edge ':54_c1', time=3007.00.
+Warning: Person '6796' is jammed on edge ':54_c1', time=3009.00.
+Warning: Person '6860' is jammed on edge ':54_c1', time=3009.00.
+Warning: Person '5613' is jammed on edge ':54_w1', time=3011.00.
+Warning: Person '5366' is jammed on edge ':54_w1', time=3012.00.
+Warning: Person '5256' is jammed on edge ':54_w1', time=3012.00.
+Warning: Person '6030' is jammed on edge ':54_w1', time=3013.00.
+Warning: Person '5816' is jammed on edge ':54_w1', time=3014.00.
+Warning: Person '7146' is jammed on edge ':54_c1', time=3015.00.
+Warning: Person '5303' is jammed on edge ':54_w1', time=3019.00.
+Warning: Person '6502' is jammed on edge ':54_c1', time=3020.00.
+Warning: Person '7210' is jammed on edge ':54_c1', time=3021.00.
+Warning: Person '7089' is jammed on edge ':54_c1', time=3023.00.
+Warning: Person '6788' is jammed on edge ':46_w1', time=3026.00.
+Warning: Person '6426' is jammed on edge ':54_c1', time=3030.00.
+Warning: Person '7380' is jammed on edge ':54_c1', time=3033.00.
+Warning: Person '7379' is jammed on edge ':54_c1', time=3039.00.
+Warning: Person '6892' is jammed on edge ':54_c1', time=3044.00.
+Warning: Person '6619' is jammed on edge ':54_w1', time=3053.00.
+Warning: Person '6808' is jammed on edge ':54_c1', time=3063.00.
+Warning: Person '7212' is jammed on edge ':54_c1', time=3066.00.
+Warning: Person '7098' is jammed on edge ':54_c1', time=3066.00.
+Warning: Person '7109' is jammed on edge ':54_c1', time=3069.00.
+Warning: Person '5287' is jammed on edge ':54_w1', time=3071.00.
+Warning: Person '4578' is jammed on edge '189[1][0]+20000', time=3071.00.
+Warning: Person '6431' is jammed on edge ':54_w1', time=3072.00.
+Warning: Person '4060' is jammed on edge '189[1][0]+20000', time=3072.00.
+Warning: Person '3647' is jammed on edge '189[1][0]+20000', time=3073.00.
+Warning: Person '4271' is jammed on edge '189[1][0]+20000', time=3074.00.
+Warning: Person '4808' is jammed on edge '189[1][0]+20000', time=3074.00.
+Warning: Person '4678' is jammed on edge '189[1][0]+20000', time=3075.00.
+Warning: Person '5421' is jammed on edge '189[1][0]+20000', time=3077.00.
+Warning: Person '5604' is jammed on edge '189[1][0]+20000', time=3078.00.
+Warning: Person '5314' is jammed on edge '189[1][0]+20000', time=3078.00.
+Warning: Person '7343' is jammed on edge ':54_c1', time=3081.00.
+Warning: Person '4659' is jammed on edge ':84_w0', time=3081.00.
+Warning: Person '4733' is jammed on edge ':84_w0', time=3082.00.
+Warning: Person '3860' is jammed on edge '189[1][0]+20000', time=3082.00.
+Warning: Person '4203' is jammed on edge '189[1][0]+20000', time=3082.00.
+Warning: Person '5241' is jammed on edge ':84_w0', time=3083.00.
+Warning: Person '5553' is jammed on edge ':84_w0', time=3083.00.
+Warning: Person '1678' is jammed on edge '189[1][0]+20000', time=3083.00.
+Warning: Person '3015' is jammed on edge '189[1][0]+20000', time=3083.00.
+Warning: Person '3646' is jammed on edge '189[1][0]+20000', time=3084.00.
+Warning: Person '5106' is jammed on edge '189[1][0]+20000', time=3084.00.
+Warning: Person '5789' is jammed on edge ':54_w1', time=3085.00.
+Warning: Person '6448' is jammed on edge ':54_w1', time=3085.00.
+Warning: Person '5228' is jammed on edge ':84_w0', time=3085.00.
+Warning: Person '2442' is jammed on edge '189[1][0]+20000', time=3085.00.
+Warning: Person '4304' is jammed on edge '189[1][0]+20000', time=3085.00.
+Warning: Person '6742' is jammed on edge ':54_w1', time=3086.00.
+Warning: Person '6026' is jammed on edge '189[1][0]+20000', time=3086.00.
+Warning: Person '7396' is jammed on edge ':54_c1', time=3087.00.
+Warning: Person '5574' is jammed on edge '189[1][0]+20000', time=3087.00.
+Warning: Person '7293' is jammed on edge ':54_c1', time=3093.00.
+Warning: Person '5936' is jammed on edge ':54_c0', time=3096.00.
+Warning: Person '6994' is jammed on edge '189[1][0]+20000', time=3100.00.
+Warning: Person '6797' is jammed on edge ':54_c1', time=3107.00.
+Warning: Person '3996' is jammed on edge ':54_c0', time=3116.00.
+Warning: Person '4279' is jammed on edge '189[1][0]+20000', time=3117.00.
+Warning: Person '3644' is jammed on edge '189[1][0]+20000', time=3120.00.
+Warning: Person '2728' is jammed on edge '189[1][0]+20000', time=3120.00.
+Warning: Person '6670' is jammed on edge ':54_c1', time=3121.00.
+Warning: Person '4683' is jammed on edge '189[1][0]+20000', time=3121.00.
+Warning: Person '4875' is jammed on edge '189[1][0]+20000', time=3122.00.
+Warning: Person '4351' is jammed on edge '189[1][0]+20000', time=3122.00.
+Warning: Person '5396' is jammed on edge '189[1][0]+20000', time=3122.00.
+Warning: Person '4798' is jammed on edge ':84_w0', time=3123.00.
+Warning: Person '5034' is jammed on edge ':84_w0', time=3124.00.
+Warning: Person '5207' is jammed on edge ':84_w0', time=3125.00.
+Warning: Person '5195' is jammed on edge '189[1][0]+20000', time=3126.00.
+Warning: Person '4149' is jammed on edge '189[1][0]+20000', time=3126.00.
+Warning: Person '6524' is jammed on edge ':54_c1', time=3129.00.
+Warning: Person '6685' is jammed on edge ':54_w1', time=3131.00.
+Warning: Person '7243' is jammed on edge ':54_c1', time=3132.00.
+Warning: Person '6575' is jammed on edge '189[1][0]+20000', time=3132.00.
+Warning: Person '6351' is jammed on edge ':54_w1', time=3133.00.
+Warning: Person '6350' is jammed on edge ':54_w1', time=3133.00.
+Warning: Person '5987' is jammed on edge ':84_w0', time=3134.00.
+Warning: Person '7399' is jammed on edge ':54_c1', time=3141.00.
+Warning: Person '6867' is jammed on edge ':54_c1', time=3141.00.
+Warning: Person '6496' is jammed on edge ':54_w1', time=3144.00.
+Warning: Person '6822' is jammed on edge ':54_c1', time=3145.00.
+Warning: Person '5858' is jammed on edge ':54_w1', time=3145.00.
+Warning: Person '6662' is jammed on edge ':54_c1', time=3149.00.
+Warning: Person '7024' is jammed on edge ':54_c1', time=3155.00.
+Warning: Person '5947' is jammed on edge ':54_w1', time=3157.00.
+Warning: Person '6341' is jammed on edge ':54_w1', time=3158.00.
+Warning: Person '6964' is jammed on edge ':54_w1', time=3159.00.
+Warning: Person '6477' is jammed on edge ':54_c1', time=3167.00.
+Warning: Person '6617' is jammed on edge ':54_c1', time=3167.00.
+Warning: Person '6610' is jammed on edge ':54_c1', time=3171.00.
+Warning: Vehicle 'Silvani_7_1331' performs emergency braking on lane ':78_1_1' with decel=9.00, wished=4.50, severity=1.00, time=3174.00.
+Warning: Person '6374' is jammed on edge ':54_w1', time=3181.00.
+Warning: Person '5635' is jammed on edge ':54_w1', time=3182.00.
+Warning: Person '5098' is jammed on edge ':54_w1', time=3182.00.
+Warning: Person '5537' is jammed on edge ':54_w1', time=3182.00.
+Warning: Person '5296' is jammed on edge ':54_w1', time=3183.00.
+Warning: Person '5046' is jammed on edge '189[0]', time=3183.00.
+Warning: Person '6823' is jammed on edge ':54_c1', time=3184.00.
+Warning: Person '6600' is jammed on edge ':54_w1', time=3186.00.
+Warning: Person '4690' is jammed on edge '189[0]', time=3187.00.
+Warning: Person '6091' is jammed on edge '189[0]', time=3187.00.
+Warning: Person '7712' is jammed on edge ':54_c1', time=3188.00.
+Warning: Person '4650' is jammed on edge '189[0]', time=3188.00.
+Warning: Person '5847' is jammed on edge '189[0]', time=3189.00.
+Warning: Person '6441' is jammed on edge ':54_w1', time=3189.00.
+Warning: Person '6587' is jammed on edge ':54_w1', time=3190.00.
+Warning: Person '6515' is jammed on edge ':54_w1', time=3190.00.
+Warning: Person '5284' is jammed on edge ':54_w1', time=3191.00.
+Warning: Person '6622' is jammed on edge ':54_w1', time=3196.00.
+Warning: Person '5587' is jammed on edge ':54_w1', time=3203.00.
+Warning: Person '7369' is jammed on edge ':54_c1', time=3207.00.
+Warning: Person '6777' is jammed on edge ':54_w1', time=3220.00.
+Warning: Person '7299' is jammed on edge '189[1][0]+20000', time=3222.00.
+Warning: Person '6340' is jammed on edge ':54_w1', time=3225.00.
+Warning: Person '6237' is jammed on edge ':54_w1', time=3225.00.
+Warning: Person '7326' is jammed on edge '189[1][0]+20000', time=3233.00.
+Warning: Person '7840' is jammed on edge ':54_c1', time=3237.00.
+Warning: Person '6337' is jammed on edge ':54_c3', time=3240.00.
+Warning: Person '5190' is jammed on edge ':54_c3', time=3241.00.
+Warning: Person '4502' is jammed on edge ':54_c3', time=3241.00.
+Warning: Person '6835' is jammed on edge ':54_c3', time=3242.00.
+Warning: Person '5253' is jammed on edge ':54_c3', time=3243.00.
+Warning: Person '6525' is jammed on edge ':54_w1', time=3249.00.
+Warning: Person '6580' is jammed on edge ':54_w1', time=3250.00.
+Warning: Person '6393' is jammed on edge ':54_w1', time=3253.00.
+Warning: Person '7385' is jammed on edge '189[0]', time=3256.00.
+Warning: Person '7854' is jammed on edge ':54_c1', time=3258.00.
+Warning: Person '6907' is jammed on edge ':54_w1', time=3259.00.
+Warning: Person '7690' is jammed on edge ':54_c1', time=3260.00.
+Warning: Person '6211' is jammed on edge ':54_w1', time=3260.00.
+Warning: Person '7159' is jammed on edge ':54_w1', time=3261.00.
+Warning: Person '6653' is jammed on edge ':54_w1', time=3262.00.
+Warning: Person '6932' is jammed on edge ':54_w1', time=3262.00.
+Warning: Person '6694' is jammed on edge ':54_w1', time=3263.00.
+Warning: Person '6149' is jammed on edge ':54_w1', time=3263.00.
+Warning: Person '5979' is jammed on edge ':54_w1', time=3270.00.
+Warning: Person '7446' is jammed on edge '189[1][0]+20000', time=3281.00.
+Warning: Person '6792' is jammed on edge ':54_w1', time=3289.00.
+Warning: Person '7540' is jammed on edge ':54_c1', time=3291.00.
+Warning: Person '7971' is jammed on edge ':54_c1', time=3304.00.
+Warning: Person '7294' is jammed on edge ':54_w1', time=3307.00.
+Warning: Person '7882' is jammed on edge ':54_c0', time=3313.00.
+Warning: Person '5712' is jammed on edge ':54_c0', time=3314.00.
+Warning: Person '5312' is jammed on edge ':54_w1', time=3315.00.
+Warning: Person '6170' is jammed on edge ':54_w1', time=3316.00.
+Warning: Person '5923' is jammed on edge ':54_w1', time=3316.00.
+Warning: Person '5487' is jammed on edge ':54_w1', time=3316.00.
+Warning: Person '6511' is jammed on edge ':54_w1', time=3316.00.
+Warning: Person '7413' is jammed on edge ':39a_w1', time=3317.00.
+Warning: Person '7146' is jammed on edge ':54_w1', time=3318.00.
+Warning: Person '6783' is jammed on edge ':54_w1', time=3318.00.
+Warning: Person '6430' is jammed on edge ':54_c0', time=3318.00.
+Warning: Person '7157' is jammed on edge ':54_c0', time=3318.00.
+Warning: Person '5772' is jammed on edge ':54_w1', time=3319.00.
+Warning: Person '7258' is jammed on edge ':54_w1', time=3320.00.
+Warning: Person '5989' is jammed on edge ':39a_w0', time=3327.00.
+Warning: Person '5684' is jammed on edge ':54_c0', time=3327.00.
+Warning: Person '6784' is jammed on edge ':54_w1', time=3331.00.
+Warning: Person '7554' is jammed on edge ':39a_w1', time=3333.00.
+Warning: Person '7430' is jammed on edge ':39a_w0', time=3333.00.
+Warning: Person '6183' is jammed on edge ':39a_w0', time=3333.00.
+Warning: Person '7297' is jammed on edge ':54_c1', time=3335.00.
+Warning: Person '7584' is jammed on edge '77cd', time=3336.00.
+Warning: Person '7378' is jammed on edge ':54_w1', time=3344.00.
+Warning: Person '7606' is jammed on edge '189[0]', time=3345.00.
+Warning: Person '6992' is jammed on edge ':54_w1', time=3348.00.
+Warning: Person '7366' is jammed on edge ':54_w1', time=3349.00.
+Warning: Person '8150' is jammed on edge ':54_c0', time=3351.00.
+Warning: Person '8149' is jammed on edge ':54_c0', time=3351.00.
+Warning: Person '8309' is jammed on edge ':63_c1', time=3351.00.
+Warning: Person '7002' is jammed on edge ':54_c1', time=3352.00.
+Warning: Person '8186' is jammed on edge ':54_c0', time=3353.00.
+Warning: Person '8142' is jammed on edge ':54_c1', time=3363.00.
+Warning: Person '7054' is jammed on edge ':39a_c0', time=3363.00.
+Warning: Person '5002' is jammed on edge ':39a_c0', time=3363.00.
+Warning: Person '6283' is jammed on edge ':39a_c0', time=3363.00.
+Warning: Person '7422' is jammed on edge ':39a_c0', time=3364.00.
+Warning: Person '7455' is jammed on edge ':54_w1', time=3365.00.
+Warning: Person '6641' is jammed on edge ':39a_c0', time=3365.00.
+Warning: Person '7557' is jammed on edge ':39a_c0', time=3365.00.
+Warning: Person '7914' is jammed on edge ':39a_c0', time=3366.00.
+Warning: Person '7093' is jammed on edge ':39a_c0', time=3368.00.
+Warning: Person '8180' is jammed on edge ':54_c0', time=3369.00.
+Warning: Person '7720' is jammed on edge ':39a_c0', time=3371.00.
+Warning: Person '4250' is jammed on edge '189[1][0]+20000', time=3373.00.
+Warning: Person '7180' is jammed on edge ':39a_c0', time=3373.00.
+Warning: Person '7723' is jammed on edge ':54_c1', time=3374.00.
+Warning: Person '4097' is jammed on edge '189[1][0]+20000', time=3374.00.
+Warning: Person '4331' is jammed on edge '189[1][0]+20000', time=3375.00.
+Warning: Person '2987' is jammed on edge ':39a_c0', time=3375.00.
+Warning: Person '4128' is jammed on edge ':39a_c0', time=3375.00.
+Warning: Person '7195' is jammed on edge ':39a_c0', time=3376.00.
+Warning: Person '6909' is jammed on edge ':39a_c0', time=3376.00.
+Warning: Person '4270' is jammed on edge '189[1][0]+20000', time=3377.00.
+Warning: Person '4516' is jammed on edge '189[1][0]+20000', time=3377.00.
+Warning: Person '4954' is jammed on edge '189[1][0]+20000', time=3377.00.
+Warning: Person '5016' is jammed on edge '189[1][0]+20000', time=3377.00.
+Warning: Person '4709' is jammed on edge '189[1][0]+20000', time=3377.00.
+Warning: Person '5442' is jammed on edge '189[1][0]+20000', time=3377.00.
+Warning: Person '5362' is jammed on edge '189[1][0]+20000', time=3377.00.
+Warning: Person '5002' is jammed on edge ':39a_c0', time=3377.00.
+Warning: Person '7833' is jammed on edge ':39a_c0', time=3377.00.
+Warning: Person '6283' is jammed on edge ':39a_c0', time=3377.00.
+Warning: Person '7879' is jammed on edge ':54_c1', time=3378.00.
+Warning: Person '7557' is jammed on edge ':39a_c0', time=3378.00.
+Warning: Person '5938' is jammed on edge '189[1][0]+20000', time=3379.00.
+Warning: Person '6295' is jammed on edge ':84_w0', time=3381.00.
+Warning: Person '5292' is jammed on edge ':84_w0', time=3383.00.
+Warning: Person '5366' is jammed on edge ':84_w0', time=3383.00.
+Warning: Person '8376' is jammed on edge ':54_c0', time=3384.00.
+Warning: Person '8388' is jammed on edge ':54_c0', time=3384.00.
+Warning: Person '4942' is jammed on edge ':84_w0', time=3385.00.
+Warning: Person '7106' is jammed on edge ':84_w0', time=3385.00.
+Warning: Person '6589' is jammed on edge ':39a_c0', time=3385.00.
+Warning: Person '7816' is jammed on edge ':54_c0', time=3385.00.
+Warning: Person '1125' is jammed on edge '189[1][0]+20000', time=3385.00.
+Warning: Person '3697' is jammed on edge '189[1][0]+20000', time=3385.00.
+Warning: Person '4053' is jammed on edge '189[1][0]+20000', time=3385.00.
+Warning: Person '8056' is jammed on edge ':54_c0', time=3386.00.
+Warning: Person '6243' is jammed on edge ':54_w1', time=3386.00.
+Warning: Person '4706' is jammed on edge '189[1][0]+20000', time=3386.00.
+Warning: Person '3821' is jammed on edge '189[1][0]+20000', time=3386.00.
+Warning: Person '5601' is jammed on edge ':84_w0', time=3387.00.
+Warning: Person '6739' is jammed on edge ':39a_c0', time=3387.00.
+Warning: Person '6567' is jammed on edge ':39a_c0', time=3387.00.
+Warning: Person '4944' is jammed on edge '189[1][0]+20000', time=3387.00.
+Warning: Person '5879' is jammed on edge '189[1][0]+20000', time=3387.00.
+Warning: Person '5628' is jammed on edge '189[0]', time=3389.00.
+Warning: Person '8200' is jammed on edge ':39a_c0', time=3389.00.
+Warning: Person '5594' is jammed on edge ':39a_c0', time=3389.00.
+Warning: Person '7181' is jammed on edge ':54_w1', time=3389.00.
+Warning: Person '3918' is jammed on edge '189[1][0]+20000', time=3389.00.
+Warning: Person '5283' is jammed on edge '189[1][0]+20000', time=3389.00.
+Warning: Person '5572' is jammed on edge '189[1][0]+20000', time=3389.00.
+Warning: Person '6703' is jammed on edge ':20c_w0', time=3390.00.
+Warning: Person '2987' is jammed on edge ':39a_c0', time=3390.00.
+Warning: Person '7559' is jammed on edge ':39a_c0', time=3390.00.
+Warning: Person '6835' is jammed on edge ':39a_c0', time=3390.00.
+Warning: Person '5121' is jammed on edge ':84_w0', time=3391.00.
+Warning: Person '7098' is jammed on edge '189[0]', time=3393.00.
+Warning: Person '3927' is jammed on edge '189[1][0]+20000', time=3393.00.
+Warning: Person '8275' is jammed on edge ':54_c1', time=3394.00.
+Warning: Person '6558' is jammed on edge ':54_w1', time=3395.00.
+Warning: Person '7018' is jammed on edge ':54_c0', time=3396.00.
+Warning: Person '7997' is jammed on edge ':39a_c0', time=3398.00.
+Warning: Person '8224' is jammed on edge ':54_c0', time=3398.00.
+Warning: Person '7749' is jammed on edge '189[0]', time=3402.00.
+Warning: Person '7066' is jammed on edge ':39a_c0', time=3402.00.
+Warning: Person '6909' is jammed on edge ':39a_c0', time=3402.00.
+Warning: Person '6018' is jammed on edge ':54_w1', time=3404.00.
+Warning: Person '6337' is jammed on edge ':39a_c0', time=3404.00.
+Warning: Person '6981' is jammed on edge ':54_w1', time=3406.00.
+Warning: Person '7658' is jammed on edge ':54_c1', time=3408.00.
+Warning: Person '4253' is jammed on edge '189[1][0]+20000', time=3420.00.
+Warning: Person '7795' is jammed on edge '189[1][0]+20000', time=3420.00.
+Warning: Person '4430' is jammed on edge '189[1][0]+20000', time=3422.00.
+Warning: Person '6848' is jammed on edge ':54_w1', time=3423.00.
+Warning: Person '4165' is jammed on edge '189[1][0]+20000', time=3423.00.
+Warning: Person '7200' is jammed on edge '189[1][0]+20000', time=3423.00.
+Warning: Person '7596' is jammed on edge ':54_w1', time=3424.00.
+Warning: Person '5815' is jammed on edge '189[1][0]+20000', time=3424.00.
+Warning: Person '6796' is jammed on edge ':84_w0', time=3425.00.
+Warning: Person '4286' is jammed on edge '189[1][0]+20000', time=3425.00.
+Warning: Person '5034' is jammed on edge '189[1][0]+20000', time=3427.00.
+Warning: Person '4821' is jammed on edge '189[1][0]+20000', time=3428.00.
+Warning: Person '6551' is jammed on edge '189[0]', time=3430.00.
+Warning: Person '6740' is jammed on edge '189[0]', time=3431.00.
+Warning: Person '5230' is jammed on edge '189[0]', time=3432.00.
+Warning: Person '5514' is jammed on edge ':84_w0', time=3433.00.
+Warning: Person '5718' is jammed on edge '189[0]', time=3433.00.
+Warning: Person '5869' is jammed on edge '189[0]', time=3433.00.
+Warning: Person '7096' is jammed on edge '189[0]', time=3433.00.
+Warning: Person '7097' is jammed on edge ':54_w1', time=3433.00.
+Warning: Person '5303' is jammed on edge '189[1][0]+20000', time=3434.00.
+Warning: Person '5441' is jammed on edge '189[1][0]+20000', time=3434.00.
+Warning: Person '6524' is jammed on edge ':54_w1', time=3437.00.
+Warning: Person '6722' is jammed on edge ':54_w1', time=3446.00.
+Warning: Person '7435' is jammed on edge ':54_c1', time=3447.00.
+Warning: Person '7136' is jammed on edge ':54_w1', time=3447.00.
+Warning: Person '6874' is jammed on edge ':54_w1', time=3448.00.
+Warning: Person '7554' is jammed on edge ':54_c1', time=3453.00.
+Warning: Person '7196' is jammed on edge ':54_w1', time=3456.00.
+Warning: Person '7381' is jammed on edge ':54_c1', time=3460.00.
+Warning: Person '7550' is jammed on edge ':54_c1', time=3460.00.
+Warning: Person '7375' is jammed on edge ':54_w1', time=3460.00.
+Warning: Person '7798' is jammed on edge ':54_c1', time=3461.00.
+Warning: Person '7930' is jammed on edge ':54_c1', time=3465.00.
+Warning: Person '7445' is jammed on edge ':54_w1', time=3467.00.
+Warning: Person '7477' is jammed on edge ':54_c0', time=3468.00.
+Warning: Person '7535' is jammed on edge ':54_c1', time=3470.00.
+Warning: Person '7227' is jammed on edge ':54_c0', time=3470.00.
+Warning: Person '7893' is jammed on edge ':54_c1', time=3472.00.
+Warning: Person '3822' is jammed on edge ':54_c3', time=3472.00.
+Warning: Person '7388' is jammed on edge ':54_c0', time=3474.00.
+Warning: Person '6873' is jammed on edge ':54_c3', time=3475.00.
+Warning: Person '7214' is jammed on edge ':54_c0', time=3475.00.
+Warning: Person '6556' is jammed on edge ':54_c0', time=3476.00.
+Warning: Person '7987' is jammed on edge ':54_c1', time=3477.00.
+Warning: Person '7275' is jammed on edge ':54_c3', time=3477.00.
+Warning: Person '7815' is jammed on edge ':54_c3', time=3477.00.
+Warning: Person '7135' is jammed on edge ':54_c3', time=3480.00.
+Warning: Person '7548' is jammed on edge ':54_c1', time=3481.00.
+Warning: Person '6771' is jammed on edge ':54_c0', time=3482.00.
+Warning: Person '6886' is jammed on edge ':54_w1', time=3483.00.
+Warning: Person '8042' is jammed on edge ':54_c0', time=3484.00.
+Warning: Person '7578' is jammed on edge ':54_c0', time=3484.00.
+Warning: Person '6087' is jammed on edge ':54_c3', time=3485.00.
+Warning: Person '7288' is jammed on edge ':54_w1', time=3485.00.
+Warning: Person '7934' is jammed on edge ':54_c3', time=3486.00.
+Warning: Person '6085' is jammed on edge ':54_c3', time=3486.00.
+Warning: Person '7008' is jammed on edge ':54_c0', time=3486.00.
+Warning: Person '8107' is jammed on edge ':54_c3', time=3487.00.
+Warning: Person '6964' is jammed on edge '189[0]', time=3488.00.
+Warning: Person '8053' is jammed on edge ':54_c3', time=3489.00.
+Warning: Person '4432' is jammed on edge ':54_c3', time=3489.00.
+Warning: Person '7029' is jammed on edge ':54_c3', time=3489.00.
+Warning: Person '7013' is jammed on edge ':54_w1', time=3492.00.
+Warning: Person '6617' is jammed on edge ':54_w1', time=3493.00.
+Warning: Person '5463' is jammed on edge ':54_w1', time=3493.00.
+Warning: Person '5516' is jammed on edge ':54_w1', time=3494.00.
+Warning: Person '7922' is jammed on edge ':54_c0', time=3495.00.
+Warning: Person '6084' is jammed on edge ':54_w1', time=3497.00.
+Warning: Person '7578' is jammed on edge ':54_c0', time=3497.00.
+Warning: Person '6972' is jammed on edge ':54_w1', time=3498.00.
+Warning: Person '7623' is jammed on edge ':54_w1', time=3503.00.
+Warning: Person '7189' is jammed on edge ':54_c3', time=3504.00.
+Warning: Person '6703' is jammed on edge ':54_c1', time=3520.00.
+Warning: Person '7030' is jammed on edge ':54_w1', time=3523.00.
+Warning: Person '7670' is jammed on edge ':54_c1', time=3527.00.
+Warning: Person '7236' is jammed on edge ':54_w1', time=3529.00.
+Warning: Person '7365' is jammed on edge ':54_w1', time=3530.00.
+Warning: Person '7732' is jammed on edge ':54_c1', time=3534.00.
+Warning: Person '7771' is jammed on edge ':54_c1', time=3537.00.
+Warning: Person '7582' is jammed on edge ':54_c1', time=3540.00.
+Warning: Person '7762' is jammed on edge ':54_c1', time=3543.00.
+Warning: Person '8078' is jammed on edge ':54_c1', time=3546.00.
+Warning: Person '8437' is jammed on edge ':54_c1', time=3546.00.
+Warning: Person '6427' is jammed on edge ':54_w1', time=3547.00.
+Warning: Person '7676' is jammed on edge ':54_c1', time=3549.00.
+Warning: Person '7672' is jammed on edge ':54_w1', time=3549.00.
+Warning: Person '7803' is jammed on edge ':54_c1', time=3550.00.
+Warning: Person '7357' is jammed on edge ':54_w1', time=3550.00.
+Warning: Person '7718' is jammed on edge ':54_c1', time=3552.00.
+Warning: Person '8064' is jammed on edge ':54_c1', time=3554.00.
+Warning: Person '8553' is jammed on edge ':54_c1', time=3558.00.
+Warning: Person '8212' is jammed on edge ':54_c1', time=3559.00.
+Warning: Person '8502' is jammed on edge ':54_c1', time=3564.00.
+Warning: Person '6907' is jammed on edge ':54_w1', time=3565.00.
+Warning: Person '7415' is jammed on edge ':54_w1', time=3576.00.
+Warning: Person '7408' is jammed on edge ':54_w1', time=3577.00.
+Warning: Person '8517' is jammed on edge ':54_c1', time=3580.00.
+Warning: Person '6399' is jammed on edge ':54_w1', time=3583.00.
+Warning: Person '2442' is jammed on edge ':54_w1', time=3583.00.
+Warning: Person '8736' is jammed on edge ':54_c1', time=3595.00.
+Warning: Person '7498' is jammed on edge ':54_w1', time=3607.00.
+Warning: Person '7641' is jammed on edge ':54_w1', time=3610.00.
+Warning: Person '8155' is jammed on edge ':54_c1', time=3612.00.
+Warning: Person '8281' is jammed on edge '189[0]', time=3615.00.
+Warning: Person '7971' is jammed on edge ':54_w1', time=3620.00.
+Warning: Person '7826' is jammed on edge ':54_c1', time=3625.00.
+Warning: Person '8266' is jammed on edge ':54_c1', time=3632.00.
+Warning: Person '7331' is jammed on edge ':54_w1', time=3640.00.
+Warning: Person '8152' is jammed on edge ':54_w1', time=3647.00.
+Warning: Person '8370' is jammed on edge '189[0]', time=3650.00.
+Warning: Person '7440' is jammed on edge ':54_w1', time=3657.00.
+Warning: Person '7470' is jammed on edge ':54_w1', time=3660.00.
+Warning: Person '8713' is jammed on edge ':54_c1', time=3672.00.
+Warning: Person '7272' is jammed on edge ':54_w1', time=3676.00.
+Warning: Person '4705' is jammed on edge '189[1][0]+20000', time=3676.00.
+Warning: Person '4658' is jammed on edge '189[1][0]+20000', time=3676.00.
+Warning: Person '4580' is jammed on edge '189[1][0]+20000', time=3677.00.
+Warning: Person '3915' is jammed on edge '189[1][0]+20000', time=3678.00.
+Warning: Person '3880' is jammed on edge '189[1][0]+20000', time=3678.00.
+Warning: Person '4534' is jammed on edge '189[1][0]+20000', time=3679.00.
+Warning: Person '4194' is jammed on edge '189[1][0]+20000', time=3679.00.
+Warning: Person '6393' is jammed on edge '189[1][0]+20000', time=3679.00.
+Warning: Person '4830' is jammed on edge '189[1][0]+20000', time=3679.00.
+Warning: Person '5055' is jammed on edge '189[1][0]+20000', time=3680.00.
+Warning: Person '7317' is jammed on edge ':54_w1', time=3681.00.
+Warning: Person '5442' is jammed on edge '189[1][0]+20000', time=3682.00.
+Warning: Person '4339' is jammed on edge '189[1][0]+20000', time=3682.00.
+Warning: Person '4608' is jammed on edge '189[1][0]+20000', time=3683.00.
+Warning: Person '5487' is jammed on edge ':84_w0', time=3686.00.
+Warning: Person '6195' is jammed on edge ':84_w0', time=3687.00.
+Warning: Person '4549' is jammed on edge '189[1][0]+20000', time=3687.00.
+Warning: Person '4141' is jammed on edge '189[1][0]+20000', time=3687.00.
+Warning: Person '4013' is jammed on edge '189[1][0]+20000', time=3688.00.
+Warning: Person '3487' is jammed on edge '189[1][0]+20000', time=3689.00.
+Warning: Person '4554' is jammed on edge '189[1][0]+20000', time=3689.00.
+Warning: Person '5019' is jammed on edge '189[0]', time=3691.00.
+Warning: Person '5364' is jammed on edge '189[0]', time=3691.00.
+Warning: Person '4375' is jammed on edge '189[0]', time=3691.00.
+Warning: Person '6180' is jammed on edge ':84_w0', time=3692.00.
+Warning: Person '7243' is jammed on edge '189[1][0]+20000', time=3693.00.
+Warning: Person '5762' is jammed on edge '189[1][0]+20000', time=3693.00.
+Warning: Person '5203' is jammed on edge '189[1][0]+20000', time=3693.00.
+Warning: Person '6215' is jammed on edge '189[1][0]+20000', time=3693.00.
+Warning: Person '5389' is jammed on edge '189[1][0]+20000', time=3693.00.
+Warning: Person '6686' is jammed on edge '189[1][0]+20000', time=3693.00.
+Warning: Person '6351' is jammed on edge '189[0]', time=3694.00.
+Warning: Person '5233' is jammed on edge '189[0]', time=3694.00.
+Warning: Person '6426' is jammed on edge '189[0]', time=3694.00.
+Warning: Person '4592' is jammed on edge '189[1][0]+20000', time=3694.00.
+Warning: Person '5766' is jammed on edge '189[1][0]+20000', time=3695.00.
+Warning: Person '8270' is jammed on edge ':54_w1', time=3696.00.
+Warning: Person '7209' is jammed on edge ':54_w1', time=3696.00.
+Warning: Person '4941' is jammed on edge '189[0]', time=3697.00.
+Warning: Person '5540' is jammed on edge ':54_w1', time=3698.00.
+Warning: Person '7378' is jammed on edge '189[0]', time=3698.00.
+Warning: Person '8149' is jammed on edge '189[0]', time=3699.00.
+Warning: Person '5320' is jammed on edge ':54_w1', time=3707.00.
+Warning: Person '8508' is jammed on edge ':48_w2', time=3710.00.
+Warning: Person '7522' is jammed on edge ':54_w1', time=3710.00.
+Warning: Person '7413' is jammed on edge ':54_w1', time=3719.00.
+Warning: Person '4447' is jammed on edge '189[1][0]+20000', time=3722.00.
+Warning: Person '3763' is jammed on edge '189[1][0]+20000', time=3723.00.
+Warning: Person '6149' is jammed on edge '189[1][0]+20000', time=3723.00.
+Warning: Person '6890' is jammed on edge '189[1][0]+20000', time=3725.00.
+Warning: Person '4918' is jammed on edge '189[1][0]+20000', time=3726.00.
+Warning: Person '7379' is jammed on edge ':84_w0', time=3727.00.
+Warning: Person '6118' is jammed on edge ':84_w0', time=3727.00.
+Warning: Person '7106' is jammed on edge '189[1][0]+20000', time=3729.00.
+Warning: Person '5981' is jammed on edge '189[1][0]+20000', time=3730.00.
+Warning: Person '4237' is jammed on edge '189[1][0]+20000', time=3730.00.
+Warning: Person '7854' is jammed on edge '189[1][0]+20000', time=3730.00.
+Warning: Person '4961' is jammed on edge '189[1][0]+20000', time=3731.00.
+Warning: Person '5121' is jammed on edge '189[1][0]+20000', time=3731.00.
+Warning: Person '8092' is jammed on edge ':54_c3', time=3735.00.
+Warning: Person '5222' is jammed on edge ':84_w0', time=3735.00.
+Warning: Person '7662' is jammed on edge '189[0]', time=3735.00.
+Warning: Person '8204' is jammed on edge ':54_c3', time=3736.00.
+Warning: Person '4659' is jammed on edge ':84_w0', time=3736.00.
+Warning: Person '8180' is jammed on edge ':84_w0', time=3736.00.
+Warning: Person '7146' is jammed on edge ':54_w1', time=3739.00.
+Warning: Person '7576' is jammed on edge ':54_w1', time=3759.00.
+Warning: Person '8647' is jammed on edge ':39a_w1', time=3766.00.
+Warning: Person '5845' is jammed on edge ':54_w1', time=3785.00.
+Warning: Person '7435' is jammed on edge ':54_w1', time=3794.00.
+Warning: Person '7797' is jammed on edge ':54_w1', time=3795.00.
+Warning: Person '7329' is jammed on edge ':54_w1', time=3795.00.
+Warning: Person '7206' is jammed on edge ':54_w1', time=3796.00.
+Warning: Person '8320' is jammed on edge '189[1][1]', time=3799.00.
+Warning: Person '6026' is jammed on edge ':39a_w0', time=3807.00.
+Warning: Person '8764' is jammed on edge '189[1][0]+20000', time=3808.00.
+Warning: Person '8776' is jammed on edge '189[1][0]+20000', time=3813.00.
+Warning: Person '8216' is jammed on edge '189[1][1]', time=3818.00.
+Warning: Person '8317' is jammed on edge ':54_w1', time=3819.00.
+Warning: Person '4709' is jammed on edge ':85_w0', time=3819.00.
+Warning: Person '7704' is jammed on edge ':39a_w1', time=3824.00.
+Warning: Person '8062' is jammed on edge ':54_w1', time=3827.00.
+Warning: Person '8590' is jammed on edge ':54_w1', time=3828.00.
+Warning: Person '8822' is jammed on edge '189[1][0]+20000', time=3831.00.
+Warning: Person '8109' is jammed on edge ':54_w1', time=3842.00.
+Warning: Person '8848' is jammed on edge '189[1][0]+20000', time=3842.00.
+Warning: Person '8866' is jammed on edge '189[1][0]+20000', time=3849.00.
+Warning: Person '7756' is jammed on edge ':54_w1', time=3850.00.
+Warning: Person '8894' is jammed on edge '189[1][1]', time=3860.00.
+Warning: Person '7645' is jammed on edge ':54_w1', time=3861.00.
+Warning: Person '8019' is jammed on edge ':54_w1', time=3874.00.
+Warning: Person '8949' is jammed on edge ':54_c1', time=3884.00.
+Warning: Person '7489' is jammed on edge ':54_w1', time=3886.00.
+Warning: Person '8984' is jammed on edge '189[1][1]', time=3896.00.
+Warning: Person '8100' is jammed on edge ':54_w1', time=3897.00.
+Warning: Person '8801' is jammed on edge ':54_w1', time=3908.00.
+Warning: Person '8599' is jammed on edge ':54_c1', time=3916.00.
+Warning: Person '8965' is jammed on edge ':54_c1', time=3925.00.
+Warning: Person '7806' is jammed on edge ':54_w1', time=3926.00.
+Warning: Person '8810' is jammed on edge ':54_c1', time=3928.00.
+Warning: Person '8299' is jammed on edge ':54_w1', time=3958.00.
+Warning: Person '7015' is jammed on edge ':54_c0', time=3959.00.
+Warning: Person '7650' is jammed on edge ':54_c0', time=3964.00.
+Warning: Person '4478' is jammed on edge '189[1][0]+20000', time=3979.00.
+Warning: Person '6982' is jammed on edge '189[1][0]+20000', time=3979.00.
+Warning: Person '5362' is jammed on edge '189[1][0]+20000', time=3980.00.
+Warning: Person '5210' is jammed on edge '189[1][0]+20000', time=3981.00.
+Warning: Person '6777' is jammed on edge '189[1][0]+20000', time=3981.00.
+Warning: Person '4932' is jammed on edge '189[1][0]+20000', time=3981.00.
+Warning: Person '5589' is jammed on edge '189[1][0]+20000', time=3981.00.
+Warning: Person '4830' is jammed on edge '189[1][0]+20000', time=3982.00.
+Warning: Person '5141' is jammed on edge '189[1][0]+20000', time=3983.00.
+Warning: Person '4092' is jammed on edge '189[1][0]+20000', time=3983.00.
+Warning: Person '5312' is jammed on edge '189[1][0]+20000', time=3983.00.
+Warning: Person '6146' is jammed on edge '189[1][0]+20000', time=3984.00.
+Warning: Person '7731' is jammed on edge ':54_w1', time=3985.00.
+Warning: Person '5718' is jammed on edge '189[0]', time=3989.00.
+Warning: Person '8998' is jammed on edge ':54_w1', time=3990.00.
+Warning: Person '5393' is jammed on edge ':84_w0', time=3990.00.
+Warning: Person '3806' is jammed on edge '189[1][0]+20000', time=3990.00.
+Warning: Person '3697' is jammed on edge '189[1][0]+20000', time=3990.00.
+Warning: Person '4468' is jammed on edge '189[1][0]+20000', time=3990.00.
+Warning: Person '5064' is jammed on edge '189[1][0]+20000', time=3991.00.
+Warning: Person '4604' is jammed on edge '189[1][0]+20000', time=3995.00.
+Warning: Person '4130' is jammed on edge '189[1][0]+20000', time=3995.00.
+Warning: Person '6185' is jammed on edge '189[0]', time=3997.00.
+Warning: Person '7740' is jammed on edge '189[1][0]+20000', time=3998.00.
+Warning: Person '7850' is jammed on edge ':85_w0', time=3999.00.
+Warning: Person '8308' is jammed on edge '189[1][1]', time=3999.00.
+Warning: Person '7891' is jammed on edge ':54_w1', time=4000.00.
+Warning: Person '6389' is jammed on edge ':54_w1', time=4000.00.
+Warning: Person '7717' is jammed on edge '189[1][0]+20000', time=4000.00.
+Warning: Person '7096' is jammed on edge '189[0]', time=4002.00.
+Warning: Person '6437' is jammed on edge '189[1][0]+20000', time=4002.00.
+Warning: Person '7585' is jammed on edge ':54_w1', time=4005.00.
+Warning: Person '7279' is jammed on edge ':54_w1', time=4014.00.
+Warning: Person '4644' is jammed on edge '189[1][0]+20000', time=4025.00.
+Warning: Person '5090' is jammed on edge '189[1][0]+20000', time=4025.00.
+Warning: Person '8152' is jammed on edge ':84_w0', time=4037.00.
+Warning: Person '5206' is jammed on edge ':84_w0', time=4038.00.
+Warning: Person '7294' is jammed on edge ':54_w1', time=4043.00.
+Warning: Person '7986' is jammed on edge ':54_w1', time=4051.00.
+Warning: Person '6996' is jammed on edge ':54_w1', time=4053.00.
+Warning: Person '8663' is jammed on edge ':54_w1', time=4056.00.
+Warning: Person '8466' is jammed on edge ':54_w1', time=4098.00.
+Warning: Person '8856' is jammed on edge ':54_w1', time=4099.00.
+Warning: Person '8201' is jammed on edge '189[1][1]', time=4102.00.
+Warning: Person '7206' is jammed on edge ':54_w1', time=4111.00.
+Warning: Person '7243' is jammed on edge ':85_w0', time=4121.00.
+Warning: Person '8901' is jammed on edge ':54_w1', time=4129.00.
+Warning: Person '8868' is jammed on edge ':54_w1', time=4129.00.
+Warning: Person '8951' is jammed on edge ':54_w1', time=4147.00.
+Warning: Person '8960' is jammed on edge ':54_w1', time=4166.00.
+Warning: Person '7073' is jammed on edge ':54_w1', time=4175.00.
+Warning: Person '3708' is jammed on edge '189[1][0]+20000', time=4281.00.
+Warning: Person '4738' is jammed on edge '189[1][0]+20000', time=4281.00.
+Warning: Person '4959' is jammed on edge '189[1][0]+20000', time=4282.00.
+Warning: Person '8109' is jammed on edge '189[1][0]+20000', time=4287.00.
+Warning: Person '5055' is jammed on edge '189[1][0]+20000', time=4288.00.
+Warning: Person '8370' is jammed on edge '189[1][0]+20000', time=4288.00.
+Warning: Person '5371' is jammed on edge '189[1][0]+20000', time=4289.00.
+Warning: Person '5444' is jammed on edge '189[1][0]+20000', time=4290.00.
+Warning: Person '8392' is jammed on edge ':54_w1', time=4291.00.
+Warning: Person '8810' is jammed on edge ':84_w0', time=4292.00.
+Warning: Person '4210' is jammed on edge '189[1][0]+20000', time=4292.00.
+Warning: Person '4328' is jammed on edge '189[1][0]+20000', time=4292.00.
+Warning: Person '5189' is jammed on edge '189[1][0]+20000', time=4292.00.
+Warning: Person '5574' is jammed on edge '189[1][0]+20000', time=4292.00.
+Warning: Person '7293' is jammed on edge '189[0]', time=4293.00.
+Warning: Person '7013' is jammed on edge '189[0]', time=4293.00.
+Warning: Person '4370' is jammed on edge '189[1][0]+20000', time=4293.00.
+Warning: Person '5762' is jammed on edge '189[1][0]+20000', time=4293.00.
+Warning: Person '5897' is jammed on edge '189[1][0]+20000', time=4293.00.
+Warning: Person '7258' is jammed on edge ':84_w0', time=4294.00.
+Warning: Person '6693' is jammed on edge '189[0]', time=4294.00.
+Warning: Person '6062' is jammed on edge '189[1][0]+20000', time=4294.00.
+Warning: Person '8056' is jammed on edge ':84_w0', time=4295.00.
+Warning: Person '6694' is jammed on edge '189[1][0]+20000', time=4295.00.
+Warning: Person '4674' is jammed on edge '189[1][0]+20000', time=4295.00.
+Warning: Person '5279' is jammed on edge '189[1][0]+20000', time=4296.00.
+Warning: Person '6031' is jammed on edge '189[1][0]+20000', time=4296.00.
+Warning: Person '6945' is jammed on edge '189[1][0]+20000', time=4296.00.
+Warning: Person '6474' is jammed on edge '189[1][0]+20000', time=4298.00.
+Warning: Person '6857' is jammed on edge ':54_w1', time=4302.00.
+Warning: Person '7611' is jammed on edge ':54_w1', time=4302.00.
+Warning: Person '7357' is jammed on edge '189[1][0]+20000', time=4327.00.
+Warning: Person '6237' is jammed on edge '189[1][0]+20000', time=4327.00.
+Warning: Person '4262' is jammed on edge '189[1][0]+20000', time=4327.00.
+Warning: Person '5358' is jammed on edge '189[1][0]+20000', time=4328.00.
+Warning: Person '7672' is jammed on edge '189[1][0]+20000', time=4329.00.
+Warning: Person '6783' is jammed on edge ':84_w0', time=4335.00.
+Warning: Person '8114' is jammed on edge ':54_w1', time=4346.00.
+Warning: Person '6515' is jammed on edge ':54_w1', time=4351.00.
+Warning: Person '7596' is jammed on edge ':85_w0', time=4423.00.
+Warning: Person '7196' is jammed on edge ':85_w0', time=4424.00.
+Warning: Person '7413' is jammed on edge ':85_w0', time=4424.00.
+Warning: Person '7435' is jammed on edge ':85_w0', time=4424.00.
+Warning: Person '8901' is jammed on edge ':54_w1', time=4451.00.
+Warning: Person '4111' is jammed on edge '189[1][0]+20000', time=4583.00.
+Warning: Person '8062' is jammed on edge '189[1][0]+20000', time=4583.00.
+Warning: Person '5314' is jammed on edge '189[1][0]+20000', time=4584.00.
+Warning: Person '7206' is jammed on edge '189[1][0]+20000', time=4584.00.
+Warning: Person '4670' is jammed on edge '189[1][0]+20000', time=4585.00.
+Warning: Person '6619' is jammed on edge ':84_w0', time=4589.00.
+Warning: Person '4852' is jammed on edge '189[0]', time=4590.00.
+Warning: Person '7331' is jammed on edge ':84_w0', time=4591.00.
+Warning: Person '7098' is jammed on edge ':84_w0', time=4592.00.
+Warning: Person '5438' is jammed on edge '189[1][0]+20000', time=4593.00.
+Warning: Person '5477' is jammed on edge ':84_w0', time=4594.00.
+Warning: Person '5095' is jammed on edge ':84_w0', time=4594.00.
+Warning: Person '4278' is jammed on edge '189[1][0]+20000', time=4594.00.
+Warning: Person '5696' is jammed on edge '189[1][0]+20000', time=4594.00.
+Warning: Person '4423' is jammed on edge '189[1][0]+20000', time=4595.00.
+Warning: Person '4630' is jammed on edge '189[1][0]+20000', time=4595.00.
+Warning: Person '7987' is jammed on edge '189[1][0]+20000', time=4596.00.
+Warning: Person '8317' is jammed on edge '189[1][0]+20000', time=4596.00.
+Warning: Person '5730' is jammed on edge '189[1][0]+20000', time=4596.00.
+Warning: Person '8590' is jammed on edge '189[1][0]+20000', time=4597.00.
+Warning: Person '4774' is jammed on edge '189[1][0]+20000', time=4597.00.
+Warning: Person '5574' is jammed on edge '189[1][0]+20000', time=4597.00.
+Warning: Person '5398' is jammed on edge '189[1][0]+20000', time=4597.00.
+Warning: Person '6976' is jammed on edge '189[1][0]+20000', time=4597.00.
+Warning: Person '5349' is jammed on edge ':84_w0', time=4598.00.
+Warning: Person '8713' is jammed on edge '189[0]', time=4598.00.
+Warning: Person '7013' is jammed on edge '189[0]', time=4598.00.
+Warning: Person '6362' is jammed on edge '189[1][0]+20000', time=4598.00.
+Warning: Person '6358' is jammed on edge '189[1][0]+20000', time=4599.00.
+Warning: Person '5512' is jammed on edge '189[0]', time=4601.00.
+Warning: Person '7851' is jammed on edge ':85_w0', time=4603.00.
+Warning: Person '8259' is jammed on edge '189[1][1]', time=4603.00.
+Warning: Person '8837' is jammed on edge ':54_w1', time=4605.00.
+Warning: Person '6859' is jammed on edge '189[1][1]', time=4605.00.
+Warning: Person '5815' is jammed on edge '189[1][0]+20000', time=4629.00.
+Warning: Person '4933' is jammed on edge '189[1][0]+20000', time=4630.00.
+Warning: Person '5247' is jammed on edge '189[1][0]+20000', time=4630.00.
+Warning: Person '4375' is jammed on edge '189[1][0]+20000', time=4631.00.
+Warning: Person '6502' is jammed on edge '189[1][0]+20000', time=4633.00.
+Warning: Person '5973' is jammed on edge '189[1][0]+20000', time=4633.00.
+Warning: Person '8109' is jammed on edge ':85_w0', time=4725.00.
+Warning: Person '4830' is jammed on edge ':85_w0', time=4730.00.
+Warning: Person '8951' is jammed on edge ':85_w0', time=4736.00.
+Warning: Person '7385' is jammed on edge '189[1][0]+20000', time=4885.00.
+Warning: Person '5314' is jammed on edge '189[1][0]+20000', time=4887.00.
+Warning: Person '4760' is jammed on edge '189[1][0]+20000', time=4887.00.
+Warning: Person '3929' is jammed on edge '189[1][0]+20000', time=4889.00.
+Warning: Person '6736' is jammed on edge '189[1][0]+20000', time=4889.00.
+Warning: Person '4650' is jammed on edge '189[0]', time=4895.00.
+Warning: Person '5052' is jammed on edge '189[1][0]+20000', time=4896.00.
+Warning: Person '5904' is jammed on edge '189[1][0]+20000', time=4896.00.
+Warning: Person '5145' is jammed on edge '189[1][0]+20000', time=4896.00.
+Warning: Person '6363' is jammed on edge '189[1][0]+20000', time=4897.00.
+Warning: Person '5368' is jammed on edge '189[1][0]+20000', time=4897.00.
+Warning: Person '5166' is jammed on edge '189[1][0]+20000', time=4898.00.
+Warning: Person '4944' is jammed on edge '189[1][0]+20000', time=4898.00.
+Warning: Person '4891' is jammed on edge '189[1][0]+20000', time=4898.00.
+Warning: Person '6720' is jammed on edge '189[1][0]+20000', time=4898.00.
+Warning: Person '7163' is jammed on edge '189[1][0]+20000', time=4898.00.
+Warning: Person '6667' is jammed on edge ':54_w1', time=4899.00.
+Warning: Person '8078' is jammed on edge '189[1][0]+20000', time=4899.00.
+Warning: Person '6182' is jammed on edge '189[1][0]+20000', time=4899.00.
+Warning: Person '2415' is jammed on edge '189[1][0]+20000', time=4899.00.
+Warning: Person '5637' is jammed on edge '189[1][0]+20000', time=4899.00.
+Warning: Person '7757' is jammed on edge '189[1][1]', time=4907.00.
+Warning: Person '8882' is jammed on edge '189[1][1]', time=4907.00.
+Warning: Person '7868' is jammed on edge '189[1][1]', time=4907.00.
+Warning: Person '8396' is jammed on edge '189[1][1]', time=4908.00.
+Warning: Person '6907' is jammed on edge '189[1][0]+20000', time=4931.00.
+Warning: Person '8317' is jammed on edge '189[1][0]+20000', time=4931.00.
+Warning: Person '3799' is jammed on edge '189[1][0]+20000', time=4931.00.
+Warning: Person '6653' is jammed on edge '189[1][0]+20000', time=4932.00.
+Warning: Person '7582' is jammed on edge '189[1][0]+20000', time=4932.00.
+Warning: Person '6226' is jammed on edge ':84_w0', time=4935.00.
+Warning: Person '8590' is jammed on edge ':85_w0', time=4991.00.
+Warning: Person '6964' is jammed on edge ':85_w0', time=5027.00.
+Warning: Person '5421' is jammed on edge '189[1][0]+20000', time=5187.00.
+Warning: Person '4027' is jammed on edge '189[1][0]+20000', time=5187.00.
+Warning: Person '5400' is jammed on edge '189[1][0]+20000', time=5188.00.
+Warning: Person '4997' is jammed on edge '189[1][0]+20000', time=5188.00.
+Warning: Person '8299' is jammed on edge '189[0]', time=5197.00.
+Warning: Person '4807' is jammed on edge '189[1][0]+20000', time=5198.00.
+Warning: Person '4884' is jammed on edge '189[1][0]+20000', time=5198.00.
+Warning: Person '5730' is jammed on edge '189[1][0]+20000', time=5198.00.
+Warning: Person '4797' is jammed on edge '189[1][0]+20000', time=5199.00.
+Warning: Person '5198' is jammed on edge '189[1][0]+20000', time=5199.00.
+Warning: Person '5572' is jammed on edge '189[1][0]+20000', time=5200.00.
+Warning: Person '6031' is jammed on edge '189[1][0]+20000', time=5200.00.
+Warning: Person '7767' is jammed on edge '189[1][0]+20000', time=5200.00.
+Warning: Person '4479' is jammed on edge '189[1][0]+20000', time=5201.00.
+Warning: Person '6599' is jammed on edge '189[1][0]+20000', time=5201.00.
+Warning: Person '5335' is jammed on edge '189[1][0]+20000', time=5201.00.
+Warning: Person '6995' is jammed on edge '189[1][0]+20000', time=5201.00.
+Warning: Person '4991' is jammed on edge '189[1][0]+20000', time=5202.00.
+Warning: Person '6196' is jammed on edge '189[1][0]+20000', time=5202.00.
+Warning: Person '7671' is jammed on edge ':85_w0', time=5203.00.
+Warning: Person '7624' is jammed on edge '189[1][0]+20000', time=5203.00.
+Warning: Person '8333' is jammed on edge '189[1][0]+20000', time=5203.00.
+Warning: Person '6496' is jammed on edge '189[1][0]+20000', time=5204.00.
+Warning: Person '6874' is jammed on edge '189[0]', time=5205.00.
+Warning: Person '6619' is jammed on edge '189[1][0]+20000', time=5208.00.
+Warning: Person '5512' is jammed on edge ':84_w0', time=5210.00.
+Warning: Person '8837' is jammed on edge '189[0]', time=5212.00.
+Warning: Person '4760' is jammed on edge '189[1][0]+20000', time=5234.00.
+Warning: Person '5487' is jammed on edge '189[1][0]+20000', time=5234.00.
+Warning: Person '4541' is jammed on edge '189[1][0]+20000', time=5235.00.
+Warning: Person '4608' is jammed on edge '189[1][0]+20000', time=5490.00.
+Warning: Person '5055' is jammed on edge '189[1][0]+20000', time=5491.00.
+Warning: Person '5059' is jammed on edge '189[1][0]+20000', time=5492.00.
+Warning: Person '5732' is jammed on edge '189[1][0]+20000', time=5492.00.
+Warning: Person '6693' is jammed on edge '189[1][0]+20000', time=5493.00.
+Warning: Person '8148' is jammed on edge '189[0]', time=5495.00.
+Warning: Person '8638' is jammed on edge '189[0]', time=5495.00.
+Warning: Person '5609' is jammed on edge '189[1][0]+20000', time=5495.00.
+Warning: Person '5001' is jammed on edge '189[1][0]+20000', time=5501.00.
+Warning: Person '4931' is jammed on edge '189[1][0]+20000', time=5501.00.
+Warning: Person '5668' is jammed on edge '189[1][0]+20000', time=5501.00.
+Warning: Person '2113' is jammed on edge '189[1][0]+20000', time=5501.00.
+Warning: Person '4808' is jammed on edge '189[1][0]+20000', time=5502.00.
+Warning: Person '5904' is jammed on edge '189[1][0]+20000', time=5502.00.
+Warning: Person '4157' is jammed on edge '189[1][0]+20000', time=5502.00.
+Warning: Person '4753' is jammed on edge '189[1][0]+20000', time=5503.00.
+Warning: Person '6718' is jammed on edge '189[1][0]+20000', time=5503.00.
+Warning: Person '5400' is jammed on edge '189[1][0]+20000', time=5504.00.
+Warning: Person '4720' is jammed on edge '189[1][0]+20000', time=5504.00.
+Warning: Person '5414' is jammed on edge '189[1][0]+20000', time=5504.00.
+Warning: Person '2933' is jammed on edge '189[1][0]+20000', time=5504.00.
+Warning: Person '5685' is jammed on edge '189[1][0]+20000', time=5504.00.
+Warning: Person '6313' is jammed on edge '189[1][0]+20000', time=5504.00.
+Warning: Person '4737' is jammed on edge '189[1][0]+20000', time=5504.00.
+Warning: Person '7767' is jammed on edge '189[1][0]+20000', time=5504.00.
+Warning: Person '5608' is jammed on edge '189[1][0]+20000', time=5506.00.
+Warning: Person '5477' is jammed on edge '189[1][0]+20000', time=5509.00.
+Warning: Person '8281' is jammed on edge '189[1][0]+20000', time=5536.00.
+Warning: Person '5242' is jammed on edge '189[1][0]+20000', time=5538.00.
+Warning: Person '5399' is jammed on edge '189[1][0]+20000', time=5540.00.
+Warning: Person '8998' is jammed on edge '189[0]', time=5543.00.
+Warning: Person '7555' is jammed on edge '189[0]', time=5545.00.
+Warning: Person '4694' is jammed on edge '189[1][0]+20000', time=5793.00.
+Warning: Person '4650' is jammed on edge ':84_w0', time=5801.00.
+Warning: Person '7401' is jammed on edge '189[0]', time=5801.00.
+Warning: Person '5083' is jammed on edge '189[1][0]+20000', time=5804.00.
+Warning: Person '8062' is jammed on edge '189[1][0]+20000', time=5804.00.
+Warning: Person '5198' is jammed on edge '189[1][0]+20000', time=5804.00.
+Warning: Person '4534' is jammed on edge '189[1][0]+20000', time=5805.00.
+Warning: Person '4804' is jammed on edge '189[1][0]+20000', time=5805.00.
+Warning: Person '5606' is jammed on edge '189[1][0]+20000', time=5805.00.
+Warning: Person '5472' is jammed on edge '189[1][0]+20000', time=5805.00.
+Warning: Person '6995' is jammed on edge '189[1][0]+20000', time=5805.00.
+Warning: Person '8678' is jammed on edge ':84_w0', time=5806.00.
+Warning: Person '8976' is jammed on edge ':84_w0', time=5806.00.
+Warning: Person '5118' is jammed on edge '189[1][0]+20000', time=5806.00.
+Warning: Person '4753' is jammed on edge '189[1][0]+20000', time=5806.00.
+Warning: Person '6062' is jammed on edge '189[1][0]+20000', time=5806.00.
+Warning: Person '4696' is jammed on edge '189[1][0]+20000', time=5806.00.
+Warning: Person '5981' is jammed on edge '189[1][0]+20000', time=5807.00.
+Warning: Person '8019' is jammed on edge '189[1][0]+20000', time=5807.00.
+Warning: Person '7489' is jammed on edge '189[1][0]+20000', time=5807.00.
+Warning: Person '7113' is jammed on edge '189[1][0]+20000', time=5807.00.
+Warning: Person '8480' is jammed on edge '189[1][0]+20000', time=5807.00.
+Warning: Person '8830' is jammed on edge '189[1][0]+20000', time=5807.00.
+Warning: Person '7297' is jammed on edge '189[1][0]+20000', time=5808.00.
+Warning: Person '8810' is jammed on edge '189[1][0]+20000', time=5808.00.
+Warning: Person '5685' is jammed on edge '189[1][0]+20000', time=5808.00.
+Warning: Person '5233' is jammed on edge '189[1][0]+20000', time=5809.00.
+Warning: Person '6626' is jammed on edge '189[1][0]+20000', time=5809.00.
+Warning: Person '8556' is jammed on edge '189[1][0]+20000', time=5810.00.
+Warning: Person '8387' is jammed on edge '189[1][0]+20000', time=5814.00.
+Warning: Person '4919' is jammed on edge '189[1][0]+20000', time=5842.00.
+Warning: Person '5513' is jammed on edge '189[1][0]+20000', time=5842.00.
+Warning: Person '7645' is jammed on edge '189[1][0]+20000', time=6095.00.
+Warning: Person '7756' is jammed on edge '189[1][0]+20000', time=6095.00.
+Warning: Person '6736' is jammed on edge '189[1][0]+20000', time=6095.00.
+Warning: Person '4733' is jammed on edge '189[1][0]+20000', time=6106.00.
+Warning: Person '7840' is jammed on edge '189[1][0]+20000', time=6106.00.
+Warning: Person '5491' is jammed on edge '189[1][0]+20000', time=6106.00.
+Warning: Person '6657' is jammed on edge '189[1][0]+20000', time=6106.00.
+Warning: Person '8062' is jammed on edge '189[1][0]+20000', time=6107.00.
+Warning: Person '5066' is jammed on edge '189[1][0]+20000', time=6107.00.
+Warning: Person '5166' is jammed on edge '189[1][0]+20000', time=6107.00.
+Warning: Person '6620' is jammed on edge '189[1][0]+20000', time=6107.00.
+Warning: Person '5606' is jammed on edge '189[1][0]+20000', time=6108.00.
+Warning: Person '5216' is jammed on edge '189[1][0]+20000', time=6108.00.
+Warning: Person '7620' is jammed on edge '189[1][0]+20000', time=6108.00.
+Warning: Person '6837' is jammed on edge '189[1][0]+20000', time=6109.00.
+Warning: Person '8803' is jammed on edge '189[1][0]+20000', time=6109.00.
+Warning: Person '5597' is jammed on edge '189[1][0]+20000', time=6110.00.
+Warning: Person '6718' is jammed on edge '189[1][0]+20000', time=6110.00.
+Warning: Person '8299' is jammed on edge ':84_w0', time=6111.00.
+Warning: Person '3530' is jammed on edge '189[1][0]+20000', time=6111.00.
+Warning: Person '7747' is jammed on edge '189[1][0]+20000', time=6111.00.
+Warning: Person '8539' is jammed on edge '189[1][0]+20000', time=6111.00.
+Warning: Person '8498' is jammed on edge '189[1][0]+20000', time=6111.00.
+Warning: Person '6624' is jammed on edge '189[1][0]+20000', time=6112.00.
+Warning: Person '7532' is jammed on edge '189[1][0]+20000', time=6118.00.
+Warning: Person '5326' is jammed on edge '189[1][0]+20000', time=6144.00.
+Warning: Person '4541' is jammed on edge '189[1][0]+20000', time=6397.00.
+Warning: Person '6185' is jammed on edge '189[1][0]+20000', time=6397.00.
+Warning: Person '5222' is jammed on edge '189[1][0]+20000', time=6398.00.
+Warning: Person '5264' is jammed on edge '189[1][0]+20000', time=6398.00.
+Warning: Person '8078' is jammed on edge '189[1][0]+20000', time=6408.00.
+Warning: Person '5371' is jammed on edge '189[1][0]+20000', time=6408.00.
+Warning: Person '7030' is jammed on edge '189[1][0]+20000', time=6408.00.
+Warning: Person '5429' is jammed on edge '189[1][0]+20000', time=6408.00.
+Warning: Person '7840' is jammed on edge '189[1][0]+20000', time=6409.00.
+Warning: Person '7795' is jammed on edge '189[1][0]+20000', time=6409.00.
+Warning: Person '4557' is jammed on edge '189[1][0]+20000', time=6409.00.
+Warning: Person '5978' is jammed on edge '189[1][0]+20000', time=6409.00.
+Warning: Person '3568' is jammed on edge '189[1][0]+20000', time=6409.00.
+Warning: Person '5059' is jammed on edge '189[1][0]+20000', time=6410.00.
+Warning: Person '5166' is jammed on edge '189[1][0]+20000', time=6410.00.
+Warning: Person '5472' is jammed on edge '189[1][0]+20000', time=6410.00.
+Warning: Person '7657' is jammed on edge '189[1][0]+20000', time=6410.00.
+Warning: Person '7621' is jammed on edge '189[1][0]+20000', time=6410.00.
+Warning: Person '6369' is jammed on edge '189[1][0]+20000', time=6410.00.
+Warning: Person '7043' is jammed on edge '189[1][0]+20000', time=6411.00.
+Warning: Person '8249' is jammed on edge '189[1][0]+20000', time=6411.00.
+Warning: Person '6859' is jammed on edge '189[1][0]+20000', time=6411.00.
+Warning: Person '6389' is jammed on edge '189[1][0]+20000', time=6414.00.
+Warning: Person '7118' is jammed on edge '189[1][0]+20000', time=6699.00.
+Warning: Person '5322' is jammed on edge '189[1][0]+20000', time=6699.00.
+Warning: Person '6075' is jammed on edge '189[1][0]+20000', time=6699.00.
+Warning: Person '5210' is jammed on edge '189[1][0]+20000', time=6710.00.
+Warning: Person '6890' is jammed on edge '189[1][0]+20000', time=6710.00.
+Warning: Person '4506' is jammed on edge '189[1][0]+20000', time=6710.00.
+Warning: Person '8643' is jammed on edge '189[1][0]+20000', time=6711.00.
+Warning: Person '6272' is jammed on edge '189[1][0]+20000', time=6711.00.
+Warning: Person '4553' is jammed on edge '189[1][0]+20000', time=6711.00.
+Warning: Person '5438' is jammed on edge '189[1][0]+20000', time=6712.00.
+Warning: Person '4948' is jammed on edge '189[1][0]+20000', time=6712.00.
+Warning: Person '5427' is jammed on edge '189[1][0]+20000', time=6712.00.
+Warning: Person '5856' is jammed on edge '189[1][0]+20000', time=6712.00.
+Warning: Person '6197' is jammed on edge '189[1][0]+20000', time=6712.00.
+Warning: Person '5525' is jammed on edge '189[1][0]+20000', time=6712.00.
+Warning: Person '7729' is jammed on edge '189[1][0]+20000', time=6712.00.
+Warning: Person '8604' is jammed on edge '189[1][0]+20000', time=6712.00.
+Warning: Person '5730' is jammed on edge '189[1][0]+20000', time=6713.00.
+Warning: Person '6391' is jammed on edge '189[1][0]+20000', time=6713.00.
+Warning: Person '6359' is jammed on edge '189[1][0]+20000', time=6713.00.
+Warning: Person '8521' is jammed on edge '189[1][0]+20000', time=6713.00.
+Warning: Person '7502' is jammed on edge '189[1][0]+20000', time=6714.00.
+Warning: Person '7232' is jammed on edge '189[1][0]+20000', time=6714.00.
+Warning: Person '7611' is jammed on edge '189[1][0]+20000', time=6717.00.
+Warning: Person '6358' is jammed on edge '189[1][0]+20000', time=6717.00.
+Warning: Person '7986' is jammed on edge '189[1][0]+20000', time=6718.00.
+Warning: Person '5533' is jammed on edge '189[1][0]+20000', time=7002.00.
+Warning: Person '7489' is jammed on edge '189[1][0]+20000', time=7012.00.
+Warning: Person '4424' is jammed on edge '189[1][0]+20000', time=7013.00.
+Warning: Person '8960' is jammed on edge '189[1][0]+20000', time=7013.00.
+Warning: Person '6720' is jammed on edge '189[1][0]+20000', time=7013.00.
+Warning: Person '7795' is jammed on edge '189[1][0]+20000', time=7014.00.
+Warning: Person '7641' is jammed on edge '189[1][0]+20000', time=7014.00.
+Warning: Person '5230' is jammed on edge '189[1][0]+20000', time=7014.00.
+Warning: Person '6471' is jammed on edge '189[1][0]+20000', time=7014.00.
+Warning: Person '7007' is jammed on edge '189[1][0]+20000', time=7014.00.
+Warning: Person '8249' is jammed on edge '189[1][0]+20000', time=7014.00.
+Warning: Person '7962' is jammed on edge '189[1][0]+20000', time=7014.00.
+Warning: Person '7030' is jammed on edge '189[1][0]+20000', time=7015.00.
+Warning: Person '5856' is jammed on edge '189[1][0]+20000', time=7015.00.
+Warning: Person '5693' is jammed on edge '189[1][0]+20000', time=7015.00.
+Warning: Person '4299' is jammed on edge '189[1][0]+20000', time=7016.00.
+Warning: Person '8678' is jammed on edge '189[1][0]+20000', time=7017.00.
+Warning: Person '7502' is jammed on edge '189[1][0]+20000', time=7019.00.
+Warning: Person '8830' is jammed on edge '189[1][0]+20000', time=7021.00.
+Warning: Person '8480' is jammed on edge '189[1][0]+20000', time=7029.00.
+Warning: Person '7732' is jammed on edge '189[1][0]+20000', time=7315.00.
+Warning: Person '7378' is jammed on edge '189[1][0]+20000', time=7315.00.
+Warning: Person '5366' is jammed on edge '189[1][0]+20000', time=7315.00.
+Warning: Person '6080' is jammed on edge '189[1][0]+20000', time=7315.00.
+Warning: Person '4789' is jammed on edge '189[1][0]+20000', time=7315.00.
+Warning: Person '8810' is jammed on edge '189[1][0]+20000', time=7316.00.
+Warning: Person '5736' is jammed on edge '189[1][0]+20000', time=7316.00.
+Warning: Person '8175' is jammed on edge '189[1][0]+20000', time=7316.00.
+Warning: Person '8352' is jammed on edge '189[1][0]+20000', time=7316.00.
+Warning: Person '5181' is jammed on edge '189[1][0]+20000', time=7317.00.
+Warning: Person '8738' is jammed on edge '189[1][0]+20000', time=7317.00.
+Warning: Person '4112' is jammed on edge '189[1][0]+20000', time=7317.00.
+Warning: Person '7920' is jammed on edge '189[1][0]+20000', time=7317.00.
+Warning: Person '6686' is jammed on edge '189[1][0]+20000', time=7317.00.
+Warning: Person '8958' is jammed on edge '189[1][0]+20000', time=7317.00.
+Warning: Person '8995' is jammed on edge '189[1][0]+20000', time=7317.00.
+Warning: Person '7795' is jammed on edge '189[1][0]+20000', time=7318.00.
+Warning: Person '6796' is jammed on edge '189[1][0]+20000', time=7318.00.
+Warning: Person '5525' is jammed on edge '189[1][0]+20000', time=7318.00.
+Warning: Person '8454' is jammed on edge '189[1][0]+20000', time=7319.00.
+Warning: Person '6667' is jammed on edge '189[1][0]+20000', time=7319.00.
+Warning: Person '8724' is jammed on edge '189[1][0]+20000', time=7319.00.
+Warning: Person '8401' is jammed on edge '189[1][0]+20000', time=7319.00.
+Warning: Person '5533' is jammed on edge '189[1][0]+20000', time=7320.00.
+Warning: Person '7415' is jammed on edge '189[1][0]+20000', time=7320.00.
+Warning: Person '7754' is jammed on edge '189[1][0]+20000', time=7320.00.
+Warning: Person '6197' is jammed on edge '189[1][0]+20000', time=7321.00.
+Warning: Person '7007' is jammed on edge '189[1][0]+20000', time=7322.00.
+Warning: Person '5609' is jammed on edge '189[1][0]+20000', time=7323.00.
+Warning: Person '8638' is jammed on edge '189[1][0]+20000', time=7617.00.
+Warning: Person '6799' is jammed on edge '189[1][0]+20000', time=7617.00.
+Warning: Person '5620' is jammed on edge '189[1][0]+20000', time=7619.00.
+Warning: Person '5516' is jammed on edge '189[1][0]+20000', time=7619.00.
+Warning: Person '6945' is jammed on edge '189[1][0]+20000', time=7619.00.
+Warning: Person '7688' is jammed on edge '189[1][0]+20000', time=7620.00.
+Warning: Person '5222' is jammed on edge '189[1][0]+20000', time=7621.00.
+Warning: Person '6737' is jammed on edge '189[1][0]+20000', time=7621.00.
+Warning: Person '6857' is jammed on edge '189[1][0]+20000', time=7621.00.
+Warning: Person '7317' is jammed on edge '189[1][0]+20000', time=7621.00.
+Warning: Person '8998' is jammed on edge '189[1][0]+20000', time=7621.00.
+Warning: Person '8100' is jammed on edge '189[1][0]+20000', time=7622.00.
+Warning: Person '5732' is jammed on edge '189[1][0]+20000', time=7622.00.
+Warning: Person '5660' is jammed on edge '189[1][0]+20000', time=7622.00.
+Warning: Person '5076' is jammed on edge '189[1][0]+20000', time=7624.00.
+Warning: Person '5301' is jammed on edge '189[1][0]+20000', time=7625.00.
+Warning: Person '7799' is jammed on edge '189[1][0]+20000', time=7625.00.
+Warning: Person '8742' is jammed on edge '189[1][0]+20000', time=7625.00.
+Warning: Person '7293' is jammed on edge '189[1][0]+20000', time=7626.00.
+Warning: Person '8629' is jammed on edge '189[1][0]+20000', time=7626.00.
+Warning: Person '6449' is jammed on edge '189[1][0]+20000', time=7626.00.
+Warning: Person '6791' is jammed on edge '189[1][0]+20000', time=7626.00.
+Warning: Person '6369' is jammed on edge '189[1][0]+20000', time=7626.00.
+Warning: Person '5707' is jammed on edge '189[1][0]+20000', time=7920.00.
+Warning: Person '7620' is jammed on edge '189[1][0]+20000', time=7922.00.
+Warning: Person '5525' is jammed on edge '189[1][0]+20000', time=7922.00.
+Warning: Person '8173' is jammed on edge '189[1][0]+20000', time=7922.00.
+Warning: Person '7378' is jammed on edge '189[1][0]+20000', time=7923.00.
+Warning: Person '6471' is jammed on edge '189[1][0]+20000', time=7923.00.
+Warning: Person '5900' is jammed on edge '189[1][0]+20000', time=7924.00.
+Warning: Person '6243' is jammed on edge '189[1][0]+20000', time=7924.00.
+Warning: Person '8197' is jammed on edge '189[1][0]+20000', time=7924.00.
+Warning: Person '6667' is jammed on edge '189[1][0]+20000', time=7925.00.
+Warning: Person '8507' is jammed on edge '189[1][0]+20000', time=7927.00.
+Warning: Person '5076' is jammed on edge '189[1][0]+20000', time=8223.00.
+Warning: Person '4852' is jammed on edge '189[1][0]+20000', time=8223.00.
+Warning: Person '8235' is jammed on edge '189[1][0]+20000', time=8224.00.
+Warning: Person '6805' is jammed on edge '189[1][0]+20000', time=8224.00.
+Warning: Person '8544' is jammed on edge '189[1][0]+20000', time=8224.00.
+Warning: Person '8252' is jammed on edge '189[1][0]+20000', time=8224.00.
+Warning: Person '6740' is jammed on edge '189[1][0]+20000', time=8225.00.
+Warning: Person '8148' is jammed on edge '189[1][0]+20000', time=8225.00.
+Warning: Person '8146' is jammed on edge '189[1][0]+20000', time=8225.00.
+Warning: Person '6693' is jammed on edge '189[1][0]+20000', time=8227.00.
+Warning: Person '6177' is jammed on edge '189[1][0]+20000', time=8227.00.
+Warning: Person '6051' is jammed on edge '189[1][0]+20000', time=8227.00.
+Warning: Person '7329' is jammed on edge '189[1][0]+20000', time=8227.00.
+Warning: Person '7124' is jammed on edge '189[1][0]+20000', time=8227.00.
+Warning: Person '8876' is jammed on edge '189[1][0]+20000', time=8229.00.
+Warning: Person '8249' is jammed on edge '189[1][0]+20000', time=8287.00.
+Warning: Person '6737' is jammed on edge '189[1][0]+20000', time=8525.00.
+Warning: Person '7325' is jammed on edge '189[1][0]+20000', time=8526.00.
+Warning: Person '8725' is jammed on edge '189[1][0]+20000', time=8526.00.
+Warning: Person '7394' is jammed on edge '189[1][0]+20000', time=8526.00.
+Warning: Person '7440' is jammed on edge '189[1][0]+20000', time=8527.00.
+Warning: Person '8550' is jammed on edge '189[1][0]+20000', time=8527.00.
+Warning: Person '7671' is jammed on edge '189[1][0]+20000', time=8527.00.
+Warning: Person '5230' is jammed on edge '189[1][0]+20000', time=8529.00.
+Warning: Person '7470' is jammed on edge '189[1][0]+20000', time=8529.00.
+Warning: Person '4650' is jammed on edge '189[1][0]+20000', time=8529.00.
+Warning: Person '8150' is jammed on edge '189[1][0]+20000', time=8531.00.
+Warning: Person '5516' is jammed on edge '189[1][0]+20000', time=8531.00.
+Warning: Person '7754' is jammed on edge '189[1][0]+20000', time=8531.00.
+Warning: Person '8259' is jammed on edge '189[1][0]+20000', time=8531.00.
+Warning: Person '8806' is jammed on edge '189[1][0]+20000', time=8589.00.
+Warning: Person '6374' is jammed on edge '189[1][0]+20000', time=8827.00.
+Warning: Person '7450' is jammed on edge '189[1][0]+20000', time=8828.00.
+Warning: Person '7657' is jammed on edge '189[1][0]+20000', time=8828.00.
+Warning: Person '7658' is jammed on edge '189[1][0]+20000', time=8830.00.
+Warning: Person '8712' is jammed on edge '189[1][0]+20000', time=8830.00.
+Warning: Person '7816' is jammed on edge '189[1][0]+20000', time=8831.00.
+Warning: Person '8763' is jammed on edge '189[1][0]+20000', time=8831.00.
+Warning: Person '5230' is jammed on edge '189[1][0]+20000', time=8833.00.
+Warning: Person '8799' is jammed on edge '189[1][0]+20000', time=8891.00.
+Warning: Person '5450' is jammed on edge '189[1][0]+20000', time=9129.00.
+Warning: Person '8284' is jammed on edge '189[1][0]+20000', time=9130.00.
+Warning: Person '8544' is jammed on edge '189[1][0]+20000', time=9132.00.
+Warning: Person '8988' is jammed on edge '189[1][0]+20000', time=9133.00.
+Warning: Person '8788' is jammed on edge '189[1][0]+20000', time=9134.00.
+Warning: Person '8399' is jammed on edge '189[1][0]+20000', time=9135.00.
+Warning: Person '8604' is jammed on edge '189[1][0]+20000', time=9193.00.
+Warning: Person '6857' is jammed on edge '189[1][0]+20000', time=9196.00.
+Warning: Person '7731' is jammed on edge '189[1][0]+20000', time=9199.00.
+Warning: Person '6511' is jammed on edge '189[1][0]+20000', time=9431.00.
+Warning: Person '7637' is jammed on edge '189[1][0]+20000', time=9432.00.
+Warning: Person '8439' is jammed on edge '189[1][0]+20000', time=9435.00.
+Warning: Person '8947' is jammed on edge '189[1][0]+20000', time=9437.00.
+Warning: Person '8604' is jammed on edge '189[1][0]+20000', time=9496.00.
+Warning: Person '7470' is jammed on edge '189[1][0]+20000', time=9498.00.
+Warning: Person '8098' is jammed on edge '189[1][0]+20000', time=9501.00.
+Warning: Person '6226' is jammed on edge '189[1][0]+20000', time=9733.00.
+Warning: Person '8916' is jammed on edge '189[1][0]+20000', time=9734.00.
+Warning: Person '7729' is jammed on edge '189[1][0]+20000', time=9734.00.
+Warning: Person '8424' is jammed on edge '189[1][0]+20000', time=9738.00.
+Warning: Person '6778' is jammed on edge '189[1][0]+20000', time=9740.00.
+Warning: Person '6778' is jammed on edge '189[1][0]+20000', time=10047.00.
+Warning: Person '8772' aborted waiting for 140 at busStop 'busStop#9'.
+Warning: Person '6832' aborted waiting for 140 at busStop 'busStop#9'.
+Warning: Person '8793' aborted waiting for 140 at busStop 'busStop#9'.
+Warning: Person '6847' aborted waiting for 140 at busStop 'busStop#9'.
+Warning: Person '6644' aborted waiting for 140 at busStop 'busStop#9'.
+Warning: Person '8205' aborted waiting for 140 at busStop 'busStop#9'.
+Warning: Person '6699' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '7942' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '7831' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '7940' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '8113' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '7311' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '8059' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '8492' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '8104' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '6755' aborted waiting for 140 at busStop 'busStop#3'.
+Warning: Person '4478' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7797' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5141' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4932' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5589' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4092' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5090' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7717' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7740' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5718' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '5393' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '8152' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '7096' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7279' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7294' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7891' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '3708' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4370' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5897' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6694' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4959' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5444' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4262' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '8370' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '7672' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '8056' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7258' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6783' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '8114' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4423' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5696' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5574' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '7987' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4670' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7206' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5247' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6976' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4933' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5973' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5349' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5095' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '7331' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7013' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7385' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6256' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '6363' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5314' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '7163' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '3929' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6182' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6653' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5421' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4797' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6196' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '4991' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4027' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4997' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4760' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '6619' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5512' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5055' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4808' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5001' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5400' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5477' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '8281' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5414' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5399' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5242' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4694' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5083' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4534' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6995' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5981' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '7297' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5233' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6626' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5118' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5513' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4919' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4733' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5491' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '6736' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5597' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4541' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '8078' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5371' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5429' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5059' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '6185' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5264' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '4557' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6389' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5210' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5438' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '6075' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5322' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4506' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '4948' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '5427' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '7611' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4424' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7030' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7489' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '8480' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '7732' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5181' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '7415' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5366' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '5736' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6080' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5609' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '8401' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5533' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5222' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5732' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5660' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5301' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '5620' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7293' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7317' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5707' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7378' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5900' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6243' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6471' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5076' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '6740' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6693' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6177' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7329' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '8249' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '8150' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5516' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4650' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7754' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6374' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '5230' aborted waiting for 89 at busStop 'busStop#31'.
+Warning: Person '7816' aborted waiting for 21 at busStop 'busStop#31'.
+Warning: Person '7450' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6857' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '7470' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6226' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '6778' aborted waiting for 14 at busStop 'busStop#31'.
+Warning: Person '4165' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '4331' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '5034' aborted waiting for 21 at busStop 'busStop#32'.
+Warning: Person '4286' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '6295' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '6580' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '6792' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '6932' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '4658' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '7676' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '6703' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '4659' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '6180' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '7243' aborted waiting for 89 at busStop 'busStop#32'.
+Warning: Person '7413' aborted waiting for 89 at busStop 'busStop#32'.
+Warning: Person '7596' aborted waiting for 89 at busStop 'busStop#32'.
+Warning: Person '4738' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '7435' aborted waiting for 89 at busStop 'busStop#32'.
+Warning: Person '7098' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '6502' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '4830' aborted waiting for 89 at busStop 'busStop#32'.
+Warning: Person '6907' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '7582' aborted waiting for 89 at busStop 'busStop#32'.
+Warning: Person '4608' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '7401' aborted waiting for 89 at busStop 'busStop#32'.
+Warning: Person '5066' aborted waiting for 21 at busStop 'busStop#32'.
+Warning: Person '7118' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '6796' aborted waiting for 14 at busStop 'busStop#32'.
+Warning: Person '6892' aborted waiting for 14 at busStop 'busStop#33'.
+Warning: Person '4580' aborted waiting for 14 at busStop 'busStop#33'.
+Warning: Person '3763' aborted waiting for 14 at busStop 'busStop#33'.
+Warning: Person '6982' aborted waiting for 14 at busStop 'busStop#33'.
+Warning: Person '6777' aborted waiting for 14 at busStop 'busStop#33'.
+Warning: Person '5358' aborted waiting for 14 at busStop 'busStop#33'.
+Warning: Person '6515' aborted waiting for 14 at busStop 'busStop#33'.
+Warning: Person '8268' aborted waiting for 38 at busStop 'busStop#14'.
+Warning: Person '7305' aborted waiting for 38 at busStop 'busStop#14'.
+Warning: Person '7362' aborted waiting for 38 at busStop 'busStop#14'.
+Warning: Person '7249' aborted waiting for 38 at busStop 'busStop#14'.
+Warning: Person '8347' aborted waiting for 38 at busStop 'busStop#14'.
+Warning: Person '8331' aborted waiting for 38 at busStop 'busStop#14'.
+Warning: Person '6858' aborted waiting for 38 at busStop 'busStop#14'.
+Warning: Person '8427' aborted waiting for 19 at busStop 'busStop#35'.
+Warning: Person '6100' aborted waiting for 91 at busStop 'busStop#35'.
+Warning: Person '5448' aborted waiting for 13 at busStop 'busStop#35'.
+Warning: Person '5484' aborted waiting for 13 at busStop 'busStop#35'.
+Warning: Person '7328' aborted waiting for 38 at busStop 'busStop#19'.
+Warning: Person '7859' aborted waiting for 38 at busStop 'busStop#16'.
+Warning: Person '7026' aborted waiting for 38 at busStop 'busStop#16'.
+Warning: Person '6683' aborted waiting for 38 at busStop 'busStop#16'.
+Warning: Person '5603' aborted waiting for 38 at busStop 'busStop#16'.
+Warning: Person '6977' aborted waiting for 140 at busStop 'busStop#6'.
+Warning: Person '7944' aborted waiting for 140 at busStop 'busStop#6'.
+Warning: Person '7978' aborted waiting for 140 at busStop 'busStop#6'.
+Warning: Person '6064' aborted waiting for 140 at busStop 'busStop#6'.
+Warning: Person '7821' aborted waiting for 140 at busStop 'busStop#6'.
+Warning: Person '8050' aborted waiting for 140 at busStop 'busStop#6'.
+Simulation ended at time: 11357.00.
+Reason: All vehicles have left the simulation.
+Performance:
+ Duration: 55.67s
+ Real time factor: 203.995
+ UPS: 61314.586963
+ UPS-Persons: 170039.606272
+Vehicles:
+ Inserted: 8770
+ Running: 0
+ Waiting: 0
+ Emergency Braking: 6
+Persons:
+ Inserted: 9000
+ Running: 0
+ Jammed: 1175
+DijkstraRouter answered 671808 queries and explored 13.35 edges on average.
+DijkstraRouter spent 0.69s answering queries (0.00ms on average).

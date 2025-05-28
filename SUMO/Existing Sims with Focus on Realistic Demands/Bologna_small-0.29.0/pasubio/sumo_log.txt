@@ -1,0 +1,36 @@
+Loading net-file from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\pasubio\pasubio_buslanes.net.xml' ... done (16ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\pasubio\pasubio_vtypes.add.xml' ...
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'HDV_6_2'. Starting with SUMO 1.24 this will be an error.
+ done (5ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\pasubio\pasubio_bus_stops.add.xml' ... done (4ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\pasubio\pasubio_busses.rou.xml' ... done (11ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\pasubio\pasubio_detectors.add.xml' ... done (6ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\pasubio\pasubio_tls.add.xml' ... done (4ms).
+Loading route-files incrementally from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\pasubio\pasubio.rou.xml'
+Loading done.
+Simulation started with time: 0.00.
+Warning: Teleporting vehicle '8_350'; waited too long (wrong lane), lane='20000+35[1][1][1][0]_1', time=1005.00.
+Warning: Vehicle '8_350' skips stop on lane '20000+35[1][1][1][0]_0' time=1005.00.
+Warning: Vehicle '8_350' ends teleporting on edge '35[1][1][1][1]', time=1005.00.
+Simulation ended at time: 2668.00.
+Performance:
+ Duration: 30.27s
+ Real time factor: 88.1517
+ UPS: 51461.541003
+Vehicles:
+ Inserted: 6489 (Loaded: 6879)
+ Running: 723
+ Waiting: 0
+ Teleports: 1 (Wrong Lane: 1)
