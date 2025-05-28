@@ -79,6 +79,61 @@ simple Txc6
         output out;
 }
 
+simple Txc7
+{
+    parameters:
+        volatile double delayTime @unit(s);   // delay before sending back message
+        @display("i=block/routing");
+    gates:
+        input in;
+        output out;
+}
+
+simple Tic8
+{
+    parameters:
+        @display("i=block/routing");
+    gates:
+        input in;
+        output out;
+}
+
+simple Toc8
+{
+    parameters:
+        @display("i=block/process");
+    gates:
+        input in;
+        output out;
+}
+
+simple Tic9
+{
+    parameters:
+        @display("i=block/routing");
+    gates:
+        input in;
+        output out;
+}
+
+simple Toc9
+{
+    parameters:
+        @display("i=block/process");
+    gates:
+        input in;
+        output out;
+}
+
+simple Txc10
+{
+    parameters:
+        @display("i=block/routing");
+    gates:
+        input in[];  // declare in[] and out[] to be vector gates
+        output out[];
+}
+
 // Two instances (tic and toc) of Txc1 connected both ways.
 // Tic and toc will pass messages to one another.
 network Tictoc1
@@ -175,4 +230,76 @@ network Tictoc6
     connections:
         tic.out --> {  delay = 100ms; } --> toc.in;
         tic.in <-- {  delay = 100ms; } <-- toc.out;
+}
+
+network Tictoc7
+{
+    submodules:
+        tic: Txc7 {
+            parameters:
+                @display("i=,cyan");
+        }
+        toc: Txc7 {
+            parameters:
+                @display("i=,gold");
+        }
+    connections:
+        tic.out --> {  delay = 100ms; } --> toc.in;
+        tic.in <-- {  delay = 100ms; } <-- toc.out;
+}
+
+network Tictoc8
+{
+    submodules:
+        tic: Tic8 {
+            parameters:
+                @display("i=,cyan");
+        }
+        toc: Toc8 {
+            parameters:
+                @display("i=,gold");
+        }
+    connections:
+        tic.out --> {  delay = 100ms; } --> toc.in;
+        tic.in <-- {  delay = 100ms; } <-- toc.out;
+}
+
+//
+// Same as Tictoc8.
+//
+network Tictoc9
+{
+    submodules:
+        tic: Tic9 {
+            parameters:
+                @display("i=,cyan");
+        }
+        toc: Toc9 {
+            parameters:
+                @display("i=,gold");
+        }
+    connections:
+        tic.out --> {  delay = 100ms; } --> toc.in;
+        tic.in <-- {  delay = 100ms; } <-- toc.out;
+}
+
+network Tictoc10
+{
+    submodules:
+        tic[6]: Txc10;
+    connections:
+        tic[0].out++ --> {  delay = 100ms; } --> tic[1].in++;
+        tic[0].in++ <-- {  delay = 100ms; } <-- tic[1].out++;
+
+        tic[1].out++ --> {  delay = 100ms; } --> tic[2].in++;
+        tic[1].in++ <-- {  delay = 100ms; } <-- tic[2].out++;
+
+        tic[1].out++ --> {  delay = 100ms; } --> tic[4].in++;
+        tic[1].in++ <-- {  delay = 100ms; } <-- tic[4].out++;
+
+        tic[3].out++ --> {  delay = 100ms; } --> tic[4].in++;
+        tic[3].in++ <-- {  delay = 100ms; } <-- tic[4].out++;
+
+        tic[4].out++ --> {  delay = 100ms; } --> tic[5].in++;
+        tic[4].in++ <-- {  delay = 100ms; } <-- tic[5].out++;
 }
