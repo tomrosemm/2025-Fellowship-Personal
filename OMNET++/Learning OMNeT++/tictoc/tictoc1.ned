@@ -69,10 +69,18 @@ simple Toc5 extends Txc5
         @display("i=,gold");
         sendMsgOnInit = false;  // Toc modules should NOT send a message on init
 }
-//
+
+simple Txc6
+{
+    parameters:
+        @display("i=block/routing");
+    gates:
+        input in;
+        output out;
+}
+
 // Two instances (tic and toc) of Txc1 connected both ways.
 // Tic and toc will pass messages to one another.
-//
 network Tictoc1
 {
     submodules:
@@ -148,6 +156,22 @@ network Tictoc5
     submodules:
         tic: Tic5;
         toc: Toc5;
+    connections:
+        tic.out --> {  delay = 100ms; } --> toc.in;
+        tic.in <-- {  delay = 100ms; } <-- toc.out;
+}
+
+network Tictoc6
+{
+    submodules:
+        tic: Txc6 {
+            parameters:
+                @display("i=,cyan");
+        }
+        toc: Txc6 {
+            parameters:
+                @display("i=,gold");
+        }
     connections:
         tic.out --> {  delay = 100ms; } --> toc.in;
         tic.in <-- {  delay = 100ms; } <-- toc.out;

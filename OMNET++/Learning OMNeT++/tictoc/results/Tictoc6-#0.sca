@@ -1,0 +1,36 @@
+version 3
+run Tictoc6-0-20250527-22:04:26-23792
+attr configname Tictoc6
+attr datetime 20250527-22:04:26
+attr datetimef 20250527-220426
+attr experiment Tictoc6
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Tictoc6
+attr processid 23792
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network Tictoc6
+
+par Tictoc6.tic.out.channel typename "\"ned.DelayChannel\""
+par Tictoc6.tic.out.channel disabled false
+attr mutable ""
+par Tictoc6.tic.out.channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc6.toc.out.channel typename "\"ned.DelayChannel\""
+par Tictoc6.toc.out.channel disabled false
+attr mutable ""
+par Tictoc6.toc.out.channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc6.tic typename "\"Txc6\""
+par Tictoc6.toc typename "\"Txc6\""
+par Tictoc6 typename "\"Tictoc6\""
+
