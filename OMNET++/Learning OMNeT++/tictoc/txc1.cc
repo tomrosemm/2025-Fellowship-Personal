@@ -622,7 +622,7 @@ void Tic9::handleMessage(cMessage *msg)
         scheduleAt(simTime()+timeout, timeoutEvent);
     }
     else {  // message arrived
-            // Acknowledgement received!
+            // Acknowledgment received!
         EV << "Received: " << msg->getName() << "\n";
         delete msg;
 
