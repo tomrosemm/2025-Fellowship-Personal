@@ -1,0 +1,35 @@
+file 363063 1748968682                                          
+version 3
+run Tictoc15-0-20250603-12:33:40-26076
+attr configname Tictoc15
+attr datetime 20250603-12:33:40
+attr datetimef 20250603-123340
+attr experiment Tictoc15
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Tictoc15
+attr processid 26076
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network Tictoc15
+config record-eventlog true
+
+vector 0 Tictoc15.tic[5] HopCount ETV
+vector 1 Tictoc15.tic[0] HopCount ETV
+vector 2 Tictoc15.tic[3] HopCount ETV
+vector 3 Tictoc15.tic[4] HopCount ETV
+vector 4 Tictoc15.tic[1] HopCount ETV
+vector 5 Tictoc15.tic[2] HopCount ETV
+0	719 61108 18 184746 1.7 18474.5 3175 1 110 39154 938204
+1	61827 59934 29 184803 2.8 18480.2 3168 1 101 40431 996943
+2	121761 60594 74 184766 7.3 18476.5 3138 1 129 39851 977845
+3	182355 59595 77 184809 7.6 18480.8 3221 1 42 12976 121358
+4	241950 60117 140 184814 13.9 18481.3 3178 1 46 12109 114233
+5	302067 60994 145 184793 14.4 18479.2 3227 1 96 40292 943436
+

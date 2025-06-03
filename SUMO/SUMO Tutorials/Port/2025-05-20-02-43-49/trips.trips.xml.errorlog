@@ -1,0 +1,11 @@
+Warning: At actuated tlLogic 'cluster_12542894226_12543120160_2815609577', linkIndex 1,2 has no controlling detector.
+Warning: Vehicle '3_ferry_Travemünde_–_Malmö:0' is not allowed to stop on lane '128042010_0'.
+Warning: No connection between edge '166901394#0' and edge '-24556602#2' found.
+Warning: Vehicle '1_bus_36:0' has no valid route from edge '166901394#0' to stop edge '-24556602#2'.
+Warning: Teleporting vehicle '1_bus_36:0'; waited too long (wrong lane, disconnected), lane='166901394#0_0', time=146.00.
+Warning: Vehicle '1_bus_36:0' ends teleporting on edge '-24556602#2', time=146.00.
+Warning: Vehicle '4_ferry_:0' is not allowed to stop on lane '116300083_0'.
+Warning: Vehicle '6_ferry_:1' is not allowed to stop on lane '116300083_0'.
+Warning: Vehicle '3_ferry_Travemünde_–_Malmö:0' is not allowed to depart on any lane of edge '128042010'.
+Warning: Vehicle '4_ferry_:0' is not allowed to depart on any lane of edge '116300083'.
+Warning: Vehicle '6_ferry_:1' is not allowed to depart on any lane of edge '116300083'.

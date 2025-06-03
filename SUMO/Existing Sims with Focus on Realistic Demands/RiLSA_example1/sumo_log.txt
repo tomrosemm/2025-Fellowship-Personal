@@ -1,0 +1,16 @@
+Loading net-file from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\rilsa1.net.xml' ... done (1ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\vtypes.add.xml' ...
+Warning: The shape 'transport' for vType 'LKW' is deprecated, use 'truck' instead.
+ done (0ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\rilsa1_tls.add.xml' ... done (1ms).
+Loading route-files incrementally from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\genroutes.rou.xml'
+Loading done.
+Simulation ended at time: 0.00.
+Performance:
+ Duration: 4.20s
+ Real time factor: 0
+ UPS: 0.000000
+Vehicles:
+ Inserted: 0 (Loaded: 24)
+ Running: 0
+ Waiting: 0

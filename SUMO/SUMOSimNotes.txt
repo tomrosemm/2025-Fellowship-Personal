@@ -1,0 +1,9 @@
+For each sim, if you have SUMO installed correctly, downloading the whole folder(, extracting,) and then launching the .sumocfg file inside will launch the visual sim, and allowing it to finish (sped up by moving delay to 0) generates the output files
+
+Basics of a Sim:
+
+.net.xml file - Contains the information used to build the network; almost never helpful to access at the code level, netedit is useful for building the network visually but precisely and then exporting contents to the .net.xml file
+
+.rou.xml file - Contains the information used to define the demand on the network. Includes the vehicle type definitions, individual vehicle definitions, routes, and flows as applicable to the current sim. Seemingly easiest to create or modify from code. Demand on a sim network, especially one as simple as these, can be changed with one well placed 'find all occurences' change in an IDE on vehsPerHour or number or something similar, generally in a flow element.
+
+.sumocfg file - Contains paths to the inputs (net, rou, etc.), paths to desired outputs (summary, bt-output, etc), and often an overall time definition (start, end) for the simulator as a whole (out can be misleading; sometimes, the extra time needed for all cars to reach their final destination is added to the end time. In other words, in some situations (like the 3x3 city block sim) the simulator ends at the end time or when all present vehicles have reached a final destination, whichever comes last). That behavior isn't reflected in the circle sim, though, which likely has to do with how the traffic is being defined, but just worth noting here.

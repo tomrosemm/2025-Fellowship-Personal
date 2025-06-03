@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-05-20 02:44:11 by Eclipse SUMO netconvert Version 1.23.1
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <type-files value="${SUMO_HOME}\data\typemap\osmNetconvert.typ.xml,${SUMO_HOME}\data\typemap\osmNetconvertUrbanDe.typ.xml,${SUMO_HOME}\data\typemap\osmNetconvertPedestrians.typ.xml,${SUMO_HOME}\data\typemap\osmNetconvertShips.typ.xml,${SUMO_HOME}\data\typemap\osmNetconvertAerialway.typ.xml"/>
+        <osm-files value="osm_bbox.osm.xml.gz"/>
+    </input>
+
+    <output>
+        <output-file value="osm.net.xml.gz"/>
+        <output.street-names value="true"/>
+        <output.original-names value="true"/>
+        <ptstop-output value="osm_stops.add.xml"/>
+        <ptline-output value="osm_ptlines.xml"/>
+        <ptline-clean-up value="true"/>
+    </output>
+
+    <projection>
+        <proj.utm value="true"/>
+    </projection>
+
+    <processing>
+        <geometry.remove value="true"/>
+        <roundabouts.guess value="true"/>
+    </processing>
+
+    <tls_building>
+        <tls.discard-simple value="true"/>
+        <tls.join value="true"/>
+        <tls.guess-signals value="true"/>
+        <tls.default-type value="actuated"/>
+    </tls_building>
+
+    <ramp_guessing>
+        <ramps.guess value="true"/>
+    </ramp_guessing>
+
+    <junctions>
+        <junctions.join value="true"/>
+        <junctions.corner-detail value="5"/>
+    </junctions>
+
+    <pedestrian>
+        <crossings.guess value="true"/>
+    </pedestrian>
+
+    <railway>
+        <railway.topology.repair value="true"/>
+    </railway>
+
+    <formats>
+        <osm.sidewalks value="true"/>
+    </formats>
+
+</netconvertConfiguration>
+-->
+
+<ptLines xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/ptlines_file.xsd">
+    <ptLine id="14945175" name="Travemünde – Helsinki" line="Travemünde – Helsinki" type="ferry" vClass="ignoring" completeness="0.00" missingAfter="1">
+        <route edges="707334351"/>
+    </ptLine>
+    <ptLine id="18673530" name="Bus LVG 36: Travemünde Priwallfähre =&gt; Roter Hahn" line="36" type="bus" vClass="bus" color="210,4,27" completeness="0.04" missingBefore="17" missingAfter="7">
+        <route edges="166901394#0 166901394#1 39946669#0 39946669#1 39946669#2 39946669#3 50833122#0 50833122#1 50833122#2 50833122#4 682628452 -24556602#2 -24556602#1 -24556602#0 84620430#0 84620430#1 84620430#2 84620430#3 84620430#4"/>
+        <busStop id="-257837209" name="Skandinavienkai Terminal"/>
+    </ptLine>
+    <ptLine id="18673531" name="Bus LVG 36: Roter Hahn =&gt; Travemünde Priwallfähre" line="36" type="bus" vClass="bus" color="210,4,27" completeness="0.04" missingBefore="8" missingAfter="16">
+        <route edges="50833122#0 50833122#1 50833122#2 50833122#4 682628452 -24556602#2 -24556602#1 -24556602#0 84620430#0 84620430#1 84620430#2 84620430#3 84620430#4 -39946669#3 -39946669#2 -39946669#1 -39946669#0 -166901394#1 -166901394#0"/>
+        <busStop id="-257837209" name="Skandinavienkai Terminal"/>
+    </ptLine>
+    <ptLine id="5587469" name="Travemünde – Malmö" line="Travemünde – Malmö" type="ferry" vClass="ignoring" completeness="0.50" missingBefore="1">
+        <route edges="1212750573"/>
+        <busStop id="1415854311" name="Anleger 5a"/>
+    </ptLine>
+    <ptLine id="8872328" line="" type="ferry" vClass="ignoring" completeness="0.50" missingAfter="1">
+        <route edges="533470203"/>
+        <busStop id="1360276252" name="Anleger 6a"/>
+    </ptLine>
+    <ptLine id="8872329" name="Travemünde – Liepāja" line="Travemünde – Liepāja" type="ferry" vClass="ignoring" completeness="0.00">
+        <route edges="128069455"/>
+    </ptLine>
+    <ptLine id="953335" line="" type="ferry" vClass="ignoring" completeness="0.50" missingAfter="1">
+        <route edges="239309340"/>
+        <busStop id="1360276252" name="Anleger 6a"/>
+    </ptLine>
+</ptLines>

@@ -1,0 +1,19 @@
+Loading net-file from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example3\rilsa3.net.xml' ... done (8ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example3\vtypes.add.xml' ...
+Warning: The shape 'transport' for vType 'LKW' is deprecated, use 'truck' instead.
+ done (1ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example3\rilsa3_tls.add.xml' ... done (4ms).
+Loading route-files incrementally from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example3\genroutes.rou.xml'
+Loading done.
+Simulation started with time: 0.00.
+Warning: Vehicle 'nm2mePKW.4' performs emergency braking on lane ':0_2_0' with decel=9.00, wished=4.50, severity=1.00, time=323.00.
+Simulation ended at time: 511.00.
+Performance:
+ Duration: 20.42s
+ Real time factor: 25.0208
+ UPS: 2226.998972
+Vehicles:
+ Inserted: 396 (Loaded: 473)
+ Running: 114
+ Waiting: 0
+ Emergency Braking: 1

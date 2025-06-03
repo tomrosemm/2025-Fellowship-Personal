@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-05-20 02:44:14 by Eclipse SUMO sumo Version 1.23.1
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="C:\Users\trose\Sumo\2025-05-20-02-43-49\osm.net.xml.gz"/>
+        <route-files value="C:\Users\trose\Sumo\2025-05-20-02-43-49\trips.trips.xml"/>
+        <additional-files value="C:\Users\trose\Sumo\2025-05-20-02-43-49\osm_stops.add.xml"/>
+    </input>
+
+    <output>
+        <vehroute-output value="C:\Users\trose\Sumo\2025-05-20-02-43-49\vehroutes.xml"/>
+        <stop-output value="C:\Users\trose\Sumo\2025-05-20-02-43-49\stopinfos.xml"/>
+    </output>
+
+    <time>
+        <begin value="0.0"/>
+    </time>
+
+    <processing>
+        <ignore-route-errors value="true"/>
+        <time-to-teleport.disconnected value="0"/>
+    </processing>
+
+    <routing>
+        <device.rerouting.adaptation-interval value="0"/>
+    </routing>
+
+    <report>
+        <aggregate-warnings value="5"/>
+        <error-log value="C:\Users\trose\Sumo\2025-05-20-02-43-49\trips.trips.xml.errorlog"/>
+        <no-step-log value="true"/>
+    </report>
+
+</sumoConfiguration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vehicle id="0_ferry_Travemünde_–_Helsinki:0" type="pt_ferry" depart="15.00" departLane="0" arrival="203.00">
+        <route edges="707334351"/>
+    </vehicle>
+
+    <vehicle id="1_bus_36:0" type="pt_bus" depart="133.00" departLane="0" arrival="203.00">
+        <route edges="166901394#0 -24556602#2 -24556602#1 -24556602#0 84620430#0 84620430#1 84620430#2 84620430#3 84620430#4"/>
+        <stop busStop="-257837209" duration="30.00"/>
+    </vehicle>
+
+    <vehicle id="2_bus_36:1" type="pt_bus" depart="165.00" departLane="0" arrival="249.00">
+        <route edges="50833122#0 50833122#1 50833122#2 50833122#4 682628452 -24556602#2 -24556602#1 -24556602#0 84620430#0 84620430#1 84620430#2 84620430#3 84620430#4"/>
+        <stop busStop="-257837209" duration="30.00"/>
+    </vehicle>
+
+    <vehicle id="5_ferry_Travemünde_–_Liepāja:0" type="pt_ferry" depart="441.00" departLane="0" arrival="748.00">
+        <route edges="128069455"/>
+    </vehicle>
+
+</routes>

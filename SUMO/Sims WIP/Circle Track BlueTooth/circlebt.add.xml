@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-05-27 16:17:56 by Eclipse SUMO netedit Version 1.23.1
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <!-- StoppingPlaces -->
+    <parkingArea id="pa_0" lane="E5_0" startPos="70.00" endPos="80.00"/>
+    <!-- Other additionals -->
+    <rerouter id="rerouter_0" edges="E1" pos="14.20,44.00"/>
+    <rerouter id="rerouter_1" edges="E5" pos="685.80,-94.00"/>
+</additional>

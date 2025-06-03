@@ -1,0 +1,178 @@
+version 3
+run Tictoc16-0-20250603-14:12:47-31520
+attr configname Tictoc16
+attr datetime 20250603-14:12:47
+attr datetimef 20250603-141247
+attr experiment Tictoc16
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Tictoc16
+attr processid 31520
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network Tictoc16
+config **.tic[1].hopCount.result-recording-modes +histogram
+config **.tic[0..2].hopCount.result-recording-modes -vector
+
+par Tictoc16.tic[0].gate$o[0].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[0].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc16.tic[0].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[1].gate$o[0].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[1].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc16.tic[1].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[1].gate$o[1].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[1].gate$o[1].channel disabled false
+attr mutable ""
+par Tictoc16.tic[1].gate$o[1].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[2].gate$o[0].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[2].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc16.tic[2].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[1].gate$o[2].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[1].gate$o[2].channel disabled false
+attr mutable ""
+par Tictoc16.tic[1].gate$o[2].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[4].gate$o[0].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[4].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc16.tic[4].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[3].gate$o[0].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[3].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc16.tic[3].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[4].gate$o[1].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[4].gate$o[1].channel disabled false
+attr mutable ""
+par Tictoc16.tic[4].gate$o[1].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[4].gate$o[2].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[4].gate$o[2].channel disabled false
+attr mutable ""
+par Tictoc16.tic[4].gate$o[2].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[5].gate$o[0].channel typename "\"Tictoc16.Channel\""
+par Tictoc16.tic[5].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc16.tic[5].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc16.tic[0] typename "\"Txc16\""
+statistic Tictoc16.tic[0] hopCount:stats
+field count 6
+field mean 12.166666666667
+field stddev 9.8674549234677
+field min 2
+field max 31
+field sum 73
+field sqrsum 1375
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc16.tic[1] typename "\"Txc16\""
+statistic Tictoc16.tic[1] hopCount:stats
+field count 3
+field mean 1
+field stddev 0
+field min 1
+field max 1
+field sum 3
+field sqrsum 3
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+statistic Tictoc16.tic[1] hopCount:histogram
+field count 3
+field mean 1
+field stddev 0
+field min 1
+field max 1
+field sum 3
+field sqrsum 3
+attr interpolationmode none
+attr recordingmode histogram
+attr source arrival
+attr title "hop count"
+bin	-inf	0
+bin	0	0
+bin	1	3
+bin	2	0
+par Tictoc16.tic[2] typename "\"Txc16\""
+statistic Tictoc16.tic[2] hopCount:stats
+field count 2
+field mean 8.5
+field stddev 6.3639610306789
+field min 4
+field max 13
+field sum 17
+field sqrsum 185
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc16.tic[3] typename "\"Txc16\""
+statistic Tictoc16.tic[3] hopCount:stats
+field count 2
+field mean 23
+field stddev 31.112698372208
+field min 1
+field max 45
+field sum 46
+field sqrsum 2026
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc16.tic[4] typename "\"Txc16\""
+statistic Tictoc16.tic[4] hopCount:stats
+field count 5
+field mean 5.2
+field stddev 7.8230428862432
+field min 1
+field max 19
+field sum 26
+field sqrsum 380
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc16.tic[5] typename "\"Txc16\""
+statistic Tictoc16.tic[5] hopCount:stats
+field count 4
+field mean 12.25
+field stddev 13.351029922819
+field min 1
+field max 29
+field sum 49
+field sqrsum 1135
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc16 typename "\"Tictoc16\""
+

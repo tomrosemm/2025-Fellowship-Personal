@@ -1,0 +1,20 @@
+<configuration>
+    <input>
+       <net-file value="circletrack.net.xml"/>
+       <route-files value="circletrack.rou.xml"/>
+       <additional-files value="circletrack.add.xml"/>
+       <gui-settings-file value="circletrack.viewsettings.xml"/>
+    </input>
+
+    <output>
+        <summary-output value="out/summary_out.xml" synonymes="summary" type="FILE"/>
+        <netstate-dump value="out/raw_out.xml" synonymes="raw" type="FILE"/>
+        <full-output value="out/full_out.xml" synonymes="full" type="FILE"/>
+        <lanechange-output value="out/lanechange_out.xml" synonymes="full" type="FILE"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="1000"/>
+    </time>
+</configuration>

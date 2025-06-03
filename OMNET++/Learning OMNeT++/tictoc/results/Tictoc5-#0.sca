@@ -1,0 +1,41 @@
+version 3
+run Tictoc5-0-20250527-21:59:21-3592
+attr configname Tictoc5
+attr datetime 20250527-21:59:21
+attr datetimef 20250527-215921
+attr experiment Tictoc5
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Tictoc5
+attr processid 3592
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network Tictoc5
+config **.limit 5
+
+par Tictoc5.tic.out.channel typename "\"ned.DelayChannel\""
+par Tictoc5.tic.out.channel disabled false
+attr mutable ""
+par Tictoc5.tic.out.channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc5.toc.out.channel typename "\"ned.DelayChannel\""
+par Tictoc5.toc.out.channel disabled false
+attr mutable ""
+par Tictoc5.toc.out.channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc5.tic typename "\"Tic5\""
+par Tictoc5.tic sendMsgOnInit true
+par Tictoc5.tic limit 5
+par Tictoc5.toc typename "\"Toc5\""
+par Tictoc5.toc sendMsgOnInit false
+par Tictoc5.toc limit 5
+par Tictoc5 typename "\"Tictoc5\""
+

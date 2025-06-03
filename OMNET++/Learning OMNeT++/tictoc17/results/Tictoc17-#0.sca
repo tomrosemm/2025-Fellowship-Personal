@@ -1,0 +1,160 @@
+version 3
+run Tictoc17-0-20250603-15:04:18-35604
+attr configname Tictoc17
+attr datetime 20250603-15:04:18
+attr datetimef 20250603-150418
+attr experiment Tictoc17
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Tictoc17
+attr processid 35604
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network Tictoc17
+
+par Tictoc17.tic[0].gate$o[0].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[0].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc17.tic[0].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[1].gate$o[0].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[1].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc17.tic[1].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[1].gate$o[1].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[1].gate$o[1].channel disabled false
+attr mutable ""
+par Tictoc17.tic[1].gate$o[1].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[2].gate$o[0].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[2].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc17.tic[2].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[1].gate$o[2].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[1].gate$o[2].channel disabled false
+attr mutable ""
+par Tictoc17.tic[1].gate$o[2].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[4].gate$o[0].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[4].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc17.tic[4].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[3].gate$o[0].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[3].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc17.tic[3].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[4].gate$o[1].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[4].gate$o[1].channel disabled false
+attr mutable ""
+par Tictoc17.tic[4].gate$o[1].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[4].gate$o[2].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[4].gate$o[2].channel disabled false
+attr mutable ""
+par Tictoc17.tic[4].gate$o[2].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[5].gate$o[0].channel typename "\"Tictoc17.Channel\""
+par Tictoc17.tic[5].gate$o[0].channel disabled false
+attr mutable ""
+par Tictoc17.tic[5].gate$o[0].channel delay 0.1s
+attr mutable ""
+attr unit s
+par Tictoc17.tic[0] typename "\"Txc17\""
+statistic Tictoc17.tic[0] hopCount:stats
+field count 0
+field mean nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc17.tic[1] typename "\"Txc17\""
+statistic Tictoc17.tic[1] hopCount:stats
+field count 0
+field mean nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc17.tic[2] typename "\"Txc17\""
+statistic Tictoc17.tic[2] hopCount:stats
+field count 0
+field mean nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc17.tic[3] typename "\"Txc17\""
+statistic Tictoc17.tic[3] hopCount:stats
+field count 0
+field mean nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc17.tic[4] typename "\"Txc17\""
+statistic Tictoc17.tic[4] hopCount:stats
+field count 0
+field mean nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc17.tic[5] typename "\"Txc17\""
+statistic Tictoc17.tic[5] hopCount:stats
+field count 0
+field mean nan
+field stddev nan
+field min nan
+field max nan
+field sum 0
+field sqrsum 0
+attr interpolationmode none
+attr recordingmode stats
+attr source arrival
+attr title "hop count"
+par Tictoc17 typename "\"Tictoc17\""
+
