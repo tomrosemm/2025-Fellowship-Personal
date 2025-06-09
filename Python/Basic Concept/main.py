@@ -1,9 +1,25 @@
+"""
+main.py
+
+Purpose:
+    Orchestrates the simulation of a privacy-preserving vehicle authentication protocol using Zero-Knowledge Proofs (ZKP) and blockchain logging.
+    Demonstrates both a simulated and (optionally) real ZoKrates-based ZKP workflow, as well as a simulated blockchain verification and event logging.
+
+Methodology:
+    - Vehicles generate OTPs using a secret and timestamp.
+    - OTPs are embedded in ZKPs, which are verified by RSUs.
+    - Upon successful verification, authentication is simulated.
+    - Optionally, the ZKP-OTP proof is submitted to a simulated blockchain smart contract for verification and event logging.
+    - The workflow is modularized for easy extension to real ZKP and blockchain implementations.
+"""
+
 import hashlib
 import secrets
 
 from vehicle import Vehicle
 from rsu import RSU
 from zokrates_interface import generate_zkp_proof, run_zokrates_compile, run_zokrates_setup, run_zokrates_compute_witness, run_zokrates_generate_proof, run_zokrates_verify
+from blockchain import simulate_blockchain_verification
 
 # Part One
 
@@ -14,6 +30,16 @@ from zokrates_interface import generate_zkp_proof, run_zokrates_compile, run_zok
 # 3. ZKP is sent to the RSU, where it is verified
 
 # 4. Upon successful verification, the RSU sends a signal to the vehicle authenticating it and proceeding with session
+
+# Part Two
+
+# 1. ZKP-OTP proof is submitted to RSU
+
+# 2. RSU invokes a smart contract on the blockchain, verifying the ZKP-OTP proof
+
+# 3. The blockchain logs the event, including anonymized record of the vehicle’s identity and authentication status
+
+# 4. The outcome is returned to the infrastructure, which grants or denies access.
 
 def test_vehicle_rsu_interaction():
     
@@ -105,19 +131,36 @@ def test_vehicle_rsu_interaction_real():
     else:
         print("[Real ZKP] Authentication failed.\n")
 
+def test_vehicle_rsu_blockchain_simulated():
+    """
+    Simulate the full workflow including blockchain verification and logging.
+    """
+    vehicle_id = "VEH123"
+    vehicle_secret = secrets.token_hex(16)
+    vehicle = Vehicle(vehicle_id, vehicle_secret)
+    rsu = RSU({vehicle_id: vehicle_secret})
+
+    otp, timestamp = vehicle.generate_otp()
+    print(f"\n[Simulated] OTP: {otp}\nTimestamp: {timestamp}\n")
+
+    zkp_proof = vehicle.create_zkp(otp, timestamp)
+    print(f"[Simulated] ZKP Proof: {zkp_proof}\n")
+
+    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)
+    print(f"[Simulated] RSU Verification result: {verification_result}\n")
+
+    # Simulate blockchain smart contract verification and logging
+    outcome = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result)
+    if outcome:
+        print("[Simulated] Access granted by infrastructure.\n")
+    else:
+        print("[Simulated] Access denied by infrastructure.\n")
+
 if __name__ == "__main__":
     print("=== Simulated ZKP Test ===")
     test_vehicle_rsu_interaction_simulated()
+    print("=== Simulated Blockchain ZKP Test ===")
+    test_vehicle_rsu_blockchain_simulated()
     # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit)
     # print("=== Real ZKP Test ===")
     # test_vehicle_rsu_interaction_real()
-
-# Part Two
-
-# 1. ZKP-OTP proof is submitted to RSU
-
-# 2. RSU invokes a smart contract on the blockchain, verifying the ZKP-OTP proof
-
-# 3. The blockchain logs the event, including anonymized record of the vehicle’s identity and authentication status
-
-# 4. The outcome is returned to the infrastructure, which grants or denies access.

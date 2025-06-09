@@ -12,7 +12,6 @@ SUDO_PID=$!
 # Your setup commands
 echo "$PASSWORD" | sudo -S apt update -y
 echo "$PASSWORD" | sudo -S apt upgrade -y
-echo "$PASSWORD" | sudo -S apt install -y git htop curl
 echo "$PASSWORD" | sudo -S apt autoremove -y
 echo "$PASSWORD" | sudo -S apt clean
 
@@ -20,4 +19,4 @@ echo "$PASSWORD" | sudo -S apt clean
 kill $SUDO_PID
 echo "$PASSWORD" | sudo -S -K
 
-echo "Setup complete."
+echo "Research Tools Installed."
