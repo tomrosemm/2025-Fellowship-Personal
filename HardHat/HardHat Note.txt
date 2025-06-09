@@ -1,0 +1,1 @@
+Since Hardhat has a huge build for each project, close to 4k files, keeping out of GitHub just for faster commits. Located on local machine at "C:\Users\trose\Hardhat"
