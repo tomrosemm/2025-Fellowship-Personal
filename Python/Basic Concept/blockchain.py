@@ -26,7 +26,6 @@ Returns:
     bool: The outcome of the simulated blockchain verification (same as input verification_result).
 """
 def simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result):
-
     # Hash the vehicle_id to anonymize it for blockchain logging
     anonymized_id = hashlib.sha256(vehicle_id.encode()).hexdigest()[:10]
     # Print a message simulating the smart contract call with anonymized vehicle ID

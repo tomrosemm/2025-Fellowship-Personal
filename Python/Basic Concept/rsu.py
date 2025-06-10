@@ -39,7 +39,6 @@ class RSU:
         vehicle_secrets (dict): Mapping from vehicle_id to secret.
     """
     def __init__(self, vehicle_secrets):
-
         # vehicle_secrets: dict mapping vehicle_id to secret
         self.vehicle_secrets = vehicle_secrets      # Store the mapping
 
@@ -56,7 +55,6 @@ class RSU:
         bool: True if the proof is valid, False otherwise.
     """
     def verify_zkp(self, vehicle_id, zkp_proof, timestamp):
-
         # Retrieve the secret for the vehicle
         secret = self.vehicle_secrets.get(vehicle_id)
         # Return False if vehicle_id is unknown

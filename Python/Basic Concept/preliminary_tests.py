@@ -4,7 +4,7 @@ preliminary_tests.py
 Purpose:
     This module contains test routines to simulate and validate the ZKP-OTP authentication protocol
     between Vehicle and RSU entities. It demonstrates the authentication process using both simulated
-    and real (ZoKrates-based) zero-knowledge proof workflows, as well as blockchain verification simulation.
+    and real (ZoKrates-based) zero-knowledge proof workflows, as well as a blockchain verification simulation.
 
 Methodology:
     - Simulates the generation of one-time passwords (OTP) and timestamps by vehicles.
@@ -32,8 +32,9 @@ from zokrates_interface import (
 )
 from blockchain import simulate_blockchain_verification     # Simulate blockchain-based verification and logging
 
-# global tested
-# global passed
+# Track number of tests run and passed
+tested = 0
+passed = 0
 
 """
 Function: test_vehicle_rsu_interaction_simulated
@@ -48,7 +49,8 @@ Steps:
     5. Output the result of the verification and authentication status.
 """
 def test_vehicle_rsu_interaction_simulated():
-    # tested += 1
+    global tested, passed
+    tested += 1
     # Generate entities
     vehicle_id = "VEH123"
     vehicle_secret = secrets.token_hex(16)
@@ -69,7 +71,7 @@ def test_vehicle_rsu_interaction_simulated():
 
     # Output authentication result
     if verification_result:
-        # passed += 1
+        passed += 1
         print("[Simulated] Vehicle authenticated. Session started.\n")
     else:
         print("[Simulated] Authentication failed.\n")
@@ -81,7 +83,8 @@ Function: test_vehicle_rsu_interaction_real
 Test the workflow using the real ZoKrates CLI (when available).
 """
 def test_vehicle_rsu_interaction_real():
-    # tested += 1
+    global tested, passed
+    tested += 1
     vehicle_id = "VEH123"
     vehicle_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, vehicle_secret)
@@ -127,7 +130,7 @@ def test_vehicle_rsu_interaction_real():
     print(f"[Real ZKP] Verification result: {verification_result}\n")
 
     if verification_result:
-        # passed += 1
+        passed += 1
         print("[Real ZKP] Vehicle authenticated. Session started.\n")
     else:
         print("[Real ZKP] Authentication failed.\n")
@@ -147,7 +150,8 @@ Steps:
     6. Output the result of the infrastructure access decision.
 """
 def test_vehicle_rsu_blockchain_simulated():
-    # tested += 1
+    global tested, passed
+    tested += 1
     # Generate entities
     vehicle_id = "VEH123"
     vehicle_secret = secrets.token_hex(16)
@@ -170,14 +174,12 @@ def test_vehicle_rsu_blockchain_simulated():
     outcome = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result)
     # Output infrastructure access result
     if outcome:
-        # passed += 1
+        passed += 1
         print("[Simulated] Access granted by infrastructure.\n\n")
     else:
         print("[Simulated] Access denied by infrastructure.\n\n")
 
 if __name__ == "__main__":
-    # tested = 0
-    # passed = 0
     print("=== Simulated ZKP Test ===")
     test_vehicle_rsu_interaction_simulated()
     print("=== Simulated Blockchain ZKP Test ===")
@@ -186,4 +188,8 @@ if __name__ == "__main__":
     # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit)
     # print("=== Real ZKP Test ===")
     # test_vehicle_rsu_interaction_real()
+
+    print("----------------------------------------------------------------------------------------------------------")
+    print(f"Total tests run: {tested}")
+    print(f"Total tests passed: {passed}")
 

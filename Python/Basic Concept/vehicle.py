@@ -45,7 +45,6 @@ class Vehicle:
         secret (str): Secret key unique to the vehicle.
     """
     def __init__(self, vehicle_id, secret):
-
         self.vehicle_id = vehicle_id                    # Store the vehicle's ID
         self.secret = secret                            # Store the vehicle's secret
 
@@ -58,7 +57,6 @@ class Vehicle:
         tuple: (otp (str), timestamp (int))
     """
     def generate_otp(self):
-        
         # Get current Unix timestamp as integer
         timestamp = int(time.time())
         # Concatenate secret and timestamp, encode to bytes
@@ -80,6 +78,5 @@ class Vehicle:
         str: Simulated ZKP proof.
     """
     def create_zkp(self, otp, timestamp):
-
         # Use ZoKrates interface to generate ZKP
         return generate_zkp_proof(otp, timestamp)
