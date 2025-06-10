@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SOFTWARE_DIR="/home/$USER/Software"
+mkdir -p "$SOFTWARE_DIR"
+
 # Error on Zokrates, seems to work fairly well outside of that
 # Might need to run more than once if concurrency overwhelms... something
 
@@ -13,8 +16,7 @@ SUDO_PID=$!
 
 # Run the main installation commands as root
 echo "$PASSWORD" | sudo -S bash -c '
-SOFTWARE_DIR=/home/$SUDO_USER/Software
-mkdir -p "$SOFTWARE_DIR"
+SOFTWARE_DIR=/home/'"$USER"'/Software
 
 # Install prerequisites
 apt install -y \
@@ -98,6 +100,17 @@ cd ~
 echo "Installing latest stable ZoKrates..."
 curl -LSfs get.zokrat.es | sh
 cd ~
+
+# If this is your first time installing ZoKrates, add it to PATH
+ZOKRATES_BIN="$HOME/zokrates"
+if ! grep -q 'export PATH="$HOME/zokrates:$PATH"' ~/.bashrc; then
+    echo 'export PATH="$HOME/zokrates:$PATH"' >> ~/.bashrc
+    export PATH="$HOME/zokrates:$PATH"
+    echo "Added ZoKrates to PATH in ~/.bashrc"
+fi
+
+# At the end of the root block, fix ownership:
+chown -R '"$USER:$USER"' "$SOFTWARE_DIR"
 '
 
 # Kill the background sudo keeper and clear credentials
