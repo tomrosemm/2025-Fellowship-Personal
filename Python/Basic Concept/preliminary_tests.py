@@ -81,6 +81,13 @@ def test_vehicle_rsu_interaction_simulated():
 Function: test_vehicle_rsu_interaction_real
 
 Test the workflow using the real ZoKrates CLI (when available).
+
+--- ZoKrates workflow ---
+    1. Compile circuit
+    2. Setup
+    3. Compute witness (inputs must match your circuit)
+    4. Generate proof
+    5. Verify proof
 """
 def test_vehicle_rsu_interaction_real():
     global tested, passed
@@ -92,13 +99,6 @@ def test_vehicle_rsu_interaction_real():
 
     otp, timestamp = vehicle.generate_otp()
     print(f"\n[Real ZKP] OTP: {otp}\nTimestamp: {timestamp}\n")
-
-    # --- ZoKrates workflow ---
-    # 1. Compile circuit
-    # 2. Setup
-    # 3. Compute witness (inputs must match your circuit)
-    # 4. Generate proof
-    # 5. Verify proof
     
     # Path to your ZoKrates circuit file
     circuit_path = "otp.zok"

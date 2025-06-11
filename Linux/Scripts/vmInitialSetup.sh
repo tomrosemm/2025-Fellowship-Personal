@@ -12,7 +12,13 @@ SUDO_PID=$!
 # Your setup commands
 echo "$PASSWORD" | sudo -S apt update -y
 echo "$PASSWORD" | sudo -S apt upgrade -y
-echo "$PASSWORD" | sudo -S apt install -y git htop curl
+echo "$PASSWORD" | sudo -S apt install -y git htop curl unzip wget dos2unix
+
+# Only install virtualbox-guest-utils if running inside VirtualBox
+if grep -q "VirtualBox" /sys/class/dmi/id/product_name 2>/dev/null; then
+    echo "$PASSWORD" | sudo -S apt install -y virtualbox-guest-utils
+fi
+
 echo "$PASSWORD" | sudo -S apt autoremove -y
 echo "$PASSWORD" | sudo -S apt clean
 

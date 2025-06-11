@@ -3,9 +3,6 @@
 SOFTWARE_DIR="/home/$USER/Software"
 mkdir -p "$SOFTWARE_DIR"
 
-# Error on Zokrates, seems to work fairly well outside of that
-# Might need to run more than once if concurrency overwhelms... something
-
 # Prompt for sudo password once
 read -s -p "Enter sudo password: " PASSWORD
 echo
@@ -20,14 +17,14 @@ SOFTWARE_DIR=/home/'"$USER"'/Software
 
 # Install prerequisites
 apt install -y \
-    build-essential cmake git python3 python3-pip python3-venv \
+    build-essential cmake python3 python3-pip python3-venv \
     libxerces-c-dev libfox-1.6-dev libgdal-dev libproj-dev \
     libgl2ps-dev libopenscenegraph-dev libeigen3-dev \
     qtbase5-dev qttools5-dev qttools5-dev-tools \
     libboost-all-dev libsqlite3-dev libpng-dev \
     libgdal-dev libproj-dev libxml2-dev \
     default-jre default-jdk openjdk-11-jdk \
-    libssl-dev pkg-config curl unzip wget
+    libssl-dev pkg-config
 
 # Install latest stable SUMO
 echo "Installing latest stable SUMO..."
