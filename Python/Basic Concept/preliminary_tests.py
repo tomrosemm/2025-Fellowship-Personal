@@ -189,7 +189,7 @@ if __name__ == "__main__":
     # print("=== Real ZKP Test ===")
     # test_vehicle_rsu_interaction_real()
 
-    print("----------------------------------------------------------------------------------------------------------")
+    print("----------------------------------------------------------------------------")
     print(f"Total tests run: {tested}")
     print(f"Total tests passed: {passed}")
 
