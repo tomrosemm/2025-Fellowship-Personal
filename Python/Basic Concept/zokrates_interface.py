@@ -124,7 +124,6 @@ Returns:
     
 Side Effects:
     Prints ZoKrates CLI output or error message.
-    
 Steps:
 1. Run the ZoKrates compute-witness command with arguments
 2. Print the output from ZoKrates
