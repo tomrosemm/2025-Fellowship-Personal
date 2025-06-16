@@ -18,18 +18,19 @@ from zokrates_interface import generate_zkp_proof       # Import ZKP proof gener
 """
 Vehicle Class
 
-Function: Vehicle
-
 Represents a vehicle entity capable of generating one-time passwords (OTPs) and creating zero-knowledge proofs (ZKPs)
 for authentication in a secure protocol.
+
 Functionality:
     - Initialized with a unique vehicle ID and secret key.
     - Generates an OTP by hashing its secret with the current Unix timestamp.
     - Creates a ZKP for the OTP and timestamp using a ZoKrates interface (or a simulated function).
+    
 Usage:
     vehicle = Vehicle(vehicle_id, secret)
     otp, timestamp = vehicle.generate_otp()
     zkp_proof = vehicle.create_zkp(otp, timestamp)
+    
 Args:
     vehicle_id (str): Unique identifier for the vehicle.
     secret (str): Secret key unique to the vehicle.
@@ -40,9 +41,14 @@ class Vehicle:
     Function: __init__
 
     Initialize a Vehicle instance.
+    
     Args:
         vehicle_id (str): Unique identifier for the vehicle.
         secret (str): Secret key unique to the vehicle.
+        
+    Steps:
+    1. Store the vehicle's ID
+    2. Store the vehicle's secret
     """
     def __init__(self, vehicle_id, secret):
         self.vehicle_id = vehicle_id                    # Store the vehicle's ID
@@ -53,8 +59,15 @@ class Vehicle:
     Function: generate_otp
 
     Generate a one-time password (OTP) using the vehicle's secret and current timestamp.
+    
     Returns:
         tuple: (otp (str), timestamp (int))
+    
+    Steps:
+    1. Get current Unix timestamp as integer
+    2. Concatenate secret and timestamp, encode to bytes
+    3. Hash the input to create the OTP
+    4. Return the OTP and timestamp
     """
     def generate_otp(self):
         # Get current Unix timestamp as integer
@@ -71,9 +84,11 @@ class Vehicle:
     Function: create_zkp
 
     Create a zero-knowledge proof (ZKP) for the OTP and timestamp.
+    
     Args:
         otp (str): The generated OTP.
         timestamp (int): The timestamp used for OTP.
+        
     Returns:
         str: Simulated ZKP proof.
     """
