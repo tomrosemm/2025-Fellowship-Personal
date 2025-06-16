@@ -175,21 +175,27 @@ def test_vehicle_rsu_blockchain_simulated():
     # Output infrastructure access result
     if outcome:
         passed += 1
-        print("[Simulated] Access granted by infrastructure.\n\n")
+        print("[Simulated] Access granted by infrastructure.\n")
     else:
-        print("[Simulated] Access denied by infrastructure.\n\n")
+        print("[Simulated] Access denied by infrastructure.\n")
 
 if __name__ == "__main__":
+    print()
     print("=== Simulated ZKP Test ===")
     test_vehicle_rsu_interaction_simulated()
+    print("----------------------------------------------------------------------------")
+    print()
     print("=== Simulated Blockchain ZKP Test ===")
     test_vehicle_rsu_blockchain_simulated()
+    print("----------------------------------------------------------------------------")
     
     # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit)
     # print("=== Real ZKP Test ===")
     # test_vehicle_rsu_interaction_real()
 
-    print("----------------------------------------------------------------------------")
+    print()
     print(f"Total tests run: {tested}")
+    print()
     print(f"Total tests passed: {passed}")
+    print()
 
