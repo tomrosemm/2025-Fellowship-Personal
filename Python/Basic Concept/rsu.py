@@ -10,7 +10,8 @@ Methodology:
     - The RSU compares the received ZKP to the expected value to determine authentication success.
 """
 
-import hashlib      # For hashing secrets and timestamps
+from otp import generate_otp
+from zkp import generate_zkp_proof
 
 
 """
@@ -68,16 +69,10 @@ class RSU:
     6. Return True if proof matches expected
     """
     def verify_zkp(self, vehicle_id, zkp_proof, timestamp):
-        # Retrieve the secret for the vehicle
         secret = self.vehicle_secrets.get(vehicle_id)
-        # Return False if vehicle_id is unknown
         if not secret:
             return False
-        # Recreate the OTP input
-        otp_input = f"{secret}{timestamp}".encode()
-        # Hash to get the OTP
-        otp = hashlib.sha256(otp_input).hexdigest()
-        # Simulate expected ZKP
-        expected_zkp = hashlib.sha256(f"{otp}{timestamp}".encode()).hexdigest()
-        # Return True if proof matches expected
+        otp, _ = generate_otp(secret)
+        expected_zkp = generate_zkp_proof(otp, timestamp)
         return zkp_proof == expected_zkp
+

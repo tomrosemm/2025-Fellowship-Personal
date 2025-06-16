@@ -10,9 +10,8 @@ Methodology:
     - The vehicle creates a ZKP for the OTP and timestamp using a ZoKrates interface (currently simulated).
 """
 
-import time                                             # For generating timestamps
-import hashlib                                          # For hashing secrets and timestamps
-from zokrates_interface import generate_zkp_proof       # Import ZKP proof generator
+from otp import generate_otp                                # Import OTP generator
+from zkp import generate_zkp_proof                          # Import ZKP proof generator
 
 
 """
@@ -70,14 +69,8 @@ class Vehicle:
     4. Return the OTP and timestamp
     """
     def generate_otp(self):
-        # Get current Unix timestamp as integer
-        timestamp = int(time.time())
-        # Concatenate secret and timestamp, encode to bytes
-        otp_input = f"{self.secret}{timestamp}".encode()
-        # Hash the input to create the OTP
-        otp = hashlib.sha256(otp_input).hexdigest()
-        # Return the OTP and timestamp
-        return otp, timestamp
+        # Use the new otp module
+        return generate_otp(self.secret)
 
 
     """
@@ -93,5 +86,5 @@ class Vehicle:
         str: Simulated ZKP proof.
     """
     def create_zkp(self, otp, timestamp):
-        # Use ZoKrates interface to generate ZKP
+        # Use the new zkp module
         return generate_zkp_proof(otp, timestamp)

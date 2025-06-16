@@ -10,7 +10,7 @@ Methodology:
     - Returns the outcome to mimic infrastructure access control.
 """
 
-import hashlib      # Import hashlib for hashing vehicle IDs
+import hashlib      # Import hashlib for hashing vehicle IDs to anonymize them
 
 
 """

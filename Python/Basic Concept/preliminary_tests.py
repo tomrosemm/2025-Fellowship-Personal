@@ -23,7 +23,6 @@ import secrets                                              # For generating ran
 from vehicle import Vehicle                                 # Vehicle entity: generates OTPs and ZKPs
 from rsu import RSU                                         # RSU entity: verifies ZKPs from vehicles
 from zokrates_interface import (                        
-    generate_zkp_proof,                                     # (Currently unused here) For generating ZKP proofs via ZoKrates
     run_zokrates_compile,                                   # Compile ZoKrates circuit
     run_zokrates_setup,                                     # Setup ZoKrates proving/verification keys
     run_zokrates_compute_witness,                           # Compute ZoKrates witness from inputs
@@ -189,7 +188,7 @@ if __name__ == "__main__":
     test_vehicle_rsu_blockchain_simulated()
     print("----------------------------------------------------------------------------")
     
-    # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit)
+    # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit (.zok) file)
     # print("=== Real ZKP Test ===")
     # test_vehicle_rsu_interaction_real()
 
