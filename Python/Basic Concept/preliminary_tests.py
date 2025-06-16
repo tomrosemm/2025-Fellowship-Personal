@@ -178,7 +178,73 @@ def test_vehicle_rsu_blockchain_simulated():
     else:
         print("[Simulated] Access denied by infrastructure.\n")
 
-if __name__ == "__main__":
+
+"""
+End-to-end scenario: Vehicle authenticates successfully and is granted access.
+"""
+def scenario_successful_authentication():
+    global tested, passed
+    tested += 1
+    vehicle_id = "VEH001"
+    vehicle_secret = secrets.token_hex(16)
+    vehicle = Vehicle(vehicle_id, vehicle_secret)
+    rsu = RSU({vehicle_id: vehicle_secret})
+
+    # Generate OTP and timestamp
+    otp, timestamp = vehicle.generate_otp()
+    print(f"\nVehicle {vehicle_id} generated OTP: {otp} at {timestamp}\n")
+
+    # Create ZKP proof
+    zkp_proof = vehicle.create_zkp(otp, timestamp)
+    print(f"Vehicle {vehicle_id} created ZKP proof: {zkp_proof}\n")
+
+    # RSU verifies ZKP proof
+    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)
+    print(f"RSU verification result: {verification_result}\n")
+
+    # Blockchain verification and access outcome
+    outcome = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result)
+    if outcome:
+        passed += 1
+        print("Access granted by infrastructure.\n")
+    else:
+        print("Access denied by infrastructure.\n")
+
+
+"""
+End-to-end scenario: Vehicle fails authentication due to wrong secret.
+"""
+def scenario_failed_authentication():
+    global tested, passed
+    tested += 1
+    vehicle_id = "VEH002"
+    correct_secret = secrets.token_hex(16)
+    wrong_secret = secrets.token_hex(16)
+    vehicle = Vehicle(vehicle_id, wrong_secret)  # Vehicle uses wrong secret
+    rsu = RSU({vehicle_id: correct_secret})      # RSU expects correct secret
+
+    # Generate OTP and timestamp
+    otp, timestamp = vehicle.generate_otp()
+    print(f"\nVehicle {vehicle_id} generated OTP: {otp} at {timestamp}\n")
+
+    # Create ZKP proof
+    zkp_proof = vehicle.create_zkp(otp, timestamp)
+    print(f"Vehicle {vehicle_id} created ZKP proof: {zkp_proof}\n")
+
+    # RSU verifies ZKP proof
+    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)
+    print(f"RSU verification result: {verification_result}\n")
+
+    # Blockchain verification and access outcome
+    outcome = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result)
+    if outcome:
+        print("Access granted by infrastructure (unexpected).\n")
+    else:
+        passed += 1
+        print("Access denied by infrastructure (expected).\n")
+
+
+def testAndScenarioRunner():
     print()
     print("=== Simulated ZKP Test ===")
     test_vehicle_rsu_interaction_simulated()
@@ -193,8 +259,18 @@ if __name__ == "__main__":
     # test_vehicle_rsu_interaction_real()
 
     print()
-    print(f"Total tests run: {tested}")
+    print("=== End-to-End Scenario: Successful Authentication ===")
+    scenario_successful_authentication()
+    print("----------------------------------------------------------------------------")
     print()
+    print("=== End-to-End Scenario: Failed Authentication ===")
+    scenario_failed_authentication()
+    print("----------------------------------------------------------------------------")
+    print()
+    print(f"Total tests run: {tested}")
     print(f"Total tests passed: {passed}")
+    print(f"Total tests failed: {tested - passed}")
     print()
 
+if __name__ == "__main__":
+    testAndScenarioRunner()
