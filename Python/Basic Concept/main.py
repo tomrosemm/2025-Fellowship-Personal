@@ -6,22 +6,38 @@ Purpose:
     Demonstrates both a simulated and (optionally) real ZoKrates-based ZKP workflow, as well as a simulated blockchain verification and event logging.
 """
 
-from preliminary_tests import (
-    test_vehicle_rsu_interaction_simulated,
-    test_vehicle_rsu_blockchain_simulated,
-    test_vehicle_rsu_interaction_real
-)
+import preliminary_tests
 
 if __name__ == "__main__":
+    
     print()
     print("=== Simulated ZKP Test ===")
-    test_vehicle_rsu_interaction_simulated()
+    preliminary_tests.test_vehicle_rsu_interaction_simulated()
     print("----------------------------------------------------------------------------")
+    
     print()
     print("=== Simulated Blockchain ZKP Test ===")
-    test_vehicle_rsu_blockchain_simulated()
+    preliminary_tests.test_vehicle_rsu_blockchain_simulated()
     print("----------------------------------------------------------------------------")
+    
     # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit (.zok) file)
+    # print()
     # print("=== Real ZKP Test ===")
-    # test_vehicle_rsu_interaction_real()
+    # preliminary_tests.test_vehicle_rsu_interaction_real()
     # print("----------------------------------------------------------------------------")
+    
+    print()
+    print("=== End-to-End Scenario: Successful Authentication ===")
+    preliminary_tests.scenario_successful_authentication()
+    print("----------------------------------------------------------------------------")
+    
+    print()
+    print("=== End-to-End Scenario: Failed Authentication ===")
+    preliminary_tests.scenario_failed_authentication()
+    print("----------------------------------------------------------------------------")
+    
+    print()
+    print(f"Total tests run: {preliminary_tests.tested}")
+    print(f"Total tests passed: {preliminary_tests.passed}")
+    print(f"Total tests failed: {preliminary_tests.tested - preliminary_tests.passed}")
+    print()
