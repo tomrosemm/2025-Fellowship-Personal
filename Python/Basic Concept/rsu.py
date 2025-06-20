@@ -76,3 +76,15 @@ class RSU:
         expected_zkp = generate_zkp_proof(otp, timestamp)
         return zkp_proof == expected_zkp
 
+if __name__ == "__main__":
+    # Simple test for RSU class
+    vehicle_id = "TEST_VEHICLE"
+    secret = "mysecret"
+    from vehicle import Vehicle
+    vehicle = Vehicle(vehicle_id, secret)
+    otp, timestamp = vehicle.generate_otp()
+    zkp = vehicle.create_zkp(otp, timestamp)
+    rsu = RSU({vehicle_id: secret})
+    result = rsu.verify_zkp(vehicle_id, zkp, timestamp)
+    print(f"[RSU] Verification result: {result}")
+

@@ -69,7 +69,6 @@ class Vehicle:
     4. Return the OTP and timestamp
     """
     def generate_otp(self):
-        # Use the new otp module
         return generate_otp(self.secret)
 
 
@@ -86,5 +85,13 @@ class Vehicle:
         str: Simulated ZKP proof.
     """
     def create_zkp(self, otp, timestamp):
-        # Use the new zkp module
         return generate_zkp_proof(otp, timestamp)
+
+
+if __name__ == "__main__":
+    # Simple test for Vehicle class
+    test_vehicle = Vehicle("TEST_VEHICLE", "mysecret")
+    otp, timestamp = test_vehicle.generate_otp()
+    print(f"[Vehicle] OTP: {otp}\nTimestamp: {timestamp}")
+    zkp = test_vehicle.create_zkp(otp, timestamp)
+    print(f"[Vehicle] ZKP: {zkp}")
