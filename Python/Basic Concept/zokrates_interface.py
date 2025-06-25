@@ -173,7 +173,7 @@ def run_zokrates_verify():
         # Print the output from ZoKrates
         print("ZoKrates verify output:", result.stdout)
         # Check if the output contains the success message
-        return "Proof is valid" in result.stdout
+        return ("Proof is valid" in result.stdout) or ("PASSED" in result.stdout)
     except Exception as e:
         # Print error if verification fails
         print("ZoKrates verify failed:", e)
