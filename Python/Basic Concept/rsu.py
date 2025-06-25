@@ -72,7 +72,7 @@ class RSU:
         secret = self.vehicle_secrets.get(vehicle_id)
         if not secret:
             return False
-        otp, _ = generate_otp(secret)
+        otp, _unused_timestamp = generate_otp(secret)
         expected_zkp = generate_zkp_proof(otp, timestamp)
         return zkp_proof == expected_zkp
 

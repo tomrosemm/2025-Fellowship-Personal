@@ -19,6 +19,8 @@ Usage:
 """
 
 import secrets                                              # For generating random secrets for vehicles
+import os
+import time
 
 from vehicle import Vehicle                                 # Vehicle entity: generates OTPs and ZKPs
 from rsu import RSU                                         # RSU entity: verifies ZKPs from vehicles
@@ -35,10 +37,15 @@ from blockchain import simulate_blockchain_verification     # Simulate blockchai
 tested = 0
 passed = 0
 
-"""
-Function: test_vehicle_rsu_interaction_simulated
+"""Clears the console screen based on the operating system."""
+def clear_console():
+    if os.name == 'nt':  # For Windows
+        os.system('cls')
+    else:  # For macOS/Linux
+        os.system('clear')
 
-Test the workflow using a simulated ZKP (hash-based).
+
+"""Test the workflow using a simulated ZKP (hash-based).
 
 Steps:
     1. Generate a random vehicle secret and create Vehicle and RSU entities.
@@ -217,7 +224,7 @@ End-to-end scenario: Vehicle fails authentication due to wrong secret.
 def scenario_failed_authentication():
     global tested, passed
     tested += 1
-    vehicle_id = "VEH002"
+    vehicle_id = "VEH001"
     correct_secret = secrets.token_hex(16)
     wrong_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, wrong_secret)  # Vehicle uses wrong secret
@@ -244,28 +251,41 @@ def scenario_failed_authentication():
         print("Access denied by infrastructure (expected).\n")
 
 
+"""
+Run all test and scenario functions and print summary statistics.
+"""
 def testAndScenarioRunner():
     print()
     print("=== Simulated ZKP Test ===")
     test_vehicle_rsu_interaction_simulated()
     print("----------------------------------------------------------------------------")
+    time.sleep(3)
+    clear_console()
     print()
     print("=== Simulated Blockchain ZKP Test ===")
     test_vehicle_rsu_blockchain_simulated()
     print("----------------------------------------------------------------------------")
+    time.sleep(3)
+    clear_console()
     
     # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit (.zok) file)
     # print("=== Real ZKP Test ===")
     # test_vehicle_rsu_interaction_real()
+    # time.sleep(3)
+    # clear_console()
 
     print()
     print("=== End-to-End Scenario: Successful Authentication ===")
     scenario_successful_authentication()
     print("----------------------------------------------------------------------------")
+    time.sleep(3)
+    clear_console()
     print()
     print("=== End-to-End Scenario: Failed Authentication ===")
     scenario_failed_authentication()
     print("----------------------------------------------------------------------------")
+    time.sleep(3)
+    clear_console()
     print()
     print(f"Total tests run: {tested}")
     print(f"Total tests passed: {passed}")

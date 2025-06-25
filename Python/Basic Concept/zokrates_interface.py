@@ -178,3 +178,10 @@ def run_zokrates_verify():
         # Print error if verification fails
         print("ZoKrates verify failed:", e)
         return False
+
+
+if __name__ == "__main__":
+    # Simple test for ZoKrates CLI interface (will fail if ZoKrates is not installed)
+    print("[ZoKrates Interface] Testing compile (should fail gracefully if ZoKrates is not installed):")
+    result = run_zokrates_compile("dummy_circuit.zok")
+    print(f"Compile result: {result}")

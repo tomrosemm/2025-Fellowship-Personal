@@ -51,3 +51,13 @@ def simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verificat
     print(f"[Blockchain] Event logged: {log_entry}\n")
     # Return the outcome to simulate the infrastructure's access decision
     return verification_result
+
+
+if __name__ == "__main__":
+    # Simple test for blockchain verification simulation
+    vehicle_id = "TEST_VEHICLE"
+    zkp_proof = "dummy_zkp_proof"
+    timestamp = 1234567890
+    verification_result = True
+    result = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result)
+    print(f"[Blockchain] Simulated verification result: {result}")
