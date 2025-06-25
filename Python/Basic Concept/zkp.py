@@ -74,3 +74,4 @@ if __name__ == "__main__":
     timestamp = 1234567890
     proof = generate_zkp_proof(otp, timestamp)
     print(f"[ZKP] Simulated proof for otp='{otp}', timestamp={timestamp}: {proof}")
+    
