@@ -14,6 +14,23 @@ import subprocess       # For running ZoKrates CLI commands
 import os               # For file path operations (if needed)
 
 
+def cleanup_zokrates_files():
+    files_to_remove = [
+        "out",
+        "out.r1cs",
+        "out.wtns",
+        "proving.key",
+        "verification.key",
+        "witness",
+        "proof.json",
+        "abi.json"
+    ]
+    for filename in files_to_remove:
+        if os.path.exists(filename):
+            os.remove(filename)
+            print(f"Removed {filename}")
+            
+
 """
 Function: run_zokrates_compile
 
@@ -209,5 +226,6 @@ if __name__ == "__main__":
     print("Verifying proof...")
     if run_zokrates_verify():
         print("Proof is valid! Communication with ZoKrates works.")
+        cleanup_zokrates_files()
     else:
         print("Proof is invalid or verification failed.")
