@@ -252,9 +252,68 @@ def scenario_failed_authentication():
 
 
 """
+Function: test_zokrates_connection
+
+Test the connection and workflow with ZoKrates CLI using dummy.zok.
+
+Steps:
+    1. Compile dummy.zok
+    2. Setup
+    3. Compute witness (inputs: a=3, b=4)
+    4. Generate proof
+    5. Verify proof
+"""
+def test_zokrates_connection():
+    """
+    Test the connection and workflow with ZoKrates CLI using dummy.zok.
+
+    Steps:
+        1. Compile dummy.zok
+        2. Setup
+        3. Compute witness (inputs: a=3, b=4)
+        4. Generate proof
+        5. Verify proof
+    """
+    global tested, passed
+    tested += 1
+    circuit_path = "dummy.zok"
+    print("\n=== ZoKrates CLI Connection Test ===")
+    # Compile circuit
+    if not run_zokrates_compile(circuit_path):
+        print("[ZoKrates Test] Compilation failed.")
+        return
+    # Setup
+    if not run_zokrates_setup():
+        print("[ZoKrates Test] Setup failed.")
+        return
+    # Compute witness (inputs: a=3, b=4)
+    args = ["3", "4"]
+    if not run_zokrates_compute_witness(args):
+        print("[ZoKrates Test] Compute witness failed.")
+        return
+    # Generate proof
+    if not run_zokrates_generate_proof():
+        print("[ZoKrates Test] Proof generation failed.")
+        return
+    # Verify proof
+    verification_result = run_zokrates_verify()
+    print(f"[ZoKrates Test] Verification result: {verification_result}\n")
+    if verification_result:
+        passed += 1
+        print("[ZoKrates Test] ZoKrates connection and workflow succeeded!\n")
+    else:
+        print("[ZoKrates Test] ZoKrates connection or workflow failed.\n")
+
+
+"""
 Run all test and scenario functions and print summary statistics.
 """
 def testAndScenarioRunner():
+    print()
+    print("=== ZoKrates CLI Connection Test ===")
+    test_zokrates_connection()
+    time.sleep(3)
+    clear_console()
     print()
     print("=== Simulated ZKP Test ===")
     test_vehicle_rsu_interaction_simulated()
