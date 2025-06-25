@@ -181,7 +181,33 @@ def run_zokrates_verify():
 
 
 if __name__ == "__main__":
-    # Simple test for ZoKrates CLI interface (will fail if ZoKrates is not installed)
-    print("[ZoKrates Interface] Testing compile (should fail gracefully if ZoKrates is not installed):")
-    result = run_zokrates_compile("dummy_circuit.zok")
-    print(f"Compile result: {result}")
+    # Step 1: Compile the dummy circuit
+    print("Compiling dummy.zok...")
+    if not run_zokrates_compile("dummy.zok"):
+        print("Compilation failed.")
+        exit(1)
+
+    # Step 2: Setup
+    print("Running setup...")
+    if not run_zokrates_setup():
+        print("Setup failed.")
+        exit(1)
+
+    # Step 3: Compute witness (inputs: a=3, b=4)
+    print("Computing witness...")
+    if not run_zokrates_compute_witness(["3", "4"]):
+        print("Compute witness failed.")
+        exit(1)
+
+    # Step 4: Generate proof
+    print("Generating proof...")
+    if not run_zokrates_generate_proof():
+        print("Generate proof failed.")
+        exit(1)
+
+    # Step 5: Verify proof
+    print("Verifying proof...")
+    if run_zokrates_verify():
+        print("Proof is valid! Communication with ZoKrates works.")
+    else:
+        print("Proof is invalid or verification failed.")
