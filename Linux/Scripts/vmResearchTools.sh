@@ -11,6 +11,7 @@ echo
 ( while true; do echo "$PASSWORD" | sudo -S -v; sleep 60; done ) &
 SUDO_PID=$!
 
+
 # Run the main installation commands as root
 echo "$PASSWORD" | sudo -S bash -c '
 SOFTWARE_DIR=/home/'"$USER"'/Software

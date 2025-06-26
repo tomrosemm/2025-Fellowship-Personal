@@ -5,6 +5,7 @@ read -s -p "Enter sudo password: " PASSWORD
 
 echo
 
+
 # Keep sudo alive while script runs
 ( while true; do echo "$PASSWORD" | sudo -S -v; sleep 60; done ) &
 SUDO_PID=$!
