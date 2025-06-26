@@ -20,6 +20,14 @@ if grep -q "VirtualBox" /sys/class/dmi/id/product_name 2>/dev/null; then
     echo "$PASSWORD" | sudo -S apt install -y virtualbox-guest-utils
 fi
 
+# Prompt user to install App Center software
+echo
+echo "===================================================================="
+echo "Take this time to install any desired software from the App Center."
+echo "When you are finished, press Enter to continue the setup script."
+echo "===================================================================="
+read -p "Press Enter to continue..."
+
 echo "$PASSWORD" | sudo -S apt autoremove -y
 echo "$PASSWORD" | sudo -S apt clean
 
