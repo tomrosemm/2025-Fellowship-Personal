@@ -33,8 +33,7 @@ apt install -y sumo sumo-tools sumo-doc
 echo "Installing SUMO 1.22.0..."
 mkdir -p "$SOFTWARE_DIR/sumo-1.22.0"
 cd "$SOFTWARE_DIR/sumo-1.22.0"
-wget https://github.com/eclipse-sumo/sumo/releases/download/v1_22_0/sumo-src-1.22.0.tar.gz
-tar xzf sumo-src-1.22.0.tar.gz
+git clone --branch v1_22_0 --depth 1 https://github.com/eclipse-sumo/sumo.git sumo-1.22.0
 cd sumo-1.22.0
 mkdir build && cd build
 cmake ..
