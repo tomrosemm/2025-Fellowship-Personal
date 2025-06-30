@@ -1,0 +1,16 @@
+# Ignore Python cache folders and files
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Also ignore Python cache in Simulation/src
+Simulation/src/__pycache__/
+Simulation/src/**/*.pyc
+Simulation/src/**/*.pyo
+Simulation/src/**/*.pyd
+
+# Ignore Python cache files in Basic Concept
+/Python/Basic Concept/**/__pycache__/
+/Python/Basic Concept/**/*.pyc
