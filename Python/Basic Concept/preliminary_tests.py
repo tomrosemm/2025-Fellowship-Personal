@@ -207,16 +207,6 @@ Steps:
     5. Verify proof
 """
 def test_zokrates_connection():
-    """
-    Test the connection and workflow with ZoKrates CLI using dummy.zok.
-
-    Steps:
-        1. Compile dummy.zok
-        2. Setup
-        3. Compute witness (inputs: a=3, b=4)
-        4. Generate proof
-        5. Verify proof
-    """
     global tested, passed
     tested += 1
     circuit_path = "dummy.zok"
@@ -296,53 +286,206 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
         print("[Real ZKP] End-to-end ZoKrates workflow failed.\n")
     cleanup_zokrates_files()
 
+"""Simulated ZKP isolated test with multiple vehicles."""
+def test_simulated_isolated_multiple_vehicles():
+    global tested, passed
+    tested += 1
+    print("\n=== Simulated ZKP Isolated Test: Multiple Vehicles ===")
+    num_vehicles = 3
+    vehicles = {}
+    rsu_secrets = {}
+    for i in range(num_vehicles):
+        vid = f"VEH{i+1:03d}"
+        secret = secrets.token_hex(16)
+        vehicles[vid] = Vehicle(vid, secret)
+        rsu_secrets[vid] = secret
+    rsu = RSU(rsu_secrets)
+    all_passed = True
+    for vid, vehicle in vehicles.items():
+        otp, timestamp = vehicle.generate_otp()
+        zkp_proof = vehicle.create_zkp(otp, timestamp)
+        result = rsu.verify_zkp(vid, zkp_proof, timestamp)
+        print(f"Vehicle {vid}: Verification result: {result}")
+        all_passed = all_passed and result
+    if all_passed:
+        passed += 1
+        print("[Simulated] All vehicles authenticated successfully.\n")
+    else:
+        print("[Simulated] Some vehicles failed authentication.\n")
+
+"""Simulated end-to-end test with multiple vehicles (RSU + blockchain)."""
+def test_simulated_end_to_end_multiple_vehicles():
+    global tested, passed
+    tested += 1
+    print("\n=== Simulated End-to-End Test: Multiple Vehicles ===")
+    num_vehicles = 3
+    vehicles = {}
+    rsu_secrets = {}
+    for i in range(num_vehicles):
+        vid = f"VEH{i+1:03d}"
+        secret = secrets.token_hex(16)
+        vehicles[vid] = Vehicle(vid, secret)
+        rsu_secrets[vid] = secret
+    rsu = RSU(rsu_secrets)
+    all_passed = True
+    for vid, vehicle in vehicles.items():
+        otp, timestamp = vehicle.generate_otp()
+        zkp_proof = vehicle.create_zkp(otp, timestamp)
+        verification_result = rsu.verify_zkp(vid, zkp_proof, timestamp)
+        outcome = simulate_blockchain_verification(vid, zkp_proof, timestamp, verification_result)
+        print(f"Vehicle {vid}: RSU result: {verification_result}, Blockchain outcome: {outcome}")
+        all_passed = all_passed and outcome
+    if all_passed:
+        passed += 1
+        print("[Simulated] All vehicles granted access by infrastructure.\n")
+    else:
+        print("[Simulated] Some vehicles denied access.\n")
+
+"""ZoKrates-integrated isolated test with multiple vehicles (dummy.zok)."""
+def test_zokrates_isolated_multiple_vehicles():
+    global tested, passed
+    tested += 1
+    print("\n=== ZoKrates-Integrated Isolated Test: Multiple Vehicles ===")
+    circuit_path = "dummy.zok"
+    num_vehicles = 2
+    all_passed = True
+    for i in range(num_vehicles):
+        a = random.randint(1, 100)
+        b = random.randint(1, 100)
+        print(f"Vehicle {i+1}: Inputs a={a}, b={b}")
+        if not run_zokrates_compile(circuit_path):
+            print("[ZoKrates] Compilation failed.")
+            all_passed = False
+            continue
+        if not run_zokrates_setup():
+            print("[ZoKrates] Setup failed.")
+            cleanup_zokrates_files()
+            all_passed = False
+            continue
+        args = [str(a), str(b)]
+        if not run_zokrates_compute_witness(args):
+            print("[ZoKrates] Compute witness failed.")
+            cleanup_zokrates_files()
+            all_passed = False
+            continue
+        if not run_zokrates_generate_proof():
+            print("[ZoKrates] Proof generation failed.")
+            cleanup_zokrates_files()
+            all_passed = False
+            continue
+        verification_result = run_zokrates_verify()
+        print(f"Vehicle {i+1}: ZoKrates verification result: {verification_result}")
+        if not verification_result:
+            all_passed = False
+        cleanup_zokrates_files()
+    if all_passed:
+        passed += 1
+        print("[ZoKrates] All vehicles' proofs verified successfully.\n")
+    else:
+        print("[ZoKrates] Some vehicles' proofs failed verification.\n")
+
+"""ZoKrates-integrated end-to-end test with multiple vehicles (dummy.zok + simulated blockchain)."""
+def test_zokrates_end_to_end_multiple_vehicles():
+    global tested, passed
+    tested += 1
+    print("\n=== ZoKrates-Integrated End-to-End Test: Multiple Vehicles ===")
+    circuit_path = "dummy.zok"
+    num_vehicles = 2
+    all_passed = True
+    for i in range(num_vehicles):
+        vid = f"ZOKR_VEH{i+1:03d}"
+        a = random.randint(1, 100)
+        b = random.randint(1, 100)
+        print(f"Vehicle {vid}: Inputs a={a}, b={b}")
+        if not run_zokrates_compile(circuit_path):
+            print("[ZoKrates] Compilation failed.")
+            all_passed = False
+            continue
+        if not run_zokrates_setup():
+            print("[ZoKrates] Setup failed.")
+            cleanup_zokrates_files()
+            all_passed = False
+            continue
+        args = [str(a), str(b)]
+        if not run_zokrates_compute_witness(args):
+            print("[ZoKrates] Compute witness failed.")
+            cleanup_zokrates_files()
+            all_passed = False
+            continue
+        if not run_zokrates_generate_proof():
+            print("[ZoKrates] Proof generation failed.")
+            cleanup_zokrates_files()
+            all_passed = False
+            continue
+        verification_result = run_zokrates_verify()
+        print(f"Vehicle {vid}: ZoKrates verification result: {verification_result}")
+        # Simulate blockchain logging (using dummy proof string)
+        outcome = simulate_blockchain_verification(vid, f"proof_{a}_{b}", int(time.time()), verification_result)
+        print(f"Vehicle {vid}: Blockchain outcome: {outcome}")
+        if not (verification_result and outcome):
+            all_passed = False
+        cleanup_zokrates_files()
+    if all_passed:
+        passed += 1
+        print("[ZoKrates] All vehicles' end-to-end proofs and blockchain logs succeeded.\n")
+    else:
+        print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
+
 
 """
 Run all test and scenario functions and print summary statistics.
 """
 def testAndScenarioRunner():
     print()
+    print("=== Simulated ZKP Isolated Test: Multiple Vehicles ===")
+    test_simulated_isolated_multiple_vehicles()
+    time.sleep(2)
+    clear_console()
+    print()
+    print("=== Simulated End-to-End Test: Multiple Vehicles ===")
+    test_simulated_end_to_end_multiple_vehicles()
+    time.sleep(2)
+    clear_console()
+    print()
+    print("=== ZoKrates-Integrated Isolated Test: Multiple Vehicles ===")
+    test_zokrates_isolated_multiple_vehicles()
+    time.sleep(2)
+    clear_console()
+    print()
+    print("=== ZoKrates-Integrated End-to-End Test: Multiple Vehicles ===")
+    test_zokrates_end_to_end_multiple_vehicles()
+    time.sleep(2)
+    clear_console()
+    print()
     print("=== ZoKrates CLI Connection Test ===")
     test_zokrates_connection()
-    time.sleep(3)
+    time.sleep(2)
     clear_console()
     print()
     print("=== Real ZoKrates End-to-End Test with dummy.zok ===")
     test_vehicle_rsu_interaction_real_zokrates_dummy()
-    time.sleep(3)
+    time.sleep(2)
     clear_console()
     print()
     print("=== Simulated ZKP Test ===")
     test_vehicle_rsu_interaction_simulated()
-    # print("----------------------------------------------------------------------------")
-    time.sleep(3)
+    time.sleep(2)
     clear_console()
     print()
     print("=== Simulated Blockchain ZKP Test ===")
     test_vehicle_rsu_blockchain_simulated()
-    # print("----------------------------------------------------------------------------")
-    time.sleep(3)
+    time.sleep(2)
     clear_console()
     print()
     print("=== End-to-End Scenario: Successful Authentication ===")
     scenario_successful_authentication()
-    # print("----------------------------------------------------------------------------")
-    time.sleep(3)
+    time.sleep(2)
     clear_console()
     print()
     print("=== End-to-End Scenario: Failed Authentication ===")
     scenario_failed_authentication()
-    # print("----------------------------------------------------------------------------")
-    time.sleep(3)
+    time.sleep(2)
     clear_console()
-    
-    # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit (.zok) file)
-    # print("=== Real ZKP Test ===")
-    # test_vehicle_rsu_interaction_real()
-    # time.sleep(3)
-    # clear_console()
-    # print()
-    
     print()
     print(f"Total tests run: {tested}")
     print(f"Total tests passed: {passed}")
