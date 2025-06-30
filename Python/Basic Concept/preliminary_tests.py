@@ -30,6 +30,7 @@ from zokrates_interface import (
     run_zokrates_compute_witness,                           # Compute ZoKrates witness from inputs
     run_zokrates_generate_proof,                            # Generate ZKP proof using ZoKrates
     run_zokrates_verify,                                    # Verify ZKP proof using ZoKrates
+    cleanup_zokrates_files                                  # Clean up ZoKrates artifacts
 )
 from blockchain import simulate_blockchain_verification     # Simulate blockchain-based verification and logging
 
@@ -285,15 +286,18 @@ def test_zokrates_connection():
     # Setup
     if not run_zokrates_setup():
         print("[ZoKrates Test] Setup failed.")
+        cleanup_zokrates_files()
         return
     # Compute witness (inputs: a=3, b=4)
     args = ["3", "4"]
     if not run_zokrates_compute_witness(args):
         print("[ZoKrates Test] Compute witness failed.")
+        cleanup_zokrates_files()
         return
     # Generate proof
     if not run_zokrates_generate_proof():
         print("[ZoKrates Test] Proof generation failed.")
+        cleanup_zokrates_files()
         return
     # Verify proof
     verification_result = run_zokrates_verify()
@@ -303,6 +307,8 @@ def test_zokrates_connection():
         print("[ZoKrates Test] ZoKrates connection and workflow succeeded!\n")
     else:
         print("[ZoKrates Test] ZoKrates connection or workflow failed.\n")
+    # Always clean up ZoKrates artifacts after test
+    cleanup_zokrates_files()
 
 
 """
