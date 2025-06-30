@@ -38,6 +38,8 @@ def cli_menu_loop():
         print("9. Simulated End-to-End Test: Multiple Vehicles")
         print("10. ZoKrates-Integrated Isolated Test: Multiple Vehicles")
         print("11. ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
+        print("d. Enable Debug Mode")
+        print("n. Disable Debug Mode")
         print("0. Exit")
         choice = input("Enter your choice: ").strip()
         match choice:
@@ -63,6 +65,12 @@ def cli_menu_loop():
                 preliminary_tests.test_zokrates_isolated_multiple_vehicles()
             case "11":
                 preliminary_tests.test_zokrates_end_to_end_multiple_vehicles()
+            case "d":
+                preliminary_tests.set_debug_mode(True)
+                print("Debug mode enabled.\n")
+            case "n":
+                preliminary_tests.set_debug_mode(False)
+                print("Debug mode disabled.\n")
             case "0":
                 print("Exiting.")
                 break

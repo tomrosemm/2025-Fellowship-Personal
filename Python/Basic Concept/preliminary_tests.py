@@ -25,13 +25,14 @@ import random
 
 from vehicle import Vehicle                                 # Vehicle entity: generates OTPs and ZKPs
 from rsu import RSU                                         # RSU entity: verifies ZKPs from vehicles
-from zokrates_interface import (                        
-    run_zokrates_compile,                                   # Compile ZoKrates circuit
-    run_zokrates_setup,                                     # Setup ZoKrates proving/verification keys
-    run_zokrates_compute_witness,                           # Compute ZoKrates witness from inputs
-    run_zokrates_generate_proof,                            # Generate ZKP proof using ZoKrates
-    run_zokrates_verify,                                    # Verify ZKP proof using ZoKrates
-    cleanup_zokrates_files                                  # Clean up ZoKrates artifacts
+from zokrates_interface import (
+    run_zokrates_compile,
+    run_zokrates_setup,
+    run_zokrates_compute_witness,
+    run_zokrates_generate_proof,
+    run_zokrates_verify,
+    cleanup_zokrates_files,
+    set_debug_mode as set_zokrates_debug_mode
 )
 from blockchain import simulate_blockchain_verification     # Simulate blockchain-based verification and logging
 
@@ -45,6 +46,7 @@ def set_debug_mode(enabled: bool):
     """Enable or disable debug mode for detailed output."""
     global DEBUG_MODE
     DEBUG_MODE = enabled
+    set_zokrates_debug_mode(enabled)
 
 """Clears the console screen based on the operating system."""
 def clear_console():
