@@ -30,8 +30,8 @@ def cli_menu():
     print("2. Run ZoKrates CLI Connection Test")
     print("3. Run Simulated ZKP Test")
     print("4. Run Simulated Blockchain ZKP Test")
-    print("5. Run End-to-End Scenario: Successful Authentication")
-    print("6. Run End-to-End Scenario: Failed Authentication")
+    print("5. Run Simulated End-to-End Scenario: Successful Authentication")
+    print("6. Run Simulated End-to-End Scenario: Failed Authentication")
     print("0. Exit")
     return input("Enter your choice: ").strip()
 
