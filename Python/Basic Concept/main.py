@@ -32,6 +32,7 @@ def cli_menu():
     print("4. Run Simulated Blockchain ZKP Test")
     print("5. Run Simulated End-to-End Scenario: Successful Authentication")
     print("6. Run Simulated End-to-End Scenario: Failed Authentication")
+    print("7. Run Real ZoKrates End-to-End Test with dummy.zok")
     print("0. Exit")
     return input("Enter your choice: ").strip()
 
@@ -50,6 +51,8 @@ if __name__ == "__main__":
             preliminary_tests.scenario_successful_authentication()
         elif choice == "6":
             preliminary_tests.scenario_failed_authentication()
+        elif choice == "7":
+            preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy()
         elif choice == "0":
             print("Exiting.")
             break

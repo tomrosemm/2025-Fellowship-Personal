@@ -21,6 +21,7 @@ Usage:
 import secrets                                              # For generating random secrets for vehicles
 import os
 import time
+import random
 
 from vehicle import Vehicle                                 # Vehicle entity: generates OTPs and ZKPs
 from rsu import RSU                                         # RSU entity: verifies ZKPs from vehicles
@@ -252,63 +253,49 @@ def test_zokrates_connection():
     cleanup_zokrates_files()
 
 
-# """
-# Function: test_vehicle_rsu_interaction_real
+"""
+Test the end-to-end ZoKrates workflow using dummy.zok and random inputs.
+This simulates a real ZKP workflow using the ZoKrates CLI on Linux.
+"""
+def test_vehicle_rsu_interaction_real_zokrates_dummy():
+    global tested, passed
+    tested += 1
+    circuit_path = "dummy.zok"
+    print("\n=== Real ZoKrates End-to-End Test with dummy.zok ===")
+    # Generate random field inputs for dummy.zok
+    a = random.randint(1, 100)
+    b = random.randint(1, 100)
+    print(f"Inputs: a={a}, b={b}")
+    # Compile circuit
+    if not run_zokrates_compile(circuit_path):
+        print("[Real ZKP] Compilation failed.")
+        return
+    # Setup
+    if not run_zokrates_setup():
+        print("[Real ZKP] Setup failed.")
+        cleanup_zokrates_files()
+        return
+    # Compute witness
+    args = [str(a), str(b)]
+    if not run_zokrates_compute_witness(args):
+        print("[Real ZKP] Compute witness failed.")
+        cleanup_zokrates_files()
+        return
+    # Generate proof
+    if not run_zokrates_generate_proof():
+        print("[Real ZKP] Proof generation failed.")
+        cleanup_zokrates_files()
+        return
+    # Verify proof
+    verification_result = run_zokrates_verify()
+    print(f"[Real ZKP] Verification result: {verification_result}\n")
+    if verification_result:
+        passed += 1
+        print("[Real ZKP] End-to-end ZoKrates workflow succeeded!\n")
+    else:
+        print("[Real ZKP] End-to-end ZoKrates workflow failed.\n")
+    cleanup_zokrates_files()
 
-# Test the workflow using the real ZoKrates CLI (when available).
-
-# --- ZoKrates workflow ---
-#     1. Compile circuit
-#     2. Setup
-#     3. Compute witness (inputs must match your circuit)
-#     4. Generate proof
-#     5. Verify proof
-# """
-# def test_vehicle_rsu_interaction_real():
-#     global tested, passed
-#     tested += 1
-#     vehicle_id = "VEH123"
-#     vehicle_secret = secrets.token_hex(16)
-#     vehicle = Vehicle(vehicle_id, vehicle_secret)
-#     rsu = RSU({vehicle_id: vehicle_secret})
-
-#     otp, timestamp = vehicle.generate_otp()
-#     print(f"\n[Real ZKP] OTP: {otp}\nTimestamp: {timestamp}\n")
-    
-#     # Path to your ZoKrates circuit file
-#     circuit_path = "otp.zok"
-    
-#     # Compile circuit
-#     if not run_zokrates_compile(circuit_path):
-#         print("[Real ZKP] Compilation failed.")
-#         return
-    
-#     # Setup
-#     if not run_zokrates_setup():
-#         print("[Real ZKP] Setup failed.")
-#         return
-    
-#     # Compute witness (inputs must match your circuit)
-#     # Example: args = [otp, timestamp] as strings
-#     args = [str(otp), str(timestamp)]
-#     if not run_zokrates_compute_witness(args):
-#         print("[Real ZKP] Compute witness failed.")
-#         return
-    
-#     # Generate proof
-#     if not run_zokrates_generate_proof():
-#         print("[Real ZKP] Proof generation failed.")
-#         return
-    
-#     # Verify proof
-#     verification_result = run_zokrates_verify()
-#     print(f"[Real ZKP] Verification result: {verification_result}\n")
-
-#     if verification_result:
-#         passed += 1
-#         print("[Real ZKP] Vehicle authenticated. Session started.\n")
-#     else:
-#         print("[Real ZKP] Authentication failed.\n")
 
 """
 Run all test and scenario functions and print summary statistics.
@@ -317,6 +304,11 @@ def testAndScenarioRunner():
     print()
     print("=== ZoKrates CLI Connection Test ===")
     test_zokrates_connection()
+    time.sleep(3)
+    clear_console()
+    print()
+    print("=== Real ZoKrates End-to-End Test with dummy.zok ===")
+    test_vehicle_rsu_interaction_real_zokrates_dummy()
     time.sleep(3)
     clear_console()
     print()
