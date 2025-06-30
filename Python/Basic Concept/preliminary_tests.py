@@ -57,6 +57,7 @@ Steps:
     5. Output the result of the verification and authentication status.
 """
 def test_vehicle_rsu_interaction_simulated():
+    print("\n=== Simulated ZKP Test ===")
     global tested, passed
     tested += 1
     # Generate entities
@@ -99,6 +100,7 @@ Steps:
     6. Output the result of the infrastructure access decision.
 """
 def test_vehicle_rsu_blockchain_simulated():
+    print("\n=== Simulated Blockchain ZKP Test ===")
     global tested, passed
     tested += 1
     # Generate entities
@@ -133,6 +135,7 @@ def test_vehicle_rsu_blockchain_simulated():
 End-to-end scenario: Vehicle authenticates successfully and is granted access.
 """
 def scenario_successful_authentication():
+    print("\n=== End-to-End Scenario: Successful Authentication ===")
     global tested, passed
     tested += 1
     vehicle_id = "VEH001"
@@ -165,6 +168,7 @@ def scenario_successful_authentication():
 End-to-end scenario: Vehicle fails authentication due to wrong secret.
 """
 def scenario_failed_authentication():
+    print("\n=== End-to-End Scenario: Failed Authentication ===")
     global tested, passed
     tested += 1
     vehicle_id = "VEH001"
@@ -207,10 +211,10 @@ Steps:
     5. Verify proof
 """
 def test_zokrates_connection():
+    print("\n=== ZoKrates CLI Connection Test ===")
     global tested, passed
     tested += 1
     circuit_path = "dummy.zok"
-    print("\n=== ZoKrates CLI Connection Test ===")
     # Compile circuit
     if not run_zokrates_compile(circuit_path):
         print("[ZoKrates Test] Compilation failed.")
@@ -248,10 +252,10 @@ Test the end-to-end ZoKrates workflow using dummy.zok and random inputs.
 This simulates a real ZKP workflow using the ZoKrates CLI on Linux.
 """
 def test_vehicle_rsu_interaction_real_zokrates_dummy():
+    print("\n=== Real ZoKrates End-to-End Test with dummy.zok ===")
     global tested, passed
     tested += 1
     circuit_path = "dummy.zok"
-    print("\n=== Real ZoKrates End-to-End Test with dummy.zok ===")
     # Generate random field inputs for dummy.zok
     a = random.randint(1, 100)
     b = random.randint(1, 100)
@@ -436,47 +440,47 @@ def test_zokrates_end_to_end_multiple_vehicles():
 Run all test and scenario functions and print summary statistics.
 """
 def testAndScenarioRunner():
-    print("=== Simulated ZKP Isolated Test: Multiple Vehicles ===")
+
     test_simulated_isolated_multiple_vehicles()
     time.sleep(2)
     clear_console()
-    print("=== Simulated End-to-End Test: Multiple Vehicles ===")
+
     test_simulated_end_to_end_multiple_vehicles()
     time.sleep(2)
     clear_console()
-    print("=== ZoKrates-Integrated Isolated Test: Multiple Vehicles ===")
+
     test_zokrates_isolated_multiple_vehicles()
     time.sleep(2)
     clear_console()
-    print("=== ZoKrates-Integrated End-to-End Test: Multiple Vehicles ===")
+
     test_zokrates_end_to_end_multiple_vehicles()
     time.sleep(2)
     clear_console()
-    print("=== ZoKrates CLI Connection Test ===")
+
     test_zokrates_connection()
     time.sleep(2)
     clear_console()
-    print("=== Real ZoKrates End-to-End Test with dummy.zok ===")
+
     test_vehicle_rsu_interaction_real_zokrates_dummy()
     time.sleep(2)
     clear_console()
-    print("=== Simulated ZKP Test ===")
+
     test_vehicle_rsu_interaction_simulated()
     time.sleep(2)
     clear_console()
-    print("=== Simulated Blockchain ZKP Test ===")
+
     test_vehicle_rsu_blockchain_simulated()
     time.sleep(2)
     clear_console()
-    print("=== End-to-End Scenario: Successful Authentication ===")
+
     scenario_successful_authentication()
     time.sleep(2)
     clear_console()
-    print("=== End-to-End Scenario: Failed Authentication ===")
+
     scenario_failed_authentication()
     time.sleep(2)
     clear_console()
-    print(f"Total tests run: {tested}")
+    print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")
     print(f"Total tests failed: {tested - passed}")
     print()
