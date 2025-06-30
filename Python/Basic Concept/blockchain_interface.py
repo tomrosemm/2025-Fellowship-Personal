@@ -12,6 +12,7 @@ Methodology:
 """
 
 from web3 import Web3
+import json
 
 class BlockchainInterface:
     """
@@ -46,12 +47,10 @@ class BlockchainInterface:
         return tx_hash.hex()
 
 if __name__ == "__main__":
-    # Simple test for BlockchainInterface instantiation (does not make a real blockchain call)
-    provider_url = "http://localhost:8545"
-    contract_address = "0x0000000000000000000000000000000000000000"
-    abi = []
-    try:
-        interface = BlockchainInterface(provider_url, contract_address, abi)
-        print("[BlockchainInterface] Instantiated successfully (no real call made).")
-    except Exception as e:
-        print(f"[BlockchainInterface] Instantiation failed: {e}")
+    # After deploying, update these:
+    provider_url = "http://127.0.0.1:8545"
+    contract_address = "0x..."  # Use the address from deployment output
+    with open("path/to/AuthLogger.json") as f:
+        abi = json.load(f)["abi"]
+    interface = BlockchainInterface(provider_url, contract_address, abi)
+    print("[BlockchainInterface] Instantiated successfully (no real call made).")
