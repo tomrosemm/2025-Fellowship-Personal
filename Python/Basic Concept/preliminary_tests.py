@@ -84,65 +84,6 @@ def test_vehicle_rsu_interaction_simulated():
         print("[Simulated] Authentication failed.\n")
 
 
-# """
-# Function: test_vehicle_rsu_interaction_real
-
-# Test the workflow using the real ZoKrates CLI (when available).
-
-# --- ZoKrates workflow ---
-#     1. Compile circuit
-#     2. Setup
-#     3. Compute witness (inputs must match your circuit)
-#     4. Generate proof
-#     5. Verify proof
-# """
-# def test_vehicle_rsu_interaction_real():
-#     global tested, passed
-#     tested += 1
-#     vehicle_id = "VEH123"
-#     vehicle_secret = secrets.token_hex(16)
-#     vehicle = Vehicle(vehicle_id, vehicle_secret)
-#     rsu = RSU({vehicle_id: vehicle_secret})
-
-#     otp, timestamp = vehicle.generate_otp()
-#     print(f"\n[Real ZKP] OTP: {otp}\nTimestamp: {timestamp}\n")
-    
-#     # Path to your ZoKrates circuit file
-#     circuit_path = "otp.zok"
-    
-#     # Compile circuit
-#     if not run_zokrates_compile(circuit_path):
-#         print("[Real ZKP] Compilation failed.")
-#         return
-    
-#     # Setup
-#     if not run_zokrates_setup():
-#         print("[Real ZKP] Setup failed.")
-#         return
-    
-#     # Compute witness (inputs must match your circuit)
-#     # Example: args = [otp, timestamp] as strings
-#     args = [str(otp), str(timestamp)]
-#     if not run_zokrates_compute_witness(args):
-#         print("[Real ZKP] Compute witness failed.")
-#         return
-    
-#     # Generate proof
-#     if not run_zokrates_generate_proof():
-#         print("[Real ZKP] Proof generation failed.")
-#         return
-    
-#     # Verify proof
-#     verification_result = run_zokrates_verify()
-#     print(f"[Real ZKP] Verification result: {verification_result}\n")
-
-#     if verification_result:
-#         passed += 1
-#         print("[Real ZKP] Vehicle authenticated. Session started.\n")
-#     else:
-#         print("[Real ZKP] Authentication failed.\n")
-
-
 """
 Function: test_vehicle_rsu_blockchain_simulated
 
@@ -311,6 +252,64 @@ def test_zokrates_connection():
     cleanup_zokrates_files()
 
 
+# """
+# Function: test_vehicle_rsu_interaction_real
+
+# Test the workflow using the real ZoKrates CLI (when available).
+
+# --- ZoKrates workflow ---
+#     1. Compile circuit
+#     2. Setup
+#     3. Compute witness (inputs must match your circuit)
+#     4. Generate proof
+#     5. Verify proof
+# """
+# def test_vehicle_rsu_interaction_real():
+#     global tested, passed
+#     tested += 1
+#     vehicle_id = "VEH123"
+#     vehicle_secret = secrets.token_hex(16)
+#     vehicle = Vehicle(vehicle_id, vehicle_secret)
+#     rsu = RSU({vehicle_id: vehicle_secret})
+
+#     otp, timestamp = vehicle.generate_otp()
+#     print(f"\n[Real ZKP] OTP: {otp}\nTimestamp: {timestamp}\n")
+    
+#     # Path to your ZoKrates circuit file
+#     circuit_path = "otp.zok"
+    
+#     # Compile circuit
+#     if not run_zokrates_compile(circuit_path):
+#         print("[Real ZKP] Compilation failed.")
+#         return
+    
+#     # Setup
+#     if not run_zokrates_setup():
+#         print("[Real ZKP] Setup failed.")
+#         return
+    
+#     # Compute witness (inputs must match your circuit)
+#     # Example: args = [otp, timestamp] as strings
+#     args = [str(otp), str(timestamp)]
+#     if not run_zokrates_compute_witness(args):
+#         print("[Real ZKP] Compute witness failed.")
+#         return
+    
+#     # Generate proof
+#     if not run_zokrates_generate_proof():
+#         print("[Real ZKP] Proof generation failed.")
+#         return
+    
+#     # Verify proof
+#     verification_result = run_zokrates_verify()
+#     print(f"[Real ZKP] Verification result: {verification_result}\n")
+
+#     if verification_result:
+#         passed += 1
+#         print("[Real ZKP] Vehicle authenticated. Session started.\n")
+#     else:
+#         print("[Real ZKP] Authentication failed.\n")
+
 """
 Run all test and scenario functions and print summary statistics.
 """
@@ -332,13 +331,6 @@ def testAndScenarioRunner():
     # print("----------------------------------------------------------------------------")
     time.sleep(3)
     clear_console()
-    
-    # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit (.zok) file)
-    # print("=== Real ZKP Test ===")
-    # test_vehicle_rsu_interaction_real()
-    # time.sleep(3)
-    # clear_console()
-
     print()
     print("=== End-to-End Scenario: Successful Authentication ===")
     scenario_successful_authentication()
@@ -351,6 +343,14 @@ def testAndScenarioRunner():
     # print("----------------------------------------------------------------------------")
     time.sleep(3)
     clear_console()
+    
+    # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit (.zok) file)
+    # print("=== Real ZKP Test ===")
+    # test_vehicle_rsu_interaction_real()
+    # time.sleep(3)
+    # clear_console()
+    # print()
+    
     print()
     print(f"Total tests run: {tested}")
     print(f"Total tests passed: {passed}")
