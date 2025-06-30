@@ -334,10 +334,10 @@ def testAndScenarioRunner():
     clear_console()
     
     # Uncomment the next line to run the real ZoKrates workflow (requires ZoKrates and a valid circuit (.zok) file)
-    print("=== Real ZKP Test ===")
-    test_vehicle_rsu_interaction_real()
-    time.sleep(3)
-    clear_console()
+    # print("=== Real ZKP Test ===")
+    # test_vehicle_rsu_interaction_real()
+    # time.sleep(3)
+    # clear_console()
 
     print()
     print("=== End-to-End Scenario: Successful Authentication ===")
