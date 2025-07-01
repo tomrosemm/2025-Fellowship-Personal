@@ -50,9 +50,9 @@ def set_debug_mode(enabled: bool):
 
 """Clears the console screen based on the operating system."""
 def clear_console():
-    if os.name == 'nt':  # For Windows
+    if os.name == 'nt':         # For Windows
         os.system('cls')
-    else:  # For macOS/Linux
+    else:                       # For macOS/Linux
         os.system('clear')
 
 
@@ -468,44 +468,45 @@ Run all test and scenario functions and print summary statistics.
 def testAndScenarioRunner():
 
     test_simulated_isolated_multiple_vehicles()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
 
     test_simulated_end_to_end_multiple_vehicles()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
 
     test_zokrates_isolated_multiple_vehicles()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
 
     test_zokrates_end_to_end_multiple_vehicles()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
 
     test_zokrates_connection()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
 
     test_vehicle_rsu_interaction_real_zokrates_dummy()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
 
     test_vehicle_rsu_interaction_simulated()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
 
     test_vehicle_rsu_blockchain_simulated()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
 
     scenario_successful_authentication()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
 
     scenario_failed_authentication()
-    time.sleep(2)
-    clear_console()
+    time.sleep(1)
+    # clear_console()
+    
     print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")
     print(f"Total tests failed: {tested - passed}")
