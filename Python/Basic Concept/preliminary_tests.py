@@ -511,6 +511,7 @@ def testAndScenarioRunner():
     print(f"Total tests passed: {passed}")
     print(f"Total tests failed: {tested - passed}")
     print()
+    time.sleep(3)
 
 if __name__ == "__main__":
     testAndScenarioRunner()
