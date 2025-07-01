@@ -69,6 +69,7 @@ def cli_menu_loop():
             case "12":
                 preliminary_tests.set_debug_mode(True)
                 preliminary_tests.testAndScenarioRunner()
+                preliminary_tests.set_debug_mode(False)
             case "d":
                 preliminary_tests.set_debug_mode(True)
                 print("Debug mode enabled.\n")
