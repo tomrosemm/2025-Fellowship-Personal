@@ -20,6 +20,7 @@ def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
+"""Remove ZoKrates-generated files from the current directory."""
 def cleanup_zokrates_files():
     files_to_remove = [
         "out",
