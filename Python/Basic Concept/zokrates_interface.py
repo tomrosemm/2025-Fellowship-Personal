@@ -15,8 +15,8 @@ import os               # For file path operations (if needed)
 
 DEBUG_MODE = False
 
+"""Enable or disable debug mode for detailed output."""
 def set_debug_mode(enabled):
-    """Enable or disable debug mode for detailed output."""
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
