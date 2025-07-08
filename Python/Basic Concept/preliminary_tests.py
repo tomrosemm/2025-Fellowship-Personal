@@ -42,7 +42,7 @@ passed = 0
 
 DEBUG_MODE = False
 
-def set_debug_mode(enabled: bool):
+def set_debug_mode(enabled):
     """Enable or disable debug mode for detailed output."""
     global DEBUG_MODE
     DEBUG_MODE = enabled
