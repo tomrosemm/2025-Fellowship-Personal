@@ -5,6 +5,7 @@ Purpose:
     This module contains test routines to simulate and validate the ZKP-OTP authentication protocol
     between Vehicle and RSU entities. It demonstrates the authentication process using both simulated
     and real (ZoKrates-based) zero-knowledge proof workflows, as well as a blockchain verification simulation.
+    It contains tests for basic connection with related software/tools, such as ZoKrates and SUMO (next: OMNeT++ or Mininet)
 
 Methodology:
     - Simulates the generation of one-time passwords (OTP) and timestamps by vehicles.
@@ -25,6 +26,7 @@ import random
 
 from vehicle import Vehicle                                 # Vehicle entity: generates OTPs and ZKPs
 from rsu import RSU                                         # RSU entity: verifies ZKPs from vehicles
+
 from zokrates_interface import (
     run_zokrates_compile,
     run_zokrates_setup,
@@ -34,7 +36,10 @@ from zokrates_interface import (
     cleanup_zokrates_files,
     set_debug_mode as set_zokrates_debug_mode
 )
-from blockchain import simulate_blockchain_verification     # Simulate blockchain-based verification and logging
+
+from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
+from blockchain_interface import set_debug_mode as set_blockchain_interface_debug_mode
+from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
 
 # Track number of tests run and passed
 tested = 0
@@ -48,6 +53,9 @@ def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
     set_zokrates_debug_mode(enabled)
+    set_blockchain_debug_mode(enabled)
+    set_sumo_debug_mode(enabled)
+    set_blockchain_interface_debug_mode(enabled)
 
 """Clears the console screen based on the operating system."""
 def clear_console():
@@ -463,78 +471,10 @@ def test_zokrates_end_to_end_multiple_vehicles():
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
 
 
-def test_sumo_connection():
-    """
-    Test the connection to SUMO using TraCI.
-    """
-    import sys
-    import subprocess
-    import os
-    import time
-
-    SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
-    sys.path.append(SUMO_TOOLS_PATH)
-
-    try:
-        import traci
-    except ImportError as e:
-        print(f"[SUMO Test] Could not import traci: {e}")
-        print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
-        exit(1)
-
-    SUMO_NET_FILE = "/home/admin/2025-Fellowship-Personal/Python/Basic Concept/sumo/simple.net.xml"
-
-    def start_sumo():
-        sumo_binary = "sumo"
-        sumo_cmd = [sumo_binary, "-n", SUMO_NET_FILE, "--remote-port", "8813"]
-        try:
-            proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            time.sleep(2)
-            return proc, sumo_binary, SUMO_NET_FILE
-        except Exception as e:
-            print(f"[SUMO Test] Failed to start SUMO: {e}")
-            return None, None, None
-
-    proc, sumo_binary, net_file = start_sumo()
-    if not proc:
-        print("[SUMO Test] Could not start SUMO process.")
-        return
-    try:
-        traci.init(port=8813)
-        print("[SUMO Test] Successfully connected to SUMO via traci!")
-        print(f"  SUMO binary used: {sumo_binary}")
-        print(f"  Network file: {net_file}")
-        print(f"  SUMO process PID: {proc.pid}")
-        print("  SUMO process started and connection established.")
-        traci.close()
-        print("  SUMO connection closed.")
-    except Exception as e:
-        print(f"[SUMO Test] Failed to connect to SUMO: {e}")
-    finally:
-        proc.terminate()
-        proc.wait()
-        print("  SUMO process terminated.")
-
-
-def test_sumo_connection_wrapper():
-    """
-    Run the SUMO connection test and count as a test.
-    """
-    global tested, passed
-    print("\n=== SUMO Connection Test ===")
-    tested += 1
-    try:
-        test_sumo_connection()  # Now calls the local function
-        passed += 1
-        print("[SUMO Test] SUMO connection test completed successfully.\n")
-    except Exception as e:
-        print(f"[SUMO Test] SUMO connection test failed: {e}\n")
-
-
-"""
-Run all test and scenario functions and print summary statistics.
-"""
 def testAndScenarioRunner():
+    """
+    Run all test and scenario functions and print summary statistics.
+    """
 
     test_simulated_isolated_multiple_vehicles()
     time.sleep(1)
@@ -576,7 +516,9 @@ def testAndScenarioRunner():
     time.sleep(1)
     # clear_console()
     
-    test_sumo_connection_wrapper()
+    # Replace previous call with new wrapper
+    global tested, passed
+    tested, passed = test_sumo_connection_wrapper(tested, passed)
     time.sleep(1)
     # clear_console()
 

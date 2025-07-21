@@ -14,6 +14,12 @@ Methodology:
 from web3 import Web3
 import json
 
+DEBUG_MODE = False
+
+def set_debug_mode(enabled):
+    global DEBUG_MODE
+    DEBUG_MODE = enabled
+
 class BlockchainInterface:
     """
     Initialize the BlockchainInterface with provider URL, contract address, and ABI.
@@ -25,6 +31,8 @@ class BlockchainInterface:
     def __init__(self, provider_url, contract_address, abi):
         self.web3 = Web3(Web3.HTTPProvider(provider_url))
         self.contract = self.web3.eth.contract(address=contract_address, abi=abi)
+        if DEBUG_MODE:
+            print(f"[BlockchainInterface] Initialized with provider_url={provider_url}, contract_address={contract_address}")
 
     """
     Log an authentication attempt by calling the smart contract's logAuth function.
@@ -38,12 +46,16 @@ class BlockchainInterface:
         str: The transaction hash.
     """
     def log_auth(self, vehicle_hash, timestamp, authenticated, from_address, private_key):
+        if DEBUG_MODE:
+            print(f"[BlockchainInterface] Logging auth: vehicle_hash={vehicle_hash}, timestamp={timestamp}, authenticated={authenticated}")
         tx = self.contract.functions.logAuth(vehicle_hash, timestamp, authenticated).build_transaction({
             'from': from_address,
             'nonce': self.web3.eth.get_transaction_count(from_address)
         })
         signed = self.web3.eth.account.sign_transaction(tx, private_key)
         tx_hash = self.web3.eth.send_raw_transaction(signed.rawTransaction)
+        if DEBUG_MODE:
+            print(f"[BlockchainInterface] Sent transaction, hash={tx_hash.hex()}")
         return tx_hash.hex()
 
 if __name__ == "__main__":
@@ -52,5 +64,6 @@ if __name__ == "__main__":
     contract_address = "0x..."  # Use the address from deployment output
     with open("path/to/AuthLogger.json") as f:
         abi = json.load(f)["abi"]
+    set_debug_mode(True)
     interface = BlockchainInterface(provider_url, contract_address, abi)
     print("[BlockchainInterface] Instantiated successfully (no real call made).")

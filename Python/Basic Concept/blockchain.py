@@ -14,6 +14,13 @@ Methodology:
 import hashlib      # Import hashlib for hashing vehicle IDs to anonymize them
 
 
+DEBUG_MODE = False
+
+def set_debug_mode(enabled):
+    global DEBUG_MODE
+    DEBUG_MODE = enabled
+
+
 """
 Function: simulate_blockchain_verification
 
@@ -38,8 +45,9 @@ Steps:
 def simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result):
     # Hash the vehicle_id to anonymize it for blockchain logging
     anonymized_id = hashlib.sha256(vehicle_id.encode()).hexdigest()[:10]
-    # Print a message simulating the smart contract call with anonymized vehicle ID
-    print(f"[Blockchain] Verifying ZKP-OTP proof for anonymized vehicle ID: {anonymized_id}...\n")
+    if DEBUG_MODE:
+        # Print a message simulating the smart contract call with anonymized vehicle ID
+        print(f"[Blockchain] Verifying ZKP-OTP proof for anonymized vehicle ID: {anonymized_id}...\n")
     
     # Create a log entry dictionary with anonymized vehicle hash, timestamp, and authentication status
     log_entry = {
@@ -47,9 +55,9 @@ def simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verificat
         "timestamp": timestamp,                                             # Timestamp of the authentication attempt
         "authenticated": verification_result                                # Whether authentication succeeded
     }
-    
-    # Print the simulated blockchain event log
-    print(f"[Blockchain] Event logged: {log_entry}\n")
+    if DEBUG_MODE:
+        # Print the simulated blockchain event log
+        print(f"[Blockchain] Event logged: {log_entry}\n")
     # Return the outcome to simulate the infrastructure's access decision
     return verification_result
 
