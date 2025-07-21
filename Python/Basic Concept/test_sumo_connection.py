@@ -4,7 +4,7 @@ import subprocess
 import time
 
 # Path to SUMO tools (adjust if your SUMO install is elsewhere)
-SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/usr/share/sumo/tools")
+SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
 sys.path.append(SUMO_TOOLS_PATH)
 
 try:
