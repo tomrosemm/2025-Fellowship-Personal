@@ -39,6 +39,8 @@ from zokrates_interface import (
 
 from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
 from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
+
+# Uncomment if blockchain_interface is used
 # from blockchain_interface import set_debug_mode as set_blockchain_interface_debug_mode
 
 # Track number of tests run and passed
@@ -55,6 +57,7 @@ def set_debug_mode(enabled):
     set_zokrates_debug_mode(enabled)
     set_blockchain_debug_mode(enabled)
     set_sumo_debug_mode(enabled)
+    
     # set_blockchain_interface_debug_mode(enabled)
 
 """Clears the console screen based on the operating system."""
