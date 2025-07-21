@@ -26,7 +26,11 @@ def test_sumo_connection():
             print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
         return False
 
-    SUMO_NET_FILE = "Python/Basic Concept/sumo/simple.net.xml"
+    SUMO_NET_FILE = os.path.abspath("Python/Basic Concept/sumo/simple.net.xml")
+    
+    if not os.path.exists(SUMO_NET_FILE):
+        print(f"[SUMO Test] Network file not found: {SUMO_NET_FILE}")
+        return False
 
     def start_sumo():
         sumo_binary = "sumo"
@@ -34,6 +38,11 @@ def test_sumo_connection():
         try:
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             time.sleep(2)
+            if proc.poll() is not None:
+                # SUMO exited early, print stderr for diagnostics
+                stderr = proc.stderr.read().decode()
+                print(f"[SUMO Test] SUMO exited early. STDERR:\n{stderr}")
+                return None, None, None
             if DEBUG_MODE:
                 print(f"[SUMO Test] SUMO process started with PID {proc.pid}")
             return proc, sumo_binary, SUMO_NET_FILE
