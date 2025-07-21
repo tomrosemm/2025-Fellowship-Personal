@@ -59,7 +59,9 @@ def cli_menu_loop():
                 preliminary_tests.testAndScenarioRunner()
                 preliminary_tests.set_debug_mode(False)
             case "13":
-                preliminary_tests.test_sumo_connection_wrapper()
+                preliminary_tests.tested, preliminary_tests.passed = preliminary_tests.test_sumo_connection_wrapper(
+                    preliminary_tests.tested, preliminary_tests.passed
+                )
             case "d":
                 preliminary_tests.set_debug_mode(True)
                 print("Debug mode enabled.\n")
