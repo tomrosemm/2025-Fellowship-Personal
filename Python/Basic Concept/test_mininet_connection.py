@@ -21,9 +21,8 @@ def test_mininet_connection():
     print("\n=== Mininet Connection Test ===")
     setLogLevel('info')
     try:
-        net = Mininet(topo=MinimalTopo(), build=False)
-        net.addController('c0', controller=OVSController)
-        net.build()
+        # Use OVSController as the default controller for the network
+        net = Mininet(topo=MinimalTopo(), controller=OVSController)
         net.start()
         print("[Mininet Test] Mininet network started.")
         h1, h2 = net.get('h1'), net.get('h2')
