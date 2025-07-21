@@ -40,6 +40,7 @@ from blockchain import simulate_blockchain_verification     # Simulate blockchai
 tested = 0
 passed = 0
 
+
 DEBUG_MODE = False
 
 def set_debug_mode(enabled):
