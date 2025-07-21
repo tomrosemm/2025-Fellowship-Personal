@@ -12,7 +12,9 @@ import preliminary_tests
 
 def cli_menu_loop():
     while True:
-        print("Privacy-Preserving Vehicle Authentication Protocol Simulation")
+        print("*********************************************************************")
+        print("*   Privacy-Preserving Vehicle Authentication Protocol Simulation   *")
+        print("*********************************************************************")
         print("Select an option:")
         print("1 - Run all tests and scenarios with Debug Mode disabled")
         print("2 - Run all tests and scenarios with Debug Mode enabled")
