@@ -1,23 +1,28 @@
 import sys
 import subprocess
 import time
+import os
 
 try:
     from mininet.net import Mininet
     from mininet.topo import MinimalTopo
-    from mininet.node import Controller
+    from mininet.node import OVSController
     from mininet.log import setLogLevel
 except ImportError as e:
     print(f"[Mininet Test] Could not import Mininet modules: {e}")
     print("Make sure Mininet is installed and available in your Python environment.")
     sys.exit(1)
 
+if os.geteuid() != 0:
+    print("** Mininet must run as root. Please run with sudo or as administrator. **")
+    sys.exit(1)
+
 def test_mininet_connection():
     print("\n=== Mininet Connection Test ===")
     setLogLevel('info')
     try:
-        # Create a minimal topology (2 hosts, 1 switch)
-        net = Mininet(topo=MinimalTopo(), controller=Controller)
+        # Use OVSController instead of default Controller
+        net = Mininet(topo=MinimalTopo(), controller=OVSController)
         net.start()
         print("[Mininet Test] Mininet network started.")
         h1, h2 = net.get('h1'), net.get('h2')
