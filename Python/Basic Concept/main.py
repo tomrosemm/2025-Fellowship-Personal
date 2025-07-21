@@ -12,9 +12,9 @@ import preliminary_tests
 
 def cli_menu_loop():
     while True:
-        print("*********************************************************************")
-        print("*   Privacy-Preserving Vehicle Authentication Protocol Simulation   *")
-        print("*********************************************************************")
+        print("\n*********************************************************************")
+        print("*** Privacy-Preserving Vehicle Authentication Protocol Simulation ***")
+        print("*********************************************************************\n")
         print("Select an option:")
         print("1 - Run all tests and scenarios with Debug Mode disabled")
         print("2 - Run all tests and scenarios with Debug Mode enabled")
@@ -31,7 +31,7 @@ def cli_menu_loop():
         print("13 - Run ZoKrates CLI Connection Test")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
-        print("e - Exit")
+        print("e - Exit\n")
         choice = input("Enter your choice: ").strip()
         match choice:
             case "1":
