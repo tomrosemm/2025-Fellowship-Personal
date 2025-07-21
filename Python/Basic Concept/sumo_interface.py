@@ -59,10 +59,14 @@ def test_sumo_connection():
         if DEBUG_MODE:
             print(f"[SUMO Test] Failed to connect to SUMO: {e}")
     finally:
-        proc.terminate()
-        proc.wait()
-        if DEBUG_MODE:
-            print("  SUMO process terminated.")
+        try:
+            proc.terminate()
+            proc.communicate(timeout=5)
+            if DEBUG_MODE:
+                print("  SUMO process terminated.")
+        except Exception as e:
+            if DEBUG_MODE:
+                print(f"  SUMO process termination error: {e}")
 
 def test_sumo_connection_wrapper(tested, passed):
     """
