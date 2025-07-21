@@ -1,4 +1,4 @@
-import secrets 
+import secrets
 import os
 import time
 import random
@@ -37,10 +37,24 @@ def set_debug_mode(enabled):
     set_blockchain_debug_mode(enabled)
     set_sumo_debug_mode(enabled)
     # set_blockchain_interface_debug_mode(enabled)
+    Experiment.DEBUG_MODE = enabled
 
-"""Clears the console screen based on the operating system."""
 def clear_console():
-    if os.name == 'nt':         # For Windows
+    if os.name == 'nt':
         os.system('cls')
-    else:                       # For macOS/Linux
+    else:
         os.system('clear')
+
+def run_single_experiment():
+    """
+    Example: Run a single experiment using the Experiment class.
+    """
+    global experiment_count
+    experiment_count += 1
+    name = f"Experiment_{experiment_count}"
+    vehicle_id = f"Vehicle_{experiment_count}"
+    rsu_id = f"RSU_{experiment_count}"
+    zokrates_circuit_path = "dummy.zok"
+    exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
+    exp.run()
+    exp.report()
