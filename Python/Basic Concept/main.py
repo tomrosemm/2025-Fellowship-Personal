@@ -34,7 +34,7 @@ def cli_menu_loop():
         print("dboff - Disable Debug Mode")
         print("e - Exit\n")
         
-        choice = input("Enter your choice: ").strip()
+        choice = input("Enter your choice: ").strip().lower()
         
         match choice:
             case "1":
