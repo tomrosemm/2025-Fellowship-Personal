@@ -1,6 +1,4 @@
 import sys
-import subprocess
-import time
 import os
 
 try:
@@ -10,30 +8,46 @@ try:
     from mininet.log import setLogLevel
 except ImportError as e:
     print(f"[Mininet Test] Could not import Mininet modules: {e}")
-    print("Make sure Mininet is installed and available in your Python environment.")
     sys.exit(1)
 
 if os.geteuid() != 0:
     print("** Mininet must run as root. Please run with sudo or as administrator. **")
     sys.exit(1)
 
-def test_mininet_connection():
-    print("\n=== Mininet Connection Test ===")
+def test_mininet_import():
+    print("\n=== Mininet Import Test ===")
+    try:
+        import mininet
+        print("[Mininet Test] Mininet imported successfully.")
+    except ImportError as e:
+        print(f"[Mininet Test] Import failed: {e}")
+
+def test_mininet_network_start_stop():
+    print("\n=== Mininet Network Start/Stop Test ===")
     setLogLevel('info')
     try:
-        # Use OVSController as the default controller for the network
         net = Mininet(topo=MinimalTopo(), controller=OVSController)
         net.start()
-        print("[Mininet Test] Mininet network started.")
-        h1, h2 = net.get('h1'), net.get('h2')
-        print(f"[Mininet Test] Hosts: {h1.name}, {h2.name}")
-        result = h1.cmd('ping -c1 %s' % h2.IP())
-        print(f"[Mininet Test] Ping result from {h1.name} to {h2.name}:\n{result}")
+        print("[Mininet Test] Network started.")
         net.stop()
-        print("[Mininet Test] Mininet network stopped.")
-        print("[Mininet Test] Connection test completed successfully.\n")
+        print("[Mininet Test] Network stopped.")
     except Exception as e:
-        print(f"[Mininet Test] Mininet connection test failed: {e}\n")
+        print(f"[Mininet Test] Network start/stop failed: {e}")
+
+def test_mininet_host_ping():
+    print("\n=== Mininet Host Ping Test ===")
+    setLogLevel('info')
+    try:
+        net = Mininet(topo=MinimalTopo(), controller=OVSController)
+        net.start()
+        h1, h2 = net.get('h1'), net.get('h2')
+        result = h1.cmd('ping -c1 %s' % h2.IP())
+        print(f"[Mininet Test] Ping result:\n{result}")
+        net.stop()
+    except Exception as e:
+        print(f"[Mininet Test] Host ping failed: {e}")
 
 if __name__ == "__main__":
-    test_mininet_connection()
+    test_mininet_import()
+    test_mininet_network_start_stop()
+    test_mininet_host_ping()
