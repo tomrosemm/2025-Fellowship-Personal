@@ -55,7 +55,7 @@ def set_debug_mode(enabled):
     set_zokrates_debug_mode(enabled)
     set_blockchain_debug_mode(enabled)
     set_sumo_debug_mode(enabled)
-    set_blockchain_interface_debug_mode(enabled)
+    # set_blockchain_interface_debug_mode(enabled)
 
 """Clears the console screen based on the operating system."""
 def clear_console():
