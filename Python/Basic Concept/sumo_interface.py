@@ -26,7 +26,7 @@ def test_sumo_connection():
             print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
         return False
 
-    SUMO_NET_FILE = os.path.abspath("Python/Basic Concept/sumo/simple.net.xml")
+    SUMO_NET_FILE = os.path.abspath("/home/admin/2025-Fellowship-Personal/Python/Basic Concept/sumo/simple.net.xml")
     
     if not os.path.exists(SUMO_NET_FILE):
         print(f"[SUMO Test] Network file not found: {SUMO_NET_FILE}")
