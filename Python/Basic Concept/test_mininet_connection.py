@@ -21,13 +21,13 @@ def test_mininet_connection():
     print("\n=== Mininet Connection Test ===")
     setLogLevel('info')
     try:
-        # Use OVSController instead of default Controller
-        net = Mininet(topo=MinimalTopo(), controller=OVSController)
+        net = Mininet(topo=MinimalTopo(), build=False)
+        net.addController('c0', controller=OVSController)
+        net.build()
         net.start()
         print("[Mininet Test] Mininet network started.")
         h1, h2 = net.get('h1'), net.get('h2')
         print(f"[Mininet Test] Hosts: {h1.name}, {h2.name}")
-        # Test connectivity
         result = h1.cmd('ping -c1 %s' % h2.IP())
         print(f"[Mininet Test] Ping result from {h1.name} to {h2.name}:\n{result}")
         net.stop()
