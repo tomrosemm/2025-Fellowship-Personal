@@ -476,6 +476,9 @@ def testAndScenarioRunner():
     Run all test and scenario functions and print summary statistics.
     """
 
+    global tested, passed
+    tested, passed = 0, 0
+    
     test_simulated_isolated_multiple_vehicles()
     time.sleep(1)
     # clear_console()
@@ -516,8 +519,6 @@ def testAndScenarioRunner():
     time.sleep(1)
     # clear_console()
     
-    # Replace previous call with new wrapper
-    global tested, passed
     tested, passed = test_sumo_connection_wrapper(tested, passed)
     time.sleep(1)
     # clear_console()

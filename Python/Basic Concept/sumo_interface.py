@@ -12,6 +12,8 @@ def set_debug_mode(enabled):
 def test_sumo_connection():
     """
     Test the connection to SUMO using TraCI.
+    Returns:
+        bool: True if connection succeeded, False otherwise.
     """
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
     sys.path.append(SUMO_TOOLS_PATH)
@@ -22,7 +24,7 @@ def test_sumo_connection():
         if DEBUG_MODE:
             print(f"[SUMO Test] Could not import traci: {e}")
             print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
-        exit(1)
+        return False
 
     SUMO_NET_FILE = "Python/Basic Concept/sumo/simple.net.xml"
 
@@ -43,9 +45,11 @@ def test_sumo_connection():
     proc, sumo_binary, net_file = start_sumo()
     if not proc:
         print("[SUMO Test] Could not start SUMO process.")
-        return
+        return False
+    connected = False
     try:
         traci.init(port=8813)
+        connected = True
         if DEBUG_MODE:
             print("[SUMO Test] Successfully connected to SUMO via traci!")
             print(f"  SUMO binary used: {sumo_binary}")
@@ -67,6 +71,8 @@ def test_sumo_connection():
         except Exception as e:
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
+        time.sleep(1)  # Give OS time to release port
+    return connected
 
 def test_sumo_connection_wrapper(tested, passed):
     """
@@ -74,10 +80,10 @@ def test_sumo_connection_wrapper(tested, passed):
     """
     print("\n=== SUMO Connection Test ===")
     tested += 1
-    try:
-        test_sumo_connection()
+    result = test_sumo_connection()
+    if result:
         passed += 1
         print("[SUMO Test] SUMO connection test completed successfully.\n")
-    except Exception as e:
-        print(f"[SUMO Test] SUMO connection test failed: {e}\n")
+    else:
+        print("[SUMO Test] SUMO connection test failed.\n")
     return tested, passed
