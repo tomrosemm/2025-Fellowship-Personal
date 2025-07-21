@@ -482,7 +482,7 @@ def test_sumo_connection():
         print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
         exit(1)
 
-    SUMO_NET_FILE = "simple.net.xml"
+    SUMO_NET_FILE = "/home/admin/2025-Fellowship-Personal/Python/Basic Concept/sumo/simple.net.xml"
 
     def start_sumo():
         sumo_binary = "sumo"
