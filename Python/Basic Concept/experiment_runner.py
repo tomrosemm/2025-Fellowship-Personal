@@ -58,3 +58,7 @@ def run_single_experiment():
     exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
     exp.run()
     exp.report()
+
+
+if __name__ == "__main__":
+    run_single_experiment()
