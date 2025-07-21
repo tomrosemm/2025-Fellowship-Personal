@@ -35,7 +35,6 @@ from zokrates_interface import (
     set_debug_mode as set_zokrates_debug_mode
 )
 from blockchain import simulate_blockchain_verification     # Simulate blockchain-based verification and logging
-from test_sumo_connection import test_sumo_connection
 
 # Track number of tests run and passed
 tested = 0
@@ -464,6 +463,59 @@ def test_zokrates_end_to_end_multiple_vehicles():
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
 
 
+def test_sumo_connection():
+    """
+    Test the connection to SUMO using TraCI.
+    """
+    import sys
+    import subprocess
+    import os
+    import time
+
+    SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
+    sys.path.append(SUMO_TOOLS_PATH)
+
+    try:
+        import traci
+    except ImportError as e:
+        print(f"[SUMO Test] Could not import traci: {e}")
+        print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
+        exit(1)
+
+    SUMO_NET_FILE = "simple.net.xml"
+
+    def start_sumo():
+        sumo_binary = "sumo"
+        sumo_cmd = [sumo_binary, "-n", SUMO_NET_FILE, "--remote-port", "8813"]
+        try:
+            proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            time.sleep(2)
+            return proc, sumo_binary, SUMO_NET_FILE
+        except Exception as e:
+            print(f"[SUMO Test] Failed to start SUMO: {e}")
+            return None, None, None
+
+    proc, sumo_binary, net_file = start_sumo()
+    if not proc:
+        print("[SUMO Test] Could not start SUMO process.")
+        return
+    try:
+        traci.init(port=8813)
+        print("[SUMO Test] Successfully connected to SUMO via traci!")
+        print(f"  SUMO binary used: {sumo_binary}")
+        print(f"  Network file: {net_file}")
+        print(f"  SUMO process PID: {proc.pid}")
+        print("  SUMO process started and connection established.")
+        traci.close()
+        print("  SUMO connection closed.")
+    except Exception as e:
+        print(f"[SUMO Test] Failed to connect to SUMO: {e}")
+    finally:
+        proc.terminate()
+        proc.wait()
+        print("  SUMO process terminated.")
+
+
 def test_sumo_connection_wrapper():
     """
     Run the SUMO connection test and count as a test.
@@ -472,7 +524,7 @@ def test_sumo_connection_wrapper():
     print("\n=== SUMO Connection Test ===")
     tested += 1
     try:
-        test_sumo_connection()
+        test_sumo_connection()  # Now calls the local function
         passed += 1
         print("[SUMO Test] SUMO connection test completed successfully.\n")
     except Exception as e:
