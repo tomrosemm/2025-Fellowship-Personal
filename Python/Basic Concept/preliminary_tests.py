@@ -35,6 +35,7 @@ from zokrates_interface import (
     set_debug_mode as set_zokrates_debug_mode
 )
 from blockchain import simulate_blockchain_verification     # Simulate blockchain-based verification and logging
+from test_sumo_connection import test_sumo_connection
 
 # Track number of tests run and passed
 tested = 0
@@ -463,6 +464,21 @@ def test_zokrates_end_to_end_multiple_vehicles():
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
 
 
+def test_sumo_connection_wrapper():
+    """
+    Run the SUMO connection test and count as a test.
+    """
+    global tested, passed
+    print("\n=== SUMO Connection Test ===")
+    tested += 1
+    try:
+        test_sumo_connection()
+        passed += 1
+        print("[SUMO Test] SUMO connection test completed successfully.\n")
+    except Exception as e:
+        print(f"[SUMO Test] SUMO connection test failed: {e}\n")
+
+
 """
 Run all test and scenario functions and print summary statistics.
 """
@@ -508,6 +524,10 @@ def testAndScenarioRunner():
     time.sleep(1)
     # clear_console()
     
+    test_sumo_connection_wrapper()
+    time.sleep(1)
+    # clear_console()
+
     print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")
     print(f"Total tests failed: {tested - passed}")

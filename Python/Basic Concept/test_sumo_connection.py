@@ -23,25 +23,31 @@ def start_sumo():
     try:
         proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         time.sleep(2)  # Give SUMO time to start
-        return proc
+        return proc, sumo_binary, SUMO_NET_FILE
     except Exception as e:
         print(f"[SUMO Test] Failed to start SUMO: {e}")
-        return None
+        return None, None, None
 
 def test_sumo_connection():
-    proc = start_sumo()
+    proc, sumo_binary, net_file = start_sumo()
     if not proc:
         print("[SUMO Test] Could not start SUMO process.")
         return
     try:
         traci.init(port=8813)
         print("[SUMO Test] Successfully connected to SUMO via traci!")
+        print(f"  SUMO binary used: {sumo_binary}")
+        print(f"  Network file: {net_file}")
+        print(f"  SUMO process PID: {proc.pid}")
+        print("  SUMO process started and connection established.")
         traci.close()
+        print("  SUMO connection closed.")
     except Exception as e:
         print(f"[SUMO Test] Failed to connect to SUMO: {e}")
     finally:
         proc.terminate()
         proc.wait()
+        print("  SUMO process terminated.")
 
 if __name__ == "__main__":
     test_sumo_connection()

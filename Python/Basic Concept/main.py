@@ -26,6 +26,7 @@ def cli_menu_loop():
         print("10. ZoKrates-Integrated Isolated Test: Multiple Vehicles")
         print("11. ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
         print("12. Run all tests and scenarios with Debug Mode enabled")
+        print("13. Run SUMO Connection Test")
         print("d. Enable Debug Mode")
         print("n. Disable Debug Mode")
         print("0. Exit")
@@ -57,6 +58,8 @@ def cli_menu_loop():
                 preliminary_tests.set_debug_mode(True)
                 preliminary_tests.testAndScenarioRunner()
                 preliminary_tests.set_debug_mode(False)
+            case "13":
+                preliminary_tests.test_sumo_connection_wrapper()
             case "d":
                 preliminary_tests.set_debug_mode(True)
                 print("Debug mode enabled.\n")
