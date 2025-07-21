@@ -483,54 +483,54 @@ def testAndScenarioRunner():
     tested, passed = 0, 0
     
     test_simulated_isolated_multiple_vehicles()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     test_simulated_end_to_end_multiple_vehicles()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     test_zokrates_isolated_multiple_vehicles()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     test_zokrates_end_to_end_multiple_vehicles()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     test_zokrates_connection()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     test_vehicle_rsu_interaction_real_zokrates_dummy()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     test_vehicle_rsu_interaction_simulated()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     test_vehicle_rsu_blockchain_simulated()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     scenario_successful_authentication()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     scenario_failed_authentication()
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
     
     tested, passed = test_sumo_connection_wrapper(tested, passed)
-    time.sleep(1)
+    time.sleep(.5)
     # clear_console()
 
     print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")
     print(f"Total tests failed: {tested - passed}")
     print()
-    time.sleep(3)
+    time.sleep(2)
 
 if __name__ == "__main__":
     testAndScenarioRunner()
