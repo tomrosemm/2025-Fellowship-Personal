@@ -38,7 +38,7 @@ from zokrates_interface import (
 )
 
 from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
-from blockchain_interface import set_debug_mode as set_blockchain_interface_debug_mode
+# from blockchain_interface import set_debug_mode as set_blockchain_interface_debug_mode
 from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
 
 # Track number of tests run and passed
