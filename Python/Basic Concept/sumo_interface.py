@@ -4,6 +4,8 @@ import os
 import time
 import socket
 import psutil
+import xml.etree.ElementTree as ET
+import tempfile
 
 DEBUG_MODE = False
 
@@ -183,6 +185,42 @@ def test_sumo_connection():
         time.sleep(2)  # Give OS time to release port and clean up
     return connected
 
+def create_non_gui_config(original_config_path):
+    """Create a temporary config file without GUI elements."""
+    try:
+        tree = ET.parse(original_config_path)
+        root = tree.getroot()
+        
+        # Remove GUI-related elements
+        gui_elements_to_remove = [
+            'gui-settings-file',
+            'viewsettings-file',
+            'gui-settings',
+            'viewsettings'
+        ]
+        
+        for elem in root.iter():
+            for gui_elem in gui_elements_to_remove:
+                if gui_elem in elem.attrib:
+                    del elem.attrib[gui_elem]
+                gui_child = elem.find(gui_elem)
+                if gui_child is not None:
+                    elem.remove(gui_child)
+        
+        # Create temporary file
+        temp_fd, temp_path = tempfile.mkstemp(suffix='.sumocfg', text=True)
+        os.close(temp_fd)
+        
+        tree.write(temp_path, encoding='utf-8', xml_declaration=True)
+        if DEBUG_MODE:
+            print(f"[SUMO Config Test] Created temporary non-GUI config: {temp_path}")
+        return temp_path
+        
+    except Exception as e:
+        if DEBUG_MODE:
+            print(f"[SUMO Config Test] Failed to create non-GUI config: {e}")
+        return None
+
 def test_sumo_config_connection():
     """
     Test the connection to SUMO using a .sumocfg configuration file.
@@ -217,12 +255,17 @@ def test_sumo_config_connection():
         return False
 
     def start_sumo_with_config():
-        # For config test, always use non-GUI sumo to avoid GUI issues
+        # Create a temporary config file without GUI elements
+        temp_config = create_non_gui_config(SUMO_CONFIG_FILE)
+        if not temp_config:
+            print("[SUMO Config Test] Failed to create temporary config file.")
+            return None, None, None, None
+        
         sumo_binary = "sumo"
         if DEBUG_MODE:
-            print(f"[SUMO Config Test] Using standard sumo binary for config test")
+            print(f"[SUMO Config Test] Using standard sumo binary with cleaned config")
         
-        sumo_cmd = [sumo_binary, "-c", SUMO_CONFIG_FILE, "--remote-port", str(port), "--step-length", "1"]
+        sumo_cmd = [sumo_binary, "-c", temp_config, "--remote-port", str(port), "--step-length", "1"]
         
         try:
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -231,16 +274,26 @@ def test_sumo_config_connection():
                 # SUMO exited early, print stderr for diagnostics
                 stderr = proc.stderr.read().decode()
                 print(f"[SUMO Config Test] SUMO exited early. STDERR:\n{stderr}")
-                return None, None, None
+                # Clean up temp file
+                try:
+                    os.unlink(temp_config)
+                except:
+                    pass
+                return None, None, None, None
             if DEBUG_MODE:
                 print(f"[SUMO Config Test] SUMO process started with PID {proc.pid}")
-            return proc, sumo_binary, SUMO_CONFIG_FILE
+            return proc, sumo_binary, SUMO_CONFIG_FILE, temp_config
         except Exception as e:
             if DEBUG_MODE:
                 print(f"[SUMO Config Test] Failed to start SUMO: {e}")
-            return None, None, None
+            # Clean up temp file
+            try:
+                os.unlink(temp_config)
+            except:
+                pass
+            return None, None, None, None
 
-    proc, sumo_binary, config_file = start_sumo_with_config()
+    proc, sumo_binary, config_file, temp_config = start_sumo_with_config()
     if not proc:
         print("[SUMO Config Test] Could not start SUMO process with configuration file.")
         return False
@@ -281,6 +334,16 @@ def test_sumo_config_connection():
         except Exception as e:
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
+        
+        # Clean up temporary config file
+        if temp_config:
+            try:
+                os.unlink(temp_config)
+                if DEBUG_MODE:
+                    print(f"  Cleaned up temporary config file: {temp_config}")
+            except Exception as e:
+                if DEBUG_MODE:
+                    print(f"  Failed to clean up temp config: {e}")
         
         # Force cleanup port
         kill_processes_on_port(port)
