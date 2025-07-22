@@ -216,6 +216,9 @@ def check_config_file_references(config_path):
 def create_non_gui_config(original_config_path):
     """Create a temporary config file without GUI elements and with essential simulation parameters."""
     try:
+        # Get the directory of the original config file for resolving relative paths
+        original_config_dir = os.path.dirname(original_config_path)
+        
         # First check if files referenced in original config exist
         files_exist, missing_files = check_config_file_references(original_config_path)
         if not files_exist and DEBUG_MODE:
@@ -239,6 +242,30 @@ def create_non_gui_config(original_config_path):
                 gui_child = elem.find(gui_elem)
                 if gui_child is not None:
                     elem.remove(gui_child)
+        
+        # Create temp output directory for files
+        temp_output_dir = tempfile.mkdtemp(prefix='sumo_outputs_')
+        if DEBUG_MODE:
+            print(f"[SUMO Config Test] Created temporary output directory: {temp_output_dir}")
+            
+        # Convert relative paths to absolute paths
+        for elem in root.iter():
+            for attr_name, attr_value in list(elem.attrib.items()):
+                # For input files, make sure they use absolute paths
+                if attr_name == 'value' and attr_value.endswith(('.xml', '.csv', '.json')) and not os.path.isabs(attr_value):
+                    if not attr_value.startswith(('out/', 'output')):
+                        # Input file - convert to absolute path based on original config location
+                        abs_path = os.path.join(original_config_dir, attr_value)
+                        elem.set(attr_name, abs_path)
+                        if DEBUG_MODE:
+                            print(f"[SUMO Config Test] Converting input path: {attr_value} -> {abs_path}")
+                    else:
+                        # Output file - direct to temp directory
+                        output_file = os.path.basename(attr_value)
+                        output_path = os.path.join(temp_output_dir, output_file)
+                        elem.set(attr_name, output_path)
+                        if DEBUG_MODE:
+                            print(f"[SUMO Config Test] Converting output path: {attr_value} -> {output_path}")
         
         # Ensure we have time settings to keep SUMO running
         time_elem = root.find('time')
@@ -271,7 +298,7 @@ def create_non_gui_config(original_config_path):
         error_log_elem = report_elem.find('error-log')
         if error_log_elem is None:
             error_log_elem = ET.SubElement(report_elem, 'error-log')
-            error_log_elem.set('value', 'sumo_errors.log')
+            error_log_elem.set('value', os.path.join(temp_output_dir, 'sumo_errors.log'))
         
         # Create temporary file
         temp_fd, temp_path = tempfile.mkstemp(suffix='.sumocfg', text=True)
@@ -291,12 +318,13 @@ def create_non_gui_config(original_config_path):
             if not files_exist:
                 print(f"[SUMO Config Warning] Some referenced files are missing in the modified config.")
         
-        return temp_path
+        # Return both the temporary config path and the output directory for later cleanup
+        return temp_path, temp_output_dir
         
     except Exception as e:
         if DEBUG_MODE:
             print(f"[SUMO Config Test] Failed to create non-GUI config: {e}")
-        return None
+        return None, None
 
 def test_sumo_config_connection():
     """
@@ -333,10 +361,10 @@ def test_sumo_config_connection():
 
     def start_sumo_with_config():
         # Create a temporary config file without GUI elements
-        temp_config = create_non_gui_config(SUMO_CONFIG_FILE)
+        temp_config, temp_output_dir = create_non_gui_config(SUMO_CONFIG_FILE)
         if not temp_config:
             print("[SUMO Config Test] Failed to create temporary config file.")
-            return None, None, None, None
+            return None, None, None, None, None
         
         sumo_binary = "sumo"
         if DEBUG_MODE:
@@ -347,12 +375,9 @@ def test_sumo_config_connection():
             sumo_binary, 
             "-c", temp_config, 
             "--remote-port", str(port),
-            "--begin", "0",
-            "--end", "100",
-            "--step-length", "1",
-            "--log", "sumo_run.log",
-            "--message-log", "sumo_messages.log",
-            "--error-log", "sumo_errors.log",
+            "--log", os.path.join(temp_output_dir, "sumo_run.log"),
+            "--message-log", os.path.join(temp_output_dir, "sumo_messages.log"),
+            "--error-log", os.path.join(temp_output_dir, "sumo_errors.log"),
             "--no-step-log", 
             "--no-warnings"
         ]
@@ -375,8 +400,9 @@ def test_sumo_config_connection():
                 # Check for log files
                 log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
                 for log_file in log_files:
-                    if os.path.exists(log_file):
-                        with open(log_file, 'r') as f:
+                    log_path = os.path.join(temp_output_dir, log_file)
+                    if os.path.exists(log_path):
+                        with open(log_path, 'r') as f:
                             content = f.read()
                             if content:
                                 print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
@@ -384,26 +410,31 @@ def test_sumo_config_connection():
                 # Clean up temp file
                 try:
                     os.unlink(temp_config)
+                    import shutil
+                    shutil.rmtree(temp_output_dir, ignore_errors=True)
                 except:
                     pass
-                return None, None, None, None
+                return None, None, None, None, None
             if DEBUG_MODE:
                 print(f"[SUMO Config Test] SUMO process started with PID {proc.pid}")
-            return proc, sumo_binary, SUMO_CONFIG_FILE, temp_config
+            return proc, sumo_binary, SUMO_CONFIG_FILE, temp_config, temp_output_dir
         except Exception as e:
             if DEBUG_MODE:
                 print(f"[SUMO Config Test] Failed to start SUMO: {e}")
-            # Clean up temp file
+            # Clean up temp file and directory
             try:
                 os.unlink(temp_config)
+                import shutil
+                shutil.rmtree(temp_output_dir, ignore_errors=True)
             except:
                 pass
-            return None, None, None, None
+            return None, None, None, None, None
 
-    proc, sumo_binary, config_file, temp_config = start_sumo_with_config()
+    proc, sumo_binary, config_file, temp_config, temp_output_dir = start_sumo_with_config()
     if not proc:
         print("[SUMO Config Test] Could not start SUMO process with configuration file.")
         return False
+        
     connected = False
     try:
         time.sleep(2)  # Additional wait before connecting
@@ -463,7 +494,7 @@ def test_sumo_config_connection():
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
         
-        # Clean up temporary config file
+        # Clean up temporary files
         if temp_config:
             try:
                 os.unlink(temp_config)
@@ -473,20 +504,28 @@ def test_sumo_config_connection():
                 if DEBUG_MODE:
                     print(f"  Failed to clean up temp config: {e}")
         
-        # Check for log files after completion
-        log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
-        for log_file in log_files:
-            if os.path.exists(log_file):
+        # Clean up output directory
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try:
+                import shutil
+                # Check log files before removal
+                log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
+                for log_file in log_files:
+                    log_path = os.path.join(temp_output_dir, log_file)
+                    if os.path.exists(log_path):
+                        if DEBUG_MODE:
+                            with open(log_path, 'r') as f:
+                                content = f.read()
+                                if content:
+                                    print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
+                
+                # Remove the temp directory
+                shutil.rmtree(temp_output_dir, ignore_errors=True)
                 if DEBUG_MODE:
-                    with open(log_file, 'r') as f:
-                        content = f.read()
-                        if content:
-                            print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
-                # Clean up log files
-                try:
-                    os.unlink(log_file)
-                except:
-                    pass
+                    print(f"  Cleaned up temporary output directory: {temp_output_dir}")
+            except Exception as e:
+                if DEBUG_MODE:
+                    print(f"  Failed to clean up temp output directory: {e}")
         
         # Force cleanup port
         kill_processes_on_port(port)
