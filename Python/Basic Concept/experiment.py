@@ -31,10 +31,15 @@ class Experiment:
             print("No ZoKrates circuit path provided.")
             return False, None, None
         otp, timestamp = vehicle.generate_otp()
-        secret_hex = vehicle.secret.ljust(64, "0")[:64]  # pad/truncate to 64 hex chars
+        
+        # Convert secret string to hex properly
+        secret_bytes = vehicle.secret.encode('utf-8')  # Convert to bytes
+        secret_hex = secret_bytes.hex().ljust(64, '0')[:64]  # Convert to hex, then pad
+        
         secret_arr = hex_to_field_array(secret_hex)
         otp_arr = hex_to_field_array(otp)
         args = [str(x) for x in secret_arr] + [str(timestamp)] + [str(x) for x in otp_arr]
+        
         if not run_zokrates_compile(self.zokrates_circuit_path):
             print("ZoKrates compilation failed.")
             return False, None, None
