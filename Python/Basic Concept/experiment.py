@@ -14,6 +14,7 @@ from blockchain import simulate_blockchain_verification
 import random
 import os
 import secrets  # <-- add this import
+import time  # <-- add this import
 
 class Experiment:
     DEBUG_MODE = False
@@ -34,18 +35,18 @@ class Experiment:
         if not self.zokrates_circuit_path:
             print("No ZoKrates circuit path provided.")
             return False, None, None
-        otp, timestamp = vehicle.generate_otp()
         circuit_name = os.path.basename(self.zokrates_circuit_path)
         if circuit_name == "dummy.zok":
+            otp, timestamp = vehicle.generate_otp()
             args = [str(timestamp), str(int(otp[:2], 16))]
         elif circuit_name == "auth.zok":
-            # For the new simple auth.zok: secret, timestamp, otp (all fields)
-            # Use a random integer secret for demonstration
+            # For auth.zok: secret, timestamp, otp (all fields)
             secret_int = random.randint(1, 100000)
             vehicle.secret = str(secret_int)
+            timestamp = int(time.time())
             otp_int = secret_int + timestamp
             args = [str(secret_int), str(timestamp), str(otp_int)]
-            otp = str(otp_int)  # <-- Use the sum as the OTP for all steps
+            otp = str(otp_int)
             if self.DEBUG_MODE:
                 print(f"[Experiment] Auth.zok arguments: {args}")
         else:
@@ -77,6 +78,7 @@ class Experiment:
             rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
         else:
             zkp_proof = vehicle.create_zkp(otp, timestamp)
+        # For auth.zok, pass the correct timestamp used in ZoKrates
         verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, timestamp)
         outcome = simulate_blockchain_verification(self.vehicle_id, zkp_proof, timestamp, verification_result)
         return outcome
@@ -97,7 +99,6 @@ class Experiment:
         if self.use_zokrates:
             success, otp, timestamp = self.run_zokrates_workflow(vehicle)
             if circuit_name == "auth.zok" and success:
-                # Ensure RSU secret matches the one used in ZoKrates
                 rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
             if not success:
                 self.result = False
