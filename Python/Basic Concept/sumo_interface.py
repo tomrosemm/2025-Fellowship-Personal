@@ -185,9 +185,42 @@ def test_sumo_connection():
         time.sleep(2)  # Give OS time to release port and clean up
     return connected
 
+def check_config_file_references(config_path):
+    """Check if all files referenced in the configuration file exist."""
+    try:
+        tree = ET.parse(config_path)
+        root = tree.getroot()
+        base_dir = os.path.dirname(config_path)
+        missing_files = []
+        
+        # Find all file references in the XML
+        for elem in root.iter():
+            for attr_name, attr_value in elem.attrib.items():
+                if attr_name.endswith('-file') or attr_name == 'value' and attr_value.endswith(('.xml', '.csv', '.json')):
+                    file_path = os.path.join(base_dir, attr_value)
+                    if not os.path.exists(file_path):
+                        missing_files.append((attr_name, attr_value, file_path))
+        
+        if missing_files:
+            if DEBUG_MODE:
+                print("[SUMO Config Check] Missing referenced files:")
+                for attr_name, attr_value, file_path in missing_files:
+                    print(f"  - {attr_name}='{attr_value}' → {file_path}")
+            return False, missing_files
+        return True, []
+    except Exception as e:
+        if DEBUG_MODE:
+            print(f"[SUMO Config Check] Error checking file references: {e}")
+        return False, []
+
 def create_non_gui_config(original_config_path):
     """Create a temporary config file without GUI elements and with essential simulation parameters."""
     try:
+        # First check if files referenced in original config exist
+        files_exist, missing_files = check_config_file_references(original_config_path)
+        if not files_exist and DEBUG_MODE:
+            print(f"[SUMO Config Warning] Some referenced files are missing in the original config.")
+
         tree = ET.parse(original_config_path)
         root = tree.getroot()
         
@@ -216,35 +249,48 @@ def create_non_gui_config(original_config_path):
         begin_elem = time_elem.find('begin')
         if begin_elem is None:
             begin_elem = ET.SubElement(time_elem, 'begin')
-        begin_elem.set('value', '0')
+            begin_elem.set('value', '0')
         
         end_elem = time_elem.find('end')
         if end_elem is None:
             end_elem = ET.SubElement(time_elem, 'end')
-        end_elem.set('value', '100')  # Run for 100 simulation seconds
+            end_elem.set('value', '100')  # Run for 100 simulation seconds
         
-        step_length_elem = time_elem.find('step-length')
-        if step_length_elem is None:
-            step_length_elem = ET.SubElement(time_elem, 'step-length')
-        step_length_elem.set('value', '1')
+        # Add report settings for verbose output
+        report_elem = root.find('report')
+        if report_elem is None:
+            report_elem = ET.SubElement(root, 'report')
         
-        # Add processing settings to prevent immediate exit
-        processing_elem = root.find('processing')
-        if processing_elem is None:
-            processing_elem = ET.SubElement(root, 'processing')
+        # Add verbose attribute for detailed error reporting
+        verbose_elem = report_elem.find('verbose')
+        if verbose_elem is None:
+            verbose_elem = ET.SubElement(report_elem, 'verbose')
+            verbose_elem.set('value', 'true')
         
-        ignore_route_errors_elem = processing_elem.find('ignore-route-errors')
-        if ignore_route_errors_elem is None:
-            ignore_route_errors_elem = ET.SubElement(processing_elem, 'ignore-route-errors')
-        ignore_route_errors_elem.set('value', 'true')
+        # Add error-log attribute
+        error_log_elem = report_elem.find('error-log')
+        if error_log_elem is None:
+            error_log_elem = ET.SubElement(report_elem, 'error-log')
+            error_log_elem.set('value', 'sumo_errors.log')
         
         # Create temporary file
         temp_fd, temp_path = tempfile.mkstemp(suffix='.sumocfg', text=True)
         os.close(temp_fd)
         
         tree.write(temp_path, encoding='utf-8', xml_declaration=True)
+        
         if DEBUG_MODE:
             print(f"[SUMO Config Test] Created temporary non-GUI config: {temp_path}")
+            # Output the content of the modified config file for debugging
+            print("\n[SUMO Config Test] Modified configuration content:")
+            with open(temp_path, 'r') as f:
+                print(f.read())
+            
+            # Check if files referenced in the new config exist
+            files_exist, missing_files = check_config_file_references(temp_path)
+            if not files_exist:
+                print(f"[SUMO Config Warning] Some referenced files are missing in the modified config.")
+        
         return temp_path
         
     except Exception as e:
@@ -296,15 +342,23 @@ def test_sumo_config_connection():
         if DEBUG_MODE:
             print(f"[SUMO Config Test] Using standard sumo binary with cleaned config")
         
-        # Add additional parameters to keep SUMO stable
+        # Use command line arguments for better diagnostics
         sumo_cmd = [
             sumo_binary, 
             "-c", temp_config, 
             "--remote-port", str(port),
-            "--no-step-log",
-            "--no-warnings", 
-            "--quit-on-end"
+            "--begin", "0",
+            "--end", "100",
+            "--step-length", "1",
+            "--log", "sumo_run.log",
+            "--message-log", "sumo_messages.log",
+            "--error-log", "sumo_errors.log",
+            "--no-step-log", 
+            "--no-warnings"
         ]
+        
+        if DEBUG_MODE:
+            print(f"[SUMO Config Test] SUMO command: {' '.join(sumo_cmd)}")
         
         try:
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -312,7 +366,21 @@ def test_sumo_config_connection():
             if proc.poll() is not None:
                 # SUMO exited early, print stderr for diagnostics
                 stderr = proc.stderr.read().decode()
-                print(f"[SUMO Config Test] SUMO exited early. STDERR:\n{stderr}")
+                stdout = proc.stdout.read().decode()
+                print(f"[SUMO Config Test] SUMO exited early with return code {proc.returncode}.")
+                print(f"[SUMO Config Test] STDERR output:\n{stderr}")
+                if stdout:
+                    print(f"[SUMO Config Test] STDOUT output:\n{stdout}")
+                    
+                # Check for log files
+                log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
+                for log_file in log_files:
+                    if os.path.exists(log_file):
+                        with open(log_file, 'r') as f:
+                            content = f.read()
+                            if content:
+                                print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
+                
                 # Clean up temp file
                 try:
                     os.unlink(temp_config)
@@ -339,6 +407,10 @@ def test_sumo_config_connection():
     connected = False
     try:
         time.sleep(2)  # Additional wait before connecting
+        
+        if DEBUG_MODE:
+            print("[SUMO Config Test] Attempting to connect to SUMO via traci...")
+        
         traci.init(port=port)
         connected = True
         if DEBUG_MODE:
@@ -349,13 +421,24 @@ def test_sumo_config_connection():
             print("  SUMO process started with full configuration and connection established.")
         
         # Perform a simple simulation step to verify functionality
+        if DEBUG_MODE:
+            print("  Performing simulation step...")
         traci.simulationStep()
         if DEBUG_MODE:
             print("  Successfully performed simulation step.")
+            print("  Simulation time:", traci.simulation.getTime())
             
     except Exception as e:
         if DEBUG_MODE:
             print(f"[SUMO Config Test] Failed to connect to SUMO: {e}")
+            # Try to capture stderr from the process if it's still running
+            if proc and proc.poll() is None:
+                try:
+                    stderr = proc.stderr.read(4096).decode()
+                    if stderr:
+                        print(f"[SUMO Config Test] SUMO process stderr:\n{stderr}")
+                except:
+                    pass
     finally:
         # Always ensure proper cleanup
         try:
@@ -390,6 +473,21 @@ def test_sumo_config_connection():
                 if DEBUG_MODE:
                     print(f"  Failed to clean up temp config: {e}")
         
+        # Check for log files after completion
+        log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
+        for log_file in log_files:
+            if os.path.exists(log_file):
+                if DEBUG_MODE:
+                    with open(log_file, 'r') as f:
+                        content = f.read()
+                        if content:
+                            print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
+                # Clean up log files
+                try:
+                    os.unlink(log_file)
+                except:
+                    pass
+        
         # Force cleanup port
         kill_processes_on_port(port)
         time.sleep(2)  # Give OS time to release port and clean up
@@ -423,3 +521,4 @@ def test_sumo_connection_wrapper(tested, passed):
     
     print()
     return tested, passed
+
