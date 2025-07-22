@@ -32,15 +32,9 @@ class Experiment:
             return False, None, None
         otp, timestamp = vehicle.generate_otp()
         
-        # Convert secret string to hex properly
-        secret_bytes = vehicle.secret.encode('utf-8')  # Convert to bytes
-        secret_hex = secret_bytes.hex().ljust(32, '0')[:32]  # Convert to hex, pad to 32 chars (128 bits)
-        
-        secret_arr = hex_to_field_array(secret_hex)
-        otp_hex = otp[:32]  # Take first 32 characters of OTP hex
-        otp_arr = hex_to_field_array(otp_hex)
-        
-        args = [str(x) for x in secret_arr] + [str(timestamp)] + [str(x) for x in otp_arr]
+        # For dummy.zok, we just need two field elements
+        # Use timestamp and first byte of OTP as simple inputs
+        args = [str(timestamp), str(int(otp[:2], 16))]
         
         if not run_zokrates_compile(self.zokrates_circuit_path):
             print("ZoKrates compilation failed.")
@@ -95,7 +89,5 @@ class Experiment:
             self.timestamp = timestamp
             print(f"Experiment '{self.name}' completed with ZoKrates only.")
 
-    def report(self):
-        print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")
     def report(self):
         print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")
