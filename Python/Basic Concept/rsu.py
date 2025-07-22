@@ -72,7 +72,10 @@ class RSU:
         secret = self.vehicle_secrets.get(vehicle_id)
         if not secret:
             return False
-        otp, _unused_timestamp = generate_otp(secret)
+        # Use the provided timestamp to generate the OTP
+        otp_input = f"{secret}{timestamp}".encode()
+        import hashlib
+        otp = hashlib.sha256(otp_input).hexdigest()
         expected_zkp = generate_zkp_proof(otp, timestamp)
         return zkp_proof == expected_zkp
 
