@@ -120,6 +120,3 @@ class Experiment:
             self.result = success
             self.timestamp = timestamp
             print(f"Experiment '{self.name}' completed with ZoKrates only.")
-
-    def report(self):
-        print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")
