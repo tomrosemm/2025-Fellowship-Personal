@@ -10,6 +10,7 @@ from zokrates_interface import (
 )
 
 from blockchain import simulate_blockchain_verification
+import random
 
 class Experiment:
     DEBUG_MODE = False
@@ -34,8 +35,9 @@ class Experiment:
         if not run_zokrates_setup():
             print("ZoKrates setup failed.")
             return False, None, None
-        otp, timestamp = vehicle.generate_otp()
-        args = [otp, str(timestamp)]
+        # Use fixed dummy arguments for dummy.zok
+        args = ["3", "4"]
+        otp, timestamp = "3", "4"
         if not run_zokrates_compute_witness(args):
             print("Witness computation failed.")
             return False, None, None
@@ -80,5 +82,7 @@ class Experiment:
             self.timestamp = timestamp
             print(f"Experiment '{self.name}' completed with ZoKrates only.")
 
+    def report(self):
+        print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")
     def report(self):
         print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")

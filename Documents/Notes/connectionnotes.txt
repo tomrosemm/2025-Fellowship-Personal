@@ -59,7 +59,7 @@ Example: When a vehicle moves in SUMO, your Python script can trigger an authent
 
 4. Example Workflow
 
-SUMO runs the traffic simulation.
+1. SUMO runs the traffic simulation.
 2. At each step, your Python script (using TraCI) checks vehicle positions and triggers authentication.
 3. The authentication message is sent over the simulated network (Mininet/OMNeT++) to the RSU.
 4. The RSU (also a Python process) receives the message, verifies it, and responds.
@@ -77,3 +77,19 @@ In summary:
 Use TraCI to control vehicles in SUMO from Python.
 Use Mininet/OMNeT++ to simulate network communication between vehicles and RSUs.
 Exchange authentication data between your Python logic and the simulators using sockets or APIs.
+
+
+
+
+
+
+To add OMNeT++ to your PATH on Ubuntu, you need to update your shell configuration file so that the omnetpp/bin directory is included in your PATH environment variable.
+
+Open your terminal.
+Find the path to your OMNeT++ installation, e.g., /home/youruser/omnetpp-6.0/bin.
+Open your shell configuration file (e.g., ~/.bashrc for Bash) in a text editor.
+Add the following line at the end of the file:
+
+   export PATH="$PATH:/home/youruser/omnetpp-6.0/bin"
+
+Save the file and run source ~/.bashrc to apply the changes.
