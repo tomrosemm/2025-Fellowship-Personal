@@ -186,7 +186,7 @@ def test_sumo_connection():
     return connected
 
 def create_non_gui_config(original_config_path):
-    """Create a temporary config file without GUI elements."""
+    """Create a temporary config file without GUI elements and with essential simulation parameters."""
     try:
         tree = ET.parse(original_config_path)
         root = tree.getroot()
@@ -206,6 +206,37 @@ def create_non_gui_config(original_config_path):
                 gui_child = elem.find(gui_elem)
                 if gui_child is not None:
                     elem.remove(gui_child)
+        
+        # Ensure we have time settings to keep SUMO running
+        time_elem = root.find('time')
+        if time_elem is None:
+            time_elem = ET.SubElement(root, 'time')
+        
+        # Set or update time parameters
+        begin_elem = time_elem.find('begin')
+        if begin_elem is None:
+            begin_elem = ET.SubElement(time_elem, 'begin')
+        begin_elem.set('value', '0')
+        
+        end_elem = time_elem.find('end')
+        if end_elem is None:
+            end_elem = ET.SubElement(time_elem, 'end')
+        end_elem.set('value', '100')  # Run for 100 simulation seconds
+        
+        step_length_elem = time_elem.find('step-length')
+        if step_length_elem is None:
+            step_length_elem = ET.SubElement(time_elem, 'step-length')
+        step_length_elem.set('value', '1')
+        
+        # Add processing settings to prevent immediate exit
+        processing_elem = root.find('processing')
+        if processing_elem is None:
+            processing_elem = ET.SubElement(root, 'processing')
+        
+        ignore_route_errors_elem = processing_elem.find('ignore-route-errors')
+        if ignore_route_errors_elem is None:
+            ignore_route_errors_elem = ET.SubElement(processing_elem, 'ignore-route-errors')
+        ignore_route_errors_elem.set('value', 'true')
         
         # Create temporary file
         temp_fd, temp_path = tempfile.mkstemp(suffix='.sumocfg', text=True)
@@ -265,7 +296,15 @@ def test_sumo_config_connection():
         if DEBUG_MODE:
             print(f"[SUMO Config Test] Using standard sumo binary with cleaned config")
         
-        sumo_cmd = [sumo_binary, "-c", temp_config, "--remote-port", str(port), "--step-length", "1"]
+        # Add additional parameters to keep SUMO stable
+        sumo_cmd = [
+            sumo_binary, 
+            "-c", temp_config, 
+            "--remote-port", str(port),
+            "--no-step-log",
+            "--no-warnings", 
+            "--quit-on-end"
+        ]
         
         try:
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -299,7 +338,7 @@ def test_sumo_config_connection():
         return False
     connected = False
     try:
-        time.sleep(3)  # Additional wait before connecting
+        time.sleep(2)  # Additional wait before connecting
         traci.init(port=port)
         connected = True
         if DEBUG_MODE:
@@ -308,6 +347,12 @@ def test_sumo_config_connection():
             print(f"  Configuration file: {config_file}")
             print(f"  SUMO process PID: {proc.pid}")
             print("  SUMO process started with full configuration and connection established.")
+        
+        # Perform a simple simulation step to verify functionality
+        traci.simulationStep()
+        if DEBUG_MODE:
+            print("  Successfully performed simulation step.")
+            
     except Exception as e:
         if DEBUG_MODE:
             print(f"[SUMO Config Test] Failed to connect to SUMO: {e}")
