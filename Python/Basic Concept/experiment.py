@@ -27,6 +27,8 @@ class Experiment:
         self.use_blockchain = use_blockchain
         self.result = None
         self.timestamp = None
+        self.vehicle = None  # <-- add
+        self.rsu = None      # <-- add
 
     def run_zokrates_workflow(self, vehicle):
         if not self.zokrates_circuit_path:
@@ -81,6 +83,8 @@ class Experiment:
             secret = "mysecret"
         vehicle = Vehicle(self.vehicle_id, secret)
         rsu = RSU({self.vehicle_id: secret})
+        self.vehicle = vehicle  # <-- store for report()
+        self.rsu = rsu          # <-- store for report()
         otp, timestamp = None, None
         success = True
         if self.use_zokrates:
@@ -102,6 +106,9 @@ class Experiment:
 
     def report(self):
         print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")
+        # Use self.vehicle and self.rsu
+        vehicle = self.vehicle
+        rsu = self.rsu
         if self.use_zokrates:
             success, otp, timestamp = self.run_zokrates_workflow(vehicle)
             if not success:
