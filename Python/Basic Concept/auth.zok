@@ -1,12 +1,8 @@
-import "hashes/sha256/sha256.zok" as sha256
+import "hashes/sha256/sha256packed.zok" as sha256packed
 
-def main(private field[8] secret, field timestamp, field[8] otp) -> bool {
-    field[8] hash = sha256(secret, [timestamp]);
-    bool valid = true;
-    for u32 i in 0..8 {
-        if hash[i] != otp[i] {
-            valid = false;
-        }
-    }
+def main(private field[4] secret, field timestamp, field[4] otp) -> bool {
+    field[2] input = [secret[0] + secret[1] * 256 + secret[2] * 65536 + secret[3] * 16777216, timestamp];
+    field[2] hash = sha256packed(input);
+    bool valid = (hash[0] == otp[0] + otp[1] * 256 + otp[2] * 65536 + otp[3] * 16777216) && (hash[1] == 0);
     return valid;
 }

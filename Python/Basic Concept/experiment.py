@@ -34,10 +34,12 @@ class Experiment:
         
         # Convert secret string to hex properly
         secret_bytes = vehicle.secret.encode('utf-8')  # Convert to bytes
-        secret_hex = secret_bytes.hex().ljust(64, '0')[:64]  # Convert to hex, then pad
+        secret_hex = secret_bytes.hex().ljust(32, '0')[:32]  # Convert to hex, pad to 32 chars (128 bits)
         
         secret_arr = hex_to_field_array(secret_hex)
-        otp_arr = hex_to_field_array(otp)
+        otp_hex = otp[:32]  # Take first 32 characters of OTP hex
+        otp_arr = hex_to_field_array(otp_hex)
+        
         args = [str(x) for x in secret_arr] + [str(timestamp)] + [str(x) for x in otp_arr]
         
         if not run_zokrates_compile(self.zokrates_circuit_path):

@@ -205,10 +205,12 @@ def run_zokrates_verify():
 
 
 def hex_to_field_array(hex_str):
-    # Converts a 64-char hex string to 8 field elements (each 32 bits)
+    # Converts a hex string to 4 field elements (each 64 bits)
     arr = []
-    for i in range(0, 64, 8):
-        arr.append(int(hex_str[i:i+8], 16))
+    # Pad to 32 characters (128 bits)
+    padded_hex = hex_str.ljust(32, '0')[:32]
+    for i in range(0, 32, 8):
+        arr.append(int(padded_hex[i:i+8], 16))
     return arr
 
 
