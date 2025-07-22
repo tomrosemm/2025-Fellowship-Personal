@@ -78,8 +78,8 @@ def run_auth_experiment():
 
 if __name__ == "__main__":
     # Run both experiments
-    print("\n=== Running Basic Dummy Circuit Experiment ===")
-    run_single_experiment()
+    # print("\n=== Running Basic Dummy Circuit Experiment ===")
+    # run_single_experiment()
     
     print("\n=== Running Cryptographically Meaningful Auth Circuit Experiment ===")
     run_auth_experiment()

@@ -14,6 +14,7 @@ Methodology:
 import time
 import hashlib
 
+
 """
 Generate a one-time password (OTP) using the provided secret and current timestamp.
 Args:
