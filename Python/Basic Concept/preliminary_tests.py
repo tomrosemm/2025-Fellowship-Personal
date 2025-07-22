@@ -526,6 +526,14 @@ def testAndScenarioRunner():
     time.sleep(.5)
     # clear_console()
 
+    # --- SUMO cleanup after connection tests ---
+    from sumo_interface import cleanup_traci_connection, kill_processes_on_port
+    cleanup_traci_connection()
+    kill_processes_on_port(8813)
+    kill_processes_on_port(8814)
+    time.sleep(2)
+    # ------------------------------------------
+
     print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")
     print(f"Total tests failed: {tested - passed}")
