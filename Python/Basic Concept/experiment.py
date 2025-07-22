@@ -83,12 +83,15 @@ class Experiment:
             secret = "mysecret"
         vehicle = Vehicle(self.vehicle_id, secret)
         rsu = RSU({self.vehicle_id: secret})
-        self.vehicle = vehicle  # <-- store for report()
-        self.rsu = rsu          # <-- store for report()
+        self.vehicle = vehicle
+        self.rsu = rsu
         otp, timestamp = None, None
         success = True
         if self.use_zokrates:
             success, otp, timestamp = self.run_zokrates_workflow(vehicle)
+            if circuit_name == "auth.zok" and success:
+                # Ensure RSU secret matches the one used in ZoKrates
+                rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
             if not success:
                 self.result = False
                 return
@@ -106,11 +109,13 @@ class Experiment:
 
     def report(self):
         print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")
-        # Use self.vehicle and self.rsu
         vehicle = self.vehicle
         rsu = self.rsu
+        circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
         if self.use_zokrates:
             success, otp, timestamp = self.run_zokrates_workflow(vehicle)
+            if circuit_name == "auth.zok" and success:
+                rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
             if not success:
                 self.result = False
                 return
@@ -123,7 +128,6 @@ class Experiment:
             else:
                 print(f"Experiment '{self.name}' failed during blockchain verification.")
         else:
-            # If not using blockchain, just report ZoKrates result
             self.result = success
             self.timestamp = timestamp
             print(f"Experiment '{self.name}' completed with ZoKrates only.")
