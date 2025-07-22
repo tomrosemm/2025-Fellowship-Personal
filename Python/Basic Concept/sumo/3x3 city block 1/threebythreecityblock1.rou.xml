@@ -1,0 +1,293 @@
+<routes>
+
+    <vType id="car1" accel="0.8" decel="4.5" sigma="0.5" length="5" maxSpeed="45"/>
+
+    <!-- From N1enter -->
+    <flow vehsPerHour="12.5" id="f1" type="car1" begin="0" end="1000" from="N1enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f2" type="car1" begin="0" end="1000" from="N1enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f3" type="car1" begin="0" end="1000" from="N1enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f4" type="car1" begin="0" end="1000" from="N1enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f5" type="car1" begin="0" end="1000" from="N1enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f6" type="car1" begin="0" end="1000" from="N1enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f7" type="car1" begin="0" end="1000" from="N1enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f8" type="car1" begin="0" end="1000" from="N1enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f9" type="car1" begin="0" end="1000" from="N1enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f10" type="car1" begin="0" end="1000" from="N1enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f11" type="car1" begin="0" end="1000" from="N1enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f12" type="car1" begin="0" end="1000" from="N1enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f13" type="car1" begin="0" end="1000" from="N1enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f14" type="car1" begin="0" end="1000" from="N1enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f15" type="car1" begin="0" end="1000" from="N1enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f16" type="car1" begin="0" end="1000" from="N1enter" to="W1exit"/>
+
+    <!-- From N2enter -->
+    <flow vehsPerHour="12.5" id="f17" type="car1" begin="0" end="1000" from="N2enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f18" type="car1" begin="0" end="1000" from="N2enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f19" type="car1" begin="0" end="1000" from="N2enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f20" type="car1" begin="0" end="1000" from="N2enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f21" type="car1" begin="0" end="1000" from="N2enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f22" type="car1" begin="0" end="1000" from="N2enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f23" type="car1" begin="0" end="1000" from="N2enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f24" type="car1" begin="0" end="1000" from="N2enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f25" type="car1" begin="0" end="1000" from="N2enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f26" type="car1" begin="0" end="1000" from="N2enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f27" type="car1" begin="0" end="1000" from="N2enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f28" type="car1" begin="0" end="1000" from="N2enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f29" type="car1" begin="0" end="1000" from="N2enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f30" type="car1" begin="0" end="1000" from="N2enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f31" type="car1" begin="0" end="1000" from="N2enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f32" type="car1" begin="0" end="1000" from="N2enter" to="W1exit"/>
+
+    <!-- From N3enter -->
+    <flow vehsPerHour="12.5" id="f33" type="car1" begin="0" end="1000" from="N3enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f34" type="car1" begin="0" end="1000" from="N3enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f35" type="car1" begin="0" end="1000" from="N3enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f36" type="car1" begin="0" end="1000" from="N3enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f37" type="car1" begin="0" end="1000" from="N3enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f38" type="car1" begin="0" end="1000" from="N3enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f39" type="car1" begin="0" end="1000" from="N3enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f40" type="car1" begin="0" end="1000" from="N3enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f41" type="car1" begin="0" end="1000" from="N3enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f42" type="car1" begin="0" end="1000" from="N3enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f43" type="car1" begin="0" end="1000" from="N3enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f44" type="car1" begin="0" end="1000" from="N3enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f45" type="car1" begin="0" end="1000" from="N3enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f46" type="car1" begin="0" end="1000" from="N3enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f47" type="car1" begin="0" end="1000" from="N3enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f48" type="car1" begin="0" end="1000" from="N3enter" to="W1exit"/>
+
+    <!-- From N4enter -->
+    <flow vehsPerHour="12.5" id="f49" type="car1" begin="0" end="1000" from="N4enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f50" type="car1" begin="0" end="1000" from="N4enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f51" type="car1" begin="0" end="1000" from="N4enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f52" type="car1" begin="0" end="1000" from="N4enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f53" type="car1" begin="0" end="1000" from="N4enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f54" type="car1" begin="0" end="1000" from="N4enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f55" type="car1" begin="0" end="1000" from="N4enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f56" type="car1" begin="0" end="1000" from="N4enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f57" type="car1" begin="0" end="1000" from="N4enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f58" type="car1" begin="0" end="1000" from="N4enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f59" type="car1" begin="0" end="1000" from="N4enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f60" type="car1" begin="0" end="1000" from="N4enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f61" type="car1" begin="0" end="1000" from="N4enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f62" type="car1" begin="0" end="1000" from="N4enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f63" type="car1" begin="0" end="1000" from="N4enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f64" type="car1" begin="0" end="1000" from="N4enter" to="W1exit"/>
+
+    <!-- From E1enter -->
+    <flow vehsPerHour="12.5" id="f65" type="car1" begin="0" end="1000" from="E1enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f66" type="car1" begin="0" end="1000" from="E1enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f67" type="car1" begin="0" end="1000" from="E1enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f68" type="car1" begin="0" end="1000" from="E1enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f69" type="car1" begin="0" end="1000" from="E1enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f70" type="car1" begin="0" end="1000" from="E1enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f71" type="car1" begin="0" end="1000" from="E1enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f72" type="car1" begin="0" end="1000" from="E1enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f73" type="car1" begin="0" end="1000" from="E1enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f74" type="car1" begin="0" end="1000" from="E1enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f75" type="car1" begin="0" end="1000" from="E1enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f76" type="car1" begin="0" end="1000" from="E1enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f77" type="car1" begin="0" end="1000" from="E1enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f78" type="car1" begin="0" end="1000" from="E1enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f79" type="car1" begin="0" end="1000" from="E1enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f80" type="car1" begin="0" end="1000" from="E1enter" to="W1exit"/>
+
+    <!-- From E2enter -->
+    <flow vehsPerHour="12.5" id="f81" type="car1" begin="0" end="1000" from="E2enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f82" type="car1" begin="0" end="1000" from="E2enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f83" type="car1" begin="0" end="1000" from="E2enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f84" type="car1" begin="0" end="1000" from="E2enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f85" type="car1" begin="0" end="1000" from="E2enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f86" type="car1" begin="0" end="1000" from="E2enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f87" type="car1" begin="0" end="1000" from="E2enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f88" type="car1" begin="0" end="1000" from="E2enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f89" type="car1" begin="0" end="1000" from="E2enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f90" type="car1" begin="0" end="1000" from="E2enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f91" type="car1" begin="0" end="1000" from="E2enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f92" type="car1" begin="0" end="1000" from="E2enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f93" type="car1" begin="0" end="1000" from="E2enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f94" type="car1" begin="0" end="1000" from="E2enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f95" type="car1" begin="0" end="1000" from="E2enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f96" type="car1" begin="0" end="1000" from="E2enter" to="W1exit"/>
+
+    <!-- From E3enter -->
+    <flow vehsPerHour="12.5" id="f97" type="car1" begin="0" end="1000" from="E3enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f98" type="car1" begin="0" end="1000" from="E3enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f99" type="car1" begin="0" end="1000" from="E3enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f100" type="car1" begin="0" end="1000" from="E3enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f101" type="car1" begin="0" end="1000" from="E3enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f102" type="car1" begin="0" end="1000" from="E3enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f103" type="car1" begin="0" end="1000" from="E3enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f104" type="car1" begin="0" end="1000" from="E3enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f105" type="car1" begin="0" end="1000" from="E3enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f106" type="car1" begin="0" end="1000" from="E3enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f107" type="car1" begin="0" end="1000" from="E3enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f108" type="car1" begin="0" end="1000" from="E3enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f109" type="car1" begin="0" end="1000" from="E3enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f110" type="car1" begin="0" end="1000" from="E3enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f111" type="car1" begin="0" end="1000" from="E3enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f112" type="car1" begin="0" end="1000" from="E3enter" to="W1exit"/>
+
+    <!-- From E4enter -->
+    <flow vehsPerHour="12.5" id="f113" type="car1" begin="0" end="1000" from="E4enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f114" type="car1" begin="0" end="1000" from="E4enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f115" type="car1" begin="0" end="1000" from="E4enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f116" type="car1" begin="0" end="1000" from="E4enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f117" type="car1" begin="0" end="1000" from="E4enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f118" type="car1" begin="0" end="1000" from="E4enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f119" type="car1" begin="0" end="1000" from="E4enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f120" type="car1" begin="0" end="1000" from="E4enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f121" type="car1" begin="0" end="1000" from="E4enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f122" type="car1" begin="0" end="1000" from="E4enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f123" type="car1" begin="0" end="1000" from="E4enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f124" type="car1" begin="0" end="1000" from="E4enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f125" type="car1" begin="0" end="1000" from="E4enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f126" type="car1" begin="0" end="1000" from="E4enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f127" type="car1" begin="0" end="1000" from="E4enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f128" type="car1" begin="0" end="1000" from="E4enter" to="W1exit"/>
+
+    <!-- From S1enter -->
+    <flow vehsPerHour="12.5" id="f129" type="car1" begin="0" end="1000" from="S1enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f130" type="car1" begin="0" end="1000" from="S1enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f131" type="car1" begin="0" end="1000" from="S1enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f132" type="car1" begin="0" end="1000" from="S1enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f133" type="car1" begin="0" end="1000" from="S1enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f134" type="car1" begin="0" end="1000" from="S1enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f135" type="car1" begin="0" end="1000" from="S1enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f136" type="car1" begin="0" end="1000" from="S1enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f137" type="car1" begin="0" end="1000" from="S1enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f138" type="car1" begin="0" end="1000" from="S1enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f139" type="car1" begin="0" end="1000" from="S1enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f140" type="car1" begin="0" end="1000" from="S1enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f141" type="car1" begin="0" end="1000" from="S1enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f142" type="car1" begin="0" end="1000" from="S1enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f143" type="car1" begin="0" end="1000" from="S1enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f144" type="car1" begin="0" end="1000" from="S1enter" to="W1exit"/>
+
+    <!-- From S2enter -->
+    <flow vehsPerHour="12.5" id="f145" type="car1" begin="0" end="1000" from="S2enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f146" type="car1" begin="0" end="1000" from="S2enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f147" type="car1" begin="0" end="1000" from="S2enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f148" type="car1" begin="0" end="1000" from="S2enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f149" type="car1" begin="0" end="1000" from="S2enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f150" type="car1" begin="0" end="1000" from="S2enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f151" type="car1" begin="0" end="1000" from="S2enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f152" type="car1" begin="0" end="1000" from="S2enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f153" type="car1" begin="0" end="1000" from="S2enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f154" type="car1" begin="0" end="1000" from="S2enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f155" type="car1" begin="0" end="1000" from="S2enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f156" type="car1" begin="0" end="1000" from="S2enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f157" type="car1" begin="0" end="1000" from="S2enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f158" type="car1" begin="0" end="1000" from="S2enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f159" type="car1" begin="0" end="1000" from="S2enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f160" type="car1" begin="0" end="1000" from="S2enter" to="W1exit"/>
+
+    <!-- From S3enter -->
+    <flow vehsPerHour="12.5" id="f161" type="car1" begin="0" end="1000" from="S3enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f162" type="car1" begin="0" end="1000" from="S3enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f163" type="car1" begin="0" end="1000" from="S3enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f164" type="car1" begin="0" end="1000" from="S3enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f165" type="car1" begin="0" end="1000" from="S3enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f166" type="car1" begin="0" end="1000" from="S3enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f167" type="car1" begin="0" end="1000" from="S3enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f168" type="car1" begin="0" end="1000" from="S3enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f169" type="car1" begin="0" end="1000" from="S3enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f170" type="car1" begin="0" end="1000" from="S3enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f171" type="car1" begin="0" end="1000" from="S3enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f172" type="car1" begin="0" end="1000" from="S3enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f173" type="car1" begin="0" end="1000" from="S3enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f174" type="car1" begin="0" end="1000" from="S3enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f175" type="car1" begin="0" end="1000" from="S3enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f176" type="car1" begin="0" end="1000" from="S3enter" to="W1exit"/>
+
+    <!-- From S4enter -->
+    <flow vehsPerHour="12.5" id="f177" type="car1" begin="0" end="1000" from="S4enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f178" type="car1" begin="0" end="1000" from="S4enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f179" type="car1" begin="0" end="1000" from="S4enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f180" type="car1" begin="0" end="1000" from="S4enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f181" type="car1" begin="0" end="1000" from="S4enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f182" type="car1" begin="0" end="1000" from="S4enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f183" type="car1" begin="0" end="1000" from="S4enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f184" type="car1" begin="0" end="1000" from="S4enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f185" type="car1" begin="0" end="1000" from="S4enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f186" type="car1" begin="0" end="1000" from="S4enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f187" type="car1" begin="0" end="1000" from="S4enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f188" type="car1" begin="0" end="1000" from="S4enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f189" type="car1" begin="0" end="1000" from="S4enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f190" type="car1" begin="0" end="1000" from="S4enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f191" type="car1" begin="0" end="1000" from="S4enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f192" type="car1" begin="0" end="1000" from="S4enter" to="W1exit"/>
+
+    <!-- From W1enter -->
+    <flow vehsPerHour="12.5" id="f193" type="car1" begin="0" end="1000" from="W1enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f194" type="car1" begin="0" end="1000" from="W1enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f195" type="car1" begin="0" end="1000" from="W1enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f196" type="car1" begin="0" end="1000" from="W1enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f197" type="car1" begin="0" end="1000" from="W1enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f198" type="car1" begin="0" end="1000" from="W1enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f199" type="car1" begin="0" end="1000" from="W1enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f200" type="car1" begin="0" end="1000" from="W1enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f201" type="car1" begin="0" end="1000" from="W1enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f202" type="car1" begin="0" end="1000" from="W1enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f203" type="car1" begin="0" end="1000" from="W1enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f204" type="car1" begin="0" end="1000" from="W1enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f205" type="car1" begin="0" end="1000" from="W1enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f206" type="car1" begin="0" end="1000" from="W1enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f207" type="car1" begin="0" end="1000" from="W1enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f208" type="car1" begin="0" end="1000" from="W1enter" to="W1exit"/>
+
+    <!-- From W2enter -->
+    <flow vehsPerHour="12.5" id="f209" type="car1" begin="0" end="1000" from="W2enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f210" type="car1" begin="0" end="1000" from="W2enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f211" type="car1" begin="0" end="1000" from="W2enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f212" type="car1" begin="0" end="1000" from="W2enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f213" type="car1" begin="0" end="1000" from="W2enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f214" type="car1" begin="0" end="1000" from="W2enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f215" type="car1" begin="0" end="1000" from="W2enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f216" type="car1" begin="0" end="1000" from="W2enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f217" type="car1" begin="0" end="1000" from="W2enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f218" type="car1" begin="0" end="1000" from="W2enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f219" type="car1" begin="0" end="1000" from="W2enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f220" type="car1" begin="0" end="1000" from="W2enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f221" type="car1" begin="0" end="1000" from="W2enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f222" type="car1" begin="0" end="1000" from="W2enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f223" type="car1" begin="0" end="1000" from="W2enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f224" type="car1" begin="0" end="1000" from="W2enter" to="W1exit"/>
+
+    <!-- From W3enter -->
+    <flow vehsPerHour="12.5" id="f225" type="car1" begin="0" end="1000" from="W3enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f226" type="car1" begin="0" end="1000" from="W3enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f227" type="car1" begin="0" end="1000" from="W3enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f228" type="car1" begin="0" end="1000" from="W3enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f229" type="car1" begin="0" end="1000" from="W3enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f230" type="car1" begin="0" end="1000" from="W3enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f231" type="car1" begin="0" end="1000" from="W3enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f232" type="car1" begin="0" end="1000" from="W3enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f233" type="car1" begin="0" end="1000" from="W3enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f234" type="car1" begin="0" end="1000" from="W3enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f235" type="car1" begin="0" end="1000" from="W3enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f236" type="car1" begin="0" end="1000" from="W3enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f237" type="car1" begin="0" end="1000" from="W3enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f238" type="car1" begin="0" end="1000" from="W3enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f239" type="car1" begin="0" end="1000" from="W3enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f240" type="car1" begin="0" end="1000" from="W3enter" to="W1exit"/>
+
+    <!-- From W4enter -->
+    <flow vehsPerHour="12.5" id="f241" type="car1" begin="0" end="1000" from="W4enter" to="N4exit"/>
+    <flow vehsPerHour="12.5" id="f242" type="car1" begin="0" end="1000" from="W4enter" to="N3exit"/>
+    <flow vehsPerHour="12.5" id="f243" type="car1" begin="0" end="1000" from="W4enter" to="N2exit"/>
+    <flow vehsPerHour="12.5" id="f244" type="car1" begin="0" end="1000" from="W4enter" to="N1exit"/>
+    <flow vehsPerHour="12.5" id="f245" type="car1" begin="0" end="1000" from="W4enter" to="E4exit"/>
+    <flow vehsPerHour="12.5" id="f246" type="car1" begin="0" end="1000" from="W4enter" to="E3exit"/>
+    <flow vehsPerHour="12.5" id="f247" type="car1" begin="0" end="1000" from="W4enter" to="E2exit"/>
+    <flow vehsPerHour="12.5" id="f248" type="car1" begin="0" end="1000" from="W4enter" to="E1exit"/>
+    <flow vehsPerHour="12.5" id="f249" type="car1" begin="0" end="1000" from="W4enter" to="S4exit"/>
+    <flow vehsPerHour="12.5" id="f250" type="car1" begin="0" end="1000" from="W4enter" to="S3exit"/>
+    <flow vehsPerHour="12.5" id="f251" type="car1" begin="0" end="1000" from="W4enter" to="S2exit"/>
+    <flow vehsPerHour="12.5" id="f252" type="car1" begin="0" end="1000" from="W4enter" to="S1exit"/>
+    <flow vehsPerHour="12.5" id="f253" type="car1" begin="0" end="1000" from="W4enter" to="W4exit"/>
+    <flow vehsPerHour="12.5" id="f254" type="car1" begin="0" end="1000" from="W4enter" to="W3exit"/>
+    <flow vehsPerHour="12.5" id="f255" type="car1" begin="0" end="1000" from="W4enter" to="W2exit"/>
+    <flow vehsPerHour="12.5" id="f256" type="car1" begin="0" end="1000" from="W4enter" to="W1exit"/>
+
+</routes>

@@ -28,7 +28,7 @@ def cli_menu_loop():
         print("9 - Simulated End-to-End Test: Multiple Vehicles")
         print("10 - ZoKrates-Integrated Isolated Test: Multiple Vehicles")
         print("11 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
-        print("12 - Run SUMO Connection Test")
+        print("12 - Run SUMO Connection Tests (Basic Network + Configuration File)")
         print("13 - Run ZoKrates CLI Connection Test")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
