@@ -40,7 +40,7 @@ class Experiment:
             otp, timestamp = vehicle.generate_otp()
             args = [str(timestamp), str(int(otp[:2], 16))]
         elif circuit_name == "auth.zok":
-            # For auth.zok: secret, timestamp, otp (all fields)
+            # For auth.zok: secret, timestamp, otp (all fields, as sum)
             secret_int = random.randint(1, 100000)
             vehicle.secret = str(secret_int)
             timestamp = int(time.time())
@@ -72,15 +72,13 @@ class Experiment:
     def run_blockchain_verification(self, vehicle, rsu, otp, timestamp):
         circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
         if circuit_name == "auth.zok":
-            # For auth.zok, use the sum as the OTP for ZKP
-            zkp_proof = vehicle.create_zkp(otp, timestamp)
-            # Ensure RSU secret matches vehicle.secret
+            # For auth.zok, ZKP is just the tuple (secret, timestamp, otp)
+            zkp_proof = (vehicle.secret, timestamp, otp)
             rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
         else:
             zkp_proof = vehicle.create_zkp(otp, timestamp)
-        # For auth.zok, pass the correct timestamp used in ZoKrates
         verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, timestamp)
-        outcome = simulate_blockchain_verification(self.vehicle_id, zkp_proof, timestamp, verification_result)
+        outcome = simulate_blockchain_verification(self.vehicle_id, str(zkp_proof), timestamp, verification_result)
         return outcome
 
     def run(self):
@@ -137,5 +135,7 @@ class Experiment:
                 print(f"Experiment '{self.name}' failed during blockchain verification.")
         else:
             self.result = success
+            self.timestamp = timestamp
+            print(f"Experiment '{self.name}' completed with ZoKrates only.")
             self.timestamp = timestamp
             print(f"Experiment '{self.name}' completed with ZoKrates only.")

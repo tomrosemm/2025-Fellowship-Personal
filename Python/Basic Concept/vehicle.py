@@ -88,6 +88,31 @@ class Vehicle:
         return generate_zkp_proof(otp, timestamp)
 
 
+    """
+    Function: generate_otp_sum
+
+    Generate an OTP as a simple sum for auth.zok experiments.
+    
+    Args:
+        timestamp (int, optional): The timestamp to use for OTP. Defaults to None.
+        
+    Returns:
+        tuple: (otp (str), timestamp (int))
+    
+    Steps:
+    1. If no timestamp is provided, get the current Unix timestamp as integer
+    2. Calculate the OTP as the sum of secret and timestamp
+    3. Return the OTP and timestamp
+    """
+    def generate_otp_sum(self, timestamp=None):
+        # For auth.zok: otp = int(secret) + timestamp
+        if timestamp is None:
+            import time
+            timestamp = int(time.time())
+        otp = str(int(self.secret) + int(timestamp))
+        return otp, timestamp
+
+
 if __name__ == "__main__":
     # Simple test for Vehicle class
     test_vehicle = Vehicle("TEST_VEHICLE", "mysecret")

@@ -72,7 +72,12 @@ class RSU:
         secret = self.vehicle_secrets.get(vehicle_id)
         if not secret:
             return False
-        # Use the provided timestamp to generate the OTP
+        # If zkp_proof is a tuple, use sum logic for auth.zok
+        if isinstance(zkp_proof, tuple) and len(zkp_proof) == 3:
+            secret_val, ts_val, otp_val = zkp_proof
+            expected_otp = str(int(secret_val) + int(ts_val))
+            return str(otp_val) == expected_otp and str(secret) == str(secret_val) and int(ts_val) == int(timestamp)
+        # Otherwise, use hash logic for dummy.zok
         otp_input = f"{secret}{timestamp}".encode()
         import hashlib
         otp = hashlib.sha256(otp_input).hexdigest()
