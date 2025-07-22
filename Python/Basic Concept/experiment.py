@@ -13,6 +13,7 @@ from zokrates_interface import (
 from blockchain import simulate_blockchain_verification
 import random
 import os
+import secrets  # <-- add this import
 
 class Experiment:
     DEBUG_MODE = False
@@ -90,7 +91,11 @@ class Experiment:
     def run(self):
         print(f"Running Experiment: {self.name}")
         # Use a random secret for each experiment, and ensure RSU uses the same secret
-        secret = "mysecret"
+        circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
+        if circuit_name == "auth.zok":
+            secret = secrets.token_hex(16)  # 32 hex chars, 128 bits
+        else:
+            secret = "mysecret"
         vehicle = Vehicle(self.vehicle_id, secret)
         rsu = RSU({self.vehicle_id: secret})
 
