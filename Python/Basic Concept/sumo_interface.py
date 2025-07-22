@@ -2,12 +2,31 @@ import sys
 import subprocess
 import os
 import time
+import socket
 
 DEBUG_MODE = False
 
 def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
+
+def is_port_available(port):
+    """Check if a port is available for use."""
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind(('localhost', port))
+            return True
+    except OSError:
+        return False
+
+def wait_for_port_available(port, timeout=10):
+    """Wait for a port to become available."""
+    start_time = time.time()
+    while time.time() - start_time < timeout:
+        if is_port_available(port):
+            return True
+        time.sleep(0.5)
+    return False
 
 def cleanup_traci_connection():
     """
@@ -38,6 +57,12 @@ def test_sumo_connection():
     # Clean up any existing connections first
     cleanup_traci_connection()
     
+    # Wait for port to be available
+    port = 8813
+    if not wait_for_port_available(port, timeout=10):
+        print(f"[SUMO Test] Port {port} is not available after waiting.")
+        return False
+    
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
     sys.path.append(SUMO_TOOLS_PATH)
 
@@ -57,7 +82,7 @@ def test_sumo_connection():
 
     def start_sumo():
         sumo_binary = "sumo"
-        sumo_cmd = [sumo_binary, "-n", SUMO_NET_FILE, "--remote-port", "8813"]
+        sumo_cmd = [sumo_binary, "-n", SUMO_NET_FILE, "--remote-port", str(port)]
         try:
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             time.sleep(2)
@@ -80,7 +105,7 @@ def test_sumo_connection():
         return False
     connected = False
     try:
-        traci.init(port=8813)
+        traci.init(port=port)
         connected = True
         if DEBUG_MODE:
             print("[SUMO Test] Successfully connected to SUMO via traci!")
@@ -110,7 +135,7 @@ def test_sumo_connection():
         except Exception as e:
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
-        time.sleep(2)  # Give OS more time to release port and clean up
+        time.sleep(3)  # Give OS more time to release port and clean up
     return connected
 
 def test_sumo_config_connection():
@@ -121,6 +146,12 @@ def test_sumo_config_connection():
     """
     # Clean up any existing connections first
     cleanup_traci_connection()
+    
+    # Wait for port to be available
+    port = 8814
+    if not wait_for_port_available(port, timeout=10):
+        print(f"[SUMO Config Test] Port {port} is not available after waiting.")
+        return False
     
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
     sys.path.append(SUMO_TOOLS_PATH)
@@ -150,25 +181,16 @@ def test_sumo_config_connection():
             return False
 
     def start_sumo_with_config():
-        # Check if config contains GUI elements and choose appropriate binary
-        if check_if_gui_config(SUMO_CONFIG_FILE):
-            sumo_binary = "sumo-gui"
-            if DEBUG_MODE:
-                print(f"[SUMO Config Test] Detected GUI configuration, using sumo-gui")
-        else:
-            sumo_binary = "sumo"
-            if DEBUG_MODE:
-                print(f"[SUMO Config Test] Using standard sumo binary")
+        # For config test, always use non-GUI sumo to avoid GUI issues
+        sumo_binary = "sumo"
+        if DEBUG_MODE:
+            print(f"[SUMO Config Test] Using standard sumo binary for config test")
         
-        sumo_cmd = [sumo_binary, "-c", SUMO_CONFIG_FILE, "--remote-port", "8814"]
+        sumo_cmd = [sumo_binary, "-c", SUMO_CONFIG_FILE, "--remote-port", str(port)]
         
-        # Add --start and --quit-on-end for GUI version to prevent hanging
-        if sumo_binary == "sumo-gui":
-            sumo_cmd.extend(["--start", "--quit-on-end"])
-            
         try:
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            time.sleep(3)  # Give GUI version more time to start
+            time.sleep(3)  # Give more time to start
             if proc.poll() is not None:
                 # SUMO exited early, print stderr for diagnostics
                 stderr = proc.stderr.read().decode()
@@ -188,7 +210,7 @@ def test_sumo_config_connection():
         return False
     connected = False
     try:
-        traci.init(port=8814)
+        traci.init(port=port)
         connected = True
         if DEBUG_MODE:
             print("[SUMO Config Test] Successfully connected to SUMO via traci with configuration file!")
@@ -218,7 +240,7 @@ def test_sumo_config_connection():
         except Exception as e:
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
-        time.sleep(2)  # Give OS more time to release port and clean up
+        time.sleep(3)  # Give OS more time to release port and clean up
     return connected
 
 def test_sumo_connection_wrapper(tested, passed):
