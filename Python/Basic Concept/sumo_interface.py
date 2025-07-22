@@ -88,6 +88,10 @@ def cleanup_traci_connection():
             print(f"[SUMO Cleanup] Error during cleanup: {e}")
 
 def test_sumo_connection():
+    # --- Aggressive cleanup before starting test ---
+    kill_processes_on_port(8813)
+    cleanup_traci_connection()
+    
     """
     Test the connection to SUMO using TraCI.
     Returns:
@@ -327,6 +331,10 @@ def create_non_gui_config(original_config_path):
         return None, None
 
 def test_sumo_config_connection():
+    # --- Aggressive cleanup before starting test ---
+    kill_processes_on_port(8814)
+    cleanup_traci_connection()
+    
     """
     Test the connection to SUMO using a .sumocfg configuration file.
     Returns:
