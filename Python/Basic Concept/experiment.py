@@ -45,6 +45,7 @@ class Experiment:
             vehicle.secret = str(secret_int)
             otp_int = secret_int + timestamp
             args = [str(secret_int), str(timestamp), str(otp_int)]
+            otp = str(otp_int)  # <-- Use the sum as the OTP for all steps
             if self.DEBUG_MODE:
                 print(f"[Experiment] Auth.zok arguments: {args}")
         else:
@@ -68,8 +69,14 @@ class Experiment:
         return True, otp, timestamp
 
     def run_blockchain_verification(self, vehicle, rsu, otp, timestamp):
-        # Use the same simulated ZKP logic as preliminary_tests
-        zkp_proof = vehicle.create_zkp(otp, timestamp)
+        circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
+        if circuit_name == "auth.zok":
+            # For auth.zok, use the sum as the OTP for ZKP
+            zkp_proof = vehicle.create_zkp(otp, timestamp)
+            # Ensure RSU secret matches vehicle.secret
+            rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
+        else:
+            zkp_proof = vehicle.create_zkp(otp, timestamp)
         verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, timestamp)
         outcome = simulate_blockchain_verification(self.vehicle_id, zkp_proof, timestamp, verification_result)
         return outcome
