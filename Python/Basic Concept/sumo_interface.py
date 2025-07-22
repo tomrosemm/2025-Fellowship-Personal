@@ -107,12 +107,35 @@ def test_sumo_config_connection():
         print(f"[SUMO Config Test] Create a .sumocfg file to test full SUMO functionality")
         return False
 
+    def check_if_gui_config(config_file):
+        """Check if the config file contains GUI-specific settings."""
+        try:
+            with open(config_file, 'r') as f:
+                content = f.read()
+                return 'gui-settings-file' in content or 'viewsettings' in content
+        except Exception:
+            return False
+
     def start_sumo_with_config():
-        sumo_binary = "sumo"
+        # Check if config contains GUI elements and choose appropriate binary
+        if check_if_gui_config(SUMO_CONFIG_FILE):
+            sumo_binary = "sumo-gui"
+            if DEBUG_MODE:
+                print(f"[SUMO Config Test] Detected GUI configuration, using sumo-gui")
+        else:
+            sumo_binary = "sumo"
+            if DEBUG_MODE:
+                print(f"[SUMO Config Test] Using standard sumo binary")
+        
         sumo_cmd = [sumo_binary, "-c", SUMO_CONFIG_FILE, "--remote-port", "8814"]
+        
+        # Add --start and --quit-on-end for GUI version to prevent hanging
+        if sumo_binary == "sumo-gui":
+            sumo_cmd.extend(["--start", "--quit-on-end"])
+            
         try:
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            time.sleep(2)
+            time.sleep(3)  # Give GUI version more time to start
             if proc.poll() is not None:
                 # SUMO exited early, print stderr for diagnostics
                 stderr = proc.stderr.read().decode()
