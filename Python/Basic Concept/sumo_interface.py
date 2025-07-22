@@ -3,12 +3,37 @@ import subprocess
 import os
 import time
 import socket
+import psutil
 
 DEBUG_MODE = False
 
 def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
+
+def kill_processes_on_port(port):
+    """Kill any processes using the specified port."""
+    killed_any = False
+    try:
+        for proc in psutil.process_iter(['pid', 'name', 'connections']):
+            try:
+                connections = proc.info['connections']
+                if connections:
+                    for conn in connections:
+                        if hasattr(conn, 'laddr') and conn.laddr and conn.laddr.port == port:
+                            if DEBUG_MODE:
+                                print(f"[Port Cleanup] Killing process {proc.info['pid']} ({proc.info['name']}) using port {port}")
+                            proc.kill()
+                            killed_any = True
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+    except Exception as e:
+        if DEBUG_MODE:
+            print(f"[Port Cleanup] Error during port cleanup: {e}")
+    
+    if killed_any:
+        time.sleep(2)  # Give time for processes to die
+    return killed_any
 
 def is_port_available(port):
     """Check if a port is available for use."""
@@ -19,13 +44,25 @@ def is_port_available(port):
     except OSError:
         return False
 
-def wait_for_port_available(port, timeout=10):
-    """Wait for a port to become available."""
+def wait_for_port_available(port, timeout=15):
+    """Wait for a port to become available, forcefully cleaning if needed."""
     start_time = time.time()
+    attempts = 0
+    
     while time.time() - start_time < timeout:
         if is_port_available(port):
             return True
-        time.sleep(0.5)
+        
+        attempts += 1
+        if attempts == 3:  # After 3 failed attempts, try to kill processes
+            if DEBUG_MODE:
+                print(f"[Port Management] Port {port} still busy, attempting to kill processes")
+            killed = kill_processes_on_port(port)
+            if killed and DEBUG_MODE:
+                print(f"[Port Management] Killed processes on port {port}")
+        
+        time.sleep(1)
+    
     return False
 
 def cleanup_traci_connection():
@@ -59,8 +96,8 @@ def test_sumo_connection():
     
     # Wait for port to be available
     port = 8813
-    if not wait_for_port_available(port, timeout=10):
-        print(f"[SUMO Test] Port {port} is not available after waiting.")
+    if not wait_for_port_available(port, timeout=15):
+        print(f"[SUMO Test] Port {port} is not available after waiting and cleanup attempts.")
         return False
     
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
@@ -85,7 +122,7 @@ def test_sumo_connection():
         sumo_cmd = [sumo_binary, "-n", SUMO_NET_FILE, "--remote-port", str(port)]
         try:
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            time.sleep(2)
+            time.sleep(3)  # Give more time to start
             if proc.poll() is not None:
                 # SUMO exited early, print stderr for diagnostics
                 stderr = proc.stderr.read().decode()
@@ -105,6 +142,7 @@ def test_sumo_connection():
         return False
     connected = False
     try:
+        time.sleep(2)  # Additional wait before connecting
         traci.init(port=port)
         connected = True
         if DEBUG_MODE:
@@ -129,13 +167,20 @@ def test_sumo_connection():
         
         try:
             proc.terminate()
-            proc.communicate(timeout=5)
+            proc.wait(timeout=3)
             if DEBUG_MODE:
                 print("  SUMO process terminated.")
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            if DEBUG_MODE:
+                print("  SUMO process killed (timeout).")
         except Exception as e:
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
-        time.sleep(3)  # Give OS more time to release port and clean up
+        
+        # Force cleanup port
+        kill_processes_on_port(port)
+        time.sleep(2)  # Give OS time to release port and clean up
     return connected
 
 def test_sumo_config_connection():
@@ -149,8 +194,8 @@ def test_sumo_config_connection():
     
     # Wait for port to be available
     port = 8814
-    if not wait_for_port_available(port, timeout=10):
-        print(f"[SUMO Config Test] Port {port} is not available after waiting.")
+    if not wait_for_port_available(port, timeout=15):
+        print(f"[SUMO Config Test] Port {port} is not available after waiting and cleanup attempts.")
         return False
     
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
@@ -171,26 +216,17 @@ def test_sumo_config_connection():
         print(f"[SUMO Config Test] Create a .sumocfg file to test full SUMO functionality")
         return False
 
-    def check_if_gui_config(config_file):
-        """Check if the config file contains GUI-specific settings."""
-        try:
-            with open(config_file, 'r') as f:
-                content = f.read()
-                return 'gui-settings-file' in content or 'viewsettings' in content
-        except Exception:
-            return False
-
     def start_sumo_with_config():
         # For config test, always use non-GUI sumo to avoid GUI issues
         sumo_binary = "sumo"
         if DEBUG_MODE:
             print(f"[SUMO Config Test] Using standard sumo binary for config test")
         
-        sumo_cmd = [sumo_binary, "-c", SUMO_CONFIG_FILE, "--remote-port", str(port)]
+        sumo_cmd = [sumo_binary, "-c", SUMO_CONFIG_FILE, "--remote-port", str(port), "--step-length", "1"]
         
         try:
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            time.sleep(3)  # Give more time to start
+            time.sleep(4)  # Give even more time to start
             if proc.poll() is not None:
                 # SUMO exited early, print stderr for diagnostics
                 stderr = proc.stderr.read().decode()
@@ -210,6 +246,7 @@ def test_sumo_config_connection():
         return False
     connected = False
     try:
+        time.sleep(3)  # Additional wait before connecting
         traci.init(port=port)
         connected = True
         if DEBUG_MODE:
@@ -234,13 +271,20 @@ def test_sumo_config_connection():
         
         try:
             proc.terminate()
-            proc.communicate(timeout=5)
+            proc.wait(timeout=3)
             if DEBUG_MODE:
                 print("  SUMO process terminated.")
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            if DEBUG_MODE:
+                print("  SUMO process killed (timeout).")
         except Exception as e:
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
-        time.sleep(3)  # Give OS more time to release port and clean up
+        
+        # Force cleanup port
+        kill_processes_on_port(port)
+        time.sleep(2)  # Give OS time to release port and clean up
     return connected
 
 def test_sumo_connection_wrapper(tested, passed):
