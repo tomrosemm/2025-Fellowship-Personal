@@ -50,15 +50,18 @@ class Experiment:
         return True, otp, timestamp
 
     def run_blockchain_verification(self, vehicle, rsu, otp, timestamp):
-        zkp_proof = vehicle.create_zkp(otp, timestamp)
-        verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, timestamp)
-        outcome = simulate_blockchain_verification(self.vehicle_id, zkp_proof, timestamp, verification_result)
+        # Use the same simulated ZKP logic as preliminary_tests
+        zkp_proof = vehicle.create_zkp(otp, int(timestamp))
+        verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, int(timestamp))
+        outcome = simulate_blockchain_verification(self.vehicle_id, zkp_proof, int(timestamp), verification_result)
         return outcome
 
     def run(self):
         print(f"Running Experiment: {self.name}")
-        vehicle = Vehicle(self.vehicle_id, "mysecret")
-        rsu = RSU({self.vehicle_id: "mysecret"})
+        # Use a random secret for each experiment, and ensure RSU uses the same secret
+        secret = "mysecret"
+        vehicle = Vehicle(self.vehicle_id, secret)
+        rsu = RSU({self.vehicle_id: secret})
 
         otp, timestamp = None, None
         success = True
