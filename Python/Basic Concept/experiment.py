@@ -37,7 +37,7 @@ class Experiment:
             return False, None, None
         # Use fixed dummy arguments for dummy.zok
         args = ["3", "4"]
-        otp, timestamp = "3", "4"
+        otp, timestamp = "3", 4  # OTP as string, timestamp as int
         if not run_zokrates_compute_witness(args):
             print("Witness computation failed.")
             return False, None, None
@@ -51,9 +51,9 @@ class Experiment:
 
     def run_blockchain_verification(self, vehicle, rsu, otp, timestamp):
         # Use the same simulated ZKP logic as preliminary_tests
-        zkp_proof = vehicle.create_zkp(otp, int(timestamp))
-        verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, int(timestamp))
-        outcome = simulate_blockchain_verification(self.vehicle_id, zkp_proof, int(timestamp), verification_result)
+        zkp_proof = vehicle.create_zkp(otp, timestamp)
+        verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, timestamp)
+        outcome = simulate_blockchain_verification(self.vehicle_id, zkp_proof, timestamp, verification_result)
         return outcome
 
     def run(self):
@@ -72,7 +72,7 @@ class Experiment:
                 self.result = False
                 return
 
-        if self.use_blockchain and otp and timestamp:
+        if self.use_blockchain and otp is not None and timestamp is not None:
             self.result = self.run_blockchain_verification(vehicle, rsu, otp, timestamp)
             self.timestamp = timestamp
             if self.result:
