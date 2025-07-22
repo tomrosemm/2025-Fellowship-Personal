@@ -12,6 +12,7 @@ from zokrates_interface import (
 
 from blockchain import simulate_blockchain_verification
 import random
+import os
 
 class Experiment:
     DEBUG_MODE = False
@@ -32,9 +33,35 @@ class Experiment:
             return False, None, None
         otp, timestamp = vehicle.generate_otp()
         
-        # For dummy.zok, we just need two field elements
-        # Use timestamp and first byte of OTP as simple inputs
-        args = [str(timestamp), str(int(otp[:2], 16))]
+        # Determine which circuit we're using and prepare appropriate arguments
+        circuit_name = os.path.basename(self.zokrates_circuit_path)
+        
+        if circuit_name == "dummy.zok":
+            # For dummy.zok, we just need two field elements
+            # Use timestamp and first byte of OTP as simple inputs
+            args = [str(timestamp), str(int(otp[:2], 16))]
+        elif circuit_name == "auth.zok":
+            # For auth.zok, we need to prepare more complex inputs:
+            # 1. A private secret array of 4 field elements
+            # 2. The timestamp as a field element
+            # 3. The OTP as an array of 4 field elements
+            
+            # Convert secret to field array (4 elements, each 64 bits)
+            secret_array = hex_to_field_array(vehicle.secret)
+            secret_args = [str(x) for x in secret_array]
+            
+            # Convert OTP to field array (4 elements, each 64 bits)
+            otp_array = hex_to_field_array(otp)
+            otp_args = [str(x) for x in otp_array]
+            
+            # Combine all arguments
+            args = secret_args + [str(timestamp)] + otp_args
+            
+            if self.DEBUG_MODE:
+                print(f"[Experiment] Auth.zok arguments: {args}")
+        else:
+            print(f"Unsupported circuit: {circuit_name}")
+            return False, None, None
         
         if not run_zokrates_compile(self.zokrates_circuit_path):
             print("ZoKrates compilation failed.")
