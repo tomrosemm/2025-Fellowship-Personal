@@ -1,0 +1,12 @@
+import "hashes/sha256/sha256.zok" as sha256
+
+def main(private field[8] secret, field timestamp, field[8] otp) -> bool {
+    field[8] hash = sha256(secret, [timestamp]);
+    bool valid = true;
+    for u32 i in 0..8 {
+        if hash[i] != otp[i] {
+            valid = false;
+        }
+    }
+    return valid;
+}

@@ -54,7 +54,7 @@ def run_single_experiment():
     name = f"Experiment_{experiment_count}"
     vehicle_id = f"Vehicle_{experiment_count}"
     rsu_id = f"RSU_{experiment_count}"
-    zokrates_circuit_path = "dummy.zok"
+    zokrates_circuit_path = "auth.zok"
     exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
     exp.run()
     exp.report()

@@ -7,6 +7,7 @@ from zokrates_interface import (
     run_zokrates_compute_witness,
     run_zokrates_generate_proof,
     run_zokrates_verify,
+    hex_to_field_array,  # <-- add this import
 )
 
 from blockchain import simulate_blockchain_verification
@@ -29,15 +30,17 @@ class Experiment:
         if not self.zokrates_circuit_path:
             print("No ZoKrates circuit path provided.")
             return False, None, None
+        otp, timestamp = vehicle.generate_otp()
+        secret_hex = vehicle.secret.ljust(64, "0")[:64]  # pad/truncate to 64 hex chars
+        secret_arr = hex_to_field_array(secret_hex)
+        otp_arr = hex_to_field_array(otp)
+        args = [str(x) for x in secret_arr] + [str(timestamp)] + [str(x) for x in otp_arr]
         if not run_zokrates_compile(self.zokrates_circuit_path):
             print("ZoKrates compilation failed.")
             return False, None, None
         if not run_zokrates_setup():
             print("ZoKrates setup failed.")
             return False, None, None
-        # Use fixed dummy arguments for dummy.zok
-        args = ["3", "4"]
-        otp, timestamp = "3", 4  # OTP as string, timestamp as int
         if not run_zokrates_compute_witness(args):
             print("Witness computation failed.")
             return False, None, None
