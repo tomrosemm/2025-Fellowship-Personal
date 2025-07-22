@@ -59,6 +59,7 @@ def run_single_experiment():
     exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
     exp.run()
     exp.report()
+    cleanup_zokrates_files()  # Clean up ZoKrates-generated files
 
 def run_auth_experiment():
     """
@@ -73,12 +74,15 @@ def run_auth_experiment():
     exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
     exp.run()
     exp.report()
+    cleanup_zokrates_files()  # Clean up ZoKrates-generated files
 
 
 if __name__ == "__main__":
+    cleanup_zokrates_files()  # Ensure no old files interfere
+    
     # Run both experiments
-    # print("\n=== Running Basic Dummy Circuit Experiment ===")
-    # run_single_experiment()
+    print("\n=== Running Basic Dummy Circuit Experiment ===")
+    run_single_experiment()
     
     print("\n=== Running Cryptographically Meaningful Auth Circuit Experiment ===")
     run_auth_experiment()
