@@ -33,37 +33,21 @@ class Experiment:
             print("No ZoKrates circuit path provided.")
             return False, None, None
         otp, timestamp = vehicle.generate_otp()
-        
-        # Determine which circuit we're using and prepare appropriate arguments
         circuit_name = os.path.basename(self.zokrates_circuit_path)
-        
         if circuit_name == "dummy.zok":
-            # For dummy.zok, we just need two field elements
-            # Use timestamp and first byte of OTP as simple inputs
             args = [str(timestamp), str(int(otp[:2], 16))]
         elif circuit_name == "auth.zok":
-            # For auth.zok, we need to prepare more complex inputs:
-            # 1. A private secret array of 4 field elements
-            # 2. The timestamp as a field element
-            # 3. The OTP as an array of 4 field elements
-            
-            # Convert secret to field array (4 elements, each 64 bits)
-            secret_array = hex_to_field_array(vehicle.secret)
-            secret_args = [str(x) for x in secret_array]
-            
-            # Convert OTP to field array (4 elements, each 64 bits)
-            otp_array = hex_to_field_array(otp)
-            otp_args = [str(x) for x in otp_array]
-            
-            # Combine all arguments
-            args = secret_args + [str(timestamp)] + otp_args
-            
+            # For the new simple auth.zok: secret, timestamp, otp (all fields)
+            # Use a random integer secret for demonstration
+            secret_int = random.randint(1, 100000)
+            vehicle.secret = str(secret_int)
+            otp_int = secret_int + timestamp
+            args = [str(secret_int), str(timestamp), str(otp_int)]
             if self.DEBUG_MODE:
                 print(f"[Experiment] Auth.zok arguments: {args}")
         else:
             print(f"Unsupported circuit: {circuit_name}")
             return False, None, None
-        
         if not run_zokrates_compile(self.zokrates_circuit_path):
             print("ZoKrates compilation failed.")
             return False, None, None
@@ -90,18 +74,34 @@ class Experiment:
 
     def run(self):
         print(f"Running Experiment: {self.name}")
-        # Use a random secret for each experiment, and ensure RSU uses the same secret
         circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
         if circuit_name == "auth.zok":
-            secret = secrets.token_hex(16)  # 32 hex chars, 128 bits
+            secret = str(random.randint(1, 100000))
         else:
             secret = "mysecret"
         vehicle = Vehicle(self.vehicle_id, secret)
         rsu = RSU({self.vehicle_id: secret})
-
         otp, timestamp = None, None
         success = True
+        if self.use_zokrates:
+            success, otp, timestamp = self.run_zokrates_workflow(vehicle)
+            if not success:
+                self.result = False
+                return
+        if self.use_blockchain and otp is not None and timestamp is not None:
+            self.result = self.run_blockchain_verification(vehicle, rsu, otp, timestamp)
+            self.timestamp = timestamp
+            if self.result:
+                print(f"Experiment '{self.name}' completed successfully.")
+            else:
+                print(f"Experiment '{self.name}' failed during blockchain verification.")
+        else:
+            self.result = success
+            self.timestamp = timestamp
+            print(f"Experiment '{self.name}' completed with ZoKrates only.")
 
+    def report(self):
+        print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")
         if self.use_zokrates:
             success, otp, timestamp = self.run_zokrates_workflow(vehicle)
             if not success:

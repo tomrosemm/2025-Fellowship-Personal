@@ -62,15 +62,14 @@ def run_single_experiment():
 
 def run_auth_experiment():
     """
-    Run an experiment using the auth.zok circuit which provides a cryptographically
-    meaningful zero-knowledge proof for authentication.
+    Run an experiment using the auth.zok circuit which provides a simple field-based proof.
     """
     global experiment_count
     experiment_count += 1
     name = f"Auth_Experiment_{experiment_count}"
     vehicle_id = f"Auth_Vehicle_{experiment_count}"
     rsu_id = f"Auth_RSU_{experiment_count}"
-    zokrates_circuit_path = "auth.zok"  # Cryptographically meaningful circuit
+    zokrates_circuit_path = "auth.zok"  # Simple field-based circuit
     exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
     exp.run()
     exp.report()
