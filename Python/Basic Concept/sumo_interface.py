@@ -9,12 +9,35 @@ def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
+def cleanup_traci_connection():
+    """
+    Ensure any existing TraCI connection is properly closed.
+    """
+    SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
+    sys.path.append(SUMO_TOOLS_PATH)
+    
+    try:
+        import traci
+        if traci.isLoaded():
+            traci.close()
+            if DEBUG_MODE:
+                print("[SUMO Cleanup] Closed existing TraCI connection")
+        time.sleep(1)  # Give time for cleanup
+    except ImportError:
+        pass  # TraCI not available
+    except Exception as e:
+        if DEBUG_MODE:
+            print(f"[SUMO Cleanup] Error during cleanup: {e}")
+
 def test_sumo_connection():
     """
     Test the connection to SUMO using TraCI.
     Returns:
         bool: True if connection succeeded, False otherwise.
     """
+    # Clean up any existing connections first
+    cleanup_traci_connection()
+    
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
     sys.path.append(SUMO_TOOLS_PATH)
 
@@ -65,13 +88,20 @@ def test_sumo_connection():
             print(f"  Network file: {net_file}")
             print(f"  SUMO process PID: {proc.pid}")
             print("  SUMO process started and connection established.")
-        traci.close()
-        if DEBUG_MODE:
-            print("  SUMO connection closed.")
     except Exception as e:
         if DEBUG_MODE:
             print(f"[SUMO Test] Failed to connect to SUMO: {e}")
     finally:
+        # Always ensure proper cleanup
+        try:
+            if traci.isLoaded():
+                traci.close()
+                if DEBUG_MODE:
+                    print("  SUMO TraCI connection closed.")
+        except Exception as e:
+            if DEBUG_MODE:
+                print(f"  TraCI close error: {e}")
+        
         try:
             proc.terminate()
             proc.communicate(timeout=5)
@@ -80,7 +110,7 @@ def test_sumo_connection():
         except Exception as e:
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
-        time.sleep(1)  # Give OS time to release port
+        time.sleep(2)  # Give OS more time to release port and clean up
     return connected
 
 def test_sumo_config_connection():
@@ -89,6 +119,9 @@ def test_sumo_config_connection():
     Returns:
         bool: True if connection succeeded, False otherwise.
     """
+    # Clean up any existing connections first
+    cleanup_traci_connection()
+    
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
     sys.path.append(SUMO_TOOLS_PATH)
 
@@ -163,13 +196,20 @@ def test_sumo_config_connection():
             print(f"  Configuration file: {config_file}")
             print(f"  SUMO process PID: {proc.pid}")
             print("  SUMO process started with full configuration and connection established.")
-        traci.close()
-        if DEBUG_MODE:
-            print("  SUMO connection closed.")
     except Exception as e:
         if DEBUG_MODE:
             print(f"[SUMO Config Test] Failed to connect to SUMO: {e}")
     finally:
+        # Always ensure proper cleanup
+        try:
+            if traci.isLoaded():
+                traci.close()
+                if DEBUG_MODE:
+                    print("  SUMO TraCI connection closed.")
+        except Exception as e:
+            if DEBUG_MODE:
+                print(f"  TraCI close error: {e}")
+        
         try:
             proc.terminate()
             proc.communicate(timeout=5)
@@ -178,7 +218,7 @@ def test_sumo_config_connection():
         except Exception as e:
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
-        time.sleep(1)  # Give OS time to release port
+        time.sleep(2)  # Give OS more time to release port and clean up
     return connected
 
 def test_sumo_connection_wrapper(tested, passed):
