@@ -5,12 +5,6 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Also ignore Python cache in Simulation/src
-Simulation/src/__pycache__/
-Simulation/src/**/*.pyc
-Simulation/src/**/*.pyo
-Simulation/src/**/*.pyd
-
 # Ignore Python cache files in Basic Concept
 /Python/Basic Concept/**/__pycache__/
 /Python/Basic Concept/**/*.pyc
