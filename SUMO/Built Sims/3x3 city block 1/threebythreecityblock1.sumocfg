@@ -7,7 +7,7 @@
         <gui-settings-file value="threebythreecityblock1.viewsettings.xml"/>
     </input>
 
-    <additional-files value="threebythreecityblock1.additional.add.xml"/>
+    <!-- <additional-files value="threebythreecityblock1.additional.add.xml"/> -->
 
     <output>
         <summary-output value="out/summary_out.xml" synonymes="summary" type="FILE"/>
@@ -18,7 +18,7 @@
     
     <time>
         <begin value="0"/>
-        <end value="14400"/>
+        <end value="1000"/>
     </time>
-    
+
 </configuration>
