@@ -25,6 +25,8 @@ import secrets                                              # For generating ran
 import os
 import time
 import random
+import subprocess
+import sys
 
 from vehicle import Vehicle                                 # Vehicle entity: generates OTPs and ZKPs
 from rsu import RSU                                         # RSU entity: verifies ZKPs from vehicles
@@ -490,11 +492,6 @@ def test_sumo_traci_data_transfer():
     global tested, passed
     tested += 1
 
-    import os
-    import time
-    import subprocess
-    import sys
-
     port = 8815
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
     sys.path.append(SUMO_TOOLS_PATH)
@@ -577,11 +574,6 @@ def test_sumo_traci_data_transfer_sumocfg():
     print("\n=== SUMO TraCI Data Transfer Test (.sumocfg, 100 steps) ===")
     global tested, passed
     tested += 1
-
-    import os
-    import time
-    import subprocess
-    import sys
 
     port = 8816
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
