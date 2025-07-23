@@ -34,7 +34,7 @@ def kill_processes_on_port(port):
             print(f"[Port Cleanup] Error during port cleanup: {e}")
     
     if killed_any:
-        time.sleep(5)  # Increase wait time for processes to die and OS to release port
+        time.sleep(10) # Increase wait time for processes to die and OS to release port
     return killed_any
 
 def is_port_available(port):
@@ -91,7 +91,7 @@ def test_sumo_connection():
     # --- Aggressive cleanup before starting test ---
     kill_processes_on_port(8813)
     cleanup_traci_connection()
-    time.sleep(5)  # Ensure OS releases port before proceeding
+    time.sleep(10) # Ensure OS releases port before proceeding
 
     """
     Test the connection to SUMO using TraCI.
@@ -335,7 +335,7 @@ def test_sumo_config_connection():
     # --- Aggressive cleanup before starting test ---
     kill_processes_on_port(8814)
     cleanup_traci_connection()
-    time.sleep(5)  # Ensure OS releases port before proceeding
+    time.sleep(10) # Ensure OS releases port before proceeding
 
     """
     Test the connection to SUMO using a .sumocfg configuration file.
