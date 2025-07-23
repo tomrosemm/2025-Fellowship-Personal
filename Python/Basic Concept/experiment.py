@@ -53,8 +53,14 @@ class Experiment:
             return False, None, None
         circuit_name = os.path.basename(self.zokrates_circuit_path)
         if circuit_name == "dummy.zok":
-            otp, timestamp = vehicle.generate_otp()
-            args = [str(timestamp), str(int(otp[:2], 16))]
+            # For dummy.zok: a + b = otp
+            a = random.randint(1, 100)
+            b = random.randint(1, 100)
+            otp = str(a + b)
+            timestamp = int(time.time())
+            args = [str(a), str(b)]
+            if self.DEBUG_MODE:
+                print(f"[Experiment] Dummy.zok arguments: {args}, otp: {otp}, timestamp: {timestamp}")
         elif circuit_name == "auth.zok":
             # For auth.zok: secret, timestamp, otp (all fields, as sum)
             secret_int = random.randint(1, 100000)
@@ -91,6 +97,9 @@ class Experiment:
             # For auth.zok, ZKP is just the tuple (secret, timestamp, otp)
             zkp_proof = (vehicle.secret, timestamp, otp)
             rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
+        elif circuit_name == "dummy.zok":
+            # For dummy.zok, ZKP is just the sum (a + b = otp)
+            zkp_proof = otp
         else:
             zkp_proof = vehicle.create_zkp(otp, timestamp, self.zokrates_circuit_path)
         verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, timestamp, self.zokrates_circuit_path)
