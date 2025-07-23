@@ -68,7 +68,7 @@ def generate_zkp_proof_real(circuit_path, otp, timestamp):
     return run_zokrates_verify()
 
 # For backward compatibility, you can alias the simulated version as the default:
-generate_zkp_proof = generate_zkp_proof_simulated
+# generate_zkp_proof = generate_zkp_proof_simulated
 
 if __name__ == "__main__":
     # Simple test for ZKP proof generation
