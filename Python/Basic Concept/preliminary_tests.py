@@ -526,6 +526,7 @@ def test_sumo_traci_data_transfer():
             return
         traci.init(port=port)
         time.sleep(1)
+        
         # Step simulation and collect data
         sim_data = []
         for _ in range(5):
@@ -540,7 +541,9 @@ def test_sumo_traci_data_transfer():
             })
             print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
             time.sleep(0.2)
+            
         passed_local = True
+        
     except Exception as e:
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
@@ -565,6 +568,93 @@ def test_sumo_traci_data_transfer():
         print("[SUMO TraCI Test] Data transfer test succeeded!\n")
     else:
         print("[SUMO TraCI Test] Data transfer test failed.\n")
+
+
+def test_sumo_traci_data_transfer_sumocfg():
+    """
+    Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps.
+    """
+    print("\n=== SUMO TraCI Data Transfer Test (.sumocfg, 100 steps) ===")
+    global tested, passed
+    tested += 1
+
+    import os
+    import time
+    import subprocess
+    import sys
+
+    port = 8816
+    SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
+    sys.path.append(SUMO_TOOLS_PATH)
+    try:
+        import traci
+    except ImportError:
+        print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
+        return
+
+    # Update this path to your actual .sumocfg file location
+    SUMO_SUMOCFG_FILE = os.path.abspath("/home/admin/2025-Fellowship-Personal/Python/Basic Concept/sumo/Intersection 1/intersection1.sumocfg")
+    if not os.path.exists(SUMO_SUMOCFG_FILE):
+        print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_SUMOCFG_FILE}")
+        return
+
+    from sumo_interface import kill_processes_on_port, cleanup_traci_connection
+    kill_processes_on_port(port)
+    cleanup_traci_connection()
+    time.sleep(2)
+
+    sumo_binary = "sumo"
+    sumo_cmd = [sumo_binary, "-c", SUMO_SUMOCFG_FILE, "--remote-port", str(port)]
+    try:
+        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        time.sleep(3)
+        if proc.poll() is not None:
+            stderr = proc.stderr.read().decode()
+            print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
+            return
+        traci.init(port=port)
+        time.sleep(1)
+        
+        sim_data = []
+        for _ in range(100):
+            traci.simulationStep()
+            sim_time = traci.simulation.getTime()
+            veh_ids = traci.vehicle.getIDList()
+            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
+            sim_data.append({
+                "time": sim_time,
+                "vehicle_ids": veh_ids,
+                "positions": veh_positions
+            })
+            print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+            time.sleep(0.05)
+            
+        passed_local = True
+        
+    except Exception as e:
+        print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
+        passed_local = False
+    finally:
+        try:
+            if 'traci' in locals() and traci.isLoaded():
+                traci.close()
+        except Exception:
+            pass
+        try:
+            proc.terminate()
+            proc.wait(timeout=3)
+        except Exception:
+            try:
+                proc.kill()
+            except Exception:
+                pass
+        kill_processes_on_port(port)
+        time.sleep(1)
+    if passed_local:
+        passed += 1
+        print("[SUMO TraCI Test] .sumocfg data transfer test succeeded!\n")
+    else:
+        print("[SUMO TraCI Test] .sumocfg data transfer test failed.\n")
 
 
 def testAndScenarioRunner():
@@ -632,6 +722,11 @@ def testAndScenarioRunner():
 
     # 14 - Run SUMO TraCI Data Transfer Test
     test_sumo_traci_data_transfer()
+    time.sleep(.5)
+    # clear_console()
+
+    # 15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
+    test_sumo_traci_data_transfer_sumocfg()
     time.sleep(.5)
     # clear_console()
 
