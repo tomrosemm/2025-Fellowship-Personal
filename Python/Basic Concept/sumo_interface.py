@@ -26,6 +26,7 @@ def kill_processes_on_port(port):
         for proc in psutil.process_iter(['pid', 'name', 'connections']):
             
             try:
+                
                 connections = proc.info['connections']
                 
                 if connections:
@@ -102,6 +103,7 @@ def cleanup_traci_connection():
     sys.path.append(SUMO_TOOLS_PATH)
     
     try:
+        
         import traci
         
         if traci.isLoaded():
@@ -153,6 +155,7 @@ def test_sumo_connection():
     sys.path.append(SUMO_TOOLS_PATH)
 
     try:
+        
         import traci
         
     except ImportError as e:
