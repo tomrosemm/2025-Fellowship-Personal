@@ -1,6 +1,8 @@
 """
 preliminary_tests.py
 
+Author: Tom Rose
+
 Purpose:
     This module contains test routines to simulate and validate the ZKP-OTP authentication protocol
     between Vehicle and RSU entities. It demonstrates the authentication process using both simulated
@@ -474,6 +476,97 @@ def test_zokrates_end_to_end_multiple_vehicles():
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
 
 
+def test_sumo_traci_data_transfer():
+    """
+    Test connecting to SUMO via TraCI, retrieving and storing simulation data.
+    Steps:
+        1. Start SUMO with a simple network.
+        2. Connect via TraCI.
+        3. Retrieve simulation time, vehicle IDs, and positions.
+        4. Print/store the data.
+        5. Clean up.
+    """
+    print("\n=== SUMO TraCI Data Transfer Test ===")
+    global tested, passed
+    tested += 1
+
+    import os
+    import time
+    import subprocess
+    import sys
+
+    port = 8815
+    SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
+    sys.path.append(SUMO_TOOLS_PATH)
+    try:
+        import traci
+    except ImportError:
+        print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
+        return
+
+    SUMO_NET_FILE = os.path.abspath("/home/admin/2025-Fellowship-Personal/Python/Basic Concept/sumo/simple.net.xml")
+    if not os.path.exists(SUMO_NET_FILE):
+        print(f"[SUMO TraCI Test] Network file not found: {SUMO_NET_FILE}")
+        return
+
+    # Clean up port and traci
+    from sumo_interface import kill_processes_on_port, cleanup_traci_connection
+    kill_processes_on_port(port)
+    cleanup_traci_connection()
+    time.sleep(2)
+
+    sumo_binary = "sumo"
+    sumo_cmd = [sumo_binary, "-n", SUMO_NET_FILE, "--remote-port", str(port)]
+    try:
+        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        time.sleep(3)
+        if proc.poll() is not None:
+            stderr = proc.stderr.read().decode()
+            print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
+            return
+        traci.init(port=port)
+        time.sleep(1)
+        # Step simulation and collect data
+        sim_data = []
+        for _ in range(5):
+            traci.simulationStep()
+            sim_time = traci.simulation.getTime()
+            veh_ids = traci.vehicle.getIDList()
+            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
+            sim_data.append({
+                "time": sim_time,
+                "vehicle_ids": veh_ids,
+                "positions": veh_positions
+            })
+            print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+            time.sleep(0.2)
+        passed_local = True
+    except Exception as e:
+        print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
+        passed_local = False
+    finally:
+        try:
+            if 'traci' in locals() and traci.isLoaded():
+                traci.close()
+        except Exception:
+            pass
+        try:
+            proc.terminate()
+            proc.wait(timeout=3)
+        except Exception:
+            try:
+                proc.kill()
+            except Exception:
+                pass
+        kill_processes_on_port(port)
+        time.sleep(1)
+    if passed_local:
+        passed += 1
+        print("[SUMO TraCI Test] Data transfer test succeeded!\n")
+    else:
+        print("[SUMO TraCI Test] Data transfer test failed.\n")
+
+
 def testAndScenarioRunner():
     """
     Run all test and scenario functions and print summary statistics.
@@ -481,48 +574,64 @@ def testAndScenarioRunner():
 
     global tested, passed
     tested, passed = 0, 0
-    
-    test_simulated_isolated_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
 
-    test_simulated_end_to_end_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
-
-    test_zokrates_isolated_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
-
-    test_zokrates_end_to_end_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
-
-    test_zokrates_connection()
-    time.sleep(.5)
-    # clear_console()
-
-    test_vehicle_rsu_interaction_real_zokrates_dummy()
-    time.sleep(.5)
-    # clear_console()
-
+    # 3 - Run Simulated ZKP Test
     test_vehicle_rsu_interaction_simulated()
     time.sleep(.5)
     # clear_console()
 
+    # 4 - Run Simulated Blockchain ZKP Test
     test_vehicle_rsu_blockchain_simulated()
     time.sleep(.5)
     # clear_console()
 
+    # 5 - Run Simulated End-to-End Scenario: Successful Authentication
     scenario_successful_authentication()
     time.sleep(.5)
     # clear_console()
 
+    # 6 - Run Simulated End-to-End Scenario: Failed Authentication
     scenario_failed_authentication()
     time.sleep(.5)
     # clear_console()
-    
+
+    # 7 - Run Real ZoKrates End-to-End Test with dummy.zok
+    test_vehicle_rsu_interaction_real_zokrates_dummy()
+    time.sleep(.5)
+    # clear_console()
+
+    # 8 - Simulated ZKP Isolated Test: Multiple Vehicles
+    test_simulated_isolated_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # 9 - Simulated End-to-End Test: Multiple Vehicles
+    test_simulated_end_to_end_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # 10 - ZoKrates-Integrated Isolated Test: Multiple Vehicles
+    test_zokrates_isolated_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # 11 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles
+    test_zokrates_end_to_end_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # 12 - Run SUMO Connection Tests (Basic Network + Configuration File)
     tested, passed = test_sumo_connection_wrapper(tested, passed)
+    time.sleep(.5)
+    # clear_console()
+
+    # 13 - Run ZoKrates CLI Connection Test
+    test_zokrates_connection()
+    time.sleep(.5)
+    # clear_console()
+
+    # 14 - Run SUMO TraCI Data Transfer Test
+    test_sumo_traci_data_transfer()
     time.sleep(.5)
     # clear_console()
 
@@ -531,6 +640,7 @@ def testAndScenarioRunner():
     cleanup_traci_connection()
     kill_processes_on_port(8813)
     kill_processes_on_port(8814)
+    kill_processes_on_port(8815)
     time.sleep(2)
     # ------------------------------------------
 

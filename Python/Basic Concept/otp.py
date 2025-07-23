@@ -1,6 +1,8 @@
 """
 otp.py
 
+Author: Tom Rose
+
 Purpose:
     Provides a function to generate a one-time password (OTP) using a secret and the current timestamp.
     Used by vehicle and authentication modules to create time-based OTPs for secure authentication workflows.

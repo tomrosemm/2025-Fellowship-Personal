@@ -1,6 +1,8 @@
 """
 blockchain_interface.py
 
+Author: Tom Rose
+
 Purpose:
     Provides a Python interface for interacting with a blockchain smart contract (e.g., for authentication event logging).
     Uses web3.py to connect to an Ethereum-compatible blockchain and call contract methods.

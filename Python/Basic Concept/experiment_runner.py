@@ -1,3 +1,18 @@
+"""
+experiment_runner.py
+
+Author: Tom Rose
+
+Purpose:
+    Provides routines to run and report on ZKP/blockchain experiments using the Experiment class.
+    Supports running experiments with different ZoKrates circuits and configurations for automated testing.
+
+Methodology:
+    - Sets up and runs experiments with dummy.zok and auth.zok circuits.
+    - Integrates with vehicle, RSU, ZoKrates, and blockchain modules.
+    - Supports debug mode and cleanup of ZoKrates artifacts.
+"""
+
 import secrets
 import os
 import time

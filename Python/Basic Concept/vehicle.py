@@ -1,6 +1,8 @@
 """
 vehicle.py
 
+Author: Tom Rose
+
 Purpose:
     Defines the Vehicle class, which is responsible for generating one-time passwords (OTPs) and creating zero-knowledge proofs (ZKPs) for authentication.
 

@@ -1,3 +1,19 @@
+"""
+experiment.py
+
+Author: Tom Rose
+
+Purpose:
+    Provides the Experiment class and logic for running and reporting ZKP/blockchain experiments
+    involving vehicles, RSUs, ZoKrates circuits, and blockchain verification.
+
+Methodology:
+    - Supports both simulated and ZoKrates-based ZKP workflows.
+    - Integrates with vehicle and RSU classes for authentication.
+    - Optionally performs blockchain verification and logging.
+    - Designed for flexible experiment setup and reporting.
+"""
+
 from vehicle import Vehicle
 from rsu import RSU
 

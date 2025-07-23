@@ -1,6 +1,8 @@
 """
 main.py
 
+Author: Tom Rose
+
 Purpose:
     Orchestrates the simulation of a privacy-preserving vehicle authentication protocol using Zero-Knowledge Proofs (ZKP) and blockchain logging.
     Demonstrates both a simulated and (eventually) real ZoKrates-based ZKP workflow, as well as simulated and (eventually) real blockchain 
@@ -30,6 +32,7 @@ def cli_menu_loop():
         print("11 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
         print("12 - Run SUMO Connection Tests (Basic Network + Configuration File)")
         print("13 - Run ZoKrates CLI Connection Test")
+        print("14 - Run SUMO TraCI Data Transfer Test")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("e - Exit\n")
@@ -80,6 +83,9 @@ def cli_menu_loop():
                 
             case "13":
                 preliminary_tests.test_zokrates_connection()
+                
+            case "14":
+                preliminary_tests.test_sumo_traci_data_transfer()
                 
             case "dbon":
                 preliminary_tests.set_debug_mode(True)

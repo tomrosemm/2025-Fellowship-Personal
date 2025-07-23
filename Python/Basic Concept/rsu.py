@@ -1,6 +1,8 @@
 """
 rsu.py
 
+Author: Tom Rose
+
 Purpose:
     Defines the RSU (Roadside Unit) class, which verifies zero-knowledge proofs (ZKPs) submitted by vehicles for authentication.
 

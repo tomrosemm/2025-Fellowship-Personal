@@ -1,6 +1,8 @@
 """
 zkp.py
 
+Author: Tom Rose
+
 Purpose:
     Provides functions for generating zero-knowledge proofs (ZKPs) for authentication workflows.
     Supports both simulated (hash-based) and real (ZoKrates CLI) ZKP generation and verification.

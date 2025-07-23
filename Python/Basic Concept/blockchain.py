@@ -1,6 +1,7 @@
 """
 blockchain.py
 
+Author: Tom Rose
 
 Purpose:
     Simulates the invocation of a blockchain smart contract for ZKP-OTP verification and logs authentication events.

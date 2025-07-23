@@ -1,3 +1,21 @@
+"""
+sumo_interface.py
+
+Author: Tom Rose
+
+Purpose:
+    Provides utility functions for managing SUMO simulation processes and TraCI connections.
+    Includes port cleanup, connection testing, configuration file handling, and data transfer routines
+    for integration with SUMO in automated testing and simulation workflows.
+
+Methodology:
+    - Cleans up processes using specific ports to avoid conflicts.
+    - Checks and waits for port availability before launching SUMO.
+    - Starts SUMO with network or configuration files and connects via TraCI.
+    - Supports aggressive cleanup and diagnostics for robust automated testing.
+    - Handles temporary configuration file creation and output management.
+"""
+
 import sys
 import subprocess
 import os
@@ -266,7 +284,7 @@ def test_sumo_connection():
             if DEBUG_MODE:
                 print(f"  SUMO process termination error: {e}")
         
-        # Force cleanup port
+        # Force cleanup
         kill_processes_on_port(port)
         time.sleep(2)  # Give OS time to release port and clean up
         
@@ -460,9 +478,9 @@ def create_non_gui_config(original_config_path):
 
 
 """
-    Test the connection to SUMO using a .sumocfg configuration file.
-    Returns:
-        bool: True if connection succeeded, False otherwise.
+Test the connection to SUMO using a .sumocfg configuration file.
+Returns:
+    bool: True if connection succeeded, False otherwise.
 """
 def test_sumo_config_connection():
     

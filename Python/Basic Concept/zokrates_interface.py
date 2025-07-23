@@ -1,6 +1,8 @@
 """
 zokrates_interface.py
 
+Author: Tom Rose
+
 Purpose:
     Provides an interface for generating and verifying zero-knowledge proofs (ZKPs) using ZoKrates, both in simulation and via CLI commands.
 
