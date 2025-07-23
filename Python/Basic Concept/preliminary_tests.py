@@ -96,12 +96,13 @@ def test_vehicle_rsu_interaction_simulated():
     if DEBUG_MODE:
         print(f"\n[Simulated] OTP: {otp}\n\nTimestamp: {timestamp}\n")
     # Create simulated ZKP proof
-    zkp_proof = vehicle.create_zkp(otp, timestamp)
+    circuit_path = "dummy.zok"
+    zkp_proof = vehicle.create_zkp(otp, timestamp, circuit_path)
     if DEBUG_MODE:
         print(f"[Simulated] ZKP Proof: {zkp_proof}\n")
 
     # RSU verifies ZKP proof
-    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)
+    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp, circuit_path)
     if DEBUG_MODE:
         print(f"[Simulated] Verification result: {verification_result}\n")
 
@@ -141,12 +142,13 @@ def test_vehicle_rsu_blockchain_simulated():
     if DEBUG_MODE:
         print(f"\n[Simulated] OTP: {otp}\n\nTimestamp: {timestamp}\n")
     # Create simulated ZKP proof
-    zkp_proof = vehicle.create_zkp(otp, timestamp)
+    circuit_path = "dummy.zok"
+    zkp_proof = vehicle.create_zkp(otp, timestamp, circuit_path)
     if DEBUG_MODE:
         print(f"[Simulated] ZKP Proof: {zkp_proof}\n")
 
     # RSU verifies ZKP proof
-    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)
+    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp, circuit_path)
     if DEBUG_MODE:
         print(f"[Simulated] RSU Verification result: {verification_result}\n")
 
@@ -177,12 +179,13 @@ def scenario_successful_authentication():
     if DEBUG_MODE:
         print(f"\nVehicle {vehicle_id} generated OTP: {otp} at {timestamp}\n")
     # Create ZKP proof
-    zkp_proof = vehicle.create_zkp(otp, timestamp)
+    circuit_path = "dummy.zok"
+    zkp_proof = vehicle.create_zkp(otp, timestamp, circuit_path)
     if DEBUG_MODE:
         print(f"Vehicle {vehicle_id} created ZKP proof: {zkp_proof}\n")
 
     # RSU verifies ZKP proof
-    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)
+    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp, circuit_path)
     if DEBUG_MODE:
         print(f"RSU verification result: {verification_result}\n")
 
@@ -213,12 +216,13 @@ def scenario_failed_authentication():
     if DEBUG_MODE:
         print(f"\nVehicle {vehicle_id} generated OTP: {otp} at {timestamp}\n")
     # Create ZKP proof
-    zkp_proof = vehicle.create_zkp(otp, timestamp)
+    circuit_path = "dummy.zok"
+    zkp_proof = vehicle.create_zkp(otp, timestamp, circuit_path)
     if DEBUG_MODE:
         print(f"Vehicle {vehicle_id} created ZKP proof: {zkp_proof}\n")
 
     # RSU verifies ZKP proof
-    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)
+    verification_result = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp, circuit_path)
     if DEBUG_MODE:
         print(f"RSU verification result: {verification_result}\n")
 
@@ -341,10 +345,11 @@ def test_simulated_isolated_multiple_vehicles():
         rsu_secrets[vid] = secret
     rsu = RSU(rsu_secrets)
     all_passed = True
+    circuit_path = "dummy.zok"
     for vid, vehicle in vehicles.items():
         otp, timestamp = vehicle.generate_otp()
-        zkp_proof = vehicle.create_zkp(otp, timestamp)
-        result = rsu.verify_zkp(vid, zkp_proof, timestamp)
+        zkp_proof = vehicle.create_zkp(otp, timestamp, circuit_path)
+        result = rsu.verify_zkp(vid, zkp_proof, timestamp, circuit_path)
         if DEBUG_MODE:
             print(f"Vehicle {vid}: Verification result: {result}")
         all_passed = all_passed and result
@@ -369,10 +374,11 @@ def test_simulated_end_to_end_multiple_vehicles():
         rsu_secrets[vid] = secret
     rsu = RSU(rsu_secrets)
     all_passed = True
+    circuit_path = "dummy.zok"
     for vid, vehicle in vehicles.items():
         otp, timestamp = vehicle.generate_otp()
-        zkp_proof = vehicle.create_zkp(otp, timestamp)
-        verification_result = rsu.verify_zkp(vid, zkp_proof, timestamp)
+        zkp_proof = vehicle.create_zkp(otp, timestamp, circuit_path)
+        verification_result = rsu.verify_zkp(vid, zkp_proof, timestamp, circuit_path)
         outcome = simulate_blockchain_verification(vid, zkp_proof, timestamp, verification_result) if DEBUG_MODE else verification_result
         if DEBUG_MODE:
             print(f"Vehicle {vid}: RSU result: {verification_result}, Blockchain outcome: {outcome}")

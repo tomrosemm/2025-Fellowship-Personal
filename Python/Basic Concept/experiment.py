@@ -92,8 +92,8 @@ class Experiment:
             zkp_proof = (vehicle.secret, timestamp, otp)
             rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
         else:
-            zkp_proof = vehicle.create_zkp(otp, timestamp)
-        verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, timestamp)
+            zkp_proof = vehicle.create_zkp(otp, timestamp, self.zokrates_circuit_path)
+        verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, timestamp, self.zokrates_circuit_path)
         outcome = simulate_blockchain_verification(self.vehicle_id, str(zkp_proof), timestamp, verification_result)
         return outcome
 

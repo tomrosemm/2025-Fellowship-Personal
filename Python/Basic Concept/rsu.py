@@ -13,7 +13,7 @@ Methodology:
 """
 
 from otp import generate_otp
-from zkp import generate_zkp_proof
+from zkp import generate_zkp_proof_real
 
 
 """
@@ -53,39 +53,39 @@ class RSU:
     """
     Function: verify_zkp
 
-    Verify the ZKP proof from a vehicle.
-    
+    Verify the ZKP proof from a vehicle using a ZoKrates circuit.
+
     Args:
         vehicle_id (str): The vehicle's unique identifier.
         zkp_proof (str): The ZKP proof to verify.
         timestamp (int): The timestamp used in OTP generation.
+        circuit_path (str): Path to the ZoKrates .zok circuit file.
+
     Returns:
         bool: True if the proof is valid, False otherwise.
-        
-    Steps:
-    1. Retrieve the secret for the vehicle
-    2. Return False if vehicle_id is unknown
-    3. Recreate the OTP input
-    4. Hash to get the OTP
-    5. Simulate expected ZKP
-    6. Return True if proof matches expected
     """
-    def verify_zkp(self, vehicle_id, zkp_proof, timestamp):
+    def verify_zkp(self, vehicle_id, zkp_proof, timestamp, circuit_path):
         secret = self.vehicle_secrets.get(vehicle_id)
         if not secret:
             return False
-        # If zkp_proof is a tuple, use sum logic for auth.zok
-        if isinstance(zkp_proof, tuple) and len(zkp_proof) == 3:
-            secret_val, ts_val, otp_val = zkp_proof
-            expected_otp = str(int(secret_val) + int(ts_val))
-            return str(otp_val) == expected_otp and str(secret) == str(secret_val) and int(ts_val) == int(timestamp)
-        # Otherwise, use hash logic for dummy.zok
+        # For dummy.zok, use real ZKP verification
         otp_input = f"{secret}{timestamp}".encode()
         import hashlib
         otp = hashlib.sha256(otp_input).hexdigest()
-        expected_zkp = generate_zkp_proof(otp, timestamp)
-        return zkp_proof == expected_zkp
+        # Use the real ZKP proof function
+        return generate_zkp_proof_real(circuit_path, otp, timestamp)
 
+if __name__ == "__main__":
+    # Simple test for RSU class
+    vehicle_id = "TEST_VEHICLE"
+    secret = "mysecret"
+    from vehicle import Vehicle
+    vehicle = Vehicle(vehicle_id, secret)
+    otp, timestamp = vehicle.generate_otp()
+    zkp = vehicle.create_zkp(otp, timestamp, "dummy.zok")
+    rsu = RSU({vehicle_id: secret})
+    result = rsu.verify_zkp(vehicle_id, zkp, timestamp, "dummy.zok")
+    print(f"[RSU] Verification result: {result}")
 if __name__ == "__main__":
     # Simple test for RSU class
     vehicle_id = "TEST_VEHICLE"

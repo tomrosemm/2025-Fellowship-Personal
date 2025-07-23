@@ -13,7 +13,7 @@ Methodology:
 """
 
 from otp import generate_otp                                # Import OTP generator
-from zkp import generate_zkp_proof                          # Import ZKP proof generator
+from zkp import generate_zkp_proof_real                     # Import real ZKP proof generator
 
 
 """
@@ -77,17 +77,18 @@ class Vehicle:
     """
     Function: create_zkp
 
-    Create a zero-knowledge proof (ZKP) for the OTP and timestamp.
-    
+    Create a zero-knowledge proof (ZKP) for the OTP and timestamp using a ZoKrates circuit.
+
     Args:
         otp (str): The generated OTP.
         timestamp (int): The timestamp used for OTP.
-        
+        circuit_path (str): Path to the ZoKrates .zok circuit file.
+
     Returns:
-        str: Simulated ZKP proof.
+        bool: True if proof is valid, False otherwise.
     """
-    def create_zkp(self, otp, timestamp):
-        return generate_zkp_proof(otp, timestamp)
+    def create_zkp(self, otp, timestamp, circuit_path):
+        return generate_zkp_proof_real(circuit_path, otp, timestamp)
 
 
     """
@@ -120,5 +121,6 @@ if __name__ == "__main__":
     test_vehicle = Vehicle("TEST_VEHICLE", "mysecret")
     otp, timestamp = test_vehicle.generate_otp()
     print(f"[Vehicle] OTP: {otp}\nTimestamp: {timestamp}")
-    zkp = test_vehicle.create_zkp(otp, timestamp)
+    # Example: use dummy.zok for demonstration
+    zkp = test_vehicle.create_zkp(otp, timestamp, "dummy.zok")
     print(f"[Vehicle] ZKP: {zkp}")
