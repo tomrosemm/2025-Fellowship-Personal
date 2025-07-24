@@ -41,6 +41,7 @@ from zokrates_interface import (
     set_debug_mode as set_zokrates_debug_mode
 )
 
+from sumo_interface import kill_processes_on_port, cleanup_traci_connection
 from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
 from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
 from zkp import generate_zkp_proof_simulated
@@ -250,10 +251,10 @@ def scenario_failed_authentication():
 """
 Function: test_zokrates_connection
 
-Test the connection and workflow with ZoKrates CLI using dummy.zok.
+Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok.
 
 Steps:
-    1. Compile dummy.zok
+    1. Compile zokrates/dummy.zok
     2. Setup
     3. Compute witness (inputs: a=3, b=4)
     4. Generate proof
@@ -263,7 +264,7 @@ def test_zokrates_connection():
     print("\n=== ZoKrates CLI Connection Test ===")
     global tested, passed
     tested += 1
-    circuit_path = "dummy.zok"
+    circuit_path = "zokrates/dummy.zok"
     # Compile circuit
     if not run_zokrates_compile(circuit_path):
         print("[ZoKrates Test] Compilation failed.")
@@ -298,14 +299,14 @@ def test_zokrates_connection():
 
 
 """
-Test the end-to-end ZoKrates workflow using dummy.zok and random inputs.
+Test the end-to-end ZoKrates workflow using zokrates/dummy.zok and random inputs.
 This simulates a real ZKP workflow using the ZoKrates CLI on Linux.
 """
 def test_vehicle_rsu_interaction_real_zokrates_dummy():
-    print("\n=== Real ZoKrates End-to-End Test with dummy.zok ===")
+    print("\n=== Real ZoKrates End-to-End Test with zokrates/dummy.zok ===")
     global tested, passed
     tested += 1
-    circuit_path = "dummy.zok"
+    circuit_path = "zokrates/dummy.zok"
     # Generate random field inputs for dummy.zok
     a = random.randint(1, 100)
     b = random.randint(1, 100)
@@ -358,7 +359,7 @@ def test_simulated_isolated_multiple_vehicles():
         rsu_secrets[vid] = secret
     rsu = RSU(rsu_secrets)
     all_passed = True
-    circuit_path = "dummy.zok"
+    circuit_path = "zokrates/dummy.zok"
     for vid, vehicle in vehicles.items():
         otp, timestamp = vehicle.generate_otp()
         zkp_proof = generate_zkp_proof_simulated(otp, timestamp)
@@ -389,7 +390,7 @@ def test_simulated_end_to_end_multiple_vehicles():
         rsu_secrets[vid] = secret
     rsu = RSU(rsu_secrets)
     all_passed = True
-    circuit_path = "dummy.zok"
+    circuit_path = "zokrates/dummy.zok"
     for vid, vehicle in vehicles.items():
         otp, timestamp = vehicle.generate_otp()
         zkp_proof = generate_zkp_proof_simulated(otp, timestamp)
@@ -406,12 +407,12 @@ def test_simulated_end_to_end_multiple_vehicles():
         print("[Simulated] Some vehicles denied access.\n")
 
 
-"""ZoKrates-integrated isolated test with multiple vehicles (dummy.zok)."""
+"""ZoKrates-integrated isolated test with multiple vehicles (zokrates/dummy.zok)."""
 def test_zokrates_isolated_multiple_vehicles():
     global tested, passed
     tested += 1
     print("\n=== ZoKrates-Integrated Isolated Test: Multiple Vehicles ===")
-    circuit_path = "dummy.zok"
+    circuit_path = "zokrates/dummy.zok"
     num_vehicles = 2
     all_passed = True
     for i in range(num_vehicles):
@@ -452,12 +453,12 @@ def test_zokrates_isolated_multiple_vehicles():
         print("[ZoKrates] Some vehicles' proofs failed verification.\n")
 
 
-"""ZoKrates-integrated end-to-end test with multiple vehicles (dummy.zok + simulated blockchain)."""
+"""ZoKrates-integrated end-to-end test with multiple vehicles (zokrates/dummy.zok + simulated blockchain)."""
 def test_zokrates_end_to_end_multiple_vehicles():
     global tested, passed
     tested += 1
     print("\n=== ZoKrates-Integrated End-to-End Test: Multiple Vehicles ===")
-    circuit_path = "dummy.zok"
+    circuit_path = "zokrates/dummy.zok"
     num_vehicles = 2
     all_passed = True
     for i in range(num_vehicles):
@@ -532,9 +533,8 @@ def test_sumo_traci_data_transfer(print_data=True):
     if not os.path.exists(SUMO_NET_FILE):
         print(f"[SUMO TraCI Test] Network file not found: {SUMO_NET_FILE}")
         return
-
+    
     # Clean up port and traci
-    from sumo_interface import kill_processes_on_port, cleanup_traci_connection
     kill_processes_on_port(port)
     cleanup_traci_connection()
     time.sleep(2)
@@ -621,7 +621,7 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
         print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_SUMOCFG_FILE}")
         return
 
-    from sumo_interface import kill_processes_on_port, cleanup_traci_connection
+    
     kill_processes_on_port(port)
     cleanup_traci_connection()
     time.sleep(2)
@@ -762,7 +762,6 @@ def testAndScenarioRunner():
     # clear_console()
 
     # --- SUMO cleanup after connection tests ---
-    from sumo_interface import cleanup_traci_connection, kill_processes_on_port
     cleanup_traci_connection()
     kill_processes_on_port(8813)
     kill_processes_on_port(8814)

@@ -87,11 +87,11 @@ def clear_console():
 """
 Function: run_single_experiment
 
-Run a single experiment using the Experiment class with dummy.zok.
+Run a single experiment using the Experiment class with zokrates/dummy.zok.
 
 Steps:
     1. Increment experiment count and set up experiment parameters.
-    2. Instantiate Experiment with dummy.zok.
+    2. Instantiate Experiment with zokrates/dummy.zok.
     3. Run and report the experiment.
     4. Clean up ZoKrates-generated files.
 """
@@ -102,7 +102,7 @@ def run_single_experiment():
     name = f"Experiment_{experiment_count}"
     vehicle_id = f"Vehicle_{experiment_count}"
     rsu_id = f"RSU_{experiment_count}"
-    zokrates_circuit_path = "dummy.zok"  # Simple addition circuit
+    zokrates_circuit_path = "zokrates/dummy.zok"  # Simple addition circuit
     exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
     exp.run()
     exp.report()
@@ -112,11 +112,11 @@ def run_single_experiment():
 """
 Function: run_auth_experiment
 
-Run an experiment using the auth.zok circuit which provides a simple field-based proof.
+Run an experiment using the zokrates/auth.zok circuit which provides a simple field-based proof.
 
 Steps:
     1. Increment experiment count and set up experiment parameters.
-    2. Instantiate Experiment with auth.zok.
+    2. Instantiate Experiment with zokrates/auth.zok.
     3. Run and report the experiment.
     4. Clean up ZoKrates-generated files.
 """
@@ -127,7 +127,7 @@ def run_auth_experiment():
     name = f"Auth_Experiment_{experiment_count}"
     vehicle_id = f"Auth_Vehicle_{experiment_count}"
     rsu_id = f"Auth_RSU_{experiment_count}"
-    zokrates_circuit_path = "auth.zok"  # Simple field-based circuit
+    zokrates_circuit_path = "zokrates/auth.zok"  # Simple field-based circuit
     exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
     exp.run()
     exp.report()
