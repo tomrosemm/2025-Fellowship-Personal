@@ -18,17 +18,47 @@ import json
 
 DEBUG_MODE = False
 
+
+"""
+Function: set_debug_mode
+
+Enable or disable debug mode for detailed output.
+
+Args:
+    enabled (bool): True to enable debug mode, False to disable.
+
+Steps:
+    1. Set the global DEBUG_MODE variable to the provided value.
+"""
 def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
+
+"""
+Initialize the BlockchainInterface with provider URL, contract address, and ABI.
+Args:
+    provider_url (str): The HTTP provider URL for the blockchain node.
+    contract_address (str): The deployed contract address.
+    abi (list): The contract ABI.
+"""
 class BlockchainInterface:
+    
+    
     """
+    Function: __init__
+
     Initialize the BlockchainInterface with provider URL, contract address, and ABI.
+
     Args:
         provider_url (str): The HTTP provider URL for the blockchain node.
         contract_address (str): The deployed contract address.
         abi (list): The contract ABI.
+
+    Steps:
+        1. Create a Web3 instance using the provider URL.
+        2. Create a contract instance using the contract address and ABI.
+        3. Optionally print debug info if DEBUG_MODE is enabled.
     """
     def __init__(self, provider_url, contract_address, abi):
         self.web3 = Web3(Web3.HTTPProvider(provider_url))
@@ -36,16 +66,28 @@ class BlockchainInterface:
         if DEBUG_MODE:
             print(f"[BlockchainInterface] Initialized with provider_url={provider_url}, contract_address={contract_address}")
 
+
     """
+    Function: log_auth
+
     Log an authentication attempt by calling the smart contract's logAuth function.
+
     Args:
         vehicle_hash (str): The anonymized vehicle hash.
         timestamp (int): The timestamp of the authentication attempt.
         authenticated (bool): Whether authentication succeeded.
         from_address (str): The sender's blockchain address.
         private_key (str): The sender's private key for signing.
+
     Returns:
         str: The transaction hash.
+
+    Steps:
+        1. Build the transaction for logAuth with the provided arguments.
+        2. Sign the transaction using the provided private key.
+        3. Send the raw transaction to the blockchain.
+        4. Optionally print debug info if DEBUG_MODE is enabled.
+        5. Return the transaction hash as a hex string.
     """
     def log_auth(self, vehicle_hash, timestamp, authenticated, from_address, private_key):
         if DEBUG_MODE:
@@ -59,6 +101,7 @@ class BlockchainInterface:
         if DEBUG_MODE:
             print(f"[BlockchainInterface] Sent transaction, hash={tx_hash.hex()}")
         return tx_hash.hex()
+
 
 if __name__ == "__main__":
     # After deploying, update these:

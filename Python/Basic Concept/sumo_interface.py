@@ -29,13 +29,38 @@ import tempfile
 DEBUG_MODE = False
 
 
+"""
+Function: set_debug_mode
+
+Enable or disable debug mode for detailed output.
+
+Args:
+    enabled (bool): True to enable debug mode, False to disable.
+
+Steps:
+    1. Set the global DEBUG_MODE variable to the provided value.
+"""
 def set_debug_mode(enabled):
     
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
 
-"""Kill any processes using the specified port."""
+"""
+Function: kill_processes_on_port
+
+Kill any processes using the specified port.
+
+Args:
+    port (int): Port number to clean up.
+
+Returns:
+    bool: True if any processes were killed, False otherwise.
+
+Steps:
+    1. Iterate over processes and kill those using the port.
+    2. Wait for OS to release the port if any were killed.
+"""
 def kill_processes_on_port(port):
     
     killed_any = False
@@ -67,13 +92,27 @@ def kill_processes_on_port(port):
     
     if killed_any:
         print("Wait time begins for processes to die and OS to release port")
-        time.sleep(10) # Wait time for processes to die and OS to release port
+        time.sleep(10)
         print("Wait time ends for processes to die and OS to release port")
         
     return killed_any
 
 
-"""Check if a port is available for use."""
+"""
+Function: is_port_available
+
+Check if a port is available for use.
+
+Args:
+    port (int): Port number to check.
+
+Returns:
+    bool: True if port is available, False otherwise.
+
+Steps:
+    1. Attempt to bind to the port.
+    2. Return True if successful, False otherwise.
+"""
 def is_port_available(port):
     
     try:
@@ -86,7 +125,22 @@ def is_port_available(port):
         return False
 
 
-"""Wait for a port to become available, forcefully cleaning if needed."""
+"""
+Function: wait_for_port_available
+
+Wait for a port to become available, forcefully cleaning if needed.
+
+Args:
+    port (int): Port number to wait for.
+    timeout (int): Timeout in seconds.
+
+Returns:
+    bool: True if port becomes available, False otherwise.
+
+Steps:
+    1. Check port availability in a loop.
+    2. After 3 failed attempts, try to kill processes on the port.
+"""
 def wait_for_port_available(port, timeout=15):
     
     start_time = time.time()
@@ -114,7 +168,15 @@ def wait_for_port_available(port, timeout=15):
     return False
 
 
-"""Ensure any existing TraCI connection is properly closed."""
+"""
+Function: cleanup_traci_connection
+
+Ensure any existing TraCI connection is properly closed.
+
+Steps:
+    1. Import traci and close connection if loaded.
+    2. Wait for cleanup.
+"""
 def cleanup_traci_connection():
 
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
@@ -143,9 +205,18 @@ def cleanup_traci_connection():
 
 
 """
+Function: test_sumo_connection
+
 Test the connection to SUMO using TraCI.
+
 Returns:
     bool: True if connection succeeded, False otherwise.
+
+Steps:
+    1. Aggressively clean up port and connections.
+    2. Start SUMO with network file.
+    3. Attempt to connect via TraCI.
+    4. Clean up after test.
 """
 def test_sumo_connection():
     
@@ -154,7 +225,7 @@ def test_sumo_connection():
     cleanup_traci_connection()
     
     print("Wait time begins for processes to die and OS to release port")
-    time.sleep(10) # Wait time for processes to die and OS to release port
+    time.sleep(10) 
     print("Wait time ends for processes to die and OS to release port")
 
 
@@ -192,6 +263,20 @@ def test_sumo_connection():
         return False
 
 
+    """
+    Function: start_sumo
+
+    Start the SUMO process with the specified network file and port.
+
+    Returns:
+        tuple: (proc, sumo_binary, SUMO_NET_FILE)
+
+    Steps:
+        1. Build SUMO command.
+        2. Start SUMO process.
+        3. Wait for process to start.
+        4. Return process and info.
+    """
     def start_sumo():
         
         sumo_binary = "sumo"
@@ -291,7 +376,21 @@ def test_sumo_connection():
     return connected
 
 
-"""Check if all files referenced in the configuration file exist."""
+"""
+Function: check_config_file_references
+
+Check if all files referenced in the configuration file exist.
+
+Args:
+    config_path (str): Path to SUMO configuration file.
+
+Returns:
+    tuple: (bool, list) - True if all files exist, list of missing files.
+
+Steps:
+    1. Parse XML and check file references.
+    2. Return missing files if any.
+"""
 def check_config_file_references(config_path):
     
     try:
@@ -332,7 +431,23 @@ def check_config_file_references(config_path):
             
         return False, []
 
-"""Create a temporary config file without GUI elements and with essential simulation parameters."""
+"""
+Function: create_non_gui_config
+
+Create a temporary config file without GUI elements and with essential simulation parameters.
+
+Args:
+    original_config_path (str): Path to original SUMO config file.
+
+Returns:
+    tuple: (str, str) - Path to temp config file, output directory.
+
+Steps:
+    1. Remove GUI elements.
+    2. Convert relative paths to absolute.
+    3. Add time and report settings.
+    4. Write to temp file.
+"""
 def create_non_gui_config(original_config_path):
     
     try:
@@ -478,9 +593,18 @@ def create_non_gui_config(original_config_path):
 
 
 """
+Function: test_sumo_config_connection
+
 Test the connection to SUMO using a .sumocfg configuration file.
+
 Returns:
     bool: True if connection succeeded, False otherwise.
+
+Steps:
+    1. Aggressively clean up port and connections.
+    2. Start SUMO with config file.
+    3. Attempt to connect via TraCI.
+    4. Clean up after test.
 """
 def test_sumo_config_connection():
     
@@ -489,7 +613,7 @@ def test_sumo_config_connection():
     cleanup_traci_connection()
     
     print("Wait time begins for processes to die and OS to release port")
-    time.sleep(10) # Wait time for processes to die and OS to release port
+    time.sleep(10) 
     print("Wait time ends for processes to die and OS to release port")
 
     
@@ -528,6 +652,21 @@ def test_sumo_config_connection():
         return False
 
 
+    """
+    Function: start_sumo_with_config
+
+    Start the SUMO process with the specified config file and port.
+
+    Returns:
+        tuple: (proc, sumo_binary, SUMO_CONFIG_FILE, temp_config, temp_output_dir)
+
+    Steps:
+        1. Create a temporary config file without GUI elements.
+        2. Build SUMO command.
+        3. Start SUMO process.
+        4. Wait for process to start.
+        5. Return process and info.
+    """
     def start_sumo_with_config():
         
         # Create a temporary config file without GUI elements

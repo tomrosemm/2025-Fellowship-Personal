@@ -12,6 +12,8 @@ Methodology:
     - The RSU compares the received ZKP to the expected value to determine authentication success.
 """
 
+import os
+
 from otp import generate_otp
 from zkp import generate_zkp_proof_real
 
@@ -36,14 +38,16 @@ Args:
     vehicle_secrets (dict): Mapping from vehicle_id (str) to secret (str).
 """
 class RSU:
-    
     """
     Function: __init__
 
     Initialize an RSU instance.
-    
+
     Args:
         vehicle_secrets (dict): Mapping from vehicle_id to secret.
+
+    Steps:
+        1. Store the mapping of vehicle IDs to secrets.
     """
     def __init__(self, vehicle_secrets):
         # vehicle_secrets: dict mapping vehicle_id to secret
@@ -63,9 +67,16 @@ class RSU:
 
     Returns:
         bool: True if the proof is valid, False otherwise.
+
+    Steps:
+        1. Retrieve the secret for the vehicle.
+        2. Determine circuit type and verify accordingly.
+        3. For auth.zok, check tuple values.
+        4. For dummy.zok, accept any digit string.
+        5. For other circuits, use real ZKP logic.
     """
     def verify_zkp(self, vehicle_id, zkp_proof, timestamp, circuit_path):
-        import os
+        # import os
         secret = self.vehicle_secrets.get(vehicle_id)
         if not secret:
             return False
@@ -94,6 +105,7 @@ class RSU:
             otp = hashlib.sha256(otp_input).hexdigest()
             return generate_zkp_proof_real(circuit_path, otp, timestamp)
 
+
 if __name__ == "__main__":
     # Simple test for RSU class
     vehicle_id = "TEST_VEHICLE"
@@ -104,16 +116,5 @@ if __name__ == "__main__":
     zkp = vehicle.create_zkp(otp, timestamp, "dummy.zok")
     rsu = RSU({vehicle_id: secret})
     result = rsu.verify_zkp(vehicle_id, zkp, timestamp, "dummy.zok")
-    print(f"[RSU] Verification result: {result}")
-if __name__ == "__main__":
-    # Simple test for RSU class
-    vehicle_id = "TEST_VEHICLE"
-    secret = "mysecret"
-    from vehicle import Vehicle
-    vehicle = Vehicle(vehicle_id, secret)
-    otp, timestamp = vehicle.generate_otp()
-    zkp = vehicle.create_zkp(otp, timestamp)
-    rsu = RSU({vehicle_id: secret})
-    result = rsu.verify_zkp(vehicle_id, zkp, timestamp)
     print(f"[RSU] Verification result: {result}")
 

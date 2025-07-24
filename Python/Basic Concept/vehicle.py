@@ -12,8 +12,8 @@ Methodology:
     - The vehicle creates a ZKP for the OTP and timestamp using a ZoKrates interface (currently simulated).
 """
 
-from otp import generate_otp                                # Import OTP generator
-from zkp import generate_zkp_proof_real                     # Import real ZKP proof generator
+from otp import generate_otp
+from zkp import generate_zkp_proof_real
 
 
 """
@@ -38,11 +38,12 @@ Args:
 """
 class Vehicle:
 
+
     """
     Function: __init__
 
     Initialize a Vehicle instance.
-    
+
     Args:
         vehicle_id (str): Unique identifier for the vehicle.
         secret (str): Secret key unique to the vehicle.
@@ -60,7 +61,7 @@ class Vehicle:
     Function: generate_otp
 
     Generate a one-time password (OTP) using the vehicle's secret and current timestamp.
-    
+
     Returns:
         tuple: (otp (str), timestamp (int))
     
@@ -95,10 +96,10 @@ class Vehicle:
     Function: generate_otp_sum
 
     Generate an OTP as a simple sum for auth.zok experiments.
-    
+
     Args:
         timestamp (int, optional): The timestamp to use for OTP. Defaults to None.
-        
+
     Returns:
         tuple: (otp (str), timestamp (int))
     
@@ -124,3 +125,4 @@ if __name__ == "__main__":
     # Example: use dummy.zok for demonstration
     zkp = test_vehicle.create_zkp(otp, timestamp, "dummy.zok")
     print(f"[Vehicle] ZKP: {zkp}")
+

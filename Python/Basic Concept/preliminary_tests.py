@@ -21,15 +21,15 @@ Usage:
     Requires: vehicle.py, rsu.py, zokrates_interface.py, blockchain.py
 """
 
-import secrets                                              # For generating random secrets for vehicles
+import secrets
 import os
 import time
 import random
 import subprocess
 import sys
 
-from vehicle import Vehicle                                 # Vehicle entity: generates OTPs and ZKPs
-from rsu import RSU                                         # RSU entity: verifies ZKPs from vehicles
+from vehicle import Vehicle
+from rsu import RSU
 
 from zokrates_interface import (
     run_zokrates_compile,
@@ -55,8 +55,21 @@ passed = 0
 
 DEBUG_MODE = False
 
+
+"""
+Function: set_debug_mode
+
+Enable or disable debug mode for detailed output.
+
+Args:
+    enabled (bool): True to enable debug mode, False to disable.
+
+Steps:
+    1. Set the global DEBUG_MODE variable to the provided value.
+    2. Propagate debug mode to all relevant modules/classes.
+"""
 def set_debug_mode(enabled):
-    """Enable or disable debug mode for detailed output."""
+    
     global DEBUG_MODE
     DEBUG_MODE = enabled
     set_zokrates_debug_mode(enabled)
@@ -65,7 +78,16 @@ def set_debug_mode(enabled):
     
     # set_blockchain_interface_debug_mode(enabled)
 
-"""Clears the console screen based on the operating system."""
+
+"""
+Function: clear_console
+
+Clears the console screen based on the operating system.
+
+Steps:
+    1. If Windows, use 'cls'.
+    2. Otherwise, use 'clear'.
+"""
 def clear_console():
     if os.name == 'nt':         # For Windows
         os.system('cls')
@@ -73,7 +95,8 @@ def clear_console():
         os.system('clear')
 
 
-"""Test the workflow using a simulated ZKP (hash-based).
+"""
+Test the workflow using a simulated ZKP (hash-based).
 
 Steps:
     1. Generate a random vehicle secret and create Vehicle and RSU entities.
@@ -159,9 +182,7 @@ def test_vehicle_rsu_blockchain_simulated():
         print("[Simulated] Access denied by infrastructure.\n")
 
 
-"""
-End-to-end scenario: Vehicle authenticates successfully and is granted access.
-"""
+"""End-to-end scenario: Vehicle authenticates successfully and is granted access."""
 def scenario_successful_authentication():
     print("\n=== End-to-End Scenario: Successful Authentication ===")
     global tested, passed
@@ -192,9 +213,7 @@ def scenario_successful_authentication():
         print("Access denied by infrastructure.\n")
 
 
-"""
-End-to-end scenario: Vehicle fails authentication due to wrong secret.
-"""
+"""End-to-end scenario: Vehicle fails authentication due to wrong secret."""
 def scenario_failed_authentication():
     print("\n=== End-to-End Scenario: Failed Authentication ===")
     global tested, passed
@@ -323,6 +342,7 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
         print("[Real ZKP] End-to-end ZoKrates workflow failed.\n")
     cleanup_zokrates_files()
 
+
 """Simulated ZKP isolated test with multiple vehicles."""
 def test_simulated_isolated_multiple_vehicles():
     global tested, passed
@@ -352,6 +372,7 @@ def test_simulated_isolated_multiple_vehicles():
         print("[Simulated] All vehicles authenticated successfully.\n")
     else:
         print("[Simulated] Some vehicles failed authentication.\n")
+
 
 """Simulated end-to-end test with multiple vehicles (RSU + blockchain)."""
 def test_simulated_end_to_end_multiple_vehicles():
@@ -383,6 +404,7 @@ def test_simulated_end_to_end_multiple_vehicles():
         print("[Simulated] All vehicles granted access by infrastructure.\n")
     else:
         print("[Simulated] Some vehicles denied access.\n")
+
 
 """ZoKrates-integrated isolated test with multiple vehicles (dummy.zok)."""
 def test_zokrates_isolated_multiple_vehicles():
@@ -428,6 +450,7 @@ def test_zokrates_isolated_multiple_vehicles():
         print("[ZoKrates] All vehicles' proofs verified successfully.\n")
     else:
         print("[ZoKrates] Some vehicles' proofs failed verification.\n")
+
 
 """ZoKrates-integrated end-to-end test with multiple vehicles (dummy.zok + simulated blockchain)."""
 def test_zokrates_end_to_end_multiple_vehicles():
@@ -479,18 +502,19 @@ def test_zokrates_end_to_end_multiple_vehicles():
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
 
 
+"""
+Test connecting to SUMO via TraCI, retrieving and storing simulation data.
+Steps:
+    1. Start SUMO with a simple network.
+    2. Connect via TraCI.
+    3. Retrieve simulation time, vehicle IDs, and positions.
+    4. Print/store the data.
+    5. Clean up.
+Args:
+    print_data (bool): If True, print simulation data to screen.
+"""
 def test_sumo_traci_data_transfer(print_data=True):
-    """
-    Test connecting to SUMO via TraCI, retrieving and storing simulation data.
-    Steps:
-        1. Start SUMO with a simple network.
-        2. Connect via TraCI.
-        3. Retrieve simulation time, vehicle IDs, and positions.
-        4. Print/store the data.
-        5. Clean up.
-    Args:
-        print_data (bool): If True, print simulation data to screen.
-    """
+    
     print("\n=== SUMO TraCI Data Transfer Test ===")
     global tested, passed
     tested += 1
@@ -571,12 +595,13 @@ def test_sumo_traci_data_transfer(print_data=True):
         print("[SUMO TraCI Test] Data transfer test failed.\n")
 
 
+"""
+Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps.
+Args:
+    print_data (bool): If True, print simulation data to screen.
+"""
 def test_sumo_traci_data_transfer_sumocfg(print_data=True):
-    """
-    Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps.
-    Args:
-        print_data (bool): If True, print simulation data to screen.
-    """
+    
     print("\n=== SUMO TraCI Data Transfer Test (.sumocfg, 100 steps) ===")
     global tested, passed
     tested += 1
@@ -656,11 +681,18 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
         print("[SUMO TraCI Test] .sumocfg data transfer test failed.\n")
 
 
-def testAndScenarioRunner():
-    """
-    Run all test and scenario functions and print summary statistics.
-    """
+"""
+Function: testAndScenarioRunner
 
+Run all test and scenario functions and print summary statistics.
+
+Steps:
+    1. Run all included test and scenario functions in sequence.
+    2. Print summary statistics for total tests run, passed, and failed.
+    3. Perform SUMO cleanup after connection tests.
+"""
+def testAndScenarioRunner():
+    
     global tested, passed
     tested, passed = 0, 0
 
@@ -743,6 +775,7 @@ def testAndScenarioRunner():
     print(f"Total tests failed: {tested - passed}")
     print()
     time.sleep(2)
+
 
 if __name__ == "__main__":
     # Example usage: toggle PRINT_SUMO_DATA as needed

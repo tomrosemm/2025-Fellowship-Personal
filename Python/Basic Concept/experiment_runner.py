@@ -19,7 +19,6 @@ import time
 import random
 
 from experiment import Experiment
-
 from vehicle import Vehicle
 from rsu import RSU
 
@@ -45,8 +44,21 @@ DEBUG_MODE = False
 experiment_count = 0
 tested = 0
 
+
+"""
+Function: set_debug_mode
+
+Enable or disable debug mode for detailed output.
+
+Args:
+    enabled (bool): True to enable debug mode, False to disable.
+
+Steps:
+    1. Set the global DEBUG_MODE variable to the provided value.
+    2. Propagate debug mode to all relevant modules/classes.
+"""
 def set_debug_mode(enabled):
-    """Enable or disable debug mode for detailed output."""
+    
     global DEBUG_MODE
     DEBUG_MODE = enabled
     set_zokrates_debug_mode(enabled)
@@ -55,16 +67,36 @@ def set_debug_mode(enabled):
     # set_blockchain_interface_debug_mode(enabled)
     Experiment.DEBUG_MODE = enabled
 
+
+"""
+Function: clear_console
+
+Clears the console screen based on the operating system.
+
+Steps:
+    1. If Windows, use 'cls'.
+    2. Otherwise, use 'clear'.
+"""
 def clear_console():
     if os.name == 'nt':
         os.system('cls')
     else:
         os.system('clear')
 
+
+"""
+Function: run_single_experiment
+
+Run a single experiment using the Experiment class with dummy.zok.
+
+Steps:
+    1. Increment experiment count and set up experiment parameters.
+    2. Instantiate Experiment with dummy.zok.
+    3. Run and report the experiment.
+    4. Clean up ZoKrates-generated files.
+"""
 def run_single_experiment():
-    """
-    Example: Run a single experiment using the Experiment class with dummy.zok.
-    """
+    
     global experiment_count
     experiment_count += 1
     name = f"Experiment_{experiment_count}"
@@ -76,10 +108,20 @@ def run_single_experiment():
     exp.report()
     cleanup_zokrates_files()  # Clean up ZoKrates-generated files
 
+
+"""
+Function: run_auth_experiment
+
+Run an experiment using the auth.zok circuit which provides a simple field-based proof.
+
+Steps:
+    1. Increment experiment count and set up experiment parameters.
+    2. Instantiate Experiment with auth.zok.
+    3. Run and report the experiment.
+    4. Clean up ZoKrates-generated files.
+"""
 def run_auth_experiment():
-    """
-    Run an experiment using the auth.zok circuit which provides a simple field-based proof.
-    """
+    
     global experiment_count
     experiment_count += 1
     name = f"Auth_Experiment_{experiment_count}"

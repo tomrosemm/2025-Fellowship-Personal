@@ -18,11 +18,21 @@ import hashlib
 
 
 """
+Function: generate_otp
+
 Generate a one-time password (OTP) using the provided secret and current timestamp.
+
 Args:
     secret (str): Secret key unique to the vehicle.
+
 Returns:
     tuple: (otp (str), timestamp (int))
+
+Steps:
+    1. Get current Unix timestamp as integer.
+    2. Concatenate secret and timestamp, encode to bytes.
+    3. Hash the input to create the OTP.
+    4. Return the OTP and timestamp.
 """
 def generate_otp(secret):
 
@@ -30,6 +40,7 @@ def generate_otp(secret):
     otp_input = f"{secret}{timestamp}".encode()     # Concatenate secret and timestamp, then encode as bytes
     otp = hashlib.sha256(otp_input).hexdigest()     # Hash the bytes using SHA-256 and get the hex digest as OTP
     return otp, timestamp                           # Return the OTP and the timestamp used
+
 
 if __name__ == "__main__":
     # Simple test for OTP generation

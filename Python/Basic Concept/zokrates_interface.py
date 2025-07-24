@@ -12,17 +12,30 @@ Methodology:
     - Designed to be used by Vehicle and RSU classes for proof generation and verification.
 """
 
-import subprocess       # For running ZoKrates CLI commands
-import os               # For file path operations (if needed)
+import subprocess
+import os
 
 DEBUG_MODE = False
 
-"""Enable or disable debug mode for detailed output."""
+
+"""
+Function: set_debug_mode
+
+Enable or disable debug mode for detailed output.
+
+Args:
+    enabled (bool): True to enable debug mode, False to disable.
+"""
 def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
-"""Remove ZoKrates-generated files from the current directory."""
+
+"""
+Function: cleanup_zokrates_files
+
+Remove ZoKrates-generated files from the current directory.
+"""
 def cleanup_zokrates_files():
     files_to_remove = [
         "out",
@@ -39,6 +52,7 @@ def cleanup_zokrates_files():
             os.remove(filename)
             if DEBUG_MODE:
                 print(f"Removed {filename}")
+
 
 """
 Function: run_zokrates_compile
@@ -206,6 +220,17 @@ def run_zokrates_verify():
         return False
 
 
+"""
+Function: hex_to_field_array
+
+Convert a hex string to an array of 4 field elements (each 64 bits).
+
+Args:
+    hex_str (str): Hexadecimal string to convert.
+
+Returns:
+    list: List of 4 integers representing field elements.
+"""
 def hex_to_field_array(hex_str):
     # Converts a hex string to 4 field elements (each 64 bits)
     arr = []

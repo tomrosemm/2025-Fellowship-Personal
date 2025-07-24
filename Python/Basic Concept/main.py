@@ -12,6 +12,18 @@ Purpose:
 import preliminary_tests
 
 
+"""
+Function: cli_menu_loop
+
+Command-line interface menu loop for running protocol simulation tests.
+
+Steps:
+    1. Display menu options.
+    2. Accept user input.
+    3. Dispatch to appropriate test/scenario functions based on input.
+    4. Allow toggling debug mode and SUMO data printing.
+    5. Exit on user request.
+"""
 def cli_menu_loop():
     print_sumo_data = True  # Local flag for menu session
 
@@ -39,7 +51,7 @@ def cli_menu_loop():
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("pdsumo - Print SUMO TraCI data ON")
-        print("nosumo - Print SUMO TraCI data OFF")
+        print("ndsumo - Print SUMO TraCI data OFF")
         print("e - Exit\n")
         
         choice = input("Enter your choice: ").strip().lower()
@@ -108,7 +120,7 @@ def cli_menu_loop():
                 preliminary_tests.set_print_sumo_data(True)
                 print("SUMO TraCI data printing enabled.\n")
                 
-            case "nosumo":
+            case "ndsumo":
                 print_sumo_data = False
                 preliminary_tests.set_print_sumo_data(False)
                 print("SUMO TraCI data printing disabled.\n")
@@ -119,6 +131,7 @@ def cli_menu_loop():
             
             case _:
                 print("Invalid choice. Please try again.")
+
 
 if __name__ == "__main__":
     cli_menu_loop()

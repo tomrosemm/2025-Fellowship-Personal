@@ -23,18 +23,36 @@ from zokrates_interface import (
     run_zokrates_compute_witness,
     run_zokrates_generate_proof,
     run_zokrates_verify,
-    hex_to_field_array,  # <-- add this import
+    # hex_to_field_array,
 )
 
 from blockchain import simulate_blockchain_verification
 import random
 import os
-import secrets  # <-- add this import
-import time  # <-- add this import
+# import secrets
+import time
+
 
 class Experiment:
     DEBUG_MODE = False
 
+    """
+    Function: __init__
+
+    Initialize an Experiment instance.
+
+    Args:
+        name (str): Name of the experiment.
+        vehicle_id (str): Vehicle identifier.
+        rsu_id (str): RSU identifier.
+        zokrates_circuit_path (str, optional): Path to ZoKrates circuit file.
+        use_zokrates (bool): Whether to use ZoKrates workflow.
+        use_blockchain (bool): Whether to use blockchain verification.
+
+    Steps:
+        1. Store all provided parameters as instance attributes.
+        2. Initialize result, timestamp, vehicle, and rsu to None.
+    """
     def __init__(self, name, vehicle_id, rsu_id, zokrates_circuit_path=None, use_zokrates=True, use_blockchain=True):
         self.name = name
         self.vehicle_id = vehicle_id
@@ -44,9 +62,26 @@ class Experiment:
         self.use_blockchain = use_blockchain
         self.result = None
         self.timestamp = None
-        self.vehicle = None  # <-- add
-        self.rsu = None      # <-- add
+        self.vehicle = None
+        self.rsu = None
 
+
+    """
+    Function: run_zokrates_workflow
+
+    Run the ZoKrates workflow for the experiment.
+
+    Args:
+        vehicle (Vehicle): Vehicle instance to use for the workflow.
+
+    Returns:
+        tuple: (success (bool), otp (str), timestamp (int))
+
+    Steps:
+        1. Determine circuit type and prepare arguments.
+        2. Compile, setup, compute witness, generate proof, and verify using ZoKrates CLI.
+        3. Return success status, OTP, and timestamp.
+    """
     def run_zokrates_workflow(self, vehicle):
         if not self.zokrates_circuit_path:
             print("No ZoKrates circuit path provided.")
@@ -91,6 +126,27 @@ class Experiment:
             return False, None, None
         return True, otp, timestamp
 
+
+    """
+    Function: run_blockchain_verification
+
+    Run blockchain verification and logging for the experiment.
+
+    Args:
+        vehicle (Vehicle): Vehicle instance.
+        rsu (RSU): RSU instance.
+        otp (str): One-time password.
+        timestamp (int): Timestamp used for OTP.
+
+    Returns:
+        bool: Outcome of blockchain verification.
+
+    Steps:
+        1. Prepare ZKP proof based on circuit type.
+        2. RSU verifies ZKP.
+        3. Simulate blockchain verification and logging.
+        4. Return outcome.
+    """
     def run_blockchain_verification(self, vehicle, rsu, otp, timestamp):
         circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
         if circuit_name == "auth.zok":
@@ -106,6 +162,18 @@ class Experiment:
         outcome = simulate_blockchain_verification(self.vehicle_id, str(zkp_proof), timestamp, verification_result)
         return outcome
 
+
+    """
+    Function: run
+
+    Run the experiment workflow.
+
+    Steps:
+        1. Set up vehicle and RSU instances.
+        2. Run ZoKrates workflow if enabled.
+        3. Run blockchain verification if enabled and ZoKrates succeeded.
+        4. Store and print results.
+    """
     def run(self):
         print(f"Running Experiment: {self.name}")
         circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
@@ -138,6 +206,17 @@ class Experiment:
             self.timestamp = timestamp
             print(f"Experiment '{self.name}' completed with ZoKrates only.")
 
+
+    """
+    Function: report
+
+    Print a report of the experiment results.
+
+    Steps:
+        1. Print experiment result and timestamp.
+        2. Optionally rerun ZoKrates and blockchain workflows for reporting.
+        3. Print completion status.
+    """
     def report(self):
         print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")
         vehicle = self.vehicle
