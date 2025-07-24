@@ -1,18 +1,17 @@
-"""
-experiment.py
-
-Author: Tom Rose
-
-Purpose:
-    Provides the Experiment class and logic for running and reporting ZKP/blockchain experiments
-    involving vehicles, RSUs, ZoKrates circuits, and blockchain verification.
-
-Methodology:
-    - Supports both simulated and ZoKrates-based ZKP workflows.
-    - Integrates with vehicle and RSU classes for authentication.
-    - Optionally performs blockchain verification and logging.
-    - Designed for flexible experiment setup and reporting.
-"""
+##
+# @file experiment.py
+# @author Tom Rose
+#
+# @brief
+#   Provides the Experiment class and logic for running and reporting ZKP/blockchain experiments
+#   involving vehicles, RSUs, ZoKrates circuits, and blockchain verification.
+#
+# @details
+#   - Supports both simulated and ZoKrates-based ZKP workflows.
+#   - Integrates with vehicle and RSU classes for authentication.
+#   - Optionally performs blockchain verification and logging.
+#   - Designed for flexible experiment setup and reporting.
+##
 
 from vehicle import Vehicle
 from rsu import RSU
@@ -32,27 +31,25 @@ import os
 # import secrets
 import time
 
-
+##
+# @class Experiment
+# @brief Encapsulates logic for running and reporting ZKP/blockchain experiments.
+##
 class Experiment:
     DEBUG_MODE = False
 
-    """
-    Function: __init__
-
-    Initialize an Experiment instance.
-
-    Args:
-        name (str): Name of the experiment.
-        vehicle_id (str): Vehicle identifier.
-        rsu_id (str): RSU identifier.
-        zokrates_circuit_path (str, optional): Path to ZoKrates circuit file.
-        use_zokrates (bool): Whether to use ZoKrates workflow.
-        use_blockchain (bool): Whether to use blockchain verification.
-
-    Steps:
-        1. Store all provided parameters as instance attributes.
-        2. Initialize result, timestamp, vehicle, and rsu to None.
-    """
+    ##
+    # @brief Initialize an Experiment instance.
+    # @param name Name of the experiment.
+    # @param vehicle_id Vehicle identifier.
+    # @param rsu_id RSU identifier.
+    # @param zokrates_circuit_path Path to ZoKrates circuit file (optional).
+    # @param use_zokrates Whether to use ZoKrates workflow.
+    # @param use_blockchain Whether to use blockchain verification.
+    # @details
+    #   - Stores all provided parameters as instance attributes.
+    #   - Initializes result, timestamp, vehicle, and rsu to None.
+    ##
     def __init__(self, name, vehicle_id, rsu_id, zokrates_circuit_path=None, use_zokrates=True, use_blockchain=True):
         self.name = name
         self.vehicle_id = vehicle_id
@@ -66,22 +63,16 @@ class Experiment:
         self.rsu = None
 
 
-    """
-    Function: run_zokrates_workflow
-
-    Run the ZoKrates workflow for the experiment.
-
-    Args:
-        vehicle (Vehicle): Vehicle instance to use for the workflow.
-
-    Returns:
-        tuple: (success (bool), otp (str), timestamp (int))
-
-    Steps:
-        1. Determine circuit type and prepare arguments.
-        2. Compile, setup, compute witness, generate proof, and verify using ZoKrates CLI.
-        3. Return success status, OTP, and timestamp.
-    """
+    ##
+    # @brief Run the ZoKrates workflow for the experiment.
+    # @param vehicle Vehicle instance to use for the workflow.
+    # @return tuple (success (bool), otp (str), timestamp (int))
+    # @details
+    #   Steps:
+    #     1. Determine circuit type and prepare arguments.
+    #     2. Compile, setup, compute witness, generate proof, and verify using ZoKrates CLI.
+    #     3. Return success status, OTP, and timestamp.
+    ##
     def run_zokrates_workflow(self, vehicle):
         if not self.zokrates_circuit_path:
             print("No ZoKrates circuit path provided.")
@@ -127,26 +118,20 @@ class Experiment:
         return True, otp, timestamp
 
 
-    """
-    Function: run_blockchain_verification
-
-    Run blockchain verification and logging for the experiment.
-
-    Args:
-        vehicle (Vehicle): Vehicle instance.
-        rsu (RSU): RSU instance.
-        otp (str): One-time password.
-        timestamp (int): Timestamp used for OTP.
-
-    Returns:
-        bool: Outcome of blockchain verification.
-
-    Steps:
-        1. Prepare ZKP proof based on circuit type.
-        2. RSU verifies ZKP.
-        3. Simulate blockchain verification and logging.
-        4. Return outcome.
-    """
+    ##
+    # @brief Run blockchain verification and logging for the experiment.
+    # @param vehicle Vehicle instance.
+    # @param rsu RSU instance.
+    # @param otp One-time password.
+    # @param timestamp Timestamp used for OTP.
+    # @return Outcome of blockchain verification (bool).
+    # @details
+    #   Steps:
+    #     1. Prepare ZKP proof based on circuit type.
+    #     2. RSU verifies ZKP.
+    #     3. Simulate blockchain verification and logging.
+    #     4. Return outcome.
+    ##
     def run_blockchain_verification(self, vehicle, rsu, otp, timestamp):
         circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
         if circuit_name == "auth.zok":
@@ -163,17 +148,15 @@ class Experiment:
         return outcome
 
 
-    """
-    Function: run
-
-    Run the experiment workflow.
-
-    Steps:
-        1. Set up vehicle and RSU instances.
-        2. Run ZoKrates workflow if enabled.
-        3. Run blockchain verification if enabled and ZoKrates succeeded.
-        4. Store and print results.
-    """
+    ##
+    # @brief Run the experiment workflow.
+    # @details
+    #   Steps:
+    #     1. Set up vehicle and RSU instances.
+    #     2. Run ZoKrates workflow if enabled.
+    #     3. Run blockchain verification if enabled and ZoKrates succeeded.
+    #     4. Store and print results.
+    ##
     def run(self):
         print(f"Running Experiment: {self.name}")
         circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
@@ -207,16 +190,14 @@ class Experiment:
             print(f"Experiment '{self.name}' completed with ZoKrates only.")
 
 
-    """
-    Function: report
-
-    Print a report of the experiment results.
-
-    Steps:
-        1. Print experiment result and timestamp.
-        2. Optionally rerun ZoKrates and blockchain workflows for reporting.
-        3. Print completion status.
-    """
+    ##
+    # @brief Print a report of the experiment results.
+    # @details
+    #   Steps:
+    #     1. Print experiment result and timestamp.
+    #     2. Optionally rerun ZoKrates and blockchain workflows for reporting.
+    #     3. Print completion status.
+    ##
     def report(self):
         print(f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}")
         vehicle = self.vehicle

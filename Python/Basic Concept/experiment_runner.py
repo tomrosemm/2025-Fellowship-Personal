@@ -1,17 +1,16 @@
-"""
-experiment_runner.py
-
-Author: Tom Rose
-
-Purpose:
-    Provides routines to run and report on ZKP/blockchain experiments using the Experiment class.
-    Supports running experiments with different ZoKrates circuits and configurations for automated testing.
-
-Methodology:
-    - Sets up and runs experiments with dummy.zok and auth.zok circuits.
-    - Integrates with vehicle, RSU, ZoKrates, and blockchain modules.
-    - Supports debug mode and cleanup of ZoKrates artifacts.
-"""
+##
+# @file experiment_runner.py
+# @author Tom Rose
+#
+# @brief
+#   Provides routines to run and report on ZKP/blockchain experiments using the Experiment class.
+#   Supports running experiments with different ZoKrates circuits and configurations for automated testing.
+#
+# @details
+#   - Sets up and runs experiments with dummy.zok and auth.zok circuits.
+#   - Integrates with vehicle, RSU, ZoKrates, and blockchain modules.
+#   - Supports debug mode and cleanup of ZoKrates artifacts.
+##
 
 import secrets
 import os
@@ -44,19 +43,13 @@ DEBUG_MODE = False
 experiment_count = 0
 tested = 0
 
-
-"""
-Function: set_debug_mode
-
-Enable or disable debug mode for detailed output.
-
-Args:
-    enabled (bool): True to enable debug mode, False to disable.
-
-Steps:
-    1. Set the global DEBUG_MODE variable to the provided value.
-    2. Propagate debug mode to all relevant modules/classes.
-"""
+##
+# @brief Enable or disable debug mode for detailed output.
+# @param enabled True to enable debug mode, False to disable.
+# @details
+#   - Sets the global DEBUG_MODE variable.
+#   - Propagates debug mode to all relevant modules/classes.
+##
 def set_debug_mode(enabled):
     
     global DEBUG_MODE
@@ -68,15 +61,12 @@ def set_debug_mode(enabled):
     Experiment.DEBUG_MODE = enabled
 
 
-"""
-Function: clear_console
-
-Clears the console screen based on the operating system.
-
-Steps:
-    1. If Windows, use 'cls'.
-    2. Otherwise, use 'clear'.
-"""
+##
+# @brief Clears the console screen based on the operating system.
+# @details
+#   - If Windows, use 'cls'.
+#   - Otherwise, use 'clear'.
+##
 def clear_console():
     if os.name == 'nt':
         os.system('cls')
@@ -84,17 +74,15 @@ def clear_console():
         os.system('clear')
 
 
-"""
-Function: run_single_experiment
-
-Run a single experiment using the Experiment class with zokrates/dummy.zok.
-
-Steps:
-    1. Increment experiment count and set up experiment parameters.
-    2. Instantiate Experiment with zokrates/dummy.zok.
-    3. Run and report the experiment.
-    4. Clean up ZoKrates-generated files.
-"""
+##
+# @brief Run a single experiment using the Experiment class with zokrates/dummy.zok.
+# @details
+#   Steps:
+#     1. Increment experiment count and set up experiment parameters.
+#     2. Instantiate Experiment with zokrates/dummy.zok.
+#     3. Run and report the experiment.
+#     4. Clean up ZoKrates-generated files.
+##
 def run_single_experiment():
     
     global experiment_count
@@ -109,17 +97,15 @@ def run_single_experiment():
     cleanup_zokrates_files()  # Clean up ZoKrates-generated files
 
 
-"""
-Function: run_auth_experiment
-
-Run an experiment using the zokrates/auth.zok circuit which provides a simple field-based proof.
-
-Steps:
-    1. Increment experiment count and set up experiment parameters.
-    2. Instantiate Experiment with zokrates/auth.zok.
-    3. Run and report the experiment.
-    4. Clean up ZoKrates-generated files.
-"""
+##
+# @brief Run an experiment using the zokrates/auth.zok circuit which provides a simple field-based proof.
+# @details
+#   Steps:
+#     1. Increment experiment count and set up experiment parameters.
+#     2. Instantiate Experiment with zokrates/auth.zok.
+#     3. Run and report the experiment.
+#     4. Clean up ZoKrates-generated files.
+##
 def run_auth_experiment():
     
     global experiment_count

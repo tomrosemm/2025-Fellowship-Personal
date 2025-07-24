@@ -1,17 +1,16 @@
-"""
-blockchain_interface.py
-
-Author: Tom Rose
-
-Purpose:
-    Provides a Python interface for interacting with a blockchain smart contract (e.g., for authentication event logging).
-    Uses web3.py to connect to an Ethereum-compatible blockchain and call contract methods.
-
-Methodology:
-    - Initializes a Web3 connection and contract instance using provided ABI and address.
-    - Provides a method to log authentication attempts by calling the smart contract's logAuth function.
-    - Handles transaction signing and sending using a provided private key.
-"""
+##
+# @file blockchain_interface.py
+# @author Tom Rose
+#
+# @brief
+#   Provides a Python interface for interacting with a blockchain smart contract (e.g., for authentication event logging).
+#   Uses web3.py to connect to an Ethereum-compatible blockchain and call contract methods.
+#
+# @details
+#   - Initializes a Web3 connection and contract instance using provided ABI and address.
+#   - Provides a method to log authentication attempts by calling the smart contract's logAuth function.
+#   - Handles transaction signing and sending using a provided private key.
+##
 
 from web3 import Web3
 import json
@@ -19,47 +18,42 @@ import json
 DEBUG_MODE = False
 
 
-"""
-Function: set_debug_mode
-
-Enable or disable debug mode for detailed output.
-
-Args:
-    enabled (bool): True to enable debug mode, False to disable.
-
-Steps:
-    1. Set the global DEBUG_MODE variable to the provided value.
-"""
+##
+# @brief Enable or disable debug mode for detailed output.
+#
+# @param enabled True to enable debug mode, False to disable.
+#
+# @details
+#   Steps:
+#     1. Set the global DEBUG_MODE variable to the provided value.
+##
 def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
 
-"""
-Initialize the BlockchainInterface with provider URL, contract address, and ABI.
-Args:
-    provider_url (str): The HTTP provider URL for the blockchain node.
-    contract_address (str): The deployed contract address.
-    abi (list): The contract ABI.
-"""
+##
+# @class BlockchainInterface
+# @brief Interface for interacting with a blockchain smart contract for authentication event logging.
+#
+# @details
+#   Initializes the BlockchainInterface with provider URL, contract address, and ABI.
+##
 class BlockchainInterface:
     
-    
-    """
-    Function: __init__
-
-    Initialize the BlockchainInterface with provider URL, contract address, and ABI.
-
-    Args:
-        provider_url (str): The HTTP provider URL for the blockchain node.
-        contract_address (str): The deployed contract address.
-        abi (list): The contract ABI.
-
-    Steps:
-        1. Create a Web3 instance using the provider URL.
-        2. Create a contract instance using the contract address and ABI.
-        3. Optionally print debug info if DEBUG_MODE is enabled.
-    """
+    ##
+    # @brief Initialize the BlockchainInterface with provider URL, contract address, and ABI.
+    #
+    # @param provider_url The HTTP provider URL for the blockchain node.
+    # @param contract_address The deployed contract address.
+    # @param abi The contract ABI.
+    #
+    # @details
+    #   Steps:
+    #     1. Create a Web3 instance using the provider URL.
+    #     2. Create a contract instance using the contract address and ABI.
+    #     3. Optionally print debug info if DEBUG_MODE is enabled.
+    ##
     def __init__(self, provider_url, contract_address, abi):
         self.web3 = Web3(Web3.HTTPProvider(provider_url))
         self.contract = self.web3.eth.contract(address=contract_address, abi=abi)
@@ -67,28 +61,25 @@ class BlockchainInterface:
             print(f"[BlockchainInterface] Initialized with provider_url={provider_url}, contract_address={contract_address}")
 
 
-    """
-    Function: log_auth
-
-    Log an authentication attempt by calling the smart contract's logAuth function.
-
-    Args:
-        vehicle_hash (str): The anonymized vehicle hash.
-        timestamp (int): The timestamp of the authentication attempt.
-        authenticated (bool): Whether authentication succeeded.
-        from_address (str): The sender's blockchain address.
-        private_key (str): The sender's private key for signing.
-
-    Returns:
-        str: The transaction hash.
-
-    Steps:
-        1. Build the transaction for logAuth with the provided arguments.
-        2. Sign the transaction using the provided private key.
-        3. Send the raw transaction to the blockchain.
-        4. Optionally print debug info if DEBUG_MODE is enabled.
-        5. Return the transaction hash as a hex string.
-    """
+    ##
+    # @brief Log an authentication attempt by calling the smart contract's logAuth function.
+    #
+    # @param vehicle_hash The anonymized vehicle hash.
+    # @param timestamp The timestamp of the authentication attempt.
+    # @param authenticated Whether authentication succeeded.
+    # @param from_address The sender's blockchain address.
+    # @param private_key The sender's private key for signing.
+    #
+    # @return The transaction hash.
+    #
+    # @details
+    #   Steps:
+    #     1. Build the transaction for logAuth with the provided arguments.
+    #     2. Sign the transaction using the provided private key.
+    #     3. Send the raw transaction to the blockchain.
+    #     4. Optionally print debug info if DEBUG_MODE is enabled.
+    #     5. Return the transaction hash as a hex string.
+    ##
     def log_auth(self, vehicle_hash, timestamp, authenticated, from_address, private_key):
         if DEBUG_MODE:
             print(f"[BlockchainInterface] Logging auth: vehicle_hash={vehicle_hash}, timestamp={timestamp}, authenticated={authenticated}")
@@ -104,6 +95,7 @@ class BlockchainInterface:
 
 
 if __name__ == "__main__":
+    ## @test Example usage after deployment
     # After deploying, update these:
     provider_url = "http://127.0.0.1:8545"
     contract_address = "0x..."  # Use the address from deployment output

@@ -1,25 +1,21 @@
-"""
-preliminary_tests.py
-
-Author: Tom Rose
-
-Purpose:
-    This module contains test routines to simulate and validate the ZKP-OTP authentication protocol
-    between Vehicle and RSU entities. It demonstrates the authentication process using both simulated
-    and real (ZoKrates-based) zero-knowledge proof workflows, as well as a blockchain verification simulation.
-    It contains tests for basic connection with related software/tools, such as ZoKrates and SUMO (next: OMNeT++ or Mininet)
-
-Methodology:
-    - Simulates the generation of one-time passwords (OTP) and timestamps by vehicles.
-    - Demonstrates creation of zero-knowledge proofs (ZKP) for OTP and timestamp.
-    - Shows verification of ZKPs by RSUs using both simulated (hash-based) and real ZoKrates CLI methods.
-    - Includes a workflow for simulating blockchain-based verification and logging.
-    - Provides functions for each workflow, which can be run directly for demonstration and prototyping.
-
-Usage:
-    Run this script directly to execute the included test scenarios.
-    Requires: vehicle.py, rsu.py, zokrates_interface.py, blockchain.py
-"""
+##
+# @file preliminary_tests.py
+# @author Tom Rose
+#
+# @brief
+#   Contains test routines to simulate and validate the ZKP-OTP authentication protocol
+#   between Vehicle and RSU entities. Demonstrates authentication using both simulated
+#   and real (ZoKrates-based) zero-knowledge proof workflows, as well as a blockchain verification simulation.
+#   Includes tests for basic connection with related software/tools, such as ZoKrates and SUMO.
+#
+# @details
+#   - Simulates generation of one-time passwords (OTP) and timestamps by vehicles.
+#   - Demonstrates creation of zero-knowledge proofs (ZKP) for OTP and timestamp.
+#   - Shows verification of ZKPs by RSUs using both simulated (hash-based) and real ZoKrates CLI methods.
+#   - Includes a workflow for simulating blockchain-based verification and logging.
+#   - Provides functions for each workflow, which can be run directly for demonstration and prototyping.
+#   - Requires: vehicle.py, rsu.py, zokrates_interface.py, blockchain.py
+##
 
 import secrets
 import os
@@ -57,18 +53,13 @@ passed = 0
 DEBUG_MODE = False
 
 
-"""
-Function: set_debug_mode
-
-Enable or disable debug mode for detailed output.
-
-Args:
-    enabled (bool): True to enable debug mode, False to disable.
-
-Steps:
-    1. Set the global DEBUG_MODE variable to the provided value.
-    2. Propagate debug mode to all relevant modules/classes.
-"""
+##
+# @brief Enable or disable debug mode for detailed output.
+# @param enabled True to enable debug mode, False to disable.
+# @details
+#   - Sets the global DEBUG_MODE variable.
+#   - Propagates debug mode to all relevant modules/classes.
+##
 def set_debug_mode(enabled):
     
     global DEBUG_MODE
@@ -80,15 +71,12 @@ def set_debug_mode(enabled):
     # set_blockchain_interface_debug_mode(enabled)
 
 
-"""
-Function: clear_console
-
-Clears the console screen based on the operating system.
-
-Steps:
-    1. If Windows, use 'cls'.
-    2. Otherwise, use 'clear'.
-"""
+##
+# @brief Clears the console screen based on the operating system.
+# @details
+#   - If Windows, use 'cls'.
+#   - Otherwise, use 'clear'.
+##
 def clear_console():
     if os.name == 'nt':         # For Windows
         os.system('cls')
@@ -96,16 +84,16 @@ def clear_console():
         os.system('clear')
 
 
-"""
-Test the workflow using a simulated ZKP (hash-based).
-
-Steps:
-    1. Generate a random vehicle secret and create Vehicle and RSU entities.
-    2. Vehicle generates an OTP and timestamp.
-    3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
-    4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
-    5. Output the result of the verification and authentication status.
-"""
+##
+# @brief Test the workflow using a simulated ZKP (hash-based).
+# @details
+#   Steps:
+#     1. Generate a random vehicle secret and create Vehicle and RSU entities.
+#     2. Vehicle generates an OTP and timestamp.
+#     3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
+#     4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
+#     5. Output the result of the verification and authentication status.
+##
 def test_vehicle_rsu_interaction_simulated():
     print("\n=== Simulated ZKP Test ===")
     global tested, passed
@@ -138,19 +126,17 @@ def test_vehicle_rsu_interaction_simulated():
         print("[Simulated] Authentication failed.\n")
 
 
-"""
-Function: test_vehicle_rsu_blockchain_simulated
-
-Simulate the full workflow, including using ZoKrates for the ZKP as well as blockchain verification and logging.
-
-Steps:
-    1. Generate a random vehicle secret and create Vehicle and RSU entities.
-    2. Vehicle generates an OTP and timestamp.
-    3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
-    4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
-    5. Simulate blockchain smart contract verification and logging of the authentication attempt.
-    6. Output the result of the infrastructure access decision.
-"""
+##
+# @brief Simulate the full workflow, including using ZoKrates for the ZKP as well as blockchain verification and logging.
+# @details
+#   Steps:
+#     1. Generate a random vehicle secret and create Vehicle and RSU entities.
+#     2. Vehicle generates an OTP and timestamp.
+#     3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
+#     4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
+#     5. Simulate blockchain smart contract verification and logging of the authentication attempt.
+#     6. Output the result of the infrastructure access decision.
+##
 def test_vehicle_rsu_blockchain_simulated():
     print("\n=== Simulated Blockchain ZKP Test ===")
     global tested, passed
@@ -183,7 +169,9 @@ def test_vehicle_rsu_blockchain_simulated():
         print("[Simulated] Access denied by infrastructure.\n")
 
 
-"""End-to-end scenario: Vehicle authenticates successfully and is granted access."""
+##
+# @brief End-to-end scenario: Vehicle authenticates successfully and is granted access.
+##
 def scenario_successful_authentication():
     print("\n=== End-to-End Scenario: Successful Authentication ===")
     global tested, passed
@@ -214,7 +202,9 @@ def scenario_successful_authentication():
         print("Access denied by infrastructure.\n")
 
 
-"""End-to-end scenario: Vehicle fails authentication due to wrong secret."""
+##
+# @brief End-to-end scenario: Vehicle fails authentication due to wrong secret.
+##
 def scenario_failed_authentication():
     print("\n=== End-to-End Scenario: Failed Authentication ===")
     global tested, passed
@@ -248,18 +238,16 @@ def scenario_failed_authentication():
         print("Access denied by infrastructure (expected).\n")
 
 
-"""
-Function: test_zokrates_connection
-
-Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok.
-
-Steps:
-    1. Compile zokrates/dummy.zok
-    2. Setup
-    3. Compute witness (inputs: a=3, b=4)
-    4. Generate proof
-    5. Verify proof
-"""
+##
+# @brief Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok.
+# @details
+#   Steps:
+#     1. Compile zokrates/dummy.zok
+#     2. Setup
+#     3. Compute witness (inputs: a=3, b=4)
+#     4. Generate proof
+#     5. Verify proof
+##
 def test_zokrates_connection():
     print("\n=== ZoKrates CLI Connection Test ===")
     global tested, passed
@@ -298,10 +286,11 @@ def test_zokrates_connection():
     cleanup_zokrates_files()
 
 
-"""
-Test the end-to-end ZoKrates workflow using zokrates/dummy.zok and random inputs.
-This simulates a real ZKP workflow using the ZoKrates CLI on Linux.
-"""
+##
+# @brief Test the end-to-end ZoKrates workflow using zokrates/dummy.zok and random inputs.
+# @details
+#   Simulates a real ZKP workflow using the ZoKrates CLI on Linux.
+##
 def test_vehicle_rsu_interaction_real_zokrates_dummy():
     print("\n=== Real ZoKrates End-to-End Test with zokrates/dummy.zok ===")
     global tested, passed
@@ -344,7 +333,9 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
     cleanup_zokrates_files()
 
 
-"""Simulated ZKP isolated test with multiple vehicles."""
+##
+# @brief Simulated ZKP isolated test with multiple vehicles.
+##
 def test_simulated_isolated_multiple_vehicles():
     global tested, passed
     tested += 1
@@ -375,7 +366,9 @@ def test_simulated_isolated_multiple_vehicles():
         print("[Simulated] Some vehicles failed authentication.\n")
 
 
-"""Simulated end-to-end test with multiple vehicles (RSU + blockchain)."""
+##
+# @brief Simulated end-to-end test with multiple vehicles (RSU + blockchain).
+##
 def test_simulated_end_to_end_multiple_vehicles():
     global tested, passed
     tested += 1
@@ -407,7 +400,9 @@ def test_simulated_end_to_end_multiple_vehicles():
         print("[Simulated] Some vehicles denied access.\n")
 
 
-"""ZoKrates-integrated isolated test with multiple vehicles (zokrates/dummy.zok)."""
+##
+# @brief ZoKrates-integrated isolated test with multiple vehicles (zokrates/dummy.zok).
+##
 def test_zokrates_isolated_multiple_vehicles():
     global tested, passed
     tested += 1
@@ -453,7 +448,9 @@ def test_zokrates_isolated_multiple_vehicles():
         print("[ZoKrates] Some vehicles' proofs failed verification.\n")
 
 
-"""ZoKrates-integrated end-to-end test with multiple vehicles (zokrates/dummy.zok + simulated blockchain)."""
+##
+# @brief ZoKrates-integrated end-to-end test with multiple vehicles (zokrates/dummy.zok + simulated blockchain).
+##
 def test_zokrates_end_to_end_multiple_vehicles():
     global tested, passed
     tested += 1
@@ -503,17 +500,17 @@ def test_zokrates_end_to_end_multiple_vehicles():
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
 
 
-"""
-Test connecting to SUMO via TraCI, retrieving and storing simulation data.
-Steps:
-    1. Start SUMO with a simple network.
-    2. Connect via TraCI.
-    3. Retrieve simulation time, vehicle IDs, and positions.
-    4. Print/store the data.
-    5. Clean up.
-Args:
-    print_data (bool): If True, print simulation data to screen.
-"""
+##
+# @brief Test connecting to SUMO via TraCI, retrieving and storing simulation data.
+# @param print_data If True, print simulation data to screen.
+# @details
+#   Steps:
+#     1. Start SUMO with a simple network.
+#     2. Connect via TraCI.
+#     3. Retrieve simulation time, vehicle IDs, and positions.
+#     4. Print/store the data.
+#     5. Clean up.
+##
 def test_sumo_traci_data_transfer(print_data=True):
     
     print("\n=== SUMO TraCI Data Transfer Test ===")
@@ -595,11 +592,10 @@ def test_sumo_traci_data_transfer(print_data=True):
         print("[SUMO TraCI Test] Data transfer test failed.\n")
 
 
-"""
-Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps.
-Args:
-    print_data (bool): If True, print simulation data to screen.
-"""
+##
+# @brief Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps.
+# @param print_data If True, print simulation data to screen.
+##
 def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     
     print("\n=== SUMO TraCI Data Transfer Test (.sumocfg, 100 steps) ===")
@@ -621,7 +617,6 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
         print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_SUMOCFG_FILE}")
         return
 
-    
     kill_processes_on_port(port)
     cleanup_traci_connection()
     time.sleep(2)
@@ -681,16 +676,14 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
         print("[SUMO TraCI Test] .sumocfg data transfer test failed.\n")
 
 
-"""
-Function: testAndScenarioRunner
-
-Run all test and scenario functions and print summary statistics.
-
-Steps:
-    1. Run all included test and scenario functions in sequence.
-    2. Print summary statistics for total tests run, passed, and failed.
-    3. Perform SUMO cleanup after connection tests.
-"""
+##
+# @brief Run all test and scenario functions and print summary statistics.
+# @details
+#   Steps:
+#     1. Run all included test and scenario functions in sequence.
+#     2. Print summary statistics for total tests run, passed, and failed.
+#     3. Perform SUMO cleanup after connection tests.
+##
 def testAndScenarioRunner():
     
     global tested, passed

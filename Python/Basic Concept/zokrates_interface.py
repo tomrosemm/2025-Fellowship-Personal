@@ -1,16 +1,15 @@
-"""
-zokrates_interface.py
-
-Author: Tom Rose
-
-Purpose:
-    Provides an interface for generating and verifying zero-knowledge proofs (ZKPs) using ZoKrates, both in simulation and via CLI commands.
-
-Methodology:
-    - Simulates ZKP generation by hashing OTP and timestamp.
-    - Provides wrapper functions to compile ZoKrates circuits, set up keys, compute witnesses, generate proofs, and verify proofs using the ZoKrates CLI.
-    - Designed to be used by Vehicle and RSU classes for proof generation and verification.
-"""
+##
+# @file zokrates_interface.py
+# @author Tom Rose
+#
+# @brief
+#   Provides an interface for generating and verifying zero-knowledge proofs (ZKPs) using ZoKrates, both in simulation and via CLI commands.
+#
+# @details
+#   - Simulates ZKP generation by hashing OTP and timestamp.
+#   - Provides wrapper functions to compile ZoKrates circuits, set up keys, compute witnesses, generate proofs, and verify proofs using the ZoKrates CLI.
+#   - Designed to be used by Vehicle and RSU classes for proof generation and verification.
+##
 
 import subprocess
 import os
@@ -18,24 +17,18 @@ import os
 DEBUG_MODE = False
 
 
-"""
-Function: set_debug_mode
-
-Enable or disable debug mode for detailed output.
-
-Args:
-    enabled (bool): True to enable debug mode, False to disable.
-"""
+##
+# @brief Enable or disable debug mode for detailed output.
+# @param enabled True to enable debug mode, False to disable.
+##
 def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
 
-"""
-Function: cleanup_zokrates_files
-
-Remove ZoKrates-generated files from the current directory.
-"""
+##
+# @brief Remove ZoKrates-generated files from the current directory.
+##
 def cleanup_zokrates_files():
     files_to_remove = [
         "out",
@@ -54,25 +47,21 @@ def cleanup_zokrates_files():
                 print(f"Removed {filename}")
 
 
-"""
-Function: run_zokrates_compile
-
-Compile a ZoKrates circuit file.
-
-Args:
-    circuit_path (str): Path to the ZoKrates .zok circuit file.
-    
-Returns:
-    bool: True if compilation succeeds, False otherwise.
-    
-Side Effects:
-    Prints ZoKrates CLI output or error message.
-    
-Steps:
-1. Run the ZoKrates compile command with the given circuit file
-2. Print the output from ZoKrates
-3. Return True if successful, otherwise print error and return False
-"""
+##
+# @brief Compile a ZoKrates circuit file.
+#
+# @param circuit_path Path to the ZoKrates .zok circuit file.
+# @return True if compilation succeeds, False otherwise.
+#
+# @details
+#   Side Effects:
+#     Prints ZoKrates CLI output or error message.
+#
+#   Steps:
+#     1. Run the ZoKrates compile command with the given circuit file
+#     2. Print the output from ZoKrates
+#     3. Return True if successful, otherwise print error and return False
+##
 def run_zokrates_compile(circuit_path):
     try:
         # Run the ZoKrates compile command with the given circuit file
@@ -89,22 +78,20 @@ def run_zokrates_compile(circuit_path):
         return False
 
 
-"""
-Function: run_zokrates_setup
-
-Run ZoKrates setup to generate proving and verification keys.
-
-Returns:
-    bool: True if setup succeeds, False otherwise.
-    
-Side Effects:
-    Prints ZoKrates CLI output or error message.
-    
-Steps:
-1. Run the ZoKrates setup command
-2. Print the output from ZoKrates
-3. Return True if successful, otherwise print error and return False
-"""
+##
+# @brief Run ZoKrates setup to generate proving and verification keys.
+#
+# @return True if setup succeeds, False otherwise.
+#
+# @details
+#   Side Effects:
+#     Prints ZoKrates CLI output or error message.
+#
+#   Steps:
+#     1. Run the ZoKrates setup command
+#     2. Print the output from ZoKrates
+#     3. Return True if successful, otherwise print error and return False
+##
 def run_zokrates_setup():
     try:
         # Run the ZoKrates setup command
@@ -121,24 +108,21 @@ def run_zokrates_setup():
         return False
 
 
-"""
-Function: run_zokrates_compute_witness
-
-Compute the witness for a ZoKrates circuit.
-
-Args:
-    args (list of str): Arguments to pass to the circuit (e.g., private/public inputs).
-    
-Returns:
-    bool: True if witness computation succeeds, False otherwise.
-    
-Side Effects:
-    Prints ZoKrates CLI output or error message.
-Steps:
-1. Run the ZoKrates compute-witness command with arguments
-2. Print the output from ZoKrates
-3. Return True if successful, otherwise print error and return False
-"""
+##
+# @brief Compute the witness for a ZoKrates circuit.
+#
+# @param args List of arguments to pass to the circuit (e.g., private/public inputs).
+# @return True if witness computation succeeds, False otherwise.
+#
+# @details
+#   Side Effects:
+#     Prints ZoKrates CLI output or error message.
+#
+#   Steps:
+#     1. Run the ZoKrates compute-witness command with arguments
+#     2. Print the output from ZoKrates
+#     3. Return True if successful, otherwise print error and return False
+##
 def run_zokrates_compute_witness(args):
     try:
         # Run the ZoKrates compute-witness command with arguments
@@ -155,22 +139,20 @@ def run_zokrates_compute_witness(args):
         return False
 
 
-"""
-Function: run_zokrates_generate_proof
-
-Generate a ZoKrates proof using the computed witness and setup keys.
-
-Returns:
-    bool: True if proof generation succeeds, False otherwise.
-    
-Side Effects:
-    Prints ZoKrates CLI output or error message.
-    
-Steps:
-1. Run the ZoKrates generate-proof command
-2. Print the output from ZoKrates
-3. Return True if successful, otherwise print error and return False
-"""
+##
+# @brief Generate a ZoKrates proof using the computed witness and setup keys.
+#
+# @return True if proof generation succeeds, False otherwise.
+#
+# @details
+#   Side Effects:
+#     Prints ZoKrates CLI output or error message.
+#
+#   Steps:
+#     1. Run the ZoKrates generate-proof command
+#     2. Print the output from ZoKrates
+#     3. Return True if successful, otherwise print error and return False
+##
 def run_zokrates_generate_proof():
     try:
         # Run the ZoKrates generate-proof command
@@ -187,22 +169,20 @@ def run_zokrates_generate_proof():
         return False
 
 
-"""
-Function: run_zokrates_verify
-
-Verify a ZoKrates proof using the verification key.
-
-Returns:
-    bool: True if the proof is valid, False otherwise.
-    
-Side Effects:
-    Prints ZoKrates CLI output or error message.
-    
-Steps:
-1. Run the ZoKrates verify command
-2. Print the output from ZoKrates
-3. Return True if the output contains the success message, otherwise print error and return False
-"""
+##
+# @brief Verify a ZoKrates proof using the verification key.
+#
+# @return True if the proof is valid, False otherwise.
+#
+# @details
+#   Side Effects:
+#     Prints ZoKrates CLI output or error message.
+#
+#   Steps:
+#     1. Run the ZoKrates verify command
+#     2. Print the output from ZoKrates
+#     3. Return True if the output contains the success message, otherwise print error and return False
+##
 def run_zokrates_verify():
     try:
         # Run the ZoKrates verify command
@@ -220,17 +200,12 @@ def run_zokrates_verify():
         return False
 
 
-"""
-Function: hex_to_field_array
-
-Convert a hex string to an array of 4 field elements (each 64 bits).
-
-Args:
-    hex_str (str): Hexadecimal string to convert.
-
-Returns:
-    list: List of 4 integers representing field elements.
-"""
+##
+# @brief Convert a hex string to an array of 4 field elements (each 64 bits).
+#
+# @param hex_str Hexadecimal string to convert.
+# @return List of 4 integers representing field elements.
+##
 def hex_to_field_array(hex_str):
     # Converts a hex string to 4 field elements (each 64 bits)
     arr = []
@@ -242,6 +217,7 @@ def hex_to_field_array(hex_str):
 
 
 if __name__ == "__main__":
+    ## @test Main test for ZoKrates interface functionality
     set_debug_mode(True)
     print("Compiling dummy.zok...")
     if not run_zokrates_compile("dummy.zok"):
@@ -265,3 +241,4 @@ if __name__ == "__main__":
         cleanup_zokrates_files()
     else:
         print("Proof is invalid or verification failed.")
+
