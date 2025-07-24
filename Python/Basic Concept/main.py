@@ -50,8 +50,8 @@ def cli_menu_loop():
         print("15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
-        print("pdsumo - Print SUMO TraCI data ON")
-        print("ndsumo - Print SUMO TraCI data OFF")
+        # print("pdsumo - Print SUMO TraCI data ON")
+        # print("ndsumo - Print SUMO TraCI data OFF")
         print("e - Exit\n")
         
         choice = input("Enter your choice: ").strip().lower()
@@ -115,15 +115,15 @@ def cli_menu_loop():
                 preliminary_tests.set_debug_mode(False)
                 print("Debug mode disabled.\n")
                 
-            case "pdsumo":
-                print_sumo_data = True
-                preliminary_tests.set_print_sumo_data(True)
-                print("SUMO TraCI data printing enabled.\n")
+            # case "pdsumo":
+            #     print_sumo_data = True
+            #     preliminary_tests.set_print_sumo_data(True)
+            #     print("SUMO TraCI data printing enabled.\n")
                 
-            case "ndsumo":
-                print_sumo_data = False
-                preliminary_tests.set_print_sumo_data(False)
-                print("SUMO TraCI data printing disabled.\n")
+            # case "ndsumo":
+            #     print_sumo_data = False
+            #     preliminary_tests.set_print_sumo_data(False)
+            #     print("SUMO TraCI data printing disabled.\n")
                 
             case "e":
                 print("Exiting.")
