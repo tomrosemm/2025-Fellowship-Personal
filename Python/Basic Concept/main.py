@@ -13,6 +13,8 @@ import preliminary_tests
 
 
 def cli_menu_loop():
+    print_sumo_data = True  # Local flag for menu session
+
     while True:
         
         print("\n*********************************************************************")
@@ -36,6 +38,8 @@ def cli_menu_loop():
         print("15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
+        print("pdsumo - Print SUMO TraCI data ON")
+        print("nosumo - Print SUMO TraCI data OFF")
         print("e - Exit\n")
         
         choice = input("Enter your choice: ").strip().lower()
@@ -86,10 +90,10 @@ def cli_menu_loop():
                 preliminary_tests.test_zokrates_connection()
                 
             case "14":
-                preliminary_tests.test_sumo_traci_data_transfer()
+                preliminary_tests.test_sumo_traci_data_transfer(print_data=print_sumo_data)
                 
             case "15":
-                preliminary_tests.test_sumo_traci_data_transfer_sumocfg()
+                preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=print_sumo_data)
                 
             case "dbon":
                 preliminary_tests.set_debug_mode(True)
@@ -98,6 +102,16 @@ def cli_menu_loop():
             case "dboff":
                 preliminary_tests.set_debug_mode(False)
                 print("Debug mode disabled.\n")
+                
+            case "pdsumo":
+                print_sumo_data = True
+                preliminary_tests.set_print_sumo_data(True)
+                print("SUMO TraCI data printing enabled.\n")
+                
+            case "nosumo":
+                print_sumo_data = False
+                preliminary_tests.set_print_sumo_data(False)
+                print("SUMO TraCI data printing disabled.\n")
                 
             case "e":
                 print("Exiting.")

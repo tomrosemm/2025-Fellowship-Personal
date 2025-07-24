@@ -479,7 +479,7 @@ def test_zokrates_end_to_end_multiple_vehicles():
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
 
 
-def test_sumo_traci_data_transfer():
+def test_sumo_traci_data_transfer(print_data=True):
     """
     Test connecting to SUMO via TraCI, retrieving and storing simulation data.
     Steps:
@@ -488,6 +488,8 @@ def test_sumo_traci_data_transfer():
         3. Retrieve simulation time, vehicle IDs, and positions.
         4. Print/store the data.
         5. Clean up.
+    Args:
+        print_data (bool): If True, print simulation data to screen.
     """
     print("\n=== SUMO TraCI Data Transfer Test ===")
     global tested, passed
@@ -537,7 +539,8 @@ def test_sumo_traci_data_transfer():
                 "vehicle_ids": veh_ids,
                 "positions": veh_positions
             })
-            print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+            if print_data:
+                print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
             time.sleep(0.2)
             
         passed_local = True
@@ -568,9 +571,11 @@ def test_sumo_traci_data_transfer():
         print("[SUMO TraCI Test] Data transfer test failed.\n")
 
 
-def test_sumo_traci_data_transfer_sumocfg():
+def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     """
     Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps.
+    Args:
+        print_data (bool): If True, print simulation data to screen.
     """
     print("\n=== SUMO TraCI Data Transfer Test (.sumocfg, 100 steps) ===")
     global tested, passed
@@ -619,7 +624,8 @@ def test_sumo_traci_data_transfer_sumocfg():
                 "vehicle_ids": veh_ids,
                 "positions": veh_positions
             })
-            print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+            if print_data:
+                print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
             time.sleep(0.05)
             
         passed_local = True
@@ -714,12 +720,12 @@ def testAndScenarioRunner():
     # clear_console()
 
     # 14 - Run SUMO TraCI Data Transfer Test
-    test_sumo_traci_data_transfer()
+    test_sumo_traci_data_transfer(False)
     time.sleep(.5)
     # clear_console()
 
     # 15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
-    test_sumo_traci_data_transfer_sumocfg()
+    test_sumo_traci_data_transfer_sumocfg(False)
     time.sleep(.5)
     # clear_console()
 
@@ -739,4 +745,7 @@ def testAndScenarioRunner():
     time.sleep(2)
 
 if __name__ == "__main__":
+    # Example usage: toggle PRINT_SUMO_DATA as needed
+    test_sumo_traci_data_transfer(print_data=True)
+    test_sumo_traci_data_transfer_sumocfg(print_data=True)
     testAndScenarioRunner()
