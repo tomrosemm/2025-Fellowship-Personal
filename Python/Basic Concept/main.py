@@ -1,29 +1,26 @@
-"""
-main.py
-
-Author: Tom Rose
-
-Purpose:
-    Orchestrates the simulation of a privacy-preserving vehicle authentication protocol using Zero-Knowledge Proofs (ZKP) and blockchain logging.
-    Demonstrates both a simulated and (eventually) real ZoKrates-based ZKP workflow, as well as simulated and (eventually) real blockchain 
-    verification and event logging.
-"""
+##
+# @file main.py
+# @author Tom Rose
+#
+# @brief
+#   Orchestrates the simulation of a privacy-preserving vehicle authentication protocol using Zero-Knowledge Proofs (ZKP) and blockchain logging.
+#   Demonstrates both a simulated and (eventually) real ZoKrates-based ZKP workflow, as well as simulated and (eventually) real blockchain 
+#   verification and event logging.
+##
 
 import preliminary_tests
 
-
-"""
-Function: cli_menu_loop
-
-Command-line interface menu loop for running protocol simulation tests.
-
-Steps:
-    1. Display menu options.
-    2. Accept user input.
-    3. Dispatch to appropriate test/scenario functions based on input.
-    4. Allow toggling debug mode and SUMO data printing.
-    5. Exit on user request.
-"""
+##
+# @brief Command-line interface menu loop for running protocol simulation tests.
+#
+# @details
+#   Steps:
+#     1. Display menu options.
+#     2. Accept user input.
+#     3. Dispatch to appropriate test/scenario functions based on input.
+#     4. Allow toggling debug mode and SUMO data printing.
+#     5. Exit on user request.
+##
 def cli_menu_loop():
     print_sumo_data = True  # Local flag for menu session
 
@@ -131,7 +128,6 @@ def cli_menu_loop():
             
             case _:
                 print("Invalid choice. Please try again.")
-
 
 if __name__ == "__main__":
     cli_menu_loop()
