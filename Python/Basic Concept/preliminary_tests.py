@@ -17,6 +17,7 @@
 #   - Requires: vehicle.py, rsu.py, zokrates_interface.py, blockchain.py
 ##
 
+# Imports
 import secrets
 import os
 import time
@@ -49,7 +50,8 @@ from zkp import generate_zkp_proof_simulated
 tested = 0
 passed = 0
 
-
+## @var DEBUG_MODE
+# @brief Global variable to control debug output.
 DEBUG_MODE = False
 
 
@@ -62,8 +64,11 @@ DEBUG_MODE = False
 ##
 def set_debug_mode(enabled):
     
+    # Set global debug mode
     global DEBUG_MODE
     DEBUG_MODE = enabled
+    
+    # Set debug mode for Blockchain, and SUMO and ZoKrates interfaces
     set_zokrates_debug_mode(enabled)
     set_blockchain_debug_mode(enabled)
     set_sumo_debug_mode(enabled)
@@ -78,26 +83,34 @@ def set_debug_mode(enabled):
 #   - Otherwise, use 'clear'.
 ##
 def clear_console():
-    if os.name == 'nt':         # For Windows
+    
+    if os.name == 'nt':
         os.system('cls')
-    else:                       # For macOS/Linux
+        
+    else:
         os.system('clear')
 
 
 ##
 # @brief Test the workflow using a simulated ZKP (hash-based).
 # @details
-#   Steps:
-#     1. Generate a random vehicle secret and create Vehicle and RSU entities.
-#     2. Vehicle generates an OTP and timestamp.
-#     3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
-#     4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
-#     5. Output the result of the verification and authentication status.
+#   Simulates authentication between a vehicle and RSU using a hash-based ZKP.
+# @steps
+#   1. Generate a random vehicle secret and create Vehicle and RSU entities.
+#   2. Vehicle generates an OTP and timestamp.
+#   3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
+#   4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
+#   5. Output the result of the verification and authentication status.
 ##
 def test_vehicle_rsu_interaction_simulated():
+    
+    # Print test header
     print("\n=== Simulated ZKP Test ===")
+    
+    # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
     # Generate entities
     vehicle_id = "VEH123"
     vehicle_secret = secrets.token_hex(16)
@@ -106,22 +119,32 @@ def test_vehicle_rsu_interaction_simulated():
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
+    
+    # Print debug information if DEBUG_MODE is enabled
     if DEBUG_MODE:
         print(f"\n[Simulated] OTP: {otp}\n\nTimestamp: {timestamp}\n")
+        
     # Use simulated ZKP proof
     zkp_proof = generate_zkp_proof_simulated(otp, timestamp)
+    
+    # Print ZKP proof if DEBUG_MODE is enabled
     if DEBUG_MODE:
         print(f"[Simulated] ZKP Proof: {zkp_proof}\n")
+        
     # RSU verifies ZKP proof using simulated logic
     expected_zkp = generate_zkp_proof_simulated(otp, timestamp)
     verification_result = (zkp_proof == expected_zkp)
+    
+    # Print verification result if DEBUG_MODE is enabled
     if DEBUG_MODE:
         print(f"[Simulated] Verification result: {verification_result}\n")
 
-    # Output authentication result
+    # Output authentication result, increment passed count if successful
     if verification_result:
         passed += 1
         print("[Simulated] Vehicle authenticated. Session started.\n")
+        
+    # If verification failed, print failure message
     else:
         print("[Simulated] Authentication failed.\n")
 
@@ -129,18 +152,24 @@ def test_vehicle_rsu_interaction_simulated():
 ##
 # @brief Simulate the full workflow, including using ZoKrates for the ZKP as well as blockchain verification and logging.
 # @details
-#   Steps:
-#     1. Generate a random vehicle secret and create Vehicle and RSU entities.
-#     2. Vehicle generates an OTP and timestamp.
-#     3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
-#     4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
-#     5. Simulate blockchain smart contract verification and logging of the authentication attempt.
-#     6. Output the result of the infrastructure access decision.
+#   Simulates authentication and blockchain verification using hash-based ZKP.
+# @steps
+#   1. Generate a random vehicle secret and create Vehicle and RSU entities.
+#   2. Vehicle generates an OTP and timestamp.
+#   3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
+#   4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
+#   5. Simulate blockchain smart contract verification and logging of the authentication attempt.
+#   6. Output the result of the infrastructure access decision.
 ##
 def test_vehicle_rsu_blockchain_simulated():
+    
+    # Print test header
     print("\n=== Simulated Blockchain ZKP Test ===")
+    
+    # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
     # Generate entities
     vehicle_id = "VEH123"
     vehicle_secret = secrets.token_hex(16)
@@ -149,90 +178,142 @@ def test_vehicle_rsu_blockchain_simulated():
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
+    
+    # Print debug information if DEBUG_MODE is enabled
     if DEBUG_MODE:
         print(f"\n[Simulated] OTP: {otp}\n\nTimestamp: {timestamp}\n")
+        
+    # Use simulated ZKP proof
     zkp_proof = generate_zkp_proof_simulated(otp, timestamp)
+    
+    # Print ZKP proof if DEBUG_MODE is enabled
     if DEBUG_MODE:
         print(f"[Simulated] ZKP Proof: {zkp_proof}\n")
+    
+    # RSU verifies ZKP proof using simulated logic
     expected_zkp = generate_zkp_proof_simulated(otp, timestamp)
     verification_result = (zkp_proof == expected_zkp)
+    
+    # Print verification result if DEBUG_MODE is enabled
     if DEBUG_MODE:
         print(f"[Simulated] RSU Verification result: {verification_result}\n")
 
     # Simulate blockchain verification and logging
     outcome = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result) if DEBUG_MODE else verification_result
-    # Output infrastructure access result
+    
+    # Output the result of the infrastructure access decision, increment passed count if successful
     if outcome:
         passed += 1
         print("[Simulated] Access granted by infrastructure.\n")
+        
+    # If verification failed, print failure message
     else:
         print("[Simulated] Access denied by infrastructure.\n")
 
 
 ##
 # @brief End-to-end scenario: Vehicle authenticates successfully and is granted access.
+# @details
+#   Simulates a successful authentication scenario for a vehicle.
+# @steps
+#   1. Create vehicle and RSU with matching secrets.
+#   2. Vehicle generates OTP and timestamp.
+#   3. Vehicle creates ZKP proof.
+#   4. RSU verifies ZKP proof.
+#   5. Blockchain verification is performed if DEBUG_MODE is enabled.
+#   6. Print the result of infrastructure access decision.
 ##
 def scenario_successful_authentication():
+    
     print("\n=== End-to-End Scenario: Successful Authentication ===")
+    
     global tested, passed
     tested += 1
+    
     vehicle_id = "VEH001"
+
     vehicle_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, vehicle_secret)
     rsu = RSU({vehicle_id: vehicle_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
+    
     if DEBUG_MODE:
         print(f"\nVehicle {vehicle_id} generated OTP: {otp} at {timestamp}\n")
+        
     zkp_proof = generate_zkp_proof_simulated(otp, timestamp)
+    
     if DEBUG_MODE:
         print(f"Vehicle {vehicle_id} created ZKP proof: {zkp_proof}\n")
+        
     expected_zkp = generate_zkp_proof_simulated(otp, timestamp)
     verification_result = (zkp_proof == expected_zkp)
+    
     if DEBUG_MODE:
         print(f"RSU verification result: {verification_result}\n")
 
     # Blockchain verification and access outcome
     outcome = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result) if DEBUG_MODE else verification_result
+    
     if outcome:
         passed += 1
         print("Access granted by infrastructure.\n")
+        
     else:
         print("Access denied by infrastructure.\n")
 
 
 ##
 # @brief End-to-end scenario: Vehicle fails authentication due to wrong secret.
+# @details
+#   Simulates a failed authentication scenario for a vehicle with incorrect secret.
+# @steps
+#   1. Create vehicle with wrong secret and RSU with correct secret.
+#   2. Vehicle generates OTP and timestamp.
+#   3. Vehicle creates ZKP proof.
+#   4. RSU verifies ZKP proof using expected secret.
+#   5. Blockchain verification is performed if DEBUG_MODE is enabled.
+#   6. Print expected denial of infrastructure access.
 ##
 def scenario_failed_authentication():
+    
     print("\n=== End-to-End Scenario: Failed Authentication ===")
+    
     global tested, passed
     tested += 1
+    
     vehicle_id = "VEH001"
     correct_secret = secrets.token_hex(16)
     wrong_secret = secrets.token_hex(16)
-    vehicle = Vehicle(vehicle_id, wrong_secret)  # Vehicle uses wrong secret
-    rsu = RSU({vehicle_id: correct_secret})      # RSU expects correct secret
+    vehicle = Vehicle(vehicle_id, wrong_secret)
+    rsu = RSU({vehicle_id: correct_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
+    
     if DEBUG_MODE:
         print(f"\nVehicle {vehicle_id} generated OTP: {otp} at {timestamp}\n")
+        
     zkp_proof = generate_zkp_proof_simulated(otp, timestamp)
+    
     if DEBUG_MODE:
         print(f"Vehicle {vehicle_id} created ZKP proof: {zkp_proof}\n")
+        
     # RSU expects correct secret, so expected_zkp is based on correct_secret
     otp_expected, _ = Vehicle(vehicle_id, correct_secret).generate_otp()
     expected_zkp = generate_zkp_proof_simulated(otp_expected, timestamp)
     verification_result = (zkp_proof == expected_zkp)
+    
     if DEBUG_MODE:
         print(f"RSU verification result: {verification_result}\n")
 
     # Blockchain verification and access outcome
     outcome = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result) if DEBUG_MODE else verification_result
+    
     if outcome:
         print("Access granted by infrastructure (unexpected).\n")
+        
     else:
         passed += 1
         print("Access denied by infrastructure (expected).\n")
@@ -241,47 +322,63 @@ def scenario_failed_authentication():
 ##
 # @brief Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok.
 # @details
-#   Steps:
-#     1. Compile zokrates/dummy.zok
-#     2. Setup
-#     3. Compute witness (inputs: a=3, b=4)
-#     4. Generate proof
-#     5. Verify proof
+#   Runs ZoKrates CLI workflow with fixed inputs.
+# @steps
+#   1. Compile the ZoKrates circuit.
+#   2. Run setup.
+#   3. Compute witness (inputs: a=3, b=4).
+#   4. Generate proof.
+#   5. Verify proof.
+#   6. Clean up ZoKrates artifacts after test.
+#   7. Print the result of the ZoKrates workflow.
 ##
 def test_zokrates_connection():
+    
     print("\n=== ZoKrates CLI Connection Test ===")
+    
     global tested, passed
     tested += 1
+    
     circuit_path = "zokrates/dummy.zok"
+    
     # Compile circuit
     if not run_zokrates_compile(circuit_path):
         print("[ZoKrates Test] Compilation failed.")
         return
+    
     # Setup
     if not run_zokrates_setup():
         print("[ZoKrates Test] Setup failed.")
         cleanup_zokrates_files()
         return
+    
     # Compute witness (inputs: a=3, b=4)
     args = ["3", "4"]
+    
     if not run_zokrates_compute_witness(args):
         print("[ZoKrates Test] Compute witness failed.")
         cleanup_zokrates_files()
         return
+    
     # Generate proof
     if not run_zokrates_generate_proof():
         print("[ZoKrates Test] Proof generation failed.")
         cleanup_zokrates_files()
         return
+    
     # Verify proof
     verification_result = run_zokrates_verify()
+    
     if DEBUG_MODE:
         print(f"[ZoKrates Test] Verification result: {verification_result}\n")
+        
     if verification_result:
         passed += 1
         print("[ZoKrates Test] ZoKrates connection and workflow succeeded!\n")
+        
     else:
         print("[ZoKrates Test] ZoKrates connection or workflow failed.\n")
+        
     # Always clean up ZoKrates artifacts after test
     cleanup_zokrates_files()
 
@@ -289,213 +386,341 @@ def test_zokrates_connection():
 ##
 # @brief Test the end-to-end ZoKrates workflow using zokrates/dummy.zok and random inputs.
 # @details
-#   Simulates a real ZKP workflow using the ZoKrates CLI on Linux.
+#   Simulates a real ZKP workflow using the ZoKrates CLI.
+# @steps
+#   1. Generate random field inputs for dummy.zok.
+#   2. Compile circuit.
+#   3. Run setup.
+#   4. Compute witness.
+#   5. Generate proof.
+#   6. Verify proof.
+#   7. Clean up ZoKrates artifacts after test.
+#   8. Print the result of the workflow.
 ##
 def test_vehicle_rsu_interaction_real_zokrates_dummy():
+    
     print("\n=== Real ZoKrates End-to-End Test with zokrates/dummy.zok ===")
+    
     global tested, passed
     tested += 1
+    
     circuit_path = "zokrates/dummy.zok"
+    
     # Generate random field inputs for dummy.zok
     a = random.randint(1, 100)
     b = random.randint(1, 100)
+    
     if DEBUG_MODE:
         print(f"Inputs: a={a}, b={b}")
+        
     # Compile circuit
     if not run_zokrates_compile(circuit_path):
         print("[Real ZKP] Compilation failed.")
         return
+    
     # Setup
     if not run_zokrates_setup():
         print("[Real ZKP] Setup failed.")
         cleanup_zokrates_files()
         return
+    
     # Compute witness
     args = [str(a), str(b)]
+    
     if not run_zokrates_compute_witness(args):
         print("[Real ZKP] Compute witness failed.")
         cleanup_zokrates_files()
         return
+    
     # Generate proof
     if not run_zokrates_generate_proof():
         print("[Real ZKP] Proof generation failed.")
         cleanup_zokrates_files()
         return
+    
     # Verify proof
     verification_result = run_zokrates_verify()
+    
     if DEBUG_MODE:
         print(f"[Real ZKP] Verification result: {verification_result}\n")
+        
     if verification_result:
         passed += 1
         print("[Real ZKP] End-to-end ZoKrates workflow succeeded!\n")
+        
     else:
         print("[Real ZKP] End-to-end ZoKrates workflow failed.\n")
+        
     cleanup_zokrates_files()
 
 
 ##
 # @brief Simulated ZKP isolated test with multiple vehicles.
+# @details
+#   Simulates authentication for multiple vehicles using hash-based ZKP.
+# @steps
+#   1. Create multiple vehicles, each with a unique secret.
+#   2. Each vehicle generates OTP and timestamp, creates ZKP proof.
+#   3. RSU verifies each ZKP proof.
+#   4. Print whether all vehicles authenticated successfully.
 ##
 def test_simulated_isolated_multiple_vehicles():
+    
     global tested, passed
     tested += 1
+    
     print("\n=== Simulated ZKP Isolated Test: Multiple Vehicles ===")
+    
     num_vehicles = 3
     vehicles = {}
     rsu_secrets = {}
+    
     for i in range(num_vehicles):
+        
         vid = f"VEH{i+1:03d}"
         secret = secrets.token_hex(16)
         vehicles[vid] = Vehicle(vid, secret)
         rsu_secrets[vid] = secret
+        
     rsu = RSU(rsu_secrets)
     all_passed = True
+    
     circuit_path = "zokrates/dummy.zok"
+    
     for vid, vehicle in vehicles.items():
+        
         otp, timestamp = vehicle.generate_otp()
         zkp_proof = generate_zkp_proof_simulated(otp, timestamp)
         expected_zkp = generate_zkp_proof_simulated(otp, timestamp)
         result = (zkp_proof == expected_zkp)
+        
         if DEBUG_MODE:
             print(f"Vehicle {vid}: Verification result: {result}")
+            
         all_passed = all_passed and result
+        
     if all_passed:
         passed += 1
         print("[Simulated] All vehicles authenticated successfully.\n")
+        
     else:
         print("[Simulated] Some vehicles failed authentication.\n")
 
 
 ##
 # @brief Simulated end-to-end test with multiple vehicles (RSU + blockchain).
+# @details
+#   Simulates authentication and blockchain verification for multiple vehicles.
+# @steps
+#   1. Create multiple vehicles, each with a unique secret.
+#   2. Each vehicle generates OTP and timestamp, creates ZKP proof.
+#   3. RSU verifies each ZKP proof.
+#   4. Blockchain verification is performed if DEBUG_MODE is enabled.
+#   5. Print whether all vehicles were granted access by infrastructure.
 ##
 def test_simulated_end_to_end_multiple_vehicles():
+    
     global tested, passed
     tested += 1
+    
     print("\n=== Simulated End-to-End Test: Multiple Vehicles ===")
+    
     num_vehicles = 3
     vehicles = {}
     rsu_secrets = {}
+    
     for i in range(num_vehicles):
+        
         vid = f"VEH{i+1:03d}"
         secret = secrets.token_hex(16)
         vehicles[vid] = Vehicle(vid, secret)
         rsu_secrets[vid] = secret
+        
     rsu = RSU(rsu_secrets)
     all_passed = True
+    
     circuit_path = "zokrates/dummy.zok"
+    
     for vid, vehicle in vehicles.items():
+        
         otp, timestamp = vehicle.generate_otp()
         zkp_proof = generate_zkp_proof_simulated(otp, timestamp)
         expected_zkp = generate_zkp_proof_simulated(otp, timestamp)
         verification_result = (zkp_proof == expected_zkp)
         outcome = simulate_blockchain_verification(vid, zkp_proof, timestamp, verification_result) if DEBUG_MODE else verification_result
+        
         if DEBUG_MODE:
             print(f"Vehicle {vid}: RSU result: {verification_result}, Blockchain outcome: {outcome}")
+            
         all_passed = all_passed and outcome
+        
     if all_passed:
         passed += 1
         print("[Simulated] All vehicles granted access by infrastructure.\n")
+        
     else:
         print("[Simulated] Some vehicles denied access.\n")
 
 
 ##
 # @brief ZoKrates-integrated isolated test with multiple vehicles (zokrates/dummy.zok).
+# @details
+#   Runs ZoKrates workflow for multiple vehicles with random inputs.
+# @steps
+#   1. For each vehicle:
+#      a. Generate random inputs.
+#      b. Compile ZoKrates circuit.
+#      c. Run setup.
+#      d. Compute witness.
+#      e. Generate proof.
+#      f. Verify proof.
+#      g. Clean up ZoKrates artifacts.
+#   2. Print whether all vehicles' proofs were verified successfully.
 ##
 def test_zokrates_isolated_multiple_vehicles():
+    
     global tested, passed
     tested += 1
+    
     print("\n=== ZoKrates-Integrated Isolated Test: Multiple Vehicles ===")
+    
     circuit_path = "zokrates/dummy.zok"
+    
     num_vehicles = 2
     all_passed = True
+    
     for i in range(num_vehicles):
+        
         a = random.randint(1, 100)
         b = random.randint(1, 100)
+        
         if DEBUG_MODE:
             print(f"Vehicle {i+1}: Inputs a={a}, b={b}")
+            
         if not run_zokrates_compile(circuit_path):
             print("[ZoKrates] Compilation failed.")
             all_passed = False
             continue
+        
         if not run_zokrates_setup():
             print("[ZoKrates] Setup failed.")
             cleanup_zokrates_files()
             all_passed = False
             continue
+        
         args = [str(a), str(b)]
+        
         if not run_zokrates_compute_witness(args):
             print("[ZoKrates] Compute witness failed.")
             cleanup_zokrates_files()
             all_passed = False
             continue
+        
         if not run_zokrates_generate_proof():
             print("[ZoKrates] Proof generation failed.")
             cleanup_zokrates_files()
             all_passed = False
             continue
+        
         verification_result = run_zokrates_verify()
+        
         if DEBUG_MODE:
             print(f"Vehicle {i+1}: ZoKrates verification result: {verification_result}")
+            
         if not verification_result:
             all_passed = False
+            
         cleanup_zokrates_files()
+        
     if all_passed:
         passed += 1
         print("[ZoKrates] All vehicles' proofs verified successfully.\n")
+        
     else:
         print("[ZoKrates] Some vehicles' proofs failed verification.\n")
 
 
 ##
 # @brief ZoKrates-integrated end-to-end test with multiple vehicles (zokrates/dummy.zok + simulated blockchain).
+# @details
+#   Runs ZoKrates workflow and blockchain verification for multiple vehicles.
+# @steps
+#   1. For each vehicle:
+#      a. Generate random inputs.
+#      b. Compile ZoKrates circuit.
+#      c. Run setup.
+#      d. Compute witness.
+#      e. Generate proof.
+#      f. Verify proof.
+#      g. Simulate blockchain verification if DEBUG_MODE is enabled.
+#      h. Clean up ZoKrates artifacts.
+#   2. Print whether all vehicles' proofs and blockchain logs succeeded.
 ##
 def test_zokrates_end_to_end_multiple_vehicles():
+    
     global tested, passed
     tested += 1
+    
     print("\n=== ZoKrates-Integrated End-to-End Test: Multiple Vehicles ===")
+    
     circuit_path = "zokrates/dummy.zok"
+    
     num_vehicles = 2
     all_passed = True
+    
     for i in range(num_vehicles):
+        
         vid = f"ZOKR_VEH{i+1:03d}"
         a = random.randint(1, 100)
         b = random.randint(1, 100)
+        
         if DEBUG_MODE:
             print(f"Vehicle {vid}: Inputs a={a}, b={b}")
+            
         if not run_zokrates_compile(circuit_path):
             print("[ZoKrates] Compilation failed.")
             all_passed = False
             continue
+        
         if not run_zokrates_setup():
             print("[ZoKrates] Setup failed.")
             cleanup_zokrates_files()
             all_passed = False
             continue
+        
         args = [str(a), str(b)]
+        
         if not run_zokrates_compute_witness(args):
             print("[ZoKrates] Compute witness failed.")
             cleanup_zokrates_files()
             all_passed = False
             continue
+        
         if not run_zokrates_generate_proof():
             print("[ZoKrates] Proof generation failed.")
             cleanup_zokrates_files()
             all_passed = False
             continue
+        
         verification_result = run_zokrates_verify()
+        
         if DEBUG_MODE:
             print(f"Vehicle {vid}: ZoKrates verification result: {verification_result}")
+            
         outcome = simulate_blockchain_verification(vid, f"proof_{a}_{b}", int(time.time()), verification_result) if DEBUG_MODE else verification_result
+        
         if DEBUG_MODE:
             print(f"Vehicle {vid}: Blockchain outcome: {outcome}")
+            
         if not (verification_result and outcome):
             all_passed = False
+            
         cleanup_zokrates_files()
+        
     if all_passed:
         passed += 1
         print("[ZoKrates] All vehicles' end-to-end proofs and blockchain logs succeeded.\n")
+        
     else:
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
 
@@ -504,29 +729,37 @@ def test_zokrates_end_to_end_multiple_vehicles():
 # @brief Test connecting to SUMO via TraCI, retrieving and storing simulation data.
 # @param print_data If True, print simulation data to screen.
 # @details
-#   Steps:
-#     1. Start SUMO with a simple network.
-#     2. Connect via TraCI.
-#     3. Retrieve simulation time, vehicle IDs, and positions.
-#     4. Print/store the data.
-#     5. Clean up.
+#   Tests SUMO connection and data retrieval using TraCI.
+# @steps
+#   1. Start SUMO with a simple network.
+#   2. Connect via TraCI.
+#   3. Retrieve simulation time, vehicle IDs, and positions.
+#   4. Print/store the data.
+#   5. Clean up.
 ##
 def test_sumo_traci_data_transfer(print_data=True):
     
     print("\n=== SUMO TraCI Data Transfer Test ===")
+    
     global tested, passed
     tested += 1
 
     port = 8815
+    
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
     sys.path.append(SUMO_TOOLS_PATH)
+    
     try:
+        
         import traci
+        
     except ImportError:
+        
         print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
         return
 
     SUMO_NET_FILE = os.path.abspath("/home/admin/2025-Fellowship-Personal/Python/Basic Concept/sumo/simple.net.xml")
+    
     if not os.path.exists(SUMO_NET_FILE):
         print(f"[SUMO TraCI Test] Network file not found: {SUMO_NET_FILE}")
         return
@@ -534,60 +767,88 @@ def test_sumo_traci_data_transfer(print_data=True):
     # Clean up port and traci
     kill_processes_on_port(port)
     cleanup_traci_connection()
+    
     time.sleep(2)
 
     sumo_binary = "sumo"
+    
     sumo_cmd = [sumo_binary, "-n", SUMO_NET_FILE, "--remote-port", str(port)]
+    
     try:
+        
         proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
         time.sleep(3)
+        
         if proc.poll() is not None:
+            
             stderr = proc.stderr.read().decode()
             print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
             return
+        
         traci.init(port=port)
+        
         time.sleep(1)
         
         # Step simulation and collect data
         sim_data = []
+        
         for _ in range(5):
+            
             traci.simulationStep()
+            
             sim_time = traci.simulation.getTime()
             veh_ids = traci.vehicle.getIDList()
             veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
+            
             sim_data.append({
                 "time": sim_time,
                 "vehicle_ids": veh_ids,
                 "positions": veh_positions
             })
+            
             if print_data:
                 print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+                
             time.sleep(0.2)
             
         passed_local = True
         
     except Exception as e:
+        
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
+        
     finally:
+        
         try:
+            
             if 'traci' in locals() and traci.isLoaded():
                 traci.close()
+                
         except Exception:
             pass
+        
         try:
             proc.terminate()
             proc.wait(timeout=3)
+            
         except Exception:
+            
             try:
                 proc.kill()
+                
             except Exception:
                 pass
+            
         kill_processes_on_port(port)
+        
         time.sleep(1)
+        
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] Data transfer test succeeded!\n")
+        
     else:
         print("[SUMO TraCI Test] Data transfer test failed.\n")
 
@@ -595,83 +856,127 @@ def test_sumo_traci_data_transfer(print_data=True):
 ##
 # @brief Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps.
 # @param print_data If True, print simulation data to screen.
+# @details
+#   Tests SUMO connection and data retrieval using TraCI with a .sumocfg file.
+# @steps
+#   1. Start SUMO with a configuration file.
+#   2. Connect via TraCI.
+#   3. Retrieve simulation time, vehicle IDs, and positions for 100 steps.
+#   4. Print/store the data.
+#   5. Clean up.
 ##
 def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     
     print("\n=== SUMO TraCI Data Transfer Test (.sumocfg, 100 steps) ===")
+    
     global tested, passed
     tested += 1
 
     port = 8816
+    
     SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
     sys.path.append(SUMO_TOOLS_PATH)
+    
     try:
+        
         import traci
+        
     except ImportError:
+        
         print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
         return
 
-    # Update this path to your actual .sumocfg file location
     SUMO_SUMOCFG_FILE = os.path.abspath("/home/admin/2025-Fellowship-Personal/Python/Basic Concept/sumo/Intersection 1/intersection1.sumocfg")
+    
     if not os.path.exists(SUMO_SUMOCFG_FILE):
+        
         print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_SUMOCFG_FILE}")
         return
 
     kill_processes_on_port(port)
     cleanup_traci_connection()
+    
     time.sleep(2)
 
     sumo_binary = "sumo"
+    
     sumo_cmd = [sumo_binary, "-c", SUMO_SUMOCFG_FILE, "--remote-port", str(port)]
+    
     try:
+        
         proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
         time.sleep(3)
+        
         if proc.poll() is not None:
+            
             stderr = proc.stderr.read().decode()
             print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
             return
+        
         traci.init(port=port)
+        
         time.sleep(1)
         
         sim_data = []
+        
         for _ in range(100):
+            
             traci.simulationStep()
+            
             sim_time = traci.simulation.getTime()
             veh_ids = traci.vehicle.getIDList()
             veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
+            
             sim_data.append({
                 "time": sim_time,
                 "vehicle_ids": veh_ids,
                 "positions": veh_positions
             })
+            
             if print_data:
                 print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+                
             time.sleep(0.05)
             
         passed_local = True
         
     except Exception as e:
+        
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
+        
     finally:
+        
         try:
+            
             if 'traci' in locals() and traci.isLoaded():
                 traci.close()
+                
         except Exception:
             pass
+        
         try:
+            
             proc.terminate()
             proc.wait(timeout=3)
+            
         except Exception:
+            
             try:
                 proc.kill()
+                
             except Exception:
                 pass
+            
         kill_processes_on_port(port)
+        
         time.sleep(1)
+        
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] .sumocfg data transfer test succeeded!\n")
+        
     else:
         print("[SUMO TraCI Test] .sumocfg data transfer test failed.\n")
 
@@ -679,10 +984,11 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
 ##
 # @brief Run all test and scenario functions and print summary statistics.
 # @details
-#   Steps:
-#     1. Run all included test and scenario functions in sequence.
-#     2. Print summary statistics for total tests run, passed, and failed.
-#     3. Perform SUMO cleanup after connection tests.
+#   Runs all included test and scenario functions in sequence and prints summary statistics.
+# @steps
+#   1. Run all included test and scenario functions in sequence.
+#   2. Print summary statistics for total tests run, passed, and failed.
+#   3. Perform SUMO cleanup after connection tests.
 ##
 def testAndScenarioRunner():
     
@@ -770,7 +1076,9 @@ def testAndScenarioRunner():
 
 
 if __name__ == "__main__":
+    
     # Example usage: toggle PRINT_SUMO_DATA as needed
     test_sumo_traci_data_transfer(print_data=True)
     test_sumo_traci_data_transfer_sumocfg(print_data=True)
+    
     testAndScenarioRunner()

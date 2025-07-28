@@ -11,9 +11,11 @@
 #   - Returns the outcome to mimic infrastructure access control.
 ##
 
+# Imports
 import hashlib
 
-
+## @var DEBUG_MODE
+## @brief Global variable to control debug output.
 DEBUG_MODE = False
 
 
@@ -27,6 +29,8 @@ DEBUG_MODE = False
 #     1. Set the global DEBUG_MODE variable to the provided value.
 ##
 def set_debug_mode(enabled):
+    
+    # Set the global DEBUG_MODE variable
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
@@ -50,30 +54,47 @@ def set_debug_mode(enabled):
 #     5. Return the outcome to simulate the infrastructure's access decision.
 ##
 def simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result):
+    
     # Hash the vehicle_id to anonymize it for blockchain logging
     anonymized_id = hashlib.sha256(vehicle_id.encode()).hexdigest()[:10]
+    
     if DEBUG_MODE:
         # Print a message simulating the smart contract call with anonymized vehicle ID
         print(f"[Blockchain] Verifying ZKP-OTP proof for anonymized vehicle ID: {anonymized_id}...\n")
     
     # Create a log entry dictionary with anonymized vehicle hash, timestamp, and authentication status
     log_entry = {
-        "vehicle_hash": hashlib.sha256(vehicle_id.encode()).hexdigest(),    # Full hash for record
-        "timestamp": timestamp,                                             # Timestamp of the authentication attempt
-        "authenticated": verification_result                                # Whether authentication succeeded
+        
+        # Full hash for record
+        "vehicle_hash": hashlib.sha256(vehicle_id.encode()).hexdigest(),
+        # Timestamp of the authentication attempt
+        "timestamp": timestamp,
+        # Whether authentication succeeded
+        "authenticated": verification_result
     }
+    
     if DEBUG_MODE:
         # Print the simulated blockchain event log
         print(f"[Blockchain] Event logged: {log_entry}\n")
+        
     # Return the outcome to simulate the infrastructure's access decision
     return verification_result
 
 
+## Test the blockchain verification simulation
 if __name__ == "__main__":
-    # @test for blockchain verification simulation
+    
+    ## @test for blockchain verification simulation
+    
+    # Set dummy vehicle ID, ZKP proof, timestamp, and verification results
     vehicle_id = "TEST_VEHICLE"
     zkp_proof = "dummy_zkp_proof"
     timestamp = 1234567890
     verification_result = True
+    
+    # Simulate the blockchain verification
     result = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result)
+    
+    # Print the result of the simulation
     print(f"[Blockchain] Simulated verification result: {result}")
+

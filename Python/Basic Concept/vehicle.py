@@ -11,6 +11,9 @@
 #   - The vehicle creates a ZKP for the OTP and timestamp using a ZoKrates interface (currently simulated).
 ##
 
+# Imports
+import time
+
 from otp import generate_otp
 from zkp import generate_zkp_proof_real
 
@@ -47,8 +50,12 @@ class Vehicle:
     #   2. Store the vehicle's secret
     ##
     def __init__(self, vehicle_id, secret):
-        self.vehicle_id = vehicle_id                    # Store the vehicle's ID
-        self.secret = secret                            # Store the vehicle's secret
+        
+        # Store the vehicle's ID
+        self.vehicle_id = vehicle_id
+        
+        # Store the vehicle's secret
+        self.secret = secret
 
 
     ##
@@ -63,6 +70,8 @@ class Vehicle:
     #   4. Return the OTP and timestamp
     ##
     def generate_otp(self):
+        
+        # Generate an OTP using the vehicle's secret and current timestamp, then return the OTP and timestamp
         return generate_otp(self.secret)
 
 
@@ -76,6 +85,8 @@ class Vehicle:
     # @return True if proof is valid, False otherwise.
     ##
     def create_zkp(self, otp, timestamp, circuit_path):
+        
+        # Create a ZKP for the OTP and timestamp using a ZoKrates circuit
         return generate_zkp_proof_real(circuit_path, otp, timestamp)
 
 
@@ -91,19 +102,34 @@ class Vehicle:
     #   3. Return the OTP and timestamp
     ##
     def generate_otp_sum(self, timestamp=None):
-        # For auth.zok: otp = int(secret) + timestamp
+        
+        # Check if timestamp is provided, if not, get current Unix timestamp
         if timestamp is None:
-            import time
             timestamp = int(time.time())
+        
+        # Calculate the OTP as the sum of secret and timestamp
         otp = str(int(self.secret) + int(timestamp))
+        
+        # Return the OTP and timestamp
         return otp, timestamp
 
 
+## Simple test for Vehicle class
 if __name__ == "__main__":
+    
     ## @test Simple test for Vehicle class
+    
+    # Create a test vehicle with a unique ID and secret
     test_vehicle = Vehicle("TEST_VEHICLE", "mysecret")
+    
+    # Generate an OTP and timestamp
     otp, timestamp = test_vehicle.generate_otp()
+    
+    # Print the OTP and timestamp
     print(f"[Vehicle] OTP: {otp}\nTimestamp: {timestamp}")
-    # Example: use dummy.zok for demonstration
+    
+    # Use dummy.zok for demonstration
     zkp = test_vehicle.create_zkp(otp, timestamp, "dummy.zok")
+    
+    # Print the ZKP proof
     print(f"[Vehicle] ZKP: {zkp}")

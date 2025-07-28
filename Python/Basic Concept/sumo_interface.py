@@ -15,6 +15,7 @@
 #   - Handles temporary configuration file creation and output management.
 ##
 
+# Imports
 import sys
 import subprocess
 import os
@@ -23,8 +24,10 @@ import socket
 import psutil
 import xml.etree.ElementTree as ET
 import tempfile
+import shutil
 
-
+## @var DEBUG_MODE
+# @brief Global variable to control debug output.
 DEBUG_MODE = False
 
 
@@ -39,6 +42,7 @@ DEBUG_MODE = False
 ##
 def set_debug_mode(enabled):
     
+    # Set the global DEBUG_MODE variable
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
@@ -59,6 +63,7 @@ def kill_processes_on_port(port):
     killed_any = False
     
     try:
+        
         for proc in psutil.process_iter(['pid', 'name', 'connections']):
             
             try:
@@ -66,7 +71,9 @@ def kill_processes_on_port(port):
                 connections = proc.info['connections']
                 
                 if connections:
+                    
                     for conn in connections:
+                        
                         if hasattr(conn, 'laddr') and conn.laddr and conn.laddr.port == port:
 
                             if DEBUG_MODE:                                
@@ -84,6 +91,7 @@ def kill_processes_on_port(port):
             print(f"[Port Cleanup] Error during port cleanup: {e}")
     
     if killed_any:
+        
         print("Wait time begins for processes to die and OS to release port")
         time.sleep(10)
         print("Wait time ends for processes to die and OS to release port")
@@ -105,6 +113,7 @@ def kill_processes_on_port(port):
 def is_port_available(port):
     
     try:
+        
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             
             s.bind(('localhost', port))
@@ -132,6 +141,7 @@ def wait_for_port_available(port, timeout=15):
     attempts = 0
     
     while time.time() - start_time < timeout:
+        
         if is_port_available(port):
             
             return True
@@ -265,6 +275,7 @@ def test_sumo_connection():
         try:
             
             proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            
             time.sleep(3)  # Give more time to start
             
             if proc.poll() is not None:
@@ -272,6 +283,7 @@ def test_sumo_connection():
                 # SUMO exited early, print stderr for diagnostics
                 stderr = proc.stderr.read().decode()
                 print(f"[SUMO Test] SUMO exited early. STDERR:\n{stderr}")
+                
                 return None, None, None
             
             if DEBUG_MODE:
@@ -298,6 +310,7 @@ def test_sumo_connection():
     try:
         
         time.sleep(2)  # Additional wait before connecting
+        
         traci.init(port=port)
         connected = True
         
@@ -317,6 +330,7 @@ def test_sumo_connection():
         
         # To ensure proper cleanup
         try:
+            
             if traci.isLoaded():
                 
                 traci.close()
@@ -351,6 +365,7 @@ def test_sumo_connection():
         
         # Force cleanup
         kill_processes_on_port(port)
+        
         time.sleep(2)  # Give OS time to release port and clean up
         
     return connected
@@ -373,12 +388,16 @@ def check_config_file_references(config_path):
         
         tree = ET.parse(config_path)
         root = tree.getroot()
+        
         base_dir = os.path.dirname(config_path)
+        
         missing_files = []
         
         # Find all file references in the XML
         for elem in root.iter():
+            
             for attr_name, attr_value in elem.attrib.items():
+                
                 if attr_name.endswith('-file') or attr_name == 'value' and attr_value.endswith(('.xml', '.csv', '.json')):
                     
                     file_path = os.path.join(base_dir, attr_value)
@@ -388,6 +407,7 @@ def check_config_file_references(config_path):
                         missing_files.append((attr_name, attr_value, file_path))
         
         if missing_files:
+            
             if DEBUG_MODE:
                 
                 print("[SUMO Config Check] Missing referenced files:")
@@ -445,7 +465,9 @@ def create_non_gui_config(original_config_path):
         ]
         
         for elem in root.iter():
+            
             for gui_elem in gui_elements_to_remove:
+                
                 if gui_elem in elem.attrib:
                     
                     del elem.attrib[gui_elem]
@@ -464,6 +486,7 @@ def create_non_gui_config(original_config_path):
 
         # Convert relative paths to absolute paths
         for elem in root.iter():
+            
             for attr_name, attr_value in list(elem.attrib.items()):
                 
                 # For input files, make sure they use absolute paths
@@ -540,7 +563,9 @@ def create_non_gui_config(original_config_path):
         tree.write(temp_path, encoding='utf-8', xml_declaration=True)
         
         if DEBUG_MODE:
+            
             print(f"[SUMO Config Test] Created temporary non-GUI config: {temp_path}")
+            
             # Output the content of the modified config file for debugging
             print("\n[SUMO Config Test] Modified configuration content:")
             
@@ -702,7 +727,6 @@ def test_sumo_config_connection():
                 try:
                     
                     os.unlink(temp_config)
-                    import shutil
                     shutil.rmtree(temp_output_dir, ignore_errors=True)
                     
                 except:
@@ -725,7 +749,6 @@ def test_sumo_config_connection():
             try:
                 
                 os.unlink(temp_config)
-                import shutil
                 shutil.rmtree(temp_output_dir, ignore_errors=True)
                 
             except:
@@ -826,6 +849,7 @@ def test_sumo_config_connection():
         
         # Clean up temporary files
         if temp_config:
+            
             try:
                 
                 os.unlink(temp_config)
@@ -840,9 +864,9 @@ def test_sumo_config_connection():
         
         # Clean up output directory
         if temp_output_dir and os.path.exists(temp_output_dir):
+            
             try:
                 
-                import shutil
                 # Check log files before removal
                 log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
                 
@@ -858,6 +882,7 @@ def test_sumo_config_connection():
                                 content = f.read()
                                 
                                 if content:
+                                    
                                     print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
                 
                 # Remove the temp directory
@@ -873,6 +898,7 @@ def test_sumo_config_connection():
         
         # Force cleanup port
         kill_processes_on_port(port)
+
         time.sleep(2)  # Give OS time to release port and clean up
         
     return connected

@@ -12,9 +12,9 @@
 #   - Designed to be used by Vehicle and RSU classes for proof generation and verification.
 ##
 
+# Imports
 import hashlib
 
-# Import ZoKrates interface functions for future use
 from zokrates_interface import (
     run_zokrates_compile,
     run_zokrates_setup,
@@ -37,10 +37,13 @@ from zokrates_interface import (
 #     3. Return the hash as proof.
 ##
 def generate_zkp_proof_simulated(otp, timestamp):
+    
     # Concatenate OTP and timestamp as a string, then encode to bytes
     combined = f"{otp}{timestamp}".encode()
+    
     # Hash the combined bytes using SHA-256
     proof = hashlib.sha256(combined).hexdigest()
+    
     # Return the resulting hash as the simulated ZKP proof
     return proof
 
@@ -61,30 +64,45 @@ def generate_zkp_proof_simulated(otp, timestamp):
 #     5. Verify proof and return result.
 ##
 def generate_zkp_proof_real(circuit_path, otp, timestamp):
+    
     # Compile the ZoKrates circuit; return False if compilation fails
     if not run_zokrates_compile(circuit_path):
         return False
+    
     # Run ZoKrates setup to generate keys; return False if setup fails
     if not run_zokrates_setup():
         return False
+    
     # Prepare the arguments as strings for the witness computation
     args = [str(otp), str(timestamp)]
+    
     # Compute the witness; return False if this step fails
     if not run_zokrates_compute_witness(args):
         return False
+    
     # Generate the proof; return False if this step fails
     if not run_zokrates_generate_proof():
         return False
+    
     # Verify the proof and return the result (True if valid, False otherwise)
     return run_zokrates_verify()
 
+## @note
 # Do NOT alias generate_zkp_proof to simulated version.
 # Now must explicitly choose generate_zkp_proof_simulated or generate_zkp_proof_real.
 
+## Simple test for ZKP proof generation
 if __name__ == "__main__":
+    
     ## @test Simple test for ZKP proof generation
+    
+    # Set test values for OTP and timestamp
     otp = "testotp"
     timestamp = 1234567890
+    
+    # Generate a simulated ZKP proof using the test values
     proof = generate_zkp_proof_simulated(otp, timestamp)
+    
+    # Print the simulated proof
     print(f"[ZKP] Simulated proof for otp='{otp}', timestamp={timestamp}: {proof}")
 

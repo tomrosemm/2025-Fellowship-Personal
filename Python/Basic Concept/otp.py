@@ -12,6 +12,7 @@
 #   - Returns both the OTP and the timestamp used for generation.
 ##
 
+# Imports
 import time
 import hashlib
 
@@ -29,14 +30,31 @@ import hashlib
 #     4. Return the OTP and timestamp.
 ##
 def generate_otp(secret):
-    timestamp = int(time.time())                    # Get current Unix timestamp as an integer (seconds since epoch)
-    otp_input = f"{secret}{timestamp}".encode()     # Concatenate secret and timestamp, then encode as bytes
-    otp = hashlib.sha256(otp_input).hexdigest()     # Hash the bytes using SHA-256 and get the hex digest as OTP
-    return otp, timestamp                           # Return the OTP and the timestamp used
+    
+    # Get current Unix timestamp as an integer (seconds since epoch)
+    timestamp = int(time.time())
+    
+    # Concatenate secret and timestamp, then encode as bytes\
+    otp_input = f"{secret}{timestamp}".encode()
+    
+    # Hash the bytes using SHA-256 and get the hex digest as OTP\
+    otp = hashlib.sha256(otp_input).hexdigest()
+    
+    # Return the OTP and the timestamp used\
+    return otp, timestamp
 
+
+## Simple test for OTP generation.
 if __name__ == "__main__":
+    
     ## @test Simple test for OTP generation
+    
+    # Set a test secret
     secret = "mysecret"
+    
+    # Generate OTP and timestamp with the test secret
     otp, timestamp = generate_otp(secret)
+    
+    # Print the generated OTP and timestamp
     print(f"[OTP] Generated OTP: {otp}\nTimestamp: {timestamp}")
 
