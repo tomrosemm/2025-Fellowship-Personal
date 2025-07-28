@@ -1,0 +1,4 @@
+def main(field a, field b) -> field[1]
+{
+    return [a + b];
+}
