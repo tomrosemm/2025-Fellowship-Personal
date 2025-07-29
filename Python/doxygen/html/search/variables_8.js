@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['result_0',['result',['../classexperiment_1_1_experiment.html#a5734a27c6f335279bf9b0b57ae9b8f76',1,'experiment.Experiment.result'],['../namespaceblockchain.html#a937d4dd628a8858b443a399410d2600b',1,'blockchain.result'],['../namespacersu.html#a937d4dd628a8858b443a399410d2600b',1,'rsu.result']]],
-  ['rsu_1',['rsu',['../classexperiment_1_1_experiment.html#ad4322b2209715e3daec48d9606e04a3c',1,'experiment.Experiment.rsu'],['../namespacersu.html#ad4322b2209715e3daec48d9606e04a3c',1,'rsu.rsu']]],
-  ['rsu_5fid_2',['rsu_id',['../classexperiment_1_1_experiment.html#a9d13c783c27154b1f378fd2ad5ef93ed',1,'experiment::Experiment']]]
+  ['passed_0',['passed',['../namespacepreliminary__tests.html#a561a5450b127e97c5ca67d0b349747a8',1,'preliminary_tests']]],
+  ['proof_1',['proof',['../namespacezkp.html#a7bc06438c4738df41835e3c3ee1171b2',1,'zkp']]],
+  ['provider_5furl_2',['provider_url',['../namespaceblockchain__interface.html#a0dfc25644067776fa8e662304648a3da',1,'blockchain_interface']]]
 ];

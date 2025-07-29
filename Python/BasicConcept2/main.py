@@ -189,5 +189,4 @@ def cli_menu_loop():
 if __name__ == "__main__":
     
     ## @brief Main entry point for running the protocol simulation tests.
-    
     cli_menu_loop()

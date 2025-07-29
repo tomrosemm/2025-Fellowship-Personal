@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['debug_5fmode_0',['DEBUG_MODE',['../classexperiment_1_1_experiment.html#af45d890adeeb7d0fee9c277eb84c1d3c',1,'experiment.Experiment.DEBUG_MODE'],['../classexperiment_1_1_experiment.html#aa36bae710d7db132738f1a82cdd29172',1,'experiment.Experiment.DEBUG_MODE'],['../namespaceblockchain.html#af45d890adeeb7d0fee9c277eb84c1d3c',1,'blockchain.DEBUG_MODE'],['../namespaceblockchain__interface.html#af45d890adeeb7d0fee9c277eb84c1d3c',1,'blockchain_interface.DEBUG_MODE'],['../namespaceexperiment__runner.html#af45d890adeeb7d0fee9c277eb84c1d3c',1,'experiment_runner.DEBUG_MODE'],['../namespacepreliminary__tests.html#af45d890adeeb7d0fee9c277eb84c1d3c',1,'preliminary_tests.DEBUG_MODE'],['../namespacesumo__interface.html#af45d890adeeb7d0fee9c277eb84c1d3c',1,'sumo_interface.DEBUG_MODE'],['../namespacezokrates__interface.html#af45d890adeeb7d0fee9c277eb84c1d3c',1,'zokrates_interface.DEBUG_MODE']]]
+  ['contract_0',['contract',['../classblockchain__interface_1_1_blockchain_interface.html#a2f004bfe4f7133f4d560065c2729e2c8',1,'blockchain_interface::BlockchainInterface']]],
+  ['contract_5faddress_1',['contract_address',['../namespaceblockchain__interface.html#a9a8c57ad76f99bca990762a4984e7307',1,'blockchain_interface']]]
 ];

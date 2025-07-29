@@ -15,10 +15,11 @@
 # Imports
 from web3 import Web3
 import json
+from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE, BLOCKCHAIN_PROVIDER_URL
 
 ## @var DEBUG_MODE
 ## @brief Global variable to control debug output.
-DEBUG_MODE = False
+DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 
 ##
@@ -125,8 +126,8 @@ if __name__ == "__main__":
     
     # After deploying, update these variables with our blockchain details
     
-    # provider_url = "http://
-    provider_url = "http://127.0.0.1:8545"
+    # Use provider URL from settings
+    provider_url = BLOCKCHAIN_PROVIDER_URL
     
     # contract_address = "0x..."  # Use the address from deployment output
     contract_address = "0x..."

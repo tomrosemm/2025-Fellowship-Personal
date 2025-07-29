@@ -52,9 +52,7 @@ if __name__ == "__main__":
     # Set a test secret
     secret = "mysecret"
     
-    # Generate OTP and timestamp with the test secret
+    # Generate OTP and timestamp with the test secret and print them
     otp, timestamp = generate_otp(secret)
-    
-    # Print the generated OTP and timestamp
     print(f"[OTP] Generated OTP: {otp}\nTimestamp: {timestamp}")
 

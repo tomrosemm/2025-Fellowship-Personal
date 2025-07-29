@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['contract_0',['contract',['../classblockchain__interface_1_1_blockchain_interface.html#a2f004bfe4f7133f4d560065c2729e2c8',1,'blockchain_interface::BlockchainInterface']]],
-  ['contract_5faddress_1',['contract_address',['../namespaceblockchain__interface.html#a9a8c57ad76f99bca990762a4984e7307',1,'blockchain_interface']]]
+  ['base_5fdir_0',['BASE_DIR',['../namespacesettings.html#a6c7db55cb69a3846d254023debc5b6b6',1,'settings']]],
+  ['blockchain_5fprovider_5furl_1',['BLOCKCHAIN_PROVIDER_URL',['../namespacesettings.html#a55f06a26d7057b4ea3a539e989c682ad',1,'settings']]]
 ];

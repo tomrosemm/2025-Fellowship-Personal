@@ -100,9 +100,7 @@ if __name__ == "__main__":
     otp = "testotp"
     timestamp = 1234567890
     
-    # Generate a simulated ZKP proof using the test values
+    # Generate and print a simulated ZKP proof using the test values
     proof = generate_zkp_proof_simulated(otp, timestamp)
-    
-    # Print the simulated proof
     print(f"[ZKP] Simulated proof for otp='{otp}', timestamp={timestamp}: {proof}")
 

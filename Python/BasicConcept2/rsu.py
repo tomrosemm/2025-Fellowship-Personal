@@ -145,9 +145,7 @@ if __name__ == "__main__":
     # Create an RSU with the vehicle's secret
     rsu = RSU({vehicle_id: secret})
     
-    # Verify the ZKP proof
+    # Verify the ZKP proof and print the result
     result = rsu.verify_zkp(vehicle_id, zkp, timestamp, "dummy.zok")
-    
-    # Print the result
     print(f"[RSU] Verification result: {result}")
 

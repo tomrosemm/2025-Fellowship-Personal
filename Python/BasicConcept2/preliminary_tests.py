@@ -42,9 +42,17 @@ from sumo_interface import kill_processes_on_port, cleanup_traci_connection
 from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
 from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
 from zkp import generate_zkp_proof_simulated
-
-# Uncomment if blockchain_interface is used
-# from blockchain_interface import set_debug_mode as set_blockchain_interface_debug_mode
+from settings import (
+    DEBUG_MODE as DEFAULT_DEBUG_MODE,
+    SUMO_TOOLS_PATH, 
+    SUMO_SIMPLE_NET_FILE,
+    SUMO_INTERSECTION_CONFIG_FILE,
+    SUMO_PORT_DATA,
+    SUMO_PORT_DATA_CONFIG,
+    SUMO_PORT_BASIC,
+    SUMO_PORT_CONFIG,
+    ZOKRATES_DUMMY_CIRCUIT
+)
 
 # Track number of tests run and passed
 tested = 0
@@ -52,7 +60,7 @@ passed = 0
 
 ## @var DEBUG_MODE
 # @brief Global variable to control debug output.
-DEBUG_MODE = False
+DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 
 ##
@@ -363,8 +371,8 @@ def test_zokrates_connection():
     global tested, passed
     tested += 1
     
-    # Set the circuit path for ZoKrates
-    circuit_path = "zokrates/dummy.zok"
+    # Set the circuit path for ZoKrates from settings
+    circuit_path = ZOKRATES_DUMMY_CIRCUIT
     
     ## Compile circuit
     # If compilation fails, print error and return
@@ -438,8 +446,8 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
     global tested, passed
     tested += 1
     
-    # Set the circuit path for ZoKrates
-    circuit_path = "zokrates/dummy.zok"
+    # Set the circuit path for ZoKrates from settings
+    circuit_path = ZOKRATES_DUMMY_CIRCUIT
     
     # Generate random field inputs for dummy.zok
     a = random.randint(1, 100)
@@ -676,8 +684,8 @@ def test_zokrates_isolated_multiple_vehicles():
     global tested, passed
     tested += 1
     
-    # Set the circuit path for ZoKrates
-    circuit_path = "zokrates/dummy.zok"
+    # Set the circuit path for ZoKrates from settings
+    circuit_path = ZOKRATES_DUMMY_CIRCUIT
     
     # Set the number of vehicles to test and initialize a flag to track if all passed
     num_vehicles = 2
@@ -778,8 +786,8 @@ def test_zokrates_end_to_end_multiple_vehicles():
     global tested, passed
     tested += 1
     
-    # Set the circuit path for ZoKrates
-    circuit_path = "zokrates/dummy.zok"
+    # Set the circuit path for ZoKrates from settings
+    circuit_path = ZOKRATES_DUMMY_CIRCUIT
     
     # Set the number of vehicles to test and initialize a flag to track if all passed
     num_vehicles = 2
@@ -888,11 +896,10 @@ def test_sumo_traci_data_transfer(print_data=True):
     global tested, passed
     tested += 1
 
-    # Define the port for TraCI connection
-    port = 8815
+    # Define the port for TraCI connection from settings
+    port = SUMO_PORT_DATA
     
-    # Set the SUMO_TOOLS_PATH environment variable or use a default path
-    SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
+    # Set the SUMO_TOOLS_PATH from settings
     sys.path.append(SUMO_TOOLS_PATH)
     
     # Try to import the TraCI module
@@ -906,8 +913,8 @@ def test_sumo_traci_data_transfer(print_data=True):
         print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
         return
 
-    # Define the SUMO network file path
-    SUMO_NET_FILE = os.path.abspath("/home/admin/2025-Fellowship-Personal/Python/BasicConcept2/sumo/simple.net.xml")
+    # Define the SUMO network file path from settings
+    SUMO_NET_FILE = SUMO_SIMPLE_NET_FILE
     
     # Check if the SUMO network file exists, if not, print error and return
     if not os.path.exists(SUMO_NET_FILE):
@@ -1052,11 +1059,10 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     global tested, passed
     tested += 1
 
-    # Define the port for TraCI connection
-    port = 8816
+    # Define the port for TraCI connection from settings
+    port = SUMO_PORT_DATA_CONFIG
     
-    # Set the SUMO_TOOLS_PATH environment variable or use a default path
-    SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
+    # Set the SUMO_TOOLS_PATH from settings
     sys.path.append(SUMO_TOOLS_PATH)
     
     # Try to import the TraCI module
@@ -1070,9 +1076,8 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
         print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
         return
 
-    # Define the path to the .sumocfg file
-    # This file contains the SUMO configuration for the simulation
-    SUMO_SUMOCFG_FILE = os.path.abspath("/home/admin/2025-Fellowship-Personal/Python/BasicConcept2/sumo/Intersection 1/intersection1.sumocfg")
+    # Define the path to the .sumocfg file from settings
+    SUMO_SUMOCFG_FILE = SUMO_INTERSECTION_CONFIG_FILE
     
     # Check if the .sumocfg file exists, if not, print error and return
     if not os.path.exists(SUMO_SUMOCFG_FILE):
@@ -1280,9 +1285,9 @@ def testAndScenarioRunner():
 
     # SUMO cleanup after connection tests
     cleanup_traci_connection()
-    kill_processes_on_port(8813)
-    kill_processes_on_port(8814)
-    kill_processes_on_port(8815)
+    kill_processes_on_port(SUMO_PORT_BASIC)
+    kill_processes_on_port(SUMO_PORT_CONFIG)
+    kill_processes_on_port(SUMO_PORT_DATA)
     time.sleep(2)
 
     print(f"\nTotal tests run: {tested}")

@@ -13,9 +13,9 @@
 
 # Imports
 import time
-
 from otp import generate_otp
 from zkp import generate_zkp_proof_real
+from settings import ZOKRATES_DUMMY_CIRCUIT
 
 
 ##
@@ -128,8 +128,8 @@ if __name__ == "__main__":
     # Print the OTP and timestamp
     print(f"[Vehicle] OTP: {otp}\nTimestamp: {timestamp}")
     
-    # Use dummy.zok for demonstration
-    zkp = test_vehicle.create_zkp(otp, timestamp, "dummy.zok")
+    # Use dummy.zok from settings for demonstration
+    zkp = test_vehicle.create_zkp(otp, timestamp, ZOKRATES_DUMMY_CIRCUIT)
     
     # Print the ZKP proof
     print(f"[Vehicle] ZKP: {zkp}")

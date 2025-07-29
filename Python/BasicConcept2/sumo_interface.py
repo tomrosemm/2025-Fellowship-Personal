@@ -25,10 +25,18 @@ import psutil
 import xml.etree.ElementTree as ET
 import tempfile
 import shutil
+from settings import (
+    DEBUG_MODE as DEFAULT_DEBUG_MODE,
+    SUMO_TOOLS_PATH,
+    SUMO_SIMPLE_NET_FILE,
+    SUMO_CITY_CONFIG_FILE,
+    SUMO_PORT_BASIC,
+    SUMO_PORT_CONFIG
+)
 
 ## @var DEBUG_MODE
 # @brief Global variable to control debug output.
-DEBUG_MODE = False
+DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 
 ##
@@ -252,7 +260,7 @@ def cleanup_traci_connection():
 def test_sumo_connection():
     
     # Aggressive cleanup before starting test
-    kill_processes_on_port(8813)
+    kill_processes_on_port(SUMO_PORT_BASIC)
     cleanup_traci_connection()
     
     # Wait for port to be available
@@ -265,7 +273,7 @@ def test_sumo_connection():
     cleanup_traci_connection()
     
     # Wait for port to be available
-    port = 8813
+    port = SUMO_PORT_BASIC
     
     # If port is not available, wait for it to become available until timeout
     if not wait_for_port_available(port, timeout=15):
@@ -274,8 +282,7 @@ def test_sumo_connection():
         print(f"[SUMO Test] Port {port} is not available after waiting and cleanup attempts.")
         return False
     
-    # Get SUMO tools path from environment or use default
-    SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
+    # Get SUMO tools path from settings
     sys.path.append(SUMO_TOOLS_PATH)
 
     # Try to import traci and handle import errors
@@ -292,8 +299,8 @@ def test_sumo_connection():
             
         return False
 
-    # Define the path to the SUMO network file
-    SUMO_NET_FILE = os.path.abspath("/home/admin/2025-Fellowship-Personal/Python/BasicConcept2/sumo/simple.net.xml")
+    # Define the path to the SUMO network file from settings
+    SUMO_NET_FILE = SUMO_SIMPLE_NET_FILE
     
     # Check if the SUMO network file exists
     if not os.path.exists(SUMO_NET_FILE):
@@ -445,7 +452,7 @@ def test_sumo_connection():
         kill_processes_on_port(port)
         
         time.sleep(2)
-        
+    
     return connected
 
 
@@ -711,7 +718,7 @@ def create_non_gui_config(original_config_path):
 def test_sumo_config_connection():
     
     # Aggressive cleanup before starting test
-    kill_processes_on_port(8814)
+    kill_processes_on_port(SUMO_PORT_CONFIG)
     cleanup_traci_connection()
     
     # Wait for port to be available
@@ -723,7 +730,7 @@ def test_sumo_config_connection():
     cleanup_traci_connection()
     
     # Define the port to use for SUMO connection
-    port = 8814
+    port = SUMO_PORT_CONFIG
     
     # If port is not available, wait for it to become available until timeout
     if not wait_for_port_available(port, timeout=15):
@@ -732,8 +739,7 @@ def test_sumo_config_connection():
         print(f"[SUMO Config Test] Port {port} is not available after waiting and cleanup attempts.")
         return False
     
-    # Get SUMO tools path from environment or use default
-    SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
+    # Get SUMO tools path from settings
     sys.path.append(SUMO_TOOLS_PATH)
 
     # Try to import traci
@@ -750,8 +756,8 @@ def test_sumo_config_connection():
             
         return False
 
-    # Define the path to the SUMO configuration file
-    SUMO_CONFIG_FILE = os.path.abspath("/home/admin/2025-Fellowship-Personal/Python/BasicConcept2/sumo/3x3 city block 1/threebythreecityblock1.sumocfg")
+    # Define the path to the SUMO configuration file from settings
+    SUMO_CONFIG_FILE = SUMO_CITY_CONFIG_FILE
     
     # Check if the SUMO configuration file exists; if not, print debug info and return False
     if not os.path.exists(SUMO_CONFIG_FILE):

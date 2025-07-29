@@ -32,6 +32,7 @@ from zokrates_interface import (
 )
 
 from blockchain import simulate_blockchain_verification
+from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE
 
 
 ##
@@ -42,7 +43,7 @@ class Experiment:
     
     ## @var DEBUG_MODE
     ## @brief Control debug output.
-    DEBUG_MODE = False
+    DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 
     ##
@@ -363,4 +364,4 @@ class Experiment:
             
             # Print a message indicating that the experiment was completed with ZoKrates only
             print(f"Experiment '{self.name}' completed with ZoKrates only.")
-            
+

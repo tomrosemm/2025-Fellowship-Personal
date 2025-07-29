@@ -13,10 +13,11 @@
 
 # Imports
 import hashlib
+from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE
 
 ## @var DEBUG_MODE
 ## @brief Global variable to control debug output.
-DEBUG_MODE = False
+DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 
 ##
