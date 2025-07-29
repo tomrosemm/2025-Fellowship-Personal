@@ -10,8 +10,9 @@ var searchData=
   ['test_5fvehicle_5frsu_5fblockchain_5fsimulated_7',['test_vehicle_rsu_blockchain_simulated',['../namespacepreliminary__tests.html#a24f429b37e8fd4345fe7e2349cc6ac4b',1,'preliminary_tests']]],
   ['test_5fvehicle_5frsu_5finteraction_5freal_5fzokrates_5fdummy_8',['test_vehicle_rsu_interaction_real_zokrates_dummy',['../namespacepreliminary__tests.html#a99fe7fd4c3aed278a1997b4ff1ff4cbc',1,'preliminary_tests']]],
   ['test_5fvehicle_5frsu_5finteraction_5fsimulated_9',['test_vehicle_rsu_interaction_simulated',['../namespacepreliminary__tests.html#acd1971944cc6ed8d5744274ea6b41872',1,'preliminary_tests']]],
-  ['test_5fzokrates_5fconnection_10',['test_zokrates_connection',['../namespacepreliminary__tests.html#ae6e4f2a296d65c58a4c9e6664ed31cde',1,'preliminary_tests']]],
-  ['test_5fzokrates_5fend_5fto_5fend_5fmultiple_5fvehicles_11',['test_zokrates_end_to_end_multiple_vehicles',['../namespacepreliminary__tests.html#ac1add99df74993a1314e1bcf6afe99a6',1,'preliminary_tests']]],
-  ['test_5fzokrates_5fisolated_5fmultiple_5fvehicles_12',['test_zokrates_isolated_multiple_vehicles',['../namespacepreliminary__tests.html#a59303584de6d018a486af251aa19e48d',1,'preliminary_tests']]],
-  ['testandscenariorunner_13',['testAndScenarioRunner',['../namespacepreliminary__tests.html#a04d5a6d248e3be71aaa5e09b16273163',1,'preliminary_tests']]]
+  ['test_5fvehicle_5fto_5finfrastructure_5fvtoi_5fzkp_10',['test_vehicle_to_infrastructure_VtoI_zkp',['../namespacepreliminary__tests.html#a6635d46e294c351a36cbe8d6e389929b',1,'preliminary_tests']]],
+  ['test_5fzokrates_5fconnection_11',['test_zokrates_connection',['../namespacepreliminary__tests.html#ae6e4f2a296d65c58a4c9e6664ed31cde',1,'preliminary_tests']]],
+  ['test_5fzokrates_5fend_5fto_5fend_5fmultiple_5fvehicles_12',['test_zokrates_end_to_end_multiple_vehicles',['../namespacepreliminary__tests.html#ac1add99df74993a1314e1bcf6afe99a6',1,'preliminary_tests']]],
+  ['test_5fzokrates_5fisolated_5fmultiple_5fvehicles_13',['test_zokrates_isolated_multiple_vehicles',['../namespacepreliminary__tests.html#a59303584de6d018a486af251aa19e48d',1,'preliminary_tests']]],
+  ['testandscenariorunner_14',['testAndScenarioRunner',['../namespacepreliminary__tests.html#a04d5a6d248e3be71aaa5e09b16273163',1,'preliminary_tests']]]
 ];

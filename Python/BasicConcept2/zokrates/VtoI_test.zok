@@ -1,0 +1,17 @@
+def main(private field sk, field vid, field commitment) {
+    // sk=secret# vid=Vehicle ID (VIN#)
+    // Commitment = sk^2 +vid
+    field computed_commitment = (sk * sk) + vid;
+
+   // Constraint: sk and vid in valid range
+    assert(sk > 0);
+    assert(sk < 1000);  // secret key max range
+    assert(vid > 0);
+    assert(vid < 99999999999999999); // vehicle ID (vin#) max range
+   
+    // Assert it equals the public commitment
+    assert(computed_commitment == commitment);
+   
+ 
+    return;
+}

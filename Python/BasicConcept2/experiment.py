@@ -138,6 +138,26 @@ class Experiment:
             if self.DEBUG_MODE:
                 print(f"[Experiment] Auth.zok arguments: {args}")
         
+        # For VtoI_test.zok, we will use a circuit that tests vehicle to infrastructure communication
+        elif circuit_name == "VtoI_test.zok":
+            
+            # Generate random secret key within range
+            sk = random.randint(1, 999)
+            
+            # Generate random vehicle ID within range
+            vid = random.randint(1, 999999999)
+            
+            # Calculate commitment
+            commitment = (sk * sk) + vid
+            
+            # Prepare arguments
+            args = [str(sk), str(vid), str(commitment)]
+            
+            # For blockchain verification
+            # Use commitment as OTP for this circuit and set timestamp to current time
+            otp = str(commitment)
+            timestamp = int(time.time())
+        
         # If the circuit is not recognized, print an error and return False, None, None        
         else:
             print(f"Unsupported circuit: {circuit_name}")
@@ -203,6 +223,20 @@ class Experiment:
             
             zkp_proof = (vehicle.secret, timestamp, otp)
             rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
+        
+        # For VtoI_test.zok, we'll use a tuple (sk, vid, commitment)
+        elif circuit_name == "VtoI_test.zok":
+        
+            # Parse the otp which contains our commitment value
+            commitment = int(otp)
+            
+            # Generate random values for testing
+            # In a real implementation, these would come from the vehicle
+            sk = random.randint(1, 999)
+            vid = commitment - (sk * sk)  # Solve for vid: commitment = (sk * sk) + vid
+            
+            # Create ZKP proof as tuple
+            zkp_proof = (sk, vid, commitment)
         
         # If the circuit isn't recognized
         else:

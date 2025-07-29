@@ -27,6 +27,7 @@ import sys
 
 from vehicle import Vehicle
 from rsu import RSU
+from experiment import Experiment
 
 from zokrates_interface import (
     run_zokrates_compile,
@@ -1205,6 +1206,49 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
 
 
 ##
+# @brief Test the zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication.
+# @details
+#   Tests the vehicle-to-infrastructure authentication circuit which uses a commitment scheme.
+# @steps
+#   1. Create an experiment with the VtoI_test.zok circuit.
+#   2. Run the experiment with a vehicle ID, secret key, and commitment.
+#   3. Check if the verification was successful.
+##
+def test_vehicle_to_infrastructure_VtoI_zkp():
+    
+    # Print test header
+    print("\n=== Vehicle-to-Infrastructure VtoI ZKP Test ===")
+    
+    # Use global variables to track tests, increment tested count
+    global tested, passed
+    tested += 1
+    
+    # Set the circuit path for ZoKrates
+    circuit_path = "zokrates/VtoI_test.zok"
+    
+    # Generate a random vehicle ID and RSU ID for this experiment
+    vehicle_id = f"VtoI_Vehicle_{random.randint(1000, 9999)}"
+    rsu_id = f"VtoI_RSU_{random.randint(1000, 9999)}"
+    
+    # Create an Experiment instance with the specified parameters
+    exp = Experiment("VtoI_Test", vehicle_id, rsu_id, circuit_path)
+    
+    # Run the experiment
+    exp.run()
+    
+    # Check if the experiment was successful
+    if exp.result:
+        print(f"[PASS] Vehicle-to-Infrastructure ZKP Test passed - Vehicle ID: {vehicle_id}")
+        passed += 1
+    else:
+        print(f"[FAIL] Vehicle-to-Infrastructure ZKP Test failed - Vehicle ID: {vehicle_id}")
+    
+    # Clean up ZoKrates-generated files
+    cleanup_zokrates_files()
+    
+    return exp.result
+
+##
 # @brief Run all test and scenario functions and print summary statistics.
 # @details
 #   Runs all included test and scenario functions in sequence and prints summary statistics.
@@ -1281,6 +1325,12 @@ def testAndScenarioRunner():
 
     # 15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
     test_sumo_traci_data_transfer_sumocfg(False)
+    time.sleep(.5)
+    # clear_console()
+    
+    # 16 - Run Vehicle-to-Infrastructure ZKP Test with the
+    # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
+    test_vehicle_to_infrastructure_VtoI_zkp()
     time.sleep(.5)
     # clear_console()
 

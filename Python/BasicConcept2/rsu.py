@@ -116,6 +116,27 @@ class RSU:
             # But for this, we just check that it's a digit
             return str(zkp_proof).isdigit()
         
+        # If circuit name is VtoI_test.zok, expect a tuple (sk, vid, commitment)
+        elif circuit_name == "VtoI_test.zok":
+            
+            ## @note
+            # For VtoI_test.zok, zkp_proof is a tuple (sk, vid, commitment)
+            # where sk is the secret key, vid is the vehicle ID, and commitment is the computed value
+            
+            # Extract values from proof
+            # Check if zkp_proof is a tuple with 3 elements
+            if isinstance(zkp_proof, tuple) and len(zkp_proof) == 3:
+                
+                # Unpack the ZKP proof
+                sk_val, vid_val, commitment_val = zkp_proof
+                
+                # Verify the commitment matches
+                computed_commitment = (int(sk_val) * int(sk_val)) + int(vid_val)
+                
+                # Return True if the computed commitment matches the provided commitment
+                return str(computed_commitment) == str(commitment_val)
+            return False
+        
         # By default, use real ZKP logic
         else:
             

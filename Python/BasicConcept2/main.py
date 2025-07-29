@@ -63,6 +63,7 @@ def cli_menu_loop():
         print("13 - Run ZoKrates CLI Connection Test")
         print("14 - Run SUMO TraCI Data Transfer Test")
         print("15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
+        print("16 - Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         
@@ -145,6 +146,10 @@ def cli_menu_loop():
             case "15":
                 ## @test Run SUMO TraCI data transfer test with sumo/Intersection 1/intersection1.sumocfg for 100 steps
                 preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=print_sumo_data)
+                
+            case "16":
+                ## @test Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok
+                preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
                 
             case "dbon":
                 ## @details
