@@ -283,6 +283,14 @@ class Experiment:
         elif circuit_name == "auth.zok":
             secret = str(random.randint(1, 100000))
         
+        # For VtoI_test.zok, we'll use a random value within the allowed range
+        elif circuit_name == "VtoI_test.zok":
+            secret = str(random.randint(1, 999))  # sk should be > 0 and < 1000 as per circuit constraints
+        
+        # Handle any other circuit type with a default secret
+        else:
+            secret = str(random.randint(1, 1000))
+    
         # Initialize the vehicle and RSU instances with the provided vehicle_id and secret
         vehicle = Vehicle(self.vehicle_id, secret)
         rsu = RSU({self.vehicle_id: secret})
