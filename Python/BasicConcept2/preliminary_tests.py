@@ -38,6 +38,7 @@ from zokrates_interface import (
     set_debug_mode as set_zokrates_debug_mode
 )
 
+
 from sumo_interface import kill_processes_on_port, cleanup_traci_connection
 from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
 from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
