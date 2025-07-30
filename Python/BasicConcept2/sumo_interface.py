@@ -25,6 +25,7 @@ import psutil
 import xml.etree.ElementTree as ET
 import tempfile
 import shutil
+
 from settings import (
     DEBUG_MODE as DEFAULT_DEBUG_MODE,
     SUMO_TOOLS_PATH,

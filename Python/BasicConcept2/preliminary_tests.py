@@ -77,7 +77,8 @@ DEBUG_MODE = DEFAULT_DEBUG_MODE
 # @param enabled True to enable debug mode, False to disable.
 # @details
 #   Sets the global DEBUG_MODE variable and propagates debug mode to all relevant modules/classes.
-# @steps
+#
+# Steps:
 #   1. Set the global DEBUG_MODE variable.
 #   2. Set debug mode for ZoKrates, Blockchain, and SUMO interfaces.
 ##
@@ -99,7 +100,8 @@ def set_debug_mode(enabled):
 # @brief Clears the console screen based on the operating system.
 # @details
 #   Clears the console using the appropriate command for the OS.
-# @steps
+#
+# Steps:
 #   1. If Windows, use 'cls'.
 #   2. Otherwise, use 'clear'.
 ##
@@ -116,7 +118,8 @@ def clear_console():
 # @brief Test the workflow using a simulated ZKP (hash-based).
 # @details
 #   Simulates authentication between a vehicle and RSU using a hash-based ZKP.
-# @steps
+#
+# Steps:
 #   1. Generate a random vehicle secret and create Vehicle and RSU entities.
 #   2. Vehicle generates an OTP and timestamp.
 #   3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
@@ -173,7 +176,8 @@ def test_vehicle_rsu_interaction_simulated():
 # @brief Simulate the full workflow, including using ZoKrates for the ZKP as well as blockchain verification and logging.
 # @details
 #   Simulates authentication and blockchain verification using hash-based ZKP.
-# @steps
+#
+# Steps:
 #   1. Generate a random vehicle secret and create Vehicle and RSU entities.
 #   2. Vehicle generates an OTP and timestamp.
 #   3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
@@ -234,7 +238,8 @@ def test_vehicle_rsu_blockchain_simulated():
 # @brief End-to-end scenario: Vehicle authenticates successfully and is granted access.
 # @details
 #   Simulates a successful authentication scenario for a vehicle.
-# @steps
+#
+# Steps:
 #   1. Create vehicle and RSU with matching secrets.
 #   2. Vehicle generates OTP and timestamp.
 #   3. Vehicle creates ZKP proof.
@@ -295,7 +300,8 @@ def scenario_successful_authentication():
 # @brief End-to-end scenario: Vehicle fails authentication due to wrong secret.
 # @details
 #   Simulates a failed authentication scenario for a vehicle with incorrect secret.
-# @steps
+#
+# Steps:
 #   1. Create vehicle with wrong secret and RSU with correct secret.
 #   2. Vehicle generates OTP and timestamp.
 #   3. Vehicle creates ZKP proof.
@@ -362,7 +368,8 @@ def scenario_failed_authentication():
 # @brief Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok.
 # @details
 #   Runs ZoKrates CLI workflow with fixed inputs.
-# @steps
+#
+# Steps:
 #   1. Compile the ZoKrates circuit.
 #   2. Run setup.
 #   3. Compute witness (inputs: a=3, b=4).
@@ -436,7 +443,8 @@ def test_zokrates_connection():
 # @brief Test the end-to-end ZoKrates workflow using zokrates/dummy.zok and random inputs.
 # @details
 #   Simulates a real ZKP workflow using the ZoKrates CLI.
-# @steps
+#
+# Steps:
 #   1. Generate random field inputs for dummy.zok.
 #   2. Compile circuit.
 #   3. Run setup.
@@ -519,7 +527,8 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
 # @brief Simulated ZKP isolated test with multiple vehicles.
 # @details
 #   Simulates authentication for multiple vehicles using hash-based ZKP.
-# @steps
+#
+# Steps:
 #   1. Create multiple vehicles, each with a unique secret.
 #   2. Each vehicle generates OTP and timestamp, creates ZKP proof.
 #   3. RSU verifies each ZKP proof.
@@ -594,7 +603,8 @@ def test_simulated_isolated_multiple_vehicles():
 # @brief Simulated end-to-end test with multiple vehicles (RSU + blockchain).
 # @details
 #   Simulates authentication and blockchain verification for multiple vehicles.
-# @steps
+#
+# Steps:
 #   1. Create multiple vehicles, each with a unique secret.
 #   2. Each vehicle generates OTP and timestamp, creates ZKP proof.
 #   3. RSU verifies each ZKP proof.
@@ -673,7 +683,8 @@ def test_simulated_end_to_end_multiple_vehicles():
 # @brief ZoKrates-integrated isolated test with multiple vehicles (zokrates/dummy.zok).
 # @details
 #   Runs ZoKrates workflow for multiple vehicles with random inputs.
-# @steps
+#
+# Steps:
 #   1. For each vehicle:
 #      a. Generate random inputs.
 #      b. Compile ZoKrates circuit.
@@ -774,7 +785,8 @@ def test_zokrates_isolated_multiple_vehicles():
 # @brief ZoKrates-integrated end-to-end test with multiple vehicles (zokrates/dummy.zok + simulated blockchain).
 # @details
 #   Runs ZoKrates workflow and blockchain verification for multiple vehicles.
-# @steps
+#
+# Steps:
 #   1. For each vehicle:
 #      a. Generate random inputs.
 #      b. Compile ZoKrates circuit.
@@ -889,7 +901,8 @@ def test_zokrates_end_to_end_multiple_vehicles():
 # @param print_data If True, print simulation data to screen.
 # @details
 #   Tests SUMO connection and data retrieval using TraCI.
-# @steps
+#
+# Steps:
 #   1. Start SUMO with a simple network.
 #   2. Connect via TraCI.
 #   3. Retrieve simulation time, vehicle IDs, and positions.
@@ -1052,7 +1065,8 @@ def test_sumo_traci_data_transfer(print_data=True):
 # @param print_data If True, print simulation data to screen.
 # @details
 #   Tests SUMO connection and data retrieval using TraCI with a .sumocfg file.
-# @steps
+#
+# Steps:
 #   1. Start SUMO with a configuration file.
 #   2. Connect via TraCI.
 #   3. Retrieve simulation time, vehicle IDs, and positions for 100 steps.
@@ -1217,7 +1231,8 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
 # @param print_data If True, print simulation data to screen.
 # @details
 #   Tests SUMO connection and data retrieval using TraCI with intersection2.sumocfg.
-# @steps
+#
+# Steps:
 #   1. Start SUMO with intersection2.sumocfg.
 #   2. Connect via TraCI.
 #   3. Retrieve simulation time, vehicle IDs, and positions.
@@ -1359,7 +1374,8 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
 # @brief Test the zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication.
 # @details
 #   Tests the vehicle-to-infrastructure authentication circuit which uses a commitment scheme.
-# @steps
+#
+# Steps:
 #   1. Create an experiment with the VtoI_test.zok circuit.
 #   2. Run the experiment with a vehicle ID, secret key, and commitment.
 #   3. Check if the verification was successful.
@@ -1402,7 +1418,8 @@ def test_vehicle_to_infrastructure_VtoI_zkp():
 # @brief Run all test and scenario functions and print summary statistics.
 # @details
 #   Runs all included test and scenario functions in sequence and prints summary statistics.
-# @steps
+#
+# Steps:
 #   1. Run all included test and scenario functions in sequence.
 #   2. Print summary statistics for total tests run, passed, and failed.
 #   3. Perform SUMO cleanup after connection tests.

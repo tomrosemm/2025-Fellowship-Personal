@@ -11,11 +11,12 @@ var searchData=
   ['sumo_5fdir_8',['SUMO_DIR',['../namespacesettings.html#a987dda3349e48888646b2c62aed45656',1,'settings']]],
   ['sumo_5finterface_9',['sumo_interface',['../namespacesumo__interface.html',1,'']]],
   ['sumo_5finterface_2epy_10',['sumo_interface.py',['../sumo__interface_8py.html',1,'']]],
-  ['sumo_5fintersection_5fconfig_5ffile_11',['SUMO_INTERSECTION_CONFIG_FILE',['../namespacesettings.html#a3fd49c3b60a13017c38caae3b355287f',1,'settings']]],
-  ['sumo_5fport_5fbasic_12',['SUMO_PORT_BASIC',['../namespacesettings.html#a06e9c060caa4415b24bb2f9feaedda23',1,'settings']]],
-  ['sumo_5fport_5fconfig_13',['SUMO_PORT_CONFIG',['../namespacesettings.html#a11ec4cf1b951d032d16577b63fe2fb49',1,'settings']]],
-  ['sumo_5fport_5fdata_14',['SUMO_PORT_DATA',['../namespacesettings.html#abdf144a11bee2d4abf2545481462d452',1,'settings']]],
-  ['sumo_5fport_5fdata_5fconfig_15',['SUMO_PORT_DATA_CONFIG',['../namespacesettings.html#a69c34d10b18b877758423296f98cad3d',1,'settings']]],
-  ['sumo_5fsimple_5fnet_5ffile_16',['SUMO_SIMPLE_NET_FILE',['../namespacesettings.html#a9e5300570ec3fcf75b217653f1777acb',1,'settings']]],
-  ['sumo_5ftools_5fpath_17',['SUMO_TOOLS_PATH',['../namespacesettings.html#a8dcaf62dcd037eb19759175d94f9f250',1,'settings']]]
+  ['sumo_5fintersection2_5fconfig_5ffile_11',['SUMO_INTERSECTION2_CONFIG_FILE',['../namespacesettings.html#a72fbcbed0b4e171a33172d16167e4c63',1,'settings']]],
+  ['sumo_5fintersection_5fconfig_5ffile_12',['SUMO_INTERSECTION_CONFIG_FILE',['../namespacesettings.html#a3fd49c3b60a13017c38caae3b355287f',1,'settings']]],
+  ['sumo_5fport_5fbasic_13',['SUMO_PORT_BASIC',['../namespacesettings.html#a06e9c060caa4415b24bb2f9feaedda23',1,'settings']]],
+  ['sumo_5fport_5fconfig_14',['SUMO_PORT_CONFIG',['../namespacesettings.html#a11ec4cf1b951d032d16577b63fe2fb49',1,'settings']]],
+  ['sumo_5fport_5fdata_15',['SUMO_PORT_DATA',['../namespacesettings.html#abdf144a11bee2d4abf2545481462d452',1,'settings']]],
+  ['sumo_5fport_5fdata_5fconfig_16',['SUMO_PORT_DATA_CONFIG',['../namespacesettings.html#a69c34d10b18b877758423296f98cad3d',1,'settings']]],
+  ['sumo_5fsimple_5fnet_5ffile_17',['SUMO_SIMPLE_NET_FILE',['../namespacesettings.html#a9e5300570ec3fcf75b217653f1777acb',1,'settings']]],
+  ['sumo_5ftools_5fpath_18',['SUMO_TOOLS_PATH',['../namespacesettings.html#a8dcaf62dcd037eb19759175d94f9f250',1,'settings']]]
 ];

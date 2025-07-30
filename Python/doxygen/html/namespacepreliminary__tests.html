@@ -114,6 +114,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a8354df918b8754c449d9ec5fb54e2dbd" id="r_a8354df918b8754c449d9ec5fb54e2dbd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8354df918b8754c449d9ec5fb54e2dbd">test_sumo_traci_data_transfer</a> (print_data=True)</td></tr>
 <tr class="memdesc:a8354df918b8754c449d9ec5fb54e2dbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test connecting to SUMO via TraCI, retrieving and storing simulation data.  <br /></td></tr>
 <tr class="separator:a8354df918b8754c449d9ec5fb54e2dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2a1c8f74c20b29adfcc6c6be7a5beea" id="r_ab2a1c8f74c20b29adfcc6c6be7a5beea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2a1c8f74c20b29adfcc6c6be7a5beea">test_sumo_traci_data_transfer_intersection2</a> (print_data=True)</td></tr>
+<tr class="memdesc:ab2a1c8f74c20b29adfcc6c6be7a5beea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test connecting to SUMO via TraCI using intersection2.sumocfg with explicit vehicles.  <br /></td></tr>
+<tr class="separator:ab2a1c8f74c20b29adfcc6c6be7a5beea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9082150157a9b2b32fcb39341caa70a6" id="r_a9082150157a9b2b32fcb39341caa70a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9082150157a9b2b32fcb39341caa70a6">test_sumo_traci_data_transfer_sumocfg</a> (print_data=True)</td></tr>
 <tr class="memdesc:a9082150157a9b2b32fcb39341caa70a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps.  <br /></td></tr>
 <tr class="separator:a9082150157a9b2b32fcb39341caa70a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,6 +150,8 @@ Variables</h2></td></tr>
 <tr class="memitem:a84cb21ca8841a588311a03bd9c054d76" id="r_a84cb21ca8841a588311a03bd9c054d76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84cb21ca8841a588311a03bd9c054d76">DEBUG_MODE</a> = DEFAULT_DEBUG_MODE</td></tr>
 <tr class="memdesc:a84cb21ca8841a588311a03bd9c054d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variable to control debug output.  <br /></td></tr>
 <tr class="separator:a84cb21ca8841a588311a03bd9c054d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adde69db87574040b4de683dec9e6598a" id="r_adde69db87574040b4de683dec9e6598a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adde69db87574040b4de683dec9e6598a">INTERSECTION2_SUMOCFG</a></td></tr>
+<tr class="separator:adde69db87574040b4de683dec9e6598a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a561a5450b127e97c5ca67d0b349747a8" id="r_a561a5450b127e97c5ca67d0b349747a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a561a5450b127e97c5ca67d0b349747a8">passed</a> = 0</td></tr>
 <tr class="separator:a561a5450b127e97c5ca67d0b349747a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a202b369a9c8ae3ed4de6b31303759a1a" id="r_a202b369a9c8ae3ed4de6b31303759a1a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a202b369a9c8ae3ed4de6b31303759a1a">tested</a> = 0</td></tr>
@@ -169,7 +174,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clears the console screen based on the operating system. </p>
-<p>Clears the console using the appropriate command for the OS. @steps</p><ol type="1">
+<p>Clears the console using the appropriate command for the OS.</p>
+<p>Steps:</p><ol type="1">
 <li>If Windows, use 'cls'.</li>
 <li>Otherwise, use 'clear'. </li>
 </ol>
@@ -192,7 +198,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>End-to-end scenario: Vehicle fails authentication due to wrong secret. </p>
-<p>Simulates a failed authentication scenario for a vehicle with incorrect secret. @steps</p><ol type="1">
+<p>Simulates a failed authentication scenario for a vehicle with incorrect secret.</p>
+<p>Steps:</p><ol type="1">
 <li>Create vehicle with wrong secret and RSU with correct secret.</li>
 <li>Vehicle generates OTP and timestamp.</li>
 <li>Vehicle creates ZKP proof.</li>
@@ -219,7 +226,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>End-to-end scenario: Vehicle authenticates successfully and is granted access. </p>
-<p>Simulates a successful authentication scenario for a vehicle. @steps</p><ol type="1">
+<p>Simulates a successful authentication scenario for a vehicle.</p>
+<p>Steps:</p><ol type="1">
 <li>Create vehicle and RSU with matching secrets.</li>
 <li>Vehicle generates OTP and timestamp.</li>
 <li>Vehicle creates ZKP proof.</li>
@@ -252,7 +260,8 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Sets the global DEBUG_MODE variable and propagates debug mode to all relevant modules/classes. @steps</p><ol type="1">
+<p>Sets the global DEBUG_MODE variable and propagates debug mode to all relevant modules/classes.</p>
+<p>Steps:</p><ol type="1">
 <li>Set the global DEBUG_MODE variable.</li>
 <li>Set debug mode for ZoKrates, Blockchain, and SUMO interfaces. </li>
 </ol>
@@ -275,7 +284,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Simulated end-to-end test with multiple vehicles (RSU + blockchain). </p>
-<p>Simulates authentication and blockchain verification for multiple vehicles. @steps</p><ol type="1">
+<p>Simulates authentication and blockchain verification for multiple vehicles.</p>
+<p>Steps:</p><ol type="1">
 <li>Create multiple vehicles, each with a unique secret.</li>
 <li>Each vehicle generates OTP and timestamp, creates ZKP proof.</li>
 <li>RSU verifies each ZKP proof.</li>
@@ -301,7 +311,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Simulated ZKP isolated test with multiple vehicles. </p>
-<p>Simulates authentication for multiple vehicles using hash-based ZKP. @steps</p><ol type="1">
+<p>Simulates authentication for multiple vehicles using hash-based ZKP.</p>
+<p>Steps:</p><ol type="1">
 <li>Create multiple vehicles, each with a unique secret.</li>
 <li>Each vehicle generates OTP and timestamp, creates ZKP proof.</li>
 <li>RSU verifies each ZKP proof.</li>
@@ -332,8 +343,42 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Tests SUMO connection and data retrieval using TraCI. @steps</p><ol type="1">
+<p>Tests SUMO connection and data retrieval using TraCI.</p>
+<p>Steps:</p><ol type="1">
 <li>Start SUMO with a simple network.</li>
+<li>Connect via TraCI.</li>
+<li>Retrieve simulation time, vehicle IDs, and positions.</li>
+<li>Print/store the data.</li>
+<li>Clean up. </li>
+</ol>
+
+</div>
+</div>
+<a id="ab2a1c8f74c20b29adfcc6c6be7a5beea" name="ab2a1c8f74c20b29adfcc6c6be7a5beea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2a1c8f74c20b29adfcc6c6be7a5beea">&#9670;&#160;</a></span>test_sumo_traci_data_transfer_intersection2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">test_sumo_traci_data_transfer_intersection2 </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>print_data</em></span><span class="paramdefsep"> = </span><span class="paramdefval">True</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test connecting to SUMO via TraCI using intersection2.sumocfg with explicit vehicles. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">print_data</td><td>If True, print simulation data to screen.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Tests SUMO connection and data retrieval using TraCI with intersection2.sumocfg.</p>
+<p>Steps:</p><ol type="1">
+<li>Start SUMO with intersection2.sumocfg.</li>
 <li>Connect via TraCI.</li>
 <li>Retrieve simulation time, vehicle IDs, and positions.</li>
 <li>Print/store the data.</li>
@@ -364,7 +409,8 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Tests SUMO connection and data retrieval using TraCI with a .sumocfg file. @steps</p><ol type="1">
+<p>Tests SUMO connection and data retrieval using TraCI with a .sumocfg file.</p>
+<p>Steps:</p><ol type="1">
 <li>Start SUMO with a configuration file.</li>
 <li>Connect via TraCI.</li>
 <li>Retrieve simulation time, vehicle IDs, and positions for 100 steps.</li>
@@ -390,7 +436,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Simulate the full workflow, including using ZoKrates for the ZKP as well as blockchain verification and logging. </p>
-<p>Simulates authentication and blockchain verification using hash-based ZKP. @steps</p><ol type="1">
+<p>Simulates authentication and blockchain verification using hash-based ZKP.</p>
+<p>Steps:</p><ol type="1">
 <li>Generate a random vehicle secret and create Vehicle and RSU entities.</li>
 <li>Vehicle generates an OTP and timestamp.</li>
 <li>Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.</li>
@@ -417,7 +464,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Test the end-to-end ZoKrates workflow using zokrates/dummy.zok and random inputs. </p>
-<p>Simulates a real ZKP workflow using the ZoKrates CLI. @steps</p><ol type="1">
+<p>Simulates a real ZKP workflow using the ZoKrates CLI.</p>
+<p>Steps:</p><ol type="1">
 <li>Generate random field inputs for dummy.zok.</li>
 <li>Compile circuit.</li>
 <li>Run setup.</li>
@@ -446,7 +494,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Test the workflow using a simulated ZKP (hash-based). </p>
-<p>Simulates authentication between a vehicle and RSU using a hash-based ZKP. @steps</p><ol type="1">
+<p>Simulates authentication between a vehicle and RSU using a hash-based ZKP.</p>
+<p>Steps:</p><ol type="1">
 <li>Generate a random vehicle secret and create Vehicle and RSU entities.</li>
 <li>Vehicle generates an OTP and timestamp.</li>
 <li>Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.</li>
@@ -472,7 +521,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Test the zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication. </p>
-<p>Tests the vehicle-to-infrastructure authentication circuit which uses a commitment scheme. @steps</p><ol type="1">
+<p>Tests the vehicle-to-infrastructure authentication circuit which uses a commitment scheme.</p>
+<p>Steps:</p><ol type="1">
 <li>Create an experiment with the VtoI_test.zok circuit.</li>
 <li>Run the experiment with a vehicle ID, secret key, and commitment.</li>
 <li>Check if the verification was successful. </li>
@@ -496,7 +546,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok. </p>
-<p>Runs ZoKrates CLI workflow with fixed inputs. @steps</p><ol type="1">
+<p>Runs ZoKrates CLI workflow with fixed inputs.</p>
+<p>Steps:</p><ol type="1">
 <li>Compile the ZoKrates circuit.</li>
 <li>Run setup.</li>
 <li>Compute witness (inputs: a=3, b=4).</li>
@@ -524,7 +575,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>ZoKrates-integrated end-to-end test with multiple vehicles (zokrates/dummy.zok + simulated blockchain). </p>
-<p>Runs ZoKrates workflow and blockchain verification for multiple vehicles. @steps</p><ol type="1">
+<p>Runs ZoKrates workflow and blockchain verification for multiple vehicles.</p>
+<p>Steps:</p><ol type="1">
 <li>For each vehicle: a. Generate random inputs. b. Compile ZoKrates circuit. c. Run setup. d. Compute witness. e. Generate proof. f. Verify proof. g. Simulate blockchain verification if DEBUG_MODE is enabled. h. Clean up ZoKrates artifacts.</li>
 <li>Print whether all vehicles' proofs and blockchain logs succeeded. </li>
 </ol>
@@ -547,7 +599,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>ZoKrates-integrated isolated test with multiple vehicles (zokrates/dummy.zok). </p>
-<p>Runs ZoKrates workflow for multiple vehicles with random inputs. @steps</p><ol type="1">
+<p>Runs ZoKrates workflow for multiple vehicles with random inputs.</p>
+<p>Steps:</p><ol type="1">
 <li>For each vehicle: a. Generate random inputs. b. Compile ZoKrates circuit. c. Run setup. d. Compute witness. e. Generate proof. f. Verify proof. g. Clean up ZoKrates artifacts.</li>
 <li>Print whether all vehicles' proofs were verified successfully. </li>
 </ol>
@@ -570,7 +623,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Run all test and scenario functions and print summary statistics. </p>
-<p>Runs all included test and scenario functions in sequence and prints summary statistics. @steps</p><ol type="1">
+<p>Runs all included test and scenario functions in sequence and prints summary statistics.</p>
+<p>Steps:</p><ol type="1">
 <li>Run all included test and scenario functions in sequence.</li>
 <li>Print summary statistics for total tests run, passed, and failed.</li>
 <li>Perform SUMO cleanup after connection tests. </li>
@@ -593,6 +647,24 @@ Variables</h2></td></tr>
 
 <p>Global variable to control debug output. </p>
 
+</div>
+</div>
+<a id="adde69db87574040b4de683dec9e6598a" name="adde69db87574040b4de683dec9e6598a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adde69db87574040b4de683dec9e6598a">&#9670;&#160;</a></span>INTERSECTION2_SUMOCFG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">INTERSECTION2_SUMOCFG</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"><span class="lineno">    1</span>=  os.path.join(</div>
+<div class="line"><span class="lineno">    2</span>    os.path.dirname(__file__),</div>
+<div class="line"><span class="lineno">    3</span>    <span class="stringliteral">&quot;sumo&quot;</span>, <span class="stringliteral">&quot;Intersection 2&quot;</span>, <span class="stringliteral">&quot;intersection2.sumocfg&quot;</span></div>
+<div class="line"><span class="lineno">    4</span>)</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a561a5450b127e97c5ca67d0b349747a8" name="a561a5450b127e97c5ca67d0b349747a8"></a>
