@@ -40,7 +40,7 @@ def cli_menu_loop():
     print("*** Privacy-Preserving Vehicle Authentication Protocol Simulation ***")
     print(row_of_stars)
     print("\n")
-    
+
     # Main loop for CLI menu
     ## @var choice
     ## @brief User's menu choice input.
@@ -63,6 +63,7 @@ def cli_menu_loop():
         print("13 - Run ZoKrates CLI Connection Test")
         print("14 - Run SUMO TraCI Data Transfer Test")
         print("15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
+        print("15b - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)")
         print("16 - Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
@@ -147,6 +148,10 @@ def cli_menu_loop():
                 ## @test Run SUMO TraCI data transfer test with sumo/Intersection 1/intersection1.sumocfg for 100 steps
                 preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=print_sumo_data)
                 
+            case "15b":
+                ## @test Run SUMO TraCI data transfer test with sumo/Intersection 2/intersection2.sumocfg with explicit vehicles
+                preliminary_tests.test_sumo_traci_data_transfer_intersection2(print_data=print_sumo_data)
+        
             case "16":
                 ## @test Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok
                 preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()

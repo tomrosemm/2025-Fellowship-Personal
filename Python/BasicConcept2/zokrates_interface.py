@@ -14,6 +14,7 @@
 # Imports
 import subprocess
 import os
+
 from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE, ZOKRATES_CLEANUP_FILES
 
 ## @var DEBUG_MODE

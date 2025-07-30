@@ -42,6 +42,9 @@ SUMO_CITY_CONFIG_FILE = os.path.join(SUMO_DIR, "3x3 city block 1", "threebythree
 # Path to SUMO intersection configuration
 SUMO_INTERSECTION_CONFIG_FILE = os.path.join(SUMO_DIR, "Intersection 1", "intersection1.sumocfg")
 
+# Path to SUMO intersection2 configuration
+SUMO_INTERSECTION2_CONFIG_FILE = os.path.join(SUMO_DIR, "Intersection 2", "intersection2.sumocfg")
+
 ## Network Settings
 # TraCI ports for SUMO connections
 SUMO_PORT_BASIC = 8813
