@@ -45,6 +45,13 @@ SUMO_INTERSECTION_CONFIG_FILE = os.path.join(SUMO_DIR, "Intersection 1", "inters
 # Path to SUMO intersection2 configuration
 SUMO_INTERSECTION2_CONFIG_FILE = os.path.join(SUMO_DIR, "Intersection 2", "intersection2.sumocfg")
 
+# Path to SUMO straightaway1 configuration
+SUMO_STRAIGHTAWAY1_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway1", "straightaway1.sumocfg")
+
+# Path to SUMO straightaway2 configuration
+SUMO_STRAIGHTAWAY2_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway2", "straightaway2.sumocfg")
+
+
 ## Network Settings
 # TraCI ports for SUMO connections
 SUMO_PORT_BASIC = 8813
