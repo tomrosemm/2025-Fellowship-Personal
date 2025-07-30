@@ -1469,17 +1469,17 @@ def testAndScenarioRunner():
     # clear_console()
 
     # 14 - Run SUMO TraCI Data Transfer Test
-    test_sumo_traci_data_transfer(True)
+    test_sumo_traci_data_transfer(False)
     time.sleep(.5)
     # clear_console()
 
     # 15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
-    test_sumo_traci_data_transfer_sumocfg(True)
+    test_sumo_traci_data_transfer_sumocfg(False)
     time.sleep(.5)
     # clear_console()
 
     # 15b - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
-    test_sumo_traci_data_transfer_intersection2(True)
+    test_sumo_traci_data_transfer_intersection2(False)
     time.sleep(.5)
     # clear_console()
 
