@@ -1710,7 +1710,8 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
     time.sleep(2)
 
     # Define the SUMO binary command - use GUI in debug mode for visual feedback
-    sumo_binary = "sumo-gui" if DEBUG_MODE else "sumo"
+    # sumo_binary = "sumo-gui" if DEBUG_MODE else "sumo"
+    sumo_binary = "sumo"
     
     # Create and store the command to start SUMO with the config file and remote port
     sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY1_CONFIG_FILE, "--remote-port", str(port)]
