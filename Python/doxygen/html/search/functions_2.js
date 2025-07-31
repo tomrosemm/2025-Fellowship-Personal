@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['generate_5fotp_0',['generate_otp',['../classvehicle_1_1_vehicle.html#a932146dd33ebfb8a79bc224281dc8523',1,'vehicle.Vehicle.generate_otp()'],['../namespaceotp.html#a7c01e8ebec97951c5dd005f396617c1d',1,'otp.generate_otp()']]],
-  ['generate_5fotp_5fsum_1',['generate_otp_sum',['../classvehicle_1_1_vehicle.html#a16e235e4229293f3421cf7d8ae1842bf',1,'vehicle::Vehicle']]],
-  ['generate_5fzkp_5fproof_5freal_2',['generate_zkp_proof_real',['../namespacezkp.html#ac6222a0f6ecdf04acaf89434471ce086',1,'zkp']]],
-  ['generate_5fzkp_5fproof_5fsimulated_3',['generate_zkp_proof_simulated',['../namespacezkp.html#ad39f87b3318dfbbebe2e17e68a78dd8b',1,'zkp']]]
+  ['entire_5fgroups_5fexperiments_5fmenu_0',['entire_groups_experiments_menu',['../namespacemain.html#adca518777d441432daf61fe99c853654',1,'main']]],
+  ['entire_5fgroups_5ftests_5fmenu_1',['entire_groups_tests_menu',['../namespacemain.html#afef3112713ea1f7d7e3da16f1813d2d1',1,'main']]]
 ];

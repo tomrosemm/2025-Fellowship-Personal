@@ -101,6 +101,9 @@ Variables</h2></td></tr>
 <tr class="memitem:af45d890adeeb7d0fee9c277eb84c1d3c" id="r_af45d890adeeb7d0fee9c277eb84c1d3c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af45d890adeeb7d0fee9c277eb84c1d3c">DEBUG_MODE</a> = False</td></tr>
 <tr class="memdesc:af45d890adeeb7d0fee9c277eb84c1d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug Settings Global debug mode flag.  <br /></td></tr>
 <tr class="separator:af45d890adeeb7d0fee9c277eb84c1d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeffbf09973beddd8c5b02aeeec85d583" id="r_aeffbf09973beddd8c5b02aeeec85d583"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeffbf09973beddd8c5b02aeeec85d583">PRINT_DATA</a> = True</td></tr>
+<tr class="memdesc:aeffbf09973beddd8c5b02aeeec85d583"><td class="mdescLeft">&#160;</td><td class="mdescRight">SUMO Settings Global flag to control printing of data in the SUMO interface.  <br /></td></tr>
+<tr class="separator:aeffbf09973beddd8c5b02aeeec85d583"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a95ccd171ba781f47db15be275fb52a" id="r_a0a95ccd171ba781f47db15be275fb52a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a95ccd171ba781f47db15be275fb52a">SUMO_CITY_CONFIG_FILE</a> = os.path.join(<a class="el" href="#a987dda3349e48888646b2c62aed45656">SUMO_DIR</a>, &quot;3x3 city block 1&quot;, &quot;threebythreecityblock1.sumocfg&quot;)</td></tr>
 <tr class="separator:a0a95ccd171ba781f47db15be275fb52a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a987dda3349e48888646b2c62aed45656" id="r_a987dda3349e48888646b2c62aed45656"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a987dda3349e48888646b2c62aed45656">SUMO_DIR</a> = os.path.join(<a class="el" href="#a6c7db55cb69a3846d254023debc5b6b6">BASE_DIR</a>, &quot;sumo&quot;)</td></tr>
@@ -125,7 +128,6 @@ Variables</h2></td></tr>
 <tr class="memitem:a9ef1d9854e75c0566d1b1793e7a41fa2" id="r_a9ef1d9854e75c0566d1b1793e7a41fa2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ef1d9854e75c0566d1b1793e7a41fa2">SUMO_STRAIGHTAWAY2_CONFIG_FILE</a> = os.path.join(<a class="el" href="#a987dda3349e48888646b2c62aed45656">SUMO_DIR</a>, &quot;StraightAway2&quot;, &quot;straightaway2.sumocfg&quot;)</td></tr>
 <tr class="separator:a9ef1d9854e75c0566d1b1793e7a41fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dcaf62dcd037eb19759175d94f9f250" id="r_a8dcaf62dcd037eb19759175d94f9f250"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8dcaf62dcd037eb19759175d94f9f250">SUMO_TOOLS_PATH</a> = os.getenv(&quot;SUMO_TOOLS_PATH&quot;, &quot;/home/admin/sumo/tools&quot;)</td></tr>
-<tr class="memdesc:a8dcaf62dcd037eb19759175d94f9f250"><td class="mdescLeft">&#160;</td><td class="mdescRight">SUMO Settings SUMO tools path from environment or default.  <br /></td></tr>
 <tr class="separator:a8dcaf62dcd037eb19759175d94f9f250"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4934aa7f309c3ff684104f02109da3ba" id="r_a4934aa7f309c3ff684104f02109da3ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4934aa7f309c3ff684104f02109da3ba">ZOKRATES_AUTH_CIRCUIT</a> = os.path.join(<a class="el" href="#a075657e5bd391c3a4fd06f023df161dc">ZOKRATES_DIR</a>, &quot;auth.zok&quot;)</td></tr>
 <tr class="separator:a4934aa7f309c3ff684104f02109da3ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,6 +185,22 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Debug Settings Global debug mode flag. </p>
+
+</div>
+</div>
+<a id="aeffbf09973beddd8c5b02aeeec85d583" name="aeffbf09973beddd8c5b02aeeec85d583"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeffbf09973beddd8c5b02aeeec85d583">&#9670;&#160;</a></span>PRINT_DATA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool PRINT_DATA = True</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SUMO Settings Global flag to control printing of data in the SUMO interface. </p>
 
 </div>
 </div>
@@ -353,8 +371,6 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>SUMO Settings SUMO tools path from environment or default. </p>
 
 </div>
 </div>

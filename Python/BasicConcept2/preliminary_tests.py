@@ -29,6 +29,11 @@ from vehicle import Vehicle
 from rsu import RSU
 from experiment import Experiment
 
+from sumo_interface import kill_processes_on_port, cleanup_traci_connection
+from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
+from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
+from zkp import generate_zkp_proof_simulated
+
 from zokrates_interface import (
     run_zokrates_compile,
     run_zokrates_setup,
@@ -39,13 +44,9 @@ from zokrates_interface import (
     set_debug_mode as set_zokrates_debug_mode
 )
 
-from sumo_interface import kill_processes_on_port, cleanup_traci_connection
-from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
-from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
-from zkp import generate_zkp_proof_simulated
-
 from settings import (
     DEBUG_MODE as DEFAULT_DEBUG_MODE,
+    PRINT_DATA as DEFAULT_PRINT_DATA,
     SUMO_TOOLS_PATH, 
     SUMO_SIMPLE_NET_FILE,
     SUMO_INTERSECTION_CONFIG_FILE,
@@ -73,6 +74,8 @@ passed = 0
 # @brief Global variable to control debug output.
 DEBUG_MODE = DEFAULT_DEBUG_MODE
 
+PRINT_DATA = DEFAULT_PRINT_DATA
+
 
 ##
 # @brief Enable or disable debug mode for detailed output.
@@ -97,6 +100,17 @@ def set_debug_mode(enabled):
     
     # set_blockchain_interface_debug_mode(enabled)
 
+
+"""
+@brief Set whether to print data in the SUMO interface.
+@param enabled True to enable printing data, False to disable.
+@details
+    Sets the print_data attribute in the SUMO interface.
+"""
+def set_print_data(enabled):
+    
+    global PRINT_DATA
+    PRINT_DATA = enabled
 
 ##
 # @brief Clears the console screen based on the operating system.
@@ -564,13 +578,13 @@ def test_simulated_isolated_multiple_vehicles():
     
     # Create RSU with the secrets of all vehicles
     # This simulates the RSU having access to all vehicle secrets
-    rsu = RSU(rsu_secrets)
+    unused_rsu = RSU(rsu_secrets)
     
     # Initialize a flag to track if all vehicles passed authentication
     all_passed = True
     
     # Circuit path for the simulated ZKP proof
-    circuit_path = "zokrates/dummy.zok"
+    unused_circuit_path = "zokrates/dummy.zok"
     
     # For each vehicle, generate OTP, timestamp, and ZKP proof
     for vid, vehicle in vehicles.items():
@@ -647,7 +661,7 @@ def test_simulated_end_to_end_multiple_vehicles():
     all_passed = True
     
     # Circuit path for the simulated ZKP proof
-    circuit_path = "zokrates/dummy.zok"
+    unused_circuit_path = "zokrates/dummy.zok"
     
     # For each vehicle, generate OTP, timestamp, and ZKP proof
     for vid, vehicle in vehicles.items():
@@ -1972,7 +1986,7 @@ def testAndScenarioRunner():
     global tested, passed
     tested, passed = 0, 0
 
-    # 3 - Run Simulated ZKP Test
+    #  3 - Run Simulated ZKP Test
     test_vehicle_rsu_interaction_simulated()
     time.sleep(.5)
     # clear_console()

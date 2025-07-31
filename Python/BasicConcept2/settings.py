@@ -30,6 +30,9 @@ ZOKRATES_DIR = os.path.join(BASE_DIR, "zokrates")
 DEBUG_MODE = False
 
 ## SUMO Settings
+# Global flag to control printing of data in the SUMO interface
+PRINT_DATA = True
+
 # SUMO tools path from environment or default
 SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
 
