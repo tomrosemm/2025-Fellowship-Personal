@@ -65,6 +65,7 @@ def cli_menu_loop():
         print("15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
         print("15b - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)")
         print("15c - Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)")
+        print("15d - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)")
         print("16 - Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
@@ -156,6 +157,10 @@ def cli_menu_loop():
             case "15c":
                 ## @test Run SUMO TraCI data transfer test with sumo/StraightAway1/straightaway1.sumocfg
                 preliminary_tests.test_sumo_traci_data_transfer_straightaway1(print_data=print_sumo_data)
+                
+            case "15d":
+                ## @test Run SUMO TraCI data transfer test with sumo/StraightAway2/straightaway2.sumocfg
+                preliminary_tests.test_sumo_traci_data_transfer_straightaway2(print_data=print_sumo_data)
         
             case "16":
                 ## @test Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok

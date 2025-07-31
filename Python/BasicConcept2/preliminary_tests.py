@@ -1516,6 +1516,150 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
 
 
 ##
+# @brief Test connecting to SUMO via TraCI using straightaway2.sumocfg.
+# @param print_data If True, print simulation data to screen.
+# @details
+#   Tests SUMO connection and data retrieval using TraCI with straightaway2.sumocfg.
+#
+# Steps:
+#   1. Start SUMO with straightaway2.sumocfg.
+#   2. Connect via TraCI.
+#   3. Retrieve simulation time, vehicle IDs, and positions.
+#   4. Print/store the data.
+#   5. Clean up.
+##
+def test_sumo_traci_data_transfer_straightaway2(print_data=True):
+    
+    # Print test header
+    print("\n=== SUMO TraCI Data Transfer Test (straightaway2.sumocfg) ===")
+    
+    # Use global variables to track tests, increment tested count
+    global tested, passed
+    tested += 1
+
+    # Define the port for TraCI connection from settings, using a different port to avoid conflicts
+    port = SUMO_PORT_DATA_CONFIG + 3
+    
+    # Set the SUMO_TOOLS_PATH from settings
+    sys.path.append(SUMO_TOOLS_PATH)
+    
+    # Try to import the TraCI module
+    try:
+        import traci
+    
+    # If import fails, print error and return
+    except ImportError:
+        print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
+        return
+
+    # Check if the straightaway2.sumocfg file exists
+    if not os.path.exists(SUMO_STRAIGHTAWAY2_CONFIG_FILE):
+        print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY2_CONFIG_FILE}")
+        return
+    
+    # Clean up port and traci connection before starting the test
+    kill_processes_on_port(port)
+    cleanup_traci_connection()
+    
+    # Wait for a moment to ensure cleanup is complete
+    time.sleep(2)
+
+    # Define the SUMO binary command
+    sumo_binary = "sumo"
+    
+    # Create and store the command to start SUMO with the config file and remote port
+    sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY2_CONFIG_FILE, "--remote-port", str(port)]
+    
+    # Try to start SUMO and connect via TraCI
+    try:
+        
+        # Start SUMO process with the stored command
+        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+        # Wait for a moment to allow SUMO to start
+        time.sleep(3)
+        
+        # Check if the SUMO process has exited early
+        if proc.poll() is not None:
+            stderr = proc.stderr.read().decode()
+            print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
+            return
+        
+        # Initialize TraCI connection
+        traci.init(port=port)
+        
+        # Wait for a moment to ensure TraCI connection is established
+        time.sleep(1)
+        
+        # Initialize a list to store simulation data
+        sim_data = []
+        
+        # Run the simulation for 100 steps to capture vehicle data
+        for _ in range(100):
+            
+            # Perform a simulation step using TraCI
+            traci.simulationStep()
+            
+            # Retrieve and store the current simulation time, vehicle IDs, and their positions
+            sim_time = traci.simulation.getTime()
+            veh_ids = traci.vehicle.getIDList()
+            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
+            
+            # Store the collected data
+            sim_data.append({
+                "time": sim_time,
+                "vehicle_ids": veh_ids,
+                "positions": veh_positions
+            })
+            
+            # If print_data flag is True, print the collected data
+            if print_data:
+                print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+            
+            # Short delay between steps
+            time.sleep(0.05)
+        
+        # If execution reaches here, set passed_local to True
+        passed_local = True
+    
+    # If any exception occurs during the TraCI data transfer
+    except Exception as e:
+        print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
+        passed_local = False
+    
+    # Ensure cleanup occurs regardless of success or failure
+    finally:
+        
+        # Try to close the TraCI connection if it is loaded
+        try:
+            if 'traci' in locals() and traci.isLoaded():
+                traci.close()
+        except Exception:
+            pass
+        
+        # Try to terminate the SUMO process gracefully
+        try:
+            proc.terminate()
+            proc.wait(timeout=3)
+        except Exception:
+            try:
+                proc.kill()
+            except Exception:
+                pass
+        
+        # Ensure the port is freed
+        kill_processes_on_port(port)
+        time.sleep(1)
+
+    # Output test result based on success or failure
+    if passed_local:
+        passed += 1
+        print("[SUMO TraCI Test] straightaway2.sumocfg data transfer test succeeded!\n")
+    else:
+        print("[SUMO TraCI Test] straightaway2.sumocfg data transfer test failed.\n")
+
+
+##
 # @brief Test the zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication.
 # @details
 #   Tests the vehicle-to-infrastructure authentication circuit which uses a commitment scheme.
@@ -1631,22 +1775,27 @@ def testAndScenarioRunner():
     # clear_console()
 
     # 14 - Run SUMO TraCI Data Transfer Test
-    test_sumo_traci_data_transfer(False)
+    test_sumo_traci_data_transfer(True)
     time.sleep(.5)
     # clear_console()
 
     # 15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
-    test_sumo_traci_data_transfer_sumocfg(False)
+    test_sumo_traci_data_transfer_sumocfg(True)
     time.sleep(.5)
     # clear_console()
 
     # 15b - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
-    test_sumo_traci_data_transfer_intersection2(False)
+    test_sumo_traci_data_transfer_intersection2(True)
     time.sleep(.5)
     # clear_console()
 
     # 15c - Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
-    test_sumo_traci_data_transfer_straightaway1(False)
+    test_sumo_traci_data_transfer_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # 15d - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
+    test_sumo_traci_data_transfer_straightaway2(True)
     time.sleep(.5)
     # clear_console()
 
