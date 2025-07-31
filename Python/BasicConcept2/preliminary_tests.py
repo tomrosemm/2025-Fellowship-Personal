@@ -252,7 +252,7 @@ def test_vehicle_rsu_blockchain_simulated():
 def scenario_successful_authentication():
     
     # Print test header
-    print("\n=== End-to-End Scenario: Successful Authentication ===")
+    print("\n=== End-to-End Simulated Scenario: Successful Authentication ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -314,7 +314,7 @@ def scenario_successful_authentication():
 def scenario_failed_authentication():
     
     # Print test header
-    print("\n=== End-to-End Scenario: Failed Authentication ===")
+    print("\n=== End-to-End Simulated Scenario: Failed Authentication ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -383,7 +383,7 @@ def scenario_failed_authentication():
 def test_zokrates_connection():
     
     # Print test header
-    print("\n=== ZoKrates CLI Connection Test ===")
+    print("\n=== ZoKrates CLI Connection Test (dummy.zok) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -459,7 +459,7 @@ def test_zokrates_connection():
 def test_vehicle_rsu_interaction_real_zokrates_dummy():
     
     # Print test header
-    print("\n=== Real ZoKrates End-to-End Test with zokrates/dummy.zok ===")
+    print("\n=== Real ZoKrates End-to-End Test (dummy.zok) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -700,7 +700,7 @@ def test_simulated_end_to_end_multiple_vehicles():
 def test_zokrates_isolated_multiple_vehicles():
     
     # Print test header
-    print("\n=== ZoKrates-Integrated Isolated Test: Multiple Vehicles ===")
+    print("\n=== ZoKrates-Integrated Isolated Test: Multiple Vehicles (dummy.zok) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -803,7 +803,7 @@ def test_zokrates_isolated_multiple_vehicles():
 def test_zokrates_end_to_end_multiple_vehicles():
     
     # Print test header
-    print("\n=== ZoKrates-Integrated End-to-End Test: Multiple Vehicles ===")
+    print("\n=== ZoKrates-Integrated End-to-End Test: Multiple Vehicles (dummy.zok) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -914,7 +914,7 @@ def test_zokrates_end_to_end_multiple_vehicles():
 def test_sumo_traci_data_transfer(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test ===")
+    print("\n=== SUMO TraCI Data Transfer Test (simple.net.xml)===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -1078,7 +1078,7 @@ def test_sumo_traci_data_transfer(print_data=True):
 def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (.sumocfg, 100 steps) ===")
+    print("\n=== SUMO TraCI Data Transfer Test (intersaection1.sumocfg, flow based demand, 100 steps) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -1243,7 +1243,7 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
 def test_sumo_traci_data_transfer_intersection2(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles) ===")
+    print("\n=== SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit routes and vehicles) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -1387,7 +1387,7 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
 def test_sumo_traci_data_transfer_straightaway1(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (straightaway1.sumocfg) ===")
+    print("\n=== SUMO TraCI Data Transfer Test (straightaway1.sumocfg, one vehicle) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -1531,7 +1531,7 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
 def test_sumo_traci_data_transfer_straightaway2(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (straightaway2.sumocfg) ===")
+    print("\n=== SUMO TraCI Data Transfer Test (straightaway2.sumocfg, 10 vehicles) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -1676,7 +1676,7 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
 def test_sumo_live_manipulation_straightaway1(print_data=True):
     
     # Print test header
-    print("\n=== SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg) ===")
+    print("\n=== SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg, 1 vehicle) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -1923,7 +1923,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
 def test_vehicle_to_infrastructure_VtoI_zkp():
     
     # Print test header
-    print("\n=== Vehicle-to-Infrastructure VtoI ZKP Test ===")
+    print("\n=== Vehicle-to-Infrastructure VtoI ZKP Test (VtoI_test.zok) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -2056,6 +2056,77 @@ def testAndScenarioRunner():
     # clear_console()
 
     # 16 - Run Vehicle-to-Infrastructure ZKP Test with the
+    # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
+    test_vehicle_to_infrastructure_VtoI_zkp()
+    time.sleep(.5)
+    # clear_console()
+
+    # SUMO cleanup after connection tests
+    cleanup_traci_connection()
+    kill_processes_on_port(SUMO_PORT_BASIC)
+    kill_processes_on_port(SUMO_PORT_CONFIG)
+    kill_processes_on_port(SUMO_PORT_DATA)
+    time.sleep(2)
+
+    print(f"\nTotal tests run: {tested}")
+    print(f"Total tests passed: {passed}")
+    print(f"Total tests failed: {tested - passed}")
+    print()
+    time.sleep(2)
+
+
+def progressPresentationSuite():
+    
+    # Use global variables to track tests, initialize counts
+    global tested, passed
+    tested, passed = 0, 0
+
+    # Run ZoKrates CLI Connection Test
+    test_zokrates_connection()
+    time.sleep(.5)
+    # clear_console()
+    
+    # Run Real ZoKrates End-to-End Test with dummy.zok
+    test_vehicle_rsu_interaction_real_zokrates_dummy()
+    time.sleep(.5)
+    # clear_console()
+
+    # ZoKrates-Integrated Isolated Test: Multiple Vehicles
+    test_zokrates_isolated_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # ZoKrates-Integrated End-to-End Test: Multiple Vehicles
+    test_zokrates_end_to_end_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
+    test_sumo_traci_data_transfer_sumocfg(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
+    test_sumo_traci_data_transfer_intersection2(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
+    test_sumo_traci_data_transfer_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
+    test_sumo_traci_data_transfer_straightaway2(True)
+    time.sleep(.5)
+    # clear_console()
+    
+    # Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
+    test_sumo_live_manipulation_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run Vehicle-to-Infrastructure ZKP Test with the
     # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
     test_vehicle_to_infrastructure_VtoI_zkp()
     time.sleep(.5)

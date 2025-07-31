@@ -171,6 +171,10 @@ def cli_menu_loop():
                 ## @test Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok
                 preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
                 
+            case "17":
+                ## @test Run Progress Presentation Suite
+                preliminary_tests.progressPresentationSuite()
+                
             case "dbon":
                 ## @details
                 # Enable debug mode for detailed output
