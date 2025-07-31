@@ -15,6 +15,10 @@
 import preliminary_tests
 
 
+# Row of stars for menu formatting
+##@var row_of_stars
+row_of_stars = "*********************************************************************"
+
 ##
 # @brief Top-level command-line interface menu for organizing protocol simulation tests and experiments.
 #
@@ -29,21 +33,17 @@ import preliminary_tests
 ##
 def main_menu():
     
-    # Row of stars for menu formatting
-    ##@var row_of_stars
-    row_of_stars = "*********************************************************************"
-
-    # Print menu header
-    print("\n")
-    print(row_of_stars)
-    print("*** Privacy-Preserving Vehicle Authentication Protocol Simulation ***")
-    print("***                     Main Menu                                 ***")
-    print(row_of_stars)
-    print("\n")
-
     # Main loop for top-level CLI menu
     while True:
         
+        # Print menu header
+        print("\n")
+        print(row_of_stars)
+        print("*** Privacy-Preserving Vehicle Authentication Protocol Simulation ***")
+        print("***                     Main Menu                                 ***")
+        print(row_of_stars)
+        print("\n")
+
         # Display main menu options
         print("Select a category:")
         print("1 - Entire groups of tests")
@@ -78,7 +78,6 @@ def main_menu():
                 # Enable debug mode for detailed output
                 preliminary_tests.set_debug_mode(True)
                 print("Debug mode enabled.\n")
-                
             case "dboff":
                 ## @details
                 # Disable debug mode for less verbose output
@@ -97,23 +96,19 @@ def main_menu():
 def entire_groups_tests_menu():
     
     # Local flag for menu session
-    ##@var print_sumo_data
+    ##@var unused_print_sumo_data
     ##@brief Controls whether SUMO TraCI data is printed during tests.
-    print_sumo_data = True
-    
-    # Row of stars for menu formatting
-    ##@var row_of_stars
-    row_of_stars = "*********************************************************************"
-
-    # Print menu header
-    print("\n")
-    print(row_of_stars)
-    print("*** Entire Groups of Tests Menu ***")
-    print(row_of_stars)
-    print("\n")
+    unused_print_sumo_data = True
 
     # Main loop for CLI menu
     while True:
+        
+        # Print menu header
+        print("\n")
+        print(row_of_stars)
+        print("*** Entire Groups of Tests Menu ***")
+        print(row_of_stars)
+        print("\n")
         
         # Display menu options
         print("Select an option:")
@@ -141,8 +136,6 @@ def entire_groups_tests_menu():
                 preliminary_tests.set_debug_mode(True)
                 preliminary_tests.testAndScenarioRunner()
                 preliminary_tests.set_debug_mode(False)
-                
-            
                 
             case "3":
                 ## @test Run Progress Presentation Suite
@@ -176,6 +169,14 @@ def entire_groups_tests_menu():
 
 
 def fully_simulated_tests():
+    
+    # Print menu header
+    print("\n")
+    print(row_of_stars)
+    print("*** Fully Simulated Tests ***")
+    print(row_of_stars)
+    print("\n")
+    
     print("Simulated ZKP Test")
     print("Simulated Blockchain ZKP Test")
     print("Simulated End-to-End Scenario: Successful Authentication")
@@ -192,6 +193,14 @@ def fully_simulated_tests():
                 
                 
 def zokrates_integration_tests():
+    
+    # Print menu header
+    print("\n")
+    print(row_of_stars)
+    print("*** Zokrates Integration Tests ***")
+    print(row_of_stars)
+    print("\n")
+    
     print("Run Real ZoKrates End-to-End Test with dummy.zok")
     print("ZoKrates-Integrated Isolated Test: Multiple Vehicles")
     print("ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
@@ -206,6 +215,14 @@ def zokrates_integration_tests():
 
 
 def sumo_and_traci_tests(print_sumo_data=True):
+    
+    # Print menu header
+    print("\n")
+    print(row_of_stars)
+    print("*** SUMO and TraCI Integration Tests ***")
+    print(row_of_stars)
+    print("\n")
+    
     print("Run SUMO Connection Tests (Basic Network + Configuration File)")
     print("Run SUMO TraCI Data Transfer Test (simple.net)")
     print("Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
@@ -223,37 +240,34 @@ def sumo_and_traci_tests(print_sumo_data=True):
     preliminary_tests.test_sumo_traci_data_transfer_straightaway1(print_data=print_sumo_data)
     preliminary_tests.test_sumo_traci_data_transfer_straightaway2(print_data=print_sumo_data)
     preliminary_tests.test_sumo_live_manipulation_straightaway1(print_data=print_sumo_data)
+    
+    
 ##
 # @brief Menu for subgroups of tests.
 ##
 def subgroups_tests_menu():
-    print("\n*** Subgroups of Tests Menu ***")
-    print("1 - Fully Simulated Tests")
-    print("2 - Zokrates Integration Tests")
-    print("3 - SUMO and TraCI Tests")
-    # print("1 - ZKP Tests")
-    # print("2 - SUMO Tests")
-    # print("3 - Blockchain Tests")
-    # print("4 - Integration Tests")
-    print("dbon - Enable Debug Mode")
-    print("dboff - Disable Debug Mode")
-    print("b - Back to Main Menu")
-    print("e - Exit\n")
     
     while True:
+        print("\n*** Subgroups of Tests Menu ***")
+        print("1 - Fully Simulated Tests")
+        print("2 - Zokrates Integration Tests")
+        print("3 - SUMO and TraCI Tests")
+        print("dbon - Enable Debug Mode")
+        print("dboff - Disable Debug Mode")
+        print("b - Back to Main Menu")
+        print("e - Exit\n")
+        
         choice = input("Enter your choice: ").strip().lower()
+        
         match choice:
             case "1":
                 fully_simulated_tests()
-                return
                 
             case "2":
                 zokrates_integration_tests()
-                return
             
             case "3":
                 sumo_and_traci_tests()
-                return
             
             case "dbon":
                 ## @details
@@ -280,32 +294,35 @@ def subgroups_tests_menu():
 # @brief Menu for individual tests.
 ##
 def individual_tests_menu():
-    print("\n*** Individual Tests Menu ***")
-    print("1 - Run Simulated ZKP Test")
-    print("2 - Run Simulated Blockchain ZKP Test")
-    print("3 - Run Simulated End-to-End Scenario: Successful Authentication")
-    print("4 - Run Simulated End-to-End Scenario: Failed Authentication")
-    print("5 - Run Real ZoKrates End-to-End Test with dummy.zok")
-    print("6 - Simulated ZKP Isolated Test: Multiple Vehicles")
-    print("7 - Simulated End-to-End Test: Multiple Vehicles")
-    print("8 - ZoKrates-Integrated Isolated Test: Multiple Vehicles")
-    print("9 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
-    print("10 - Run SUMO Connection Tests (Basic Network + Configuration File)")
-    print("11 - Run ZoKrates CLI Connection Test")
-    print("12 - Run SUMO TraCI Data Transfer Test")
-    print("13 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
-    print("14 - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)")
-    print("15 - Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)")
-    print("16 - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)")
-    print("17 - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
-    print("18 - Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
-    print("dbon - Enable Debug Mode")
-    print("dboff - Disable Debug Mode")
-    print("b - Back to Main Menu")
-    print("e - Exit\n")
     
     while True:
+        
+        print("\n*** Individual Tests Menu ***")
+        print("1 - Run Simulated ZKP Test")
+        print("2 - Run Simulated Blockchain ZKP Test")
+        print("3 - Run Simulated End-to-End Scenario: Successful Authentication")
+        print("4 - Run Simulated End-to-End Scenario: Failed Authentication")
+        print("5 - Run Real ZoKrates End-to-End Test with dummy.zok")
+        print("6 - Simulated ZKP Isolated Test: Multiple Vehicles")
+        print("7 - Simulated End-to-End Test: Multiple Vehicles")
+        print("8 - ZoKrates-Integrated Isolated Test: Multiple Vehicles")
+        print("9 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
+        print("10 - Run SUMO Connection Tests (Basic Network + Configuration File)")
+        print("11 - Run ZoKrates CLI Connection Test")
+        print("12 - Run SUMO TraCI Data Transfer Test")
+        print("13 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
+        print("14 - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)")
+        print("15 - Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)")
+        print("16 - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)")
+        print("17 - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
+        print("18 - Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
+        print("dbon - Enable Debug Mode")
+        print("dboff - Disable Debug Mode")
+        print("b - Back to Main Menu")
+        print("e - Exit\n")
+        
         choice = input("Enter your choice: ").strip().lower()
+        
         match choice:
             case "1":
                 ## @test Run a single simulated ZKP experiment with zokrates/dummy.zok
@@ -406,15 +423,18 @@ def individual_tests_menu():
 # @brief Menu for entire groups of experiments.
 ##
 def entire_groups_experiments_menu():
-    print("\n*** Entire Groups of Experiments Menu ***")
-    print("Implementation pending")
-    print("dbon - Enable Debug Mode")
-    print("dboff - Disable Debug Mode")
-    print("b - Back to Main Menu")
-    print("e - Exit\n")
     
     while True:
+        
+        print("\n*** Entire Groups of Experiments Menu ***")
+        print("Implementation pending")
+        print("dbon - Enable Debug Mode")
+        print("dboff - Disable Debug Mode")
+        print("b - Back to Main Menu")
+        print("e - Exit\n")
+        
         choice = input("Enter your choice: ").strip().lower()
+        
         match choice:
             case "dbon":
                 ## @details
@@ -440,15 +460,18 @@ def entire_groups_experiments_menu():
 # @brief Menu for subgroups of experiments.
 ##
 def subgroups_experiments_menu():
-    print("\n*** Subgroups of Experiments Menu ***")
-    print("Implementation pending")
-    print("dbon - Enable Debug Mode")
-    print("dboff - Disable Debug Mode")
-    print("b - Back to Main Menu")
-    print("e - Exit\n")
     
     while True:
+        
+        print("\n*** Subgroups of Experiments Menu ***")
+        print("Implementation pending")
+        print("dbon - Enable Debug Mode")
+        print("dboff - Disable Debug Mode")
+        print("b - Back to Main Menu")
+        print("e - Exit\n")
+        
         choice = input("Enter your choice: ").strip().lower()
+        
         match choice:
             case "dbon":
                 ## @details
@@ -474,15 +497,18 @@ def subgroups_experiments_menu():
 # @brief Menu for individual experiments.
 ##
 def individual_experiments_menu():
-    print("\n*** Individual Experiments Menu ***")
-    print("Implementation pending")
-    print("dbon - Enable Debug Mode")
-    print("dboff - Disable Debug Mode")
-    print("b - Back to Main Menu")
-    print("e - Exit\n")
     
     while True:
+        
+        print("\n*** Individual Experiments Menu ***")
+        print("Implementation pending")
+        print("dbon - Enable Debug Mode")
+        print("dboff - Disable Debug Mode")
+        print("b - Back to Main Menu")
+        print("e - Exit\n")
+        
         choice = input("Enter your choice: ").strip().lower()
+        
         match choice:
             case "dbon":
                 ## @details

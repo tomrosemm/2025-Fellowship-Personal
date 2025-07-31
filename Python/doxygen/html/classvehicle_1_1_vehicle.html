@@ -128,7 +128,7 @@ Public Attributes</h2></td></tr>
 <li>Generates an OTP by hashing its secret with the current Unix timestamp.</li>
 <li>Creates a ZKP for the OTP and timestamp using a ZoKrates interface (or a simulated function).</li>
 </ul>
-<p>@usage vehicle = Vehicle(vehicle_id, secret) otp, timestamp = vehicle.generate_otp() zkp_proof = vehicle.create_zkp(otp, timestamp)</p>
+<p>Usage: vehicle = Vehicle(vehicle_id, secret) otp, timestamp = vehicle.generate_otp() zkp_proof = vehicle.create_zkp(otp, timestamp)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vehicle_id</td><td>Unique identifier for the vehicle. </td></tr>

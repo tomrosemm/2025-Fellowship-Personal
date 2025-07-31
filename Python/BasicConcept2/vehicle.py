@@ -28,7 +28,7 @@ from settings import ZOKRATES_DUMMY_CIRCUIT
 #   - Generates an OTP by hashing its secret with the current Unix timestamp.
 #   - Creates a ZKP for the OTP and timestamp using a ZoKrates interface (or a simulated function).
 #
-# @usage
+# Usage:
 #   vehicle = Vehicle(vehicle_id, secret)
 #   otp, timestamp = vehicle.generate_otp()
 #   zkp_proof = vehicle.create_zkp(otp, timestamp)

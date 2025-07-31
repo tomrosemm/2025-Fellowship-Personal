@@ -34,7 +34,7 @@ from vehicle import Vehicle
 #   - Upon receiving a ZKP proof, reconstructs the expected OTP and ZKP using the stored secret and provided timestamp.
 #   - Compares the received ZKP to the expected value to determine authentication success.
 #
-# @usage
+# Usage:
 #   rsu = RSU(vehicle_secrets)
 #   is_valid = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)
 #

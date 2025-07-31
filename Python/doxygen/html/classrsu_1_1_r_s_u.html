@@ -120,7 +120,7 @@ Public Attributes</h2></td></tr>
 <li>Upon receiving a ZKP proof, reconstructs the expected OTP and ZKP using the stored secret and provided timestamp.</li>
 <li>Compares the received ZKP to the expected value to determine authentication success.</li>
 </ul>
-<p>@usage rsu = RSU(vehicle_secrets) is_valid = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)</p>
+<p>Usage: rsu = RSU(vehicle_secrets) is_valid = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vehicle_secrets</td><td>Mapping from vehicle_id (str) to secret (str). </td></tr>
