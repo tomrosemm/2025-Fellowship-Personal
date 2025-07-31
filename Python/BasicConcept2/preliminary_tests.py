@@ -224,7 +224,7 @@ def test_vehicle_rsu_blockchain_simulated():
     if DEBUG_MODE:
         print(f"[Simulated] RSU Verification result: {verification_result}\n")
 
-    # Simulate blockchain verification and logging
+    # Simulate blockchain verification and logging if DEBUG_MODE is enabled
     outcome = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result) if DEBUG_MODE else verification_result
     
     # Output the result of the infrastructure access decision, increment passed count if successful
