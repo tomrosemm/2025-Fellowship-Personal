@@ -10,5 +10,7 @@ var searchData=
   ['sumo_5fport_5fdata_7',['SUMO_PORT_DATA',['../namespacesettings.html#abdf144a11bee2d4abf2545481462d452',1,'settings']]],
   ['sumo_5fport_5fdata_5fconfig_8',['SUMO_PORT_DATA_CONFIG',['../namespacesettings.html#a69c34d10b18b877758423296f98cad3d',1,'settings']]],
   ['sumo_5fsimple_5fnet_5ffile_9',['SUMO_SIMPLE_NET_FILE',['../namespacesettings.html#a9e5300570ec3fcf75b217653f1777acb',1,'settings']]],
-  ['sumo_5ftools_5fpath_10',['SUMO_TOOLS_PATH',['../namespacesettings.html#a8dcaf62dcd037eb19759175d94f9f250',1,'settings']]]
+  ['sumo_5fstraightaway1_5fconfig_5ffile_10',['SUMO_STRAIGHTAWAY1_CONFIG_FILE',['../namespacesettings.html#aa1b6af0b7628d478661d82de312977ad',1,'settings']]],
+  ['sumo_5fstraightaway2_5fconfig_5ffile_11',['SUMO_STRAIGHTAWAY2_CONFIG_FILE',['../namespacesettings.html#a9ef1d9854e75c0566d1b1793e7a41fa2',1,'settings']]],
+  ['sumo_5ftools_5fpath_12',['SUMO_TOOLS_PATH',['../namespacesettings.html#a8dcaf62dcd037eb19759175d94f9f250',1,'settings']]]
 ];
