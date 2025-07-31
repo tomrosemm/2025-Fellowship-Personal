@@ -68,6 +68,7 @@ def cli_menu_loop():
         print("15d - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)")
         print("15e - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
         print("16 - Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
+        print("17 - Run Progress Presentation Suite")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         

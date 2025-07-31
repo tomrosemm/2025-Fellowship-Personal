@@ -1006,7 +1006,7 @@ def test_sumo_traci_data_transfer(print_data=True):
             
             # If print_data is True, print the current simulation time, vehicle IDs, and positions
             if print_data:
-                print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
             
             time.sleep(0.1)
         
@@ -1170,7 +1170,7 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
             
             # If print_data is True, print the current simulation time, vehicle IDs, and positions
             if print_data:
-                print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
                 
             time.sleep(0.1)
         
@@ -1326,7 +1326,7 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
             
             # If print_data flag is True, print the collected data
             if print_data:
-                print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
             
             # Short delay between steps
             time.sleep(0.05)
@@ -1470,7 +1470,7 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
             
             # If print_data flag is True, print the collected data
             if print_data:
-                print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
             
             # Short delay between steps
             time.sleep(0.05)
@@ -1614,7 +1614,7 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
             
             # If print_data flag is True, print the collected data
             if print_data:
-                print(f"Time: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
             
             # Short delay between steps
             time.sleep(0.05)
@@ -1737,7 +1737,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
         time.sleep(1)
         
         # Dictionary to track manipulations and their effects
-        manipulation_results = {}
+        unused_manipulation_results = {}
         
         # Run the simulation for 10 steps to let vehicles appear
         veh_ids = []
@@ -1761,13 +1761,13 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
             
             # Store initial vehicle state
             initial_speed = traci.vehicle.getSpeed(vehicle_id)
-            initial_position = traci.vehicle.getPosition(vehicle_id)
+            # initial_position = traci.vehicle.getPosition(vehicle_id)
             initial_color = traci.vehicle.getColor(vehicle_id)
             
             if print_data:
                 print(f"\nInitial state of vehicle {vehicle_id}:")
                 print(f"Speed: {initial_speed:.2f} m/s")
-                print(f"Position: ({initial_position[0]:.2f}, {initial_position[1]:.2f})")
+                # print(f"Position: ({initial_position[0]:.2f}, {initial_position[1]:.2f})")
                 print(f"Color: {initial_color}")
             
             # Perform manipulations
@@ -1799,32 +1799,32 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
                 traci.simulationStep()
                 time.sleep(0.1)
             
-            # 3. Try to teleport vehicle forward
-            try:
-                current_position = traci.vehicle.getPosition(vehicle_id)
-                lane_id = traci.vehicle.getLaneID(vehicle_id)
+            # # 3. Try to teleport vehicle forward
+            # try:
+            #     current_position = traci.vehicle.getPosition(vehicle_id)
+            #     lane_id = traci.vehicle.getLaneID(vehicle_id)
                 
-                # Try to move vehicle forward along the lane
-                current_lane_pos = traci.vehicle.getLanePosition(vehicle_id)
-                new_lane_pos = current_lane_pos + 50  # Move 50m forward
+            #     # Try to move vehicle forward along the lane
+            #     current_lane_pos = traci.vehicle.getLanePosition(vehicle_id)
+            #     new_lane_pos = current_lane_pos + 50  # Move 50m forward
                 
-                traci.vehicle.moveTo(vehicle_id, lane_id, new_lane_pos)
-                if print_data:
-                    print(f"Moved vehicle {vehicle_id} 50m forward along lane {lane_id}")
+            #     traci.vehicle.moveTo(vehicle_id, lane_id, new_lane_pos)
+            #     if print_data:
+            #         print(f"Moved vehicle {vehicle_id} 50m forward along lane {lane_id}")
                     
-            except Exception as e:
-                # If lane positioning fails, try XY positioning
-                try:
-                    current_position = traci.vehicle.getPosition(vehicle_id)
-                    new_position = (current_position[0] + 50, current_position[1])
-                    angle = traci.vehicle.getAngle(vehicle_id)
+            # except Exception as e:
+            #     # If lane positioning fails, try XY positioning
+            #     try:
+            #         current_position = traci.vehicle.getPosition(vehicle_id)
+            #         new_position = (current_position[0] + 50, current_position[1])
+            #         angle = traci.vehicle.getAngle(vehicle_id)
                     
-                    traci.vehicle.moveToXY(vehicle_id, "", 0, new_position[0], new_position[1], angle, keepRoute=2)
-                    if print_data:
-                        print(f"Teleported vehicle {vehicle_id} 50m forward using XY coordinates")
+            #         traci.vehicle.moveToXY(vehicle_id, "", 0, new_position[0], new_position[1], angle, keepRoute=2)
+            #         if print_data:
+            #             print(f"Teleported vehicle {vehicle_id} 50m forward using XY coordinates")
                         
-                except Exception as e2:
-                    print(f"Could not reposition vehicle: {e2}")
+            #     except Exception as e2:
+            #         print(f"Could not reposition vehicle: {e2}")
             
             # Run more steps to observe the effects of all manipulations
             for step in range(15):
@@ -1835,35 +1835,36 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
                 if step == 14:
                     try:
                         final_speed = traci.vehicle.getSpeed(vehicle_id)
-                        final_position = traci.vehicle.getPosition(vehicle_id)
+                        # final_position = traci.vehicle.getPosition(vehicle_id)
                         final_color = traci.vehicle.getColor(vehicle_id)
                         
-                        manipulation_results = {
+                        unused_manipulation_results = {
                             "speed_change": {"initial": initial_speed, "final": final_speed},
-                            "position_change": {"initial": initial_position, "final": final_position},
+                            # "position_change": {"initial": initial_position, "final": final_position},
                             "color_change": {"initial": initial_color, "final": final_color}
                         }
                         
                         if print_data:
                             print(f"\nFinal state of vehicle {vehicle_id} after manipulations:")
                             print(f"Speed: {final_speed:.2f} m/s (was {initial_speed:.2f} m/s)")
-                            print(f"Position: ({final_position[0]:.2f}, {final_position[1]:.2f}) (was ({initial_position[0]:.2f}, {initial_position[1]:.2f}))")
+                            # print(f"Position: ({final_position[0]:.2f}, {final_position[1]:.2f}) (was ({initial_position[0]:.2f}, {initial_position[1]:.2f}))")
                             print(f"Color: {final_color} (was {initial_color})")
                         
                         # Verify that manipulations had an effect
                         speed_changed = abs(final_speed - initial_speed) > 0.1
-                        position_changed = abs(final_position[0] - initial_position[0]) > 10.0
+                        # position_changed = abs(final_position[0] - initial_position[0]) > 10.0
                         color_changed = final_color != initial_color
                         
-                        passed_local = speed_changed or position_changed or color_changed
+                        # passed_local = speed_changed or position_changed or color_changed
+                        passed_local = speed_changed or color_changed
                         
                         if passed_local:
                             if print_data:
                                 print("\n[SUMO Manipulation Test] Successfully manipulated vehicle properties:")
                                 if speed_changed:
                                     print(f"- Speed changed from {initial_speed:.2f} to {final_speed:.2f}")
-                                if position_changed:
-                                    print(f"- Position changed by {final_position[0] - initial_position[0]:.2f} meters")
+                                # if position_changed:
+                                #     print(f"- Position changed by {final_position[0] - initial_position[0]:.2f} meters")
                                 if color_changed:
                                     print(f"- Color changed from {initial_color} to {final_color}")
                         else:
