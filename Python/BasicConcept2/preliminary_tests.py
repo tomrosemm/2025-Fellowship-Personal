@@ -1660,6 +1660,257 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
 
 
 ##
+# @brief Test manipulating SUMO vehicles in real-time using TraCI with straightaway1.sumocfg.
+# @param print_data If True, print simulation data to screen.
+# @details
+#   Tests manipulating vehicle parameters (speed, color, position) during a SUMO simulation.
+#
+# Steps:
+#   1. Start SUMO with straightaway1.sumocfg.
+#   2. Connect via TraCI.
+#   3. Run the simulation for several steps to let vehicles appear.
+#   4. Manipulate vehicle parameters (color, speed, position).
+#   5. Continue simulation to observe effects.
+#   6. Clean up.
+##
+def test_sumo_live_manipulation_straightaway1(print_data=True):
+    
+    # Print test header
+    print("\n=== SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg) ===")
+    
+    # Use global variables to track tests, increment tested count
+    global tested, passed
+    tested += 1
+
+    # Define the port for TraCI connection from settings, using a different port to avoid conflicts
+    port = SUMO_PORT_DATA_CONFIG + 4
+    
+    # Set the SUMO_TOOLS_PATH from settings
+    sys.path.append(SUMO_TOOLS_PATH)
+    
+    # Try to import the TraCI module
+    try:
+        import traci
+    
+    # If import fails, print error and return
+    except ImportError:
+        print("[SUMO Manipulation Test] Could not import traci. Check SUMO_TOOLS_PATH.")
+        return
+
+    # Check if the straightaway1.sumocfg file exists
+    if not os.path.exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE):
+        print(f"[SUMO Manipulation Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY1_CONFIG_FILE}")
+        return
+    
+    # Clean up port and traci connection before starting the test
+    kill_processes_on_port(port)
+    cleanup_traci_connection()
+    
+    # Wait for a moment to ensure cleanup is complete
+    time.sleep(2)
+
+    # Define the SUMO binary command - use GUI in debug mode for visual feedback
+    sumo_binary = "sumo-gui" if DEBUG_MODE else "sumo"
+    
+    # Create and store the command to start SUMO with the config file and remote port
+    sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY1_CONFIG_FILE, "--remote-port", str(port)]
+    
+    # Try to start SUMO and connect via TraCI
+    try:
+        
+        # Start SUMO process with the stored command
+        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+        # Wait for a moment to allow SUMO to start
+        time.sleep(3)
+        
+        # Check if the SUMO process has exited early
+        if proc.poll() is not None:
+            stderr = proc.stderr.read().decode()
+            print(f"[SUMO Manipulation Test] SUMO exited early. STDERR:\n{stderr}")
+            return
+        
+        # Initialize TraCI connection
+        traci.init(port=port)
+        
+        # Wait for a moment to ensure TraCI connection is established
+        time.sleep(1)
+        
+        # Dictionary to track manipulations and their effects
+        manipulation_results = {}
+        
+        # Run the simulation for 10 steps to let vehicles appear
+        veh_ids = []
+        for step in range(15):
+            traci.simulationStep()
+            
+            current_veh_ids = traci.vehicle.getIDList()
+            if current_veh_ids and not veh_ids:
+                veh_ids = current_veh_ids
+                if print_data:
+                    print(f"Vehicles detected in simulation at step {step}: {veh_ids}")
+                break
+                
+        # If no vehicles are present, we can't proceed with manipulations
+        if not veh_ids:
+            print("[SUMO Manipulation Test] No vehicles found in simulation after 15 steps.")
+            passed_local = False
+        else:
+            # We'll manipulate the first vehicle
+            vehicle_id = veh_ids[0]
+            
+            # Store initial vehicle state
+            initial_speed = traci.vehicle.getSpeed(vehicle_id)
+            initial_position = traci.vehicle.getPosition(vehicle_id)
+            initial_color = traci.vehicle.getColor(vehicle_id)
+            
+            if print_data:
+                print(f"\nInitial state of vehicle {vehicle_id}:")
+                print(f"Speed: {initial_speed:.2f} m/s")
+                print(f"Position: ({initial_position[0]:.2f}, {initial_position[1]:.2f})")
+                print(f"Color: {initial_color}")
+            
+            # Perform manipulations
+            
+            # 1. Change vehicle color to red
+            try:
+                traci.vehicle.setColor(vehicle_id, (255, 0, 0, 255))  # RGBA: Red
+                if print_data:
+                    print(f"\nChanged color of vehicle {vehicle_id} to red")
+            except Exception as e:
+                print(f"Failed to change color: {e}")
+            
+            # Run a few steps to observe changes
+            for _ in range(5):
+                traci.simulationStep()
+                time.sleep(0.1)
+            
+            # 2. Change vehicle speed
+            try:
+                new_speed = 15.0  # m/s
+                traci.vehicle.setSpeed(vehicle_id, new_speed)
+                if print_data:
+                    print(f"Changed speed of vehicle {vehicle_id} to {new_speed} m/s")
+            except Exception as e:
+                print(f"Failed to change speed: {e}")
+            
+            # Run a few steps to observe changes
+            for _ in range(5):
+                traci.simulationStep()
+                time.sleep(0.1)
+            
+            # 3. Try to teleport vehicle forward
+            try:
+                current_position = traci.vehicle.getPosition(vehicle_id)
+                lane_id = traci.vehicle.getLaneID(vehicle_id)
+                
+                # Try to move vehicle forward along the lane
+                current_lane_pos = traci.vehicle.getLanePosition(vehicle_id)
+                new_lane_pos = current_lane_pos + 50  # Move 50m forward
+                
+                traci.vehicle.moveTo(vehicle_id, lane_id, new_lane_pos)
+                if print_data:
+                    print(f"Moved vehicle {vehicle_id} 50m forward along lane {lane_id}")
+                    
+            except Exception as e:
+                # If lane positioning fails, try XY positioning
+                try:
+                    current_position = traci.vehicle.getPosition(vehicle_id)
+                    new_position = (current_position[0] + 50, current_position[1])
+                    angle = traci.vehicle.getAngle(vehicle_id)
+                    
+                    traci.vehicle.moveToXY(vehicle_id, "", 0, new_position[0], new_position[1], angle, keepRoute=2)
+                    if print_data:
+                        print(f"Teleported vehicle {vehicle_id} 50m forward using XY coordinates")
+                        
+                except Exception as e2:
+                    print(f"Could not reposition vehicle: {e2}")
+            
+            # Run more steps to observe the effects of all manipulations
+            for step in range(15):
+                traci.simulationStep()
+                time.sleep(0.1)
+                
+                # Get final state after last step
+                if step == 14:
+                    try:
+                        final_speed = traci.vehicle.getSpeed(vehicle_id)
+                        final_position = traci.vehicle.getPosition(vehicle_id)
+                        final_color = traci.vehicle.getColor(vehicle_id)
+                        
+                        manipulation_results = {
+                            "speed_change": {"initial": initial_speed, "final": final_speed},
+                            "position_change": {"initial": initial_position, "final": final_position},
+                            "color_change": {"initial": initial_color, "final": final_color}
+                        }
+                        
+                        if print_data:
+                            print(f"\nFinal state of vehicle {vehicle_id} after manipulations:")
+                            print(f"Speed: {final_speed:.2f} m/s (was {initial_speed:.2f} m/s)")
+                            print(f"Position: ({final_position[0]:.2f}, {final_position[1]:.2f}) (was ({initial_position[0]:.2f}, {initial_position[1]:.2f}))")
+                            print(f"Color: {final_color} (was {initial_color})")
+                        
+                        # Verify that manipulations had an effect
+                        speed_changed = abs(final_speed - initial_speed) > 0.1
+                        position_changed = abs(final_position[0] - initial_position[0]) > 10.0
+                        color_changed = final_color != initial_color
+                        
+                        passed_local = speed_changed or position_changed or color_changed
+                        
+                        if passed_local:
+                            if print_data:
+                                print("\n[SUMO Manipulation Test] Successfully manipulated vehicle properties:")
+                                if speed_changed:
+                                    print(f"- Speed changed from {initial_speed:.2f} to {final_speed:.2f}")
+                                if position_changed:
+                                    print(f"- Position changed by {final_position[0] - initial_position[0]:.2f} meters")
+                                if color_changed:
+                                    print(f"- Color changed from {initial_color} to {final_color}")
+                        else:
+                            print("[SUMO Manipulation Test] Failed to verify significant vehicle property changes.")
+                            
+                    except Exception as e:
+                        print(f"Error reading final vehicle state: {e}")
+                        passed_local = False
+    
+    # If any exception occurs during the manipulation
+    except Exception as e:
+        print(f"[SUMO Manipulation Test] Error during vehicle manipulation: {e}")
+        passed_local = False
+    
+    # Ensure cleanup occurs regardless of success or failure
+    finally:
+        
+        # Try to close the TraCI connection if it is loaded
+        try:
+            if 'traci' in locals() and traci.isLoaded():
+                traci.close()
+        except Exception:
+            pass
+        
+        # Try to terminate the SUMO process gracefully
+        try:
+            proc.terminate()
+            proc.wait(timeout=3)
+        except Exception:
+            try:
+                proc.kill()
+            except Exception:
+                pass
+        
+        # Ensure the port is freed
+        kill_processes_on_port(port)
+        time.sleep(1)
+
+    # Output test result based on success or failure
+    if passed_local:
+        passed += 1
+        print("[SUMO Manipulation Test] Vehicle manipulation test succeeded!\n")
+    else:
+        print("[SUMO Manipulation Test] Vehicle manipulation test failed.\n")
+
+
+##
 # @brief Test the zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication.
 # @details
 #   Tests the vehicle-to-infrastructure authentication circuit which uses a commitment scheme.
@@ -1798,6 +2049,11 @@ def testAndScenarioRunner():
     test_sumo_traci_data_transfer_straightaway2(True)
     time.sleep(.5)
     # clear_console()
+    
+    # 15e - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
+    test_sumo_live_manipulation_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
 
     # 16 - Run Vehicle-to-Infrastructure ZKP Test with the
     # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
@@ -1826,5 +2082,4 @@ if __name__ == "__main__":
     # test_sumo_traci_data_transfer(print_data=True)
     # test_sumo_traci_data_transfer_sumocfg(print_data=True)
     
-    testAndScenarioRunner()
     testAndScenarioRunner()
