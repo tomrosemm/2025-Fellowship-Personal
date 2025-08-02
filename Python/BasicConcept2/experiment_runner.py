@@ -161,9 +161,7 @@ def run_auth_experiment():
     cleanup_zokrates_files()
 
 
-if __name__ == "__main__":
-    
-    ## @brief Main entry point for running experiments.
+def base_experiments_test():
     
     # Ensure no old files interfere
     cleanup_zokrates_files()  
@@ -174,3 +172,11 @@ if __name__ == "__main__":
     
     print("\n=== Running Cryptographically Meaningful Auth Circuit Experiment ===")
     run_auth_experiment()
+    
+    
+if __name__ == "__main__":
+    
+    ## @brief Main entry point for running experiments.
+    base_experiments_test()
+    
+    

@@ -91,7 +91,7 @@ def main_menu():
 
 
 ##
-# @brief Menu for entire groups of tests (original CLI menu functionality).
+# @brief Menu for entire groups of tests
 ##
 def entire_groups_tests_menu():
     

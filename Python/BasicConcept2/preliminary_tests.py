@@ -2017,198 +2017,6 @@ def test_authentication_circuit_auth_zok():
     return exp.result
 
 
-def testAndScenarioRunner():
-    
-    # Use global variables to track tests, initialize counts
-    global tested, passed
-    tested, passed = 0, 0
-
-    # 3 - Run Simulated ZKP Test
-    test_vehicle_rsu_interaction_simulated()
-    time.sleep(.5)
-    # clear_console()
-
-    # 4 - Run Simulated Blockchain ZKP Test
-    test_vehicle_rsu_blockchain_simulated()
-    time.sleep(.5)
-    # clear_console()
-
-    # 5 - Run Simulated End-to-End Scenario: Successful Authentication
-    scenario_successful_authentication()
-    time.sleep(.5)
-    # clear_console()
-
-    # 6 - Run Simulated End-to-End Scenario: Failed Authentication
-    scenario_failed_authentication()
-    time.sleep(.5)
-    # clear_console()
-
-    # 7 - Run Real ZoKrates End-to-End Test with dummy.zok
-    test_vehicle_rsu_interaction_real_zokrates_dummy()
-    time.sleep(.5)
-    # clear_console()
-
-    # 8 - Simulated ZKP Isolated Test: Multiple Vehicles
-    test_simulated_isolated_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
-
-    # 9 - Simulated End-to-End Test: Multiple Vehicles
-    test_simulated_end_to_end_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
-
-    # 10 - ZoKrates-Integrated Isolated Test: Multiple Vehicles
-    test_zokrates_isolated_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
-
-    # 11 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles
-    test_zokrates_end_to_end_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
-
-    # 12 - Run SUMO Connection Tests (Basic Network + Configuration File)
-    tested, passed = test_sumo_connection_wrapper(tested, passed)
-    time.sleep(.5)
-    # clear_console()
-
-    # 13 - Run ZoKrates CLI Connection Test
-    test_zokrates_connection()
-    time.sleep(.5)
-    # clear_console()
-
-    # 14 - Run SUMO TraCI Data Transfer Test
-    test_sumo_traci_data_transfer(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
-    test_sumo_traci_data_transfer_sumocfg(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 15b - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
-    test_sumo_traci_data_transfer_intersection2(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 15c - Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
-    test_sumo_traci_data_transfer_straightaway1(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 15d - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
-    test_sumo_traci_data_transfer_straightaway2(True)
-    time.sleep(.5)
-    # clear_console()
-    
-    # 15e - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
-    test_sumo_live_manipulation_straightaway1(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 16 - Run Vehicle-to-Infrastructure ZKP Test with the
-    # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
-    test_vehicle_to_infrastructure_VtoI_zkp()
-    time.sleep(.5)
-    # clear_console()
-    
-    # 17 - Run Authentication Circuit Test with auth.zok
-    test_authentication_circuit_auth_zok()
-    time.sleep(.5)
-    # clear_console()
-    
-    # 18 - Run SUMO Small Step Length Test (10ms steps)
-    test_sumo_small_step_length_straightaway1(True)
-    time.sleep(.5)
-    # clear_console()
-    
-    # SUMO cleanup after connection tests
-    cleanup_traci_connection()
-    kill_processes_on_port(SUMO_PORT_BASIC)
-    kill_processes_on_port(SUMO_PORT_CONFIG)
-    kill_processes_on_port(SUMO_PORT_DATA)
-    time.sleep(2)
-
-    print(f"\nTotal tests run: {tested}")
-    print(f"Total tests passed: {passed}")
-    print(f"Total tests failed: {tested - passed}")
-    print()
-    time.sleep(2)
-
-
-def progressPresentationSuite():
-    
-    # Use global variables to track tests, initialize counts
-    global tested, passed
-    tested, passed = 0, 0
-
-    # Run ZoKrates CLI Connection Test
-    test_zokrates_connection()
-    time.sleep(.5)
-    # clear_console()
-    
-    # Run Real ZoKrates End-to-End Test with dummy.zok
-    test_vehicle_rsu_interaction_real_zokrates_dummy()
-    time.sleep(.5)
-    # clear_console()
-
-    # ZoKrates-Integrated Isolated Test: Multiple Vehicles
-    test_zokrates_isolated_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
-
-    # ZoKrates-Integrated End-to-End Test: Multiple Vehicles
-    test_zokrates_end_to_end_multiple_vehicles()
-    time.sleep(.5)
-    # clear_console()
-
-    # Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
-    test_sumo_traci_data_transfer_sumocfg(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
-    test_sumo_traci_data_transfer_intersection2(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
-    test_sumo_traci_data_transfer_straightaway1(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
-    test_sumo_traci_data_transfer_straightaway2(True)
-    time.sleep(.5)
-    # clear_console()
-    
-    # Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
-    test_sumo_live_manipulation_straightaway1(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # Run Vehicle-to-Infrastructure ZKP Test with the
-    # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
-    test_vehicle_to_infrastructure_VtoI_zkp()
-    time.sleep(.5)
-    # clear_console()
-
-    # SUMO cleanup after connection tests
-    cleanup_traci_connection()
-    kill_processes_on_port(SUMO_PORT_BASIC)
-    kill_processes_on_port(SUMO_PORT_CONFIG)
-    kill_processes_on_port(SUMO_PORT_DATA)
-    time.sleep(2)
-
-    print(f"\nTotal tests run: {tested}")
-    print(f"Total tests passed: {passed}")
-    print(f"Total tests failed: {tested - passed}")
-    print()
-    time.sleep(2)
-
-
 ##
 # @brief Test SUMO with a 10ms step length using straightaway1.sumocfg.
 # @param print_data If True, print simulation data to screen.
@@ -2367,11 +2175,202 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
         print("[SUMO Small Step Test] Small step length test failed.\n")
 
 
+def testAndScenarioRunner():
+    
+    # Use global variables to track tests, initialize counts
+    global tested, passed
+    tested, passed = 0, 0
+
+    # 3 - Run Simulated ZKP Test
+    test_vehicle_rsu_interaction_simulated()
+    time.sleep(.5)
+    # clear_console()
+
+    # 4 - Run Simulated Blockchain ZKP Test
+    test_vehicle_rsu_blockchain_simulated()
+    time.sleep(.5)
+    # clear_console()
+
+    # 5 - Run Simulated End-to-End Scenario: Successful Authentication
+    scenario_successful_authentication()
+    time.sleep(.5)
+    # clear_console()
+
+    # 6 - Run Simulated End-to-End Scenario: Failed Authentication
+    scenario_failed_authentication()
+    time.sleep(.5)
+    # clear_console()
+
+    # 7 - Run Real ZoKrates End-to-End Test with dummy.zok
+    test_vehicle_rsu_interaction_real_zokrates_dummy()
+    time.sleep(.5)
+    # clear_console()
+
+    # 8 - Simulated ZKP Isolated Test: Multiple Vehicles
+    test_simulated_isolated_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # 9 - Simulated End-to-End Test: Multiple Vehicles
+    test_simulated_end_to_end_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # 10 - ZoKrates-Integrated Isolated Test: Multiple Vehicles
+    test_zokrates_isolated_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # 11 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles
+    test_zokrates_end_to_end_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # 12 - Run SUMO Connection Tests (Basic Network + Configuration File)
+    tested, passed = test_sumo_connection_wrapper(tested, passed)
+    time.sleep(.5)
+    # clear_console()
+
+    # 13 - Run ZoKrates CLI Connection Test
+    test_zokrates_connection()
+    time.sleep(.5)
+    # clear_console()
+
+    # 14 - Run SUMO TraCI Data Transfer Test
+    test_sumo_traci_data_transfer(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # 15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
+    test_sumo_traci_data_transfer_sumocfg(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # 15b - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
+    test_sumo_traci_data_transfer_intersection2(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # 15c - Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
+    test_sumo_traci_data_transfer_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # 15d - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
+    test_sumo_traci_data_transfer_straightaway2(True)
+    time.sleep(.5)
+    # clear_console()
+    
+    # 15e - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
+    test_sumo_live_manipulation_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # 16 - Run Vehicle-to-Infrastructure ZKP Test with the
+    # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
+    test_vehicle_to_infrastructure_VtoI_zkp()
+    time.sleep(.5)
+    # clear_console()
+    
+    # 17 - Run Authentication Circuit Test with auth.zok
+    test_authentication_circuit_auth_zok()
+    time.sleep(.5)
+    # clear_console()
+    
+    # 18 - Run SUMO Small Step Length Test (10ms steps)
+    test_sumo_small_step_length_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+    
+    # SUMO cleanup after connection tests
+    cleanup_traci_connection()
+    kill_processes_on_port(SUMO_PORT_BASIC)
+    kill_processes_on_port(SUMO_PORT_CONFIG)
+    kill_processes_on_port(SUMO_PORT_DATA)
+    time.sleep(2)
+
+    print(f"\nTotal tests run: {tested}")
+    print(f"Total tests passed: {passed}")
+    print(f"Total tests failed: {tested - passed}")
+    print()
+    time.sleep(2)
+
+
+def progressPresentationSuite():
+    
+    # Use global variables to track tests, initialize counts
+    global tested, passed
+    tested, passed = 0, 0
+
+    # Run ZoKrates CLI Connection Test
+    test_zokrates_connection()
+    time.sleep(.5)
+    # clear_console()
+    
+    # Run Real ZoKrates End-to-End Test with dummy.zok
+    test_vehicle_rsu_interaction_real_zokrates_dummy()
+    time.sleep(.5)
+    # clear_console()
+
+    # ZoKrates-Integrated Isolated Test: Multiple Vehicles
+    test_zokrates_isolated_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # ZoKrates-Integrated End-to-End Test: Multiple Vehicles
+    test_zokrates_end_to_end_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # Toggle PRINT_SUMO_DATA as needed
+    # EX: test_sumo_traci_data_transfer(print_data=True)
+    
+    # Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
+    test_sumo_traci_data_transfer_sumocfg(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
+    test_sumo_traci_data_transfer_intersection2(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
+    test_sumo_traci_data_transfer_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
+    test_sumo_traci_data_transfer_straightaway2(True)
+    time.sleep(.5)
+    # clear_console()
+    
+    # Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
+    test_sumo_live_manipulation_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run Vehicle-to-Infrastructure ZKP Test with the
+    # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
+    test_vehicle_to_infrastructure_VtoI_zkp()
+    time.sleep(.5)
+    # clear_console()
+
+    # SUMO cleanup after connection tests
+    cleanup_traci_connection()
+    kill_processes_on_port(SUMO_PORT_BASIC)
+    kill_processes_on_port(SUMO_PORT_CONFIG)
+    kill_processes_on_port(SUMO_PORT_DATA)
+    time.sleep(2)
+
+    print(f"\nTotal tests run: {tested}")
+    print(f"Total tests passed: {passed}")
+    print(f"Total tests failed: {tested - passed}")
+    print()
+    time.sleep(2)
+
+
 ## Runs all tests and scenarios
 if __name__ == "__main__":
-    
-    # Example usage: toggle PRINT_SUMO_DATA as needed
-    # test_sumo_traci_data_transfer(print_data=True)
-    # test_sumo_traci_data_transfer_sumocfg(print_data=True)
     
     testAndScenarioRunner()
