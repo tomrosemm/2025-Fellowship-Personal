@@ -12,7 +12,16 @@
 # Could use hash table for menu options to avoid long match-case statements, not strictly needed atm
 
 # Imports
+import time
+
 import preliminary_tests
+import sumo_interface
+
+from settings import (
+    SUMO_PORT_BASIC,
+    SUMO_PORT_CONFIG,
+    SUMO_PORT_DATA
+)
 
 
 # Row of stars for menu formatting
@@ -469,6 +478,7 @@ def individual_experiments_menu():
                 print("Invalid choice. Please try again.")
 
 
+## Test SubGroups
 def fully_simulated_tests():
     
     # Print menu header
@@ -547,6 +557,79 @@ def sumo_and_traci_tests(print_sumo_data=True):
     preliminary_tests.test_sumo_small_step_length_straightaway1(print_data=print_sumo_data)
     
     
+def progressPresentationSuite():
+    
+    # Use global variables to track tests, initialize counts
+    global tested, passed
+    tested, passed = 0, 0
+
+    # Run ZoKrates CLI Connection Test
+    preliminary_tests.test_zokrates_connection()
+    time.sleep(.5)
+    # clear_console()
+    
+    # Run Real ZoKrates End-to-End Test with dummy.zok
+    preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy()
+    time.sleep(.5)
+    # clear_console()
+
+    # ZoKrates-Integrated Isolated Test: Multiple Vehicles
+    preliminary_tests.test_zokrates_isolated_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # ZoKrates-Integrated End-to-End Test: Multiple Vehicles
+    preliminary_tests.test_zokrates_end_to_end_multiple_vehicles()
+    time.sleep(.5)
+    # clear_console()
+
+    # Toggle PRINT_SUMO_DATA as needed
+    # EX: test_sumo_traci_data_transfer(print_data=True)
+    
+    # Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
+    preliminary_tests.test_sumo_traci_data_transfer_sumocfg(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
+    preliminary_tests.test_sumo_traci_data_transfer_intersection2(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
+    preliminary_tests.test_sumo_traci_data_transfer_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
+    preliminary_tests.test_sumo_traci_data_transfer_straightaway2(True)
+    time.sleep(.5)
+    # clear_console()
+    
+    # Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
+    preliminary_tests.test_sumo_live_manipulation_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # Run Vehicle-to-Infrastructure ZKP Test with the
+    # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
+    preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
+    time.sleep(.5)
+    # clear_console()
+
+    # SUMO cleanup after connection tests
+    sumo_interface.cleanup_traci_connection()
+    sumo_interface.kill_processes_on_port(SUMO_PORT_BASIC)
+    sumo_interface.kill_processes_on_port(SUMO_PORT_CONFIG)
+    sumo_interface.kill_processes_on_port(SUMO_PORT_DATA)
+    time.sleep(2)
+
+    print(f"\nTotal tests run: {tested}")
+    print(f"Total tests passed: {passed}")
+    print(f"Total tests failed: {tested - passed}")
+    print()
+    time.sleep(2)
+
 ##
 # @brief Legacy function for backward compatibility.
 # @deprecated Use main_menu() instead.
