@@ -205,13 +205,15 @@ def zokrates_integration_tests():
     print("ZoKrates-Integrated Isolated Test: Multiple Vehicles")
     print("ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
     print("Run ZoKrates CLI Connection Test")
-    print("Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
+    print("Run Vehicle-to-Infrastructure ZKP Test with VtoI_test.zok")
+    print("Run Authentication Circuit Test with auth.zok")
     
     preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy()
     preliminary_tests.test_zokrates_isolated_multiple_vehicles()
     preliminary_tests.test_zokrates_end_to_end_multiple_vehicles()
     preliminary_tests.test_zokrates_connection()
     preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
+    preliminary_tests.test_authentication_circuit_auth_zok()
 
 
 def sumo_and_traci_tests(print_sumo_data=True):
@@ -316,6 +318,7 @@ def individual_tests_menu():
         print("16 - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)")
         print("17 - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
         print("18 - Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
+        print("19 - Run Authentication Circuit Test with auth.zok")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
@@ -397,6 +400,10 @@ def individual_tests_menu():
             case "18":
                 ## @test Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok
                 preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
+                
+            case "19":
+                ## @test Run Authentication Circuit Test with auth.zok
+                preliminary_tests.test_authentication_circuit_auth_zok()
             
             case "dbon":
                 ## @details

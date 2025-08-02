@@ -17,7 +17,8 @@
 #   - Requires: vehicle.py, rsu.py, zokrates_interface.py, blockchain.py
 ##
 
-# Imports
+## Imports
+# Libraries
 import secrets
 import os
 import time
@@ -25,6 +26,7 @@ import random
 import subprocess
 import sys
 
+# Classes and functions
 from vehicle import Vehicle
 from rsu import RSU
 from experiment import Experiment
@@ -1971,22 +1973,57 @@ def test_vehicle_to_infrastructure_VtoI_zkp():
     return exp.result
 
 ##
-# @brief Run all test and scenario functions and print summary statistics.
+# @brief Test the authentication circuit (auth.zok) for field-based proof.
 # @details
-#   Runs all included test and scenario functions in sequence and prints summary statistics.
+#   Tests the authentication circuit which uses simple field arithmetic for authentication.
 #
 # Steps:
-#   1. Run all included test and scenario functions in sequence.
-#   2. Print summary statistics for total tests run, passed, and failed.
-#   3. Perform SUMO cleanup after connection tests.
+#   1. Create an experiment with the auth.zok circuit.
+#   2. Run the experiment with a random vehicle ID and secret.
+#   3. Check if the verification was successful.
 ##
+def test_authentication_circuit_auth_zok():
+    
+    # Print test header
+    print("\n=== Authentication Circuit Test (auth.zok) ===")
+    
+    # Use global variables to track tests, increment tested count
+    global tested, passed
+    tested += 1
+    
+    # Set the circuit path for ZoKrates
+    circuit_path = "zokrates/auth.zok"
+    
+    # Generate a random vehicle ID and RSU ID for this experiment
+    vehicle_id = f"Auth_Vehicle_{random.randint(1000, 9999)}"
+    rsu_id = f"Auth_RSU_{random.randint(1000, 9999)}"
+    
+    # Create an Experiment instance with the specified parameters
+    exp = Experiment("Auth_Test", vehicle_id, rsu_id, circuit_path)
+    
+    # Run the experiment
+    exp.run()
+    
+    # Check if the experiment was successful
+    if exp.result:
+        print(f"[PASS] Authentication Circuit Test passed - Vehicle ID: {vehicle_id}")
+        passed += 1
+    else:
+        print(f"[FAIL] Authentication Circuit Test failed - Vehicle ID: {vehicle_id}")
+    
+    # Clean up ZoKrates-generated files
+    cleanup_zokrates_files()
+    
+    return exp.result
+
+
 def testAndScenarioRunner():
     
     # Use global variables to track tests, initialize counts
     global tested, passed
     tested, passed = 0, 0
 
-    #  3 - Run Simulated ZKP Test
+    # 3 - Run Simulated ZKP Test
     test_vehicle_rsu_interaction_simulated()
     time.sleep(.5)
     # clear_console()
@@ -2074,6 +2111,11 @@ def testAndScenarioRunner():
     # 16 - Run Vehicle-to-Infrastructure ZKP Test with the
     # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
     test_vehicle_to_infrastructure_VtoI_zkp()
+    time.sleep(.5)
+    # clear_console()
+    
+    # 17 - Run Authentication Circuit Test with auth.zok
+    test_authentication_circuit_auth_zok()
     time.sleep(.5)
     # clear_console()
 

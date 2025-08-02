@@ -720,14 +720,12 @@ def test_sumo_config_connection():
     
     # Aggressive cleanup before starting test
     kill_processes_on_port(SUMO_PORT_CONFIG)
-    cleanup_traci_connection()
     
     # Wait for port to be available
     print("Wait time begins for processes to die and OS to release port")
     time.sleep(10) 
     print("Wait time ends for processes to die and OS to release port")
     
-    # Clean up any existing connections first
     cleanup_traci_connection()
     
     # Define the port to use for SUMO connection
@@ -1074,7 +1072,7 @@ def test_sumo_connection_wrapper(tested, passed):
     print("\n=== SUMO Connection Tests ===")
     
     # Test 1: Basic network file connection
-    print("\n--- SUMO Basic Network Test ---")
+    print("\n--- SUMO Basic Network Test (simple.net) ---")
     
     # Increment the count of tests run
     tested += 1
@@ -1094,7 +1092,7 @@ def test_sumo_connection_wrapper(tested, passed):
         print("[SUMO Basic Test] SUMO basic network connection test failed.")
     
     # Test 2: Configuration file connection
-    print("\n--- SUMO Configuration File Test ---")
+    print("\n--- SUMO Configuration File Test (threebythreecityblock1.sumocfg) ---")
     
     # Increment the count of tests run
     tested += 1
