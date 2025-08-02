@@ -195,7 +195,7 @@ def test_vehicle_rsu_interaction_simulated():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\n[Simulated] Test completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -219,6 +219,9 @@ def test_vehicle_rsu_blockchain_simulated():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("Simulated Blockchain ZKP Test Timer")
+    timer.start()
     
     # Generate entities with random secrets
     vehicle_id = "VEH123"
@@ -258,6 +261,10 @@ def test_vehicle_rsu_blockchain_simulated():
         
     else:
         print("[Simulated] Access denied by infrastructure.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -281,6 +288,9 @@ def scenario_successful_authentication():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("End-to-End Simulated Scenario: Successful Authentication Timer")
+    timer.start()
     
     # Generate entities with matching secrets
     vehicle_id = "VEH001"
@@ -320,6 +330,10 @@ def scenario_successful_authentication():
     
     else:
         print("Access denied by infrastructure.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -343,6 +357,9 @@ def scenario_failed_authentication():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("End-to-End Simulated Scenario: Failed Authentication Timer")
+    timer.start()
     
     # Generate entities with wrong secret
     vehicle_id = "VEH001"
@@ -388,6 +405,10 @@ def scenario_failed_authentication():
     else:
         passed += 1
         print("Access denied by infrastructure (expected).\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -412,6 +433,9 @@ def test_zokrates_connection():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("ZoKrates Connection Test Timer")
+    timer.start()
     
     # Set the circuit path for ZoKrates from settings
     circuit_path = ZOKRATES_DUMMY_CIRCUIT
@@ -460,7 +484,11 @@ def test_zokrates_connection():
         
     else:
         print("[ZoKrates Test] ZoKrates connection or workflow failed.\n")
-        
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    
     # Clean up ZoKrates artifacts after test
     cleanup_zokrates_files()
 
@@ -488,6 +516,9 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("Real ZoKrates End-to-End Test Timer")
+    timer.start()
     
     # Set the circuit path for ZoKrates from settings
     circuit_path = ZOKRATES_DUMMY_CIRCUIT
@@ -545,6 +576,10 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
     else:
         print("[Real ZKP] End-to-end ZoKrates workflow failed.\n")
     
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    
     # Clean up ZoKrates artifacts after test
     cleanup_zokrates_files()
 
@@ -568,6 +603,9 @@ def test_simulated_isolated_multiple_vehicles():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("Simulated ZKP Isolated Test: Multiple Vehicles Timer")
+    timer.start()
     
     # Variables to hold vehicles and RSU secrets
     num_vehicles = 3
@@ -623,6 +661,10 @@ def test_simulated_isolated_multiple_vehicles():
         
     else:
         print("[Simulated] Some vehicles failed authentication.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -645,6 +687,9 @@ def test_simulated_end_to_end_multiple_vehicles():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("Simulated End-to-End Test: Multiple Vehicles Timer")
+    timer.start()
     
     # Variables to hold vehicles and RSU secrets
     num_vehicles = 3
@@ -703,6 +748,10 @@ def test_simulated_end_to_end_multiple_vehicles():
         
     else:
         print("[Simulated] Some vehicles denied access.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -729,6 +778,9 @@ def test_zokrates_isolated_multiple_vehicles():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("ZoKrates-Integrated Isolated Test: Multiple Vehicles Timer")
+    timer.start()
     
     # Set the circuit path for ZoKrates from settings
     circuit_path = ZOKRATES_DUMMY_CIRCUIT
@@ -804,6 +856,10 @@ def test_zokrates_isolated_multiple_vehicles():
         
     else:
         print("[ZoKrates] Some vehicles' proofs failed verification.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -831,6 +887,9 @@ def test_zokrates_end_to_end_multiple_vehicles():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("ZoKrates-Integrated End-to-End Test: Multiple Vehicles Timer")
+    timer.start()
     
     # Set the circuit path for ZoKrates from settings
     circuit_path = ZOKRATES_DUMMY_CIRCUIT
@@ -919,6 +978,10 @@ def test_zokrates_end_to_end_multiple_vehicles():
         
     else:
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -942,6 +1005,9 @@ def test_sumo_traci_data_transfer(print_data=True):
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("SUMO TraCI Data Transfer Test (simple.net.xml) Timer")
+    timer.start()
 
     # Define the port for TraCI connection from settings
     port = SUMO_PORT_DATA
@@ -1083,6 +1149,10 @@ def test_sumo_traci_data_transfer(print_data=True):
         
     else:
         print("[SUMO TraCI Test] Data transfer test failed.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -1106,6 +1176,9 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("SUMO TraCI Data Transfer Test (intersection1.sumocfg) Timer")
+    timer.start()
 
     # Define the port for TraCI connection from settings
     port = SUMO_PORT_DATA_CONFIG
@@ -1249,6 +1322,10 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     else:
         print("[SUMO TraCI Test] .sumocfg data transfer test failed.\n")
 
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+
 
 ##
 # @brief Test connecting to SUMO via TraCI using intersection2.sumocfg with explicit vehicles.
@@ -1271,6 +1348,9 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("SUMO TraCI Data Transfer Test (intersection2.sumocfg) Timer")
+    timer.start()
 
     # Define the port for TraCI connection from settings
     port = SUMO_PORT_DATA_CONFIG + 1  # Use a different port to avoid conflicts
@@ -1392,6 +1472,10 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
         print("[SUMO TraCI Test] intersection2.sumocfg data transfer test succeeded!\n")
     else:
         print("[SUMO TraCI Test] intersection2.sumocfg data transfer test failed.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -1415,6 +1499,9 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("SUMO TraCI Data Transfer Test (straightaway1.sumocfg) Timer")
+    timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 2
@@ -1536,6 +1623,10 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
         print("[SUMO TraCI Test] straightaway1.sumocfg data transfer test succeeded!\n")
     else:
         print("[SUMO TraCI Test] straightaway1.sumocfg data transfer test failed.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -1559,6 +1650,9 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("SUMO TraCI Data Transfer Test (straightaway2.sumocfg) Timer")
+    timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 3
@@ -1680,6 +1774,10 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
         print("[SUMO TraCI Test] straightaway2.sumocfg data transfer test succeeded!\n")
     else:
         print("[SUMO TraCI Test] straightaway2.sumocfg data transfer test failed.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 ##
@@ -1704,6 +1802,9 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg) Timer")
+    timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 4
@@ -1891,6 +1992,10 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
                                 #     print(f"- Position changed by {final_position[0] - initial_position[0]:.2f} meters")
                                 if color_changed:
                                     print(f"- Color changed from {initial_color} to {final_color}")
+                            
+                            timer.stop()
+                            # Print elapsed time for the test
+                            print(f"\nTest completed in {timer.elapsed()} seconds.\n")
                         else:
                             print("[SUMO Manipulation Test] Failed to verify significant vehicle property changes.")
                             
@@ -1954,6 +2059,9 @@ def test_vehicle_to_infrastructure_VtoI_zkp():
     global tested, passed
     tested += 1
     
+    timer = Timer("Vehicle-to-Infrastructure VtoI ZKP Test (VtoI_test.zok) Timer")
+    timer.start()
+    
     # Set the circuit path for ZoKrates
     circuit_path = "zokrates/VtoI_test.zok"
     
@@ -1977,6 +2085,10 @@ def test_vehicle_to_infrastructure_VtoI_zkp():
     # Clean up ZoKrates-generated files
     cleanup_zokrates_files()
     
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    
     return exp.result
 
 ##
@@ -1997,6 +2109,9 @@ def test_authentication_circuit_auth_zok():
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("Authentication Circuit Test (auth.zok) Timer")
+    timer.start()
     
     # Set the circuit path for ZoKrates
     circuit_path = "zokrates/auth.zok"
@@ -2020,6 +2135,10 @@ def test_authentication_circuit_auth_zok():
     
     # Clean up ZoKrates-generated files
     cleanup_zokrates_files()
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
     
     return exp.result
 
@@ -2045,6 +2164,9 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
+    
+    timer = Timer("SUMO Small Step Length Test (straightaway1.sumocfg) Timer")
+    timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 5
@@ -2180,6 +2302,10 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
         print("[SUMO Small Step Test] Small step length test succeeded!\n")
     else:
         print("[SUMO Small Step Test] Small step length test failed.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
 
 def testAndScenarioRunner():
@@ -2187,6 +2313,9 @@ def testAndScenarioRunner():
     # Use global variables to track tests, initialize counts
     global tested, passed
     tested, passed = 0, 0
+    
+    timer = Timer("Test and Scenario Runner Timer")
+    timer.start()
 
     # 3 - Run Simulated ZKP Test
     test_vehicle_rsu_interaction_simulated()
@@ -2296,6 +2425,10 @@ def testAndScenarioRunner():
     kill_processes_on_port(SUMO_PORT_DATA)
     time.sleep(2)
 
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    
     print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")
     print(f"Total tests failed: {tested - passed}")
