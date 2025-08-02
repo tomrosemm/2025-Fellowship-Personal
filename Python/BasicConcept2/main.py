@@ -232,6 +232,7 @@ def sumo_and_traci_tests(print_sumo_data=True):
     print("Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)")
     print("Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)")
     print("Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
+    print("Run SUMO Small Step Length Test (10ms steps)")
     
     preliminary_tests.tested, preliminary_tests.passed = preliminary_tests.test_sumo_connection_wrapper(
         preliminary_tests.tested, preliminary_tests.passed
@@ -242,6 +243,7 @@ def sumo_and_traci_tests(print_sumo_data=True):
     preliminary_tests.test_sumo_traci_data_transfer_straightaway1(print_data=print_sumo_data)
     preliminary_tests.test_sumo_traci_data_transfer_straightaway2(print_data=print_sumo_data)
     preliminary_tests.test_sumo_live_manipulation_straightaway1(print_data=print_sumo_data)
+    preliminary_tests.test_sumo_small_step_length_straightaway1(print_data=print_sumo_data)
     
     
 ##
@@ -319,6 +321,7 @@ def individual_tests_menu():
         print("17 - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
         print("18 - Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
         print("19 - Run Authentication Circuit Test with auth.zok")
+        print("20 - Run SUMO Small Step Length Test (10ms steps)")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
@@ -404,6 +407,12 @@ def individual_tests_menu():
             case "19":
                 ## @test Run Authentication Circuit Test with auth.zok
                 preliminary_tests.test_authentication_circuit_auth_zok()
+            
+            case "20":
+                ## @test Run SUMO with small step length of 10ms
+                preliminary_tests.test_sumo_small_step_length_straightaway1(
+                    print_data=preliminary_tests.PRINT_DATA
+                )
             
             case "dbon":
                 ## @details

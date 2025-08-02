@@ -756,7 +756,6 @@ def test_zokrates_isolated_multiple_vehicles():
             continue
         
         # Args to use for computing witness (a, b)
-        # Convert inputs to strings for ZoKrates CLI
         args = [str(a), str(b)]
         
         ## Compute witness (inputs: a, b)
@@ -1094,7 +1093,7 @@ def test_sumo_traci_data_transfer(print_data=True):
 def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (intersaection1.sumocfg, flow based demand, 100 steps) ===")
+    print("\n=== SUMO TraCI Data Transfer Test (intersection1.sumocfg, flow based demand, 100 steps) ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
@@ -1648,7 +1647,7 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
         
         # Try to close the TraCI connection if it is loaded
         try:
-            if 'traci' in locals() and traci.isLoaded():
+            if traci.isLoaded():
                 traci.close()
         except Exception:
             pass
@@ -2118,7 +2117,12 @@ def testAndScenarioRunner():
     test_authentication_circuit_auth_zok()
     time.sleep(.5)
     # clear_console()
-
+    
+    # 18 - Run SUMO Small Step Length Test (10ms steps)
+    test_sumo_small_step_length_straightaway1(True)
+    time.sleep(.5)
+    # clear_console()
+    
     # SUMO cleanup after connection tests
     cleanup_traci_connection()
     kill_processes_on_port(SUMO_PORT_BASIC)
@@ -2202,6 +2206,164 @@ def progressPresentationSuite():
     print(f"Total tests failed: {tested - passed}")
     print()
     time.sleep(2)
+
+
+##
+# @brief Test SUMO with a 10ms step length using straightaway1.sumocfg.
+# @param print_data If True, print simulation data to screen.
+# @details
+#   Tests SUMO running with a small step length of 10ms for more precise simulation.
+#
+# Steps:
+#   1. Start SUMO with straightaway1.sumocfg and --step-length 0.01.
+#   2. Connect via TraCI.
+#   3. Retrieve simulation time for several steps to verify the step length.
+#   4. Print/store the data.
+#   5. Clean up.
+##
+def test_sumo_small_step_length_straightaway1(print_data=True):
+    
+    # Print test header
+    print("\n=== SUMO Small Step Length Test (straightaway1.sumocfg, step-length=0.01) ===")
+    
+    # Use global variables to track tests, increment tested count
+    global tested, passed
+    tested += 1
+
+    # Define the port for TraCI connection from settings, using a different port to avoid conflicts
+    port = SUMO_PORT_DATA_CONFIG + 5
+    
+    # Set the SUMO_TOOLS_PATH from settings
+    sys.path.append(SUMO_TOOLS_PATH)
+    
+    # Try to import the TraCI module
+    try:
+        import traci
+    
+    # If import fails, print error and return
+    except ImportError:
+        print("[SUMO Small Step Test] Could not import traci. Check SUMO_TOOLS_PATH.")
+        return
+
+    # Check if the straightaway1.sumocfg file exists
+    if not os.path.exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE):
+        print(f"[SUMO Small Step Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY1_CONFIG_FILE}")
+        return
+    
+    # Clean up port and traci connection before starting the test
+    kill_processes_on_port(port)
+    cleanup_traci_connection()
+    
+    # Wait for a moment to ensure cleanup is complete
+    time.sleep(2)
+
+    # Define the SUMO binary command
+    sumo_binary = "sumo"
+    
+    # Create and store the command to start SUMO with the config file, small step length, and remote port
+    sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY1_CONFIG_FILE, "--step-length", "0.01", "--remote-port", str(port)]
+    
+    # Try to start SUMO and connect via TraCI
+    try:
+        
+        # Start SUMO process with the stored command
+        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+        # Wait for a moment to allow SUMO to start
+        time.sleep(3)
+        
+        # Check if the SUMO process has exited early
+        if proc.poll() is not None:
+            stderr = proc.stderr.read().decode()
+            print(f"[SUMO Small Step Test] SUMO exited early. STDERR:\n{stderr}")
+            return
+        
+        # Initialize TraCI connection
+        traci.init(port=port)
+        
+        # Wait for a moment to ensure TraCI connection is established
+        time.sleep(1)
+        
+        # Initialize a list to store simulation data and time values
+        sim_data = []
+        time_values = []
+        
+        # Run the simulation for 50 steps (since each is only 10ms)
+        for step in range(50):
+            
+            # Perform a simulation step using TraCI
+            traci.simulationStep()
+            
+            # Retrieve and store the current simulation time, vehicle IDs, and their positions
+            sim_time = traci.simulation.getTime()
+            time_values.append(sim_time)
+            veh_ids = traci.vehicle.getIDList()
+            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
+            
+            # Store the collected data
+            sim_data.append({
+                "time": sim_time,
+                "vehicle_ids": veh_ids,
+                "positions": veh_positions
+            })
+            
+            # If print_data flag is True, print the collected data (only every 5 steps)
+            if print_data and step % 5 == 0:
+                print(f"\nTime: {sim_time:.3f}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+        
+        # Calculate the actual step length by checking time differences
+        step_lengths = [time_values[i+1] - time_values[i] for i in range(len(time_values)-1)]
+        avg_step_length = sum(step_lengths) / len(step_lengths)
+        
+        if print_data:
+            print(f"\nAverage step length: {avg_step_length:.5f} seconds")
+        
+        # Check if the average step length is close to 0.01
+        step_length_correct = abs(avg_step_length - 0.01) < 0.001
+        
+        if step_length_correct:
+            if print_data:
+                print("[SUMO Small Step Test] Step length verified as approximately 0.01 seconds")
+            passed_local = True
+        else:
+            print(f"[SUMO Small Step Test] Step length verification failed. Expected: 0.01, Got: {avg_step_length:.5f}")
+            passed_local = False
+        
+    # If any exception occurs during the TraCI data transfer
+    except Exception as e:
+        print(f"[SUMO Small Step Test] Error during test: {e}")
+        passed_local = False
+    
+    # Ensure cleanup occurs regardless of success or failure
+    finally:
+        
+        # Try to close the TraCI connection if it is loaded
+        try:
+            if 'traci' in locals() and traci.isLoaded():
+                traci.close()
+        except Exception:
+            pass
+        
+        # Try to terminate the SUMO process gracefully
+        try:
+            proc.terminate()
+            proc.wait(timeout=3)
+        except Exception:
+            try:
+                proc.kill()
+            except Exception:
+                pass
+        
+        # Ensure the port is freed
+        kill_processes_on_port(port)
+        time.sleep(1)
+
+    # Output test result based on success or failure
+    if passed_local:
+        passed += 1
+        print("[SUMO Small Step Test] Small step length test succeeded!\n")
+    else:
+        print("[SUMO Small Step Test] Small step length test failed.\n")
 
 
 ## Runs all tests and scenarios
