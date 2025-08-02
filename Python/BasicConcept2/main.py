@@ -148,7 +148,7 @@ def entire_groups_tests_menu():
                 
             case "3":
                 ## @test Run Progress Presentation Suite
-                preliminary_tests.progressPresentationSuite()
+                progressPresentationSuite()
                 
             case "dbon":
                 ## @details
