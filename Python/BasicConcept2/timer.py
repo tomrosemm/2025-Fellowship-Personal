@@ -105,4 +105,4 @@ class Timer:
     # @return String with timer name, elapsed time, and running status.
     ##
     def __repr__(self):
-        return f"<Timer(name={self.name}, elapsed={self.elapsed():.2f}, running={self._running})>"
+        return f"<Timer(name={self.name}, elapsed={self.elapsed()}, running={self._running})>"
