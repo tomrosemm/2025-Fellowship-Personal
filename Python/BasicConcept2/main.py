@@ -559,9 +559,10 @@ def sumo_and_traci_tests(print_sumo_data=True):
     
 def progressPresentationSuite():
     
-    # Use global variables to track tests, initialize counts
-    global tested, passed
-    tested, passed = 0, 0
+    # Instead of initializing local counters, use the ones from preliminary_tests module
+    # Get initial values to calculate the difference later
+    initial_tested = preliminary_tests.tested
+    initial_passed = preliminary_tests.passed
 
     # Run ZoKrates CLI Connection Test
     preliminary_tests.test_zokrates_connection()
@@ -624,11 +625,17 @@ def progressPresentationSuite():
     sumo_interface.kill_processes_on_port(SUMO_PORT_DATA)
     time.sleep(2)
 
-    print(f"\nTotal tests run: {tested}")
-    print(f"Total tests passed: {passed}")
-    print(f"Total tests failed: {tested - passed}")
+    # Calculate tests run and passed during this suite
+    tests_run = preliminary_tests.tested - initial_tested
+    tests_passed = preliminary_tests.passed - initial_passed
+    
+    print(f"\nProgress Presentation Suite Results:")
+    print(f"Tests run: {tests_run}")
+    print(f"Tests passed: {tests_passed}")
+    print(f"Tests failed: {tests_run - tests_passed}")
     print()
     time.sleep(2)
+
 
 ##
 # @brief Legacy function for backward compatibility.
