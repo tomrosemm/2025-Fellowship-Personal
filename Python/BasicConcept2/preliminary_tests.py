@@ -195,7 +195,7 @@ def test_vehicle_rsu_interaction_simulated():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\n[Simulated] Test completed in {timer.elapsed():.2f} seconds.\n")
+    print(f"\n[Simulated] Test completed in {timer.elapsed()} seconds.\n")
 
 
 ##
