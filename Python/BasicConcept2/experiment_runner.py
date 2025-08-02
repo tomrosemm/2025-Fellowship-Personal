@@ -21,6 +21,7 @@ import random
 from experiment import Experiment
 from vehicle import Vehicle
 from rsu import RSU
+from timer import Timer
 
 from zokrates_interface import (
     run_zokrates_compile,
