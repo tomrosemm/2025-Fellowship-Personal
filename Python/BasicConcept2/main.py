@@ -168,84 +168,7 @@ def entire_groups_tests_menu():
                 print("Invalid choice. Please try again.")
 
 
-def fully_simulated_tests():
-    
-    # Print menu header
-    print("\n")
-    print(row_of_stars)
-    print("*** Fully Simulated Tests ***")
-    print(row_of_stars)
-    print("\n")
-    
-    print("Simulated ZKP Test")
-    print("Simulated Blockchain ZKP Test")
-    print("Simulated End-to-End Scenario: Successful Authentication")
-    print("Simulated End-to-End Scenario: Failed Authentication")
-    print("Simulated ZKP Isolated Test: Multiple Vehicles")
-    print("Simulated End-to-End Test: Multiple Vehicles")
-    
-    preliminary_tests.test_vehicle_rsu_interaction_simulated()
-    preliminary_tests.test_vehicle_rsu_blockchain_simulated()
-    preliminary_tests.scenario_successful_authentication()
-    preliminary_tests.scenario_failed_authentication()
-    preliminary_tests.test_simulated_isolated_multiple_vehicles()
-    preliminary_tests.test_simulated_end_to_end_multiple_vehicles()
-                
-                
-def zokrates_integration_tests():
-    
-    # Print menu header
-    print("\n")
-    print(row_of_stars)
-    print("*** Zokrates Integration Tests ***")
-    print(row_of_stars)
-    print("\n")
-    
-    print("Run Real ZoKrates End-to-End Test with dummy.zok")
-    print("ZoKrates-Integrated Isolated Test: Multiple Vehicles")
-    print("ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
-    print("Run ZoKrates CLI Connection Test")
-    print("Run Vehicle-to-Infrastructure ZKP Test with VtoI_test.zok")
-    print("Run Authentication Circuit Test with auth.zok")
-    
-    preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy()
-    preliminary_tests.test_zokrates_isolated_multiple_vehicles()
-    preliminary_tests.test_zokrates_end_to_end_multiple_vehicles()
-    preliminary_tests.test_zokrates_connection()
-    preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
-    preliminary_tests.test_authentication_circuit_auth_zok()
 
-
-def sumo_and_traci_tests(print_sumo_data=True):
-    
-    # Print menu header
-    print("\n")
-    print(row_of_stars)
-    print("*** SUMO and TraCI Integration Tests ***")
-    print(row_of_stars)
-    print("\n")
-    
-    print("Run SUMO Connection Tests (Basic Network + Configuration File)")
-    print("Run SUMO TraCI Data Transfer Test (simple.net)")
-    print("Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
-    print("Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)")
-    print("Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)")
-    print("Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)")
-    print("Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
-    print("Run SUMO Small Step Length Test (10ms steps)")
-    
-    preliminary_tests.tested, preliminary_tests.passed = preliminary_tests.test_sumo_connection_wrapper(
-        preliminary_tests.tested, preliminary_tests.passed
-    )
-    preliminary_tests.test_sumo_traci_data_transfer(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_traci_data_transfer_intersection2(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_traci_data_transfer_straightaway1(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_traci_data_transfer_straightaway2(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_live_manipulation_straightaway1(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_small_step_length_straightaway1(print_data=print_sumo_data)
-    
-    
 ##
 # @brief Menu for subgroups of tests.
 ##
@@ -546,6 +469,84 @@ def individual_experiments_menu():
                 print("Invalid choice. Please try again.")
 
 
+def fully_simulated_tests():
+    
+    # Print menu header
+    print("\n")
+    print(row_of_stars)
+    print("*** Fully Simulated Tests ***")
+    print(row_of_stars)
+    print("\n")
+    
+    print("Simulated ZKP Test")
+    print("Simulated Blockchain ZKP Test")
+    print("Simulated End-to-End Scenario: Successful Authentication")
+    print("Simulated End-to-End Scenario: Failed Authentication")
+    print("Simulated ZKP Isolated Test: Multiple Vehicles")
+    print("Simulated End-to-End Test: Multiple Vehicles")
+    
+    preliminary_tests.test_vehicle_rsu_interaction_simulated()
+    preliminary_tests.test_vehicle_rsu_blockchain_simulated()
+    preliminary_tests.scenario_successful_authentication()
+    preliminary_tests.scenario_failed_authentication()
+    preliminary_tests.test_simulated_isolated_multiple_vehicles()
+    preliminary_tests.test_simulated_end_to_end_multiple_vehicles()
+                
+                
+def zokrates_integration_tests():
+    
+    # Print menu header
+    print("\n")
+    print(row_of_stars)
+    print("*** Zokrates Integration Tests ***")
+    print(row_of_stars)
+    print("\n")
+    
+    print("Run Real ZoKrates End-to-End Test with dummy.zok")
+    print("ZoKrates-Integrated Isolated Test: Multiple Vehicles")
+    print("ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
+    print("Run ZoKrates CLI Connection Test")
+    print("Run Vehicle-to-Infrastructure ZKP Test with VtoI_test.zok")
+    print("Run Authentication Circuit Test with auth.zok")
+    
+    preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy()
+    preliminary_tests.test_zokrates_isolated_multiple_vehicles()
+    preliminary_tests.test_zokrates_end_to_end_multiple_vehicles()
+    preliminary_tests.test_zokrates_connection()
+    preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
+    preliminary_tests.test_authentication_circuit_auth_zok()
+
+
+def sumo_and_traci_tests(print_sumo_data=True):
+    
+    # Print menu header
+    print("\n")
+    print(row_of_stars)
+    print("*** SUMO and TraCI Integration Tests ***")
+    print(row_of_stars)
+    print("\n")
+    
+    print("Run SUMO Connection Tests (Basic Network + Configuration File)")
+    print("Run SUMO TraCI Data Transfer Test (simple.net)")
+    print("Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
+    print("Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)")
+    print("Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)")
+    print("Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)")
+    print("Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
+    print("Run SUMO Small Step Length Test (10ms steps)")
+    
+    preliminary_tests.tested, preliminary_tests.passed = preliminary_tests.test_sumo_connection_wrapper(
+        preliminary_tests.tested, preliminary_tests.passed
+    )
+    preliminary_tests.test_sumo_traci_data_transfer(print_data=print_sumo_data)
+    preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=print_sumo_data)
+    preliminary_tests.test_sumo_traci_data_transfer_intersection2(print_data=print_sumo_data)
+    preliminary_tests.test_sumo_traci_data_transfer_straightaway1(print_data=print_sumo_data)
+    preliminary_tests.test_sumo_traci_data_transfer_straightaway2(print_data=print_sumo_data)
+    preliminary_tests.test_sumo_live_manipulation_straightaway1(print_data=print_sumo_data)
+    preliminary_tests.test_sumo_small_step_length_straightaway1(print_data=print_sumo_data)
+    
+    
 ##
 # @brief Legacy function for backward compatibility.
 # @deprecated Use main_menu() instead.

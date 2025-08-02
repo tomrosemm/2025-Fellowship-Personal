@@ -1,0 +1,17 @@
+<configuration>
+    <input>
+        <net-file value="straightaway3.net.xml"/>
+        <route-files value="straightaway3.rou.xml"/>
+        <additional-files value="straightaway3.add.xml"/>
+    </input>
+
+    <output>
+        <bt-output value="out/bt_out.xml" synonymes="bluetooth" type="FILE"/>
+    </output>
+    
+    <time>
+        <begin value="0"/>
+        <end value="100"/>
+    </time>
+
+</configuration>
