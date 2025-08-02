@@ -154,11 +154,14 @@ def test_vehicle_rsu_interaction_simulated():
     global tested, passed
     tested += 1
     
+    timer = Timer("Simulated ZKP Test Timer")
+    timer.start()
+    
     # Generate entities with random secrets
     vehicle_id = "VEH123"
     vehicle_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, vehicle_secret)
-    rsu = RSU({vehicle_id: vehicle_secret})
+    unused_rsu = RSU({vehicle_id: vehicle_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
@@ -189,6 +192,10 @@ def test_vehicle_rsu_interaction_simulated():
         
     else:
         print("[Simulated] Authentication failed.\n")
+    
+    timer.stop()
+    # Print elapsed time for the test
+    print(f"\n[Simulated] Test completed in {timer.elapsed():.2f} seconds.\n")
 
 
 ##
