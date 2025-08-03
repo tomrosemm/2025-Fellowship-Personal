@@ -6,6 +6,8 @@ import os
 from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE
 
 DEBUG_MODE = DEFAULT_DEBUG_MODE
+
+
 ##
 # @brief Enable or disable debug mode for detailed output.
 #

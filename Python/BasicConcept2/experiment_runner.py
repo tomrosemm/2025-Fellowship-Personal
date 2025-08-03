@@ -22,6 +22,7 @@ from experiment import Experiment
 from vehicle import Vehicle
 from rsu import RSU
 from timer import Timer
+from utilities import clear_console
 
 from zokrates_interface import (
     run_zokrates_compile,
@@ -77,24 +78,10 @@ def set_debug_mode(enabled):
     set_sumo_debug_mode(enabled)
     
     # set_blockchain_interface_debug_mode(enabled)
-    
 
 
 ##
-# @brief Clears the console screen based on the operating system.
-# @details
-#   - If Windows, use 'cls'.
-#   - Otherwise, use 'clear'.
-##
-def clear_console():
-    if os.name == 'nt':
-        os.system('cls')
-    else:
-        os.system('clear')
-
-
-##
-# @brief Run a single experiment using the Experiment class with zokrates/dummy.zok.
+# @brief Run a demo experiment using the Experiment class with zokrates/dummy.zok.
 # @details
 #   Steps:
 #     1. Increment experiment count and set up experiment parameters.
@@ -102,7 +89,7 @@ def clear_console():
 #     3. Run and report the experiment.
 #     4. Clean up ZoKrates-generated files.
 ##
-def run_single_experiment():
+def run_demo_experiment():
     
     # Increment experiment count and set up experiment parameters
     global experiment_count
@@ -168,7 +155,7 @@ def base_experiments_test():
     
     # Run both experiments
     print("\n=== Running Basic Dummy Circuit Experiment ===")
-    run_single_experiment()
+    run_demo_experiment()
     
     print("\n=== Running Cryptographically Meaningful Auth Circuit Experiment ===")
     run_auth_experiment()

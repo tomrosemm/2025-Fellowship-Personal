@@ -13,6 +13,7 @@
 
 # Imports
 import hashlib
+
 from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE
 
 ## @var DEBUG_MODE
