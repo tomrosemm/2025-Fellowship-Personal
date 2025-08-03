@@ -23,7 +23,7 @@ import secrets
 import os
 import time
 import random
-import subprocess
+# import subprocess
 import sys
 
 # Classes and functions
@@ -32,6 +32,10 @@ from rsu import RSU
 from experiment import Experiment
 from timer import Timer
 from zkp import generate_zkp_proof_simulated
+
+from utilities import (
+    clear_console,
+    check_file_exists)
 
 from blockchain import (
     simulate_blockchain_verification,
@@ -122,31 +126,6 @@ def set_print_data(enabled):
     
     global PRINT_DATA
     PRINT_DATA = enabled
-
-
-##
-# @brief Clears the console screen based on the operating system.
-# @details
-#   Clears the console using the appropriate command for the OS.
-#
-# Steps:
-#   1. If Windows, use 'cls'.
-#   2. Otherwise, use 'clear'.
-##
-def clear_console():
-    
-    if os.name == 'nt':
-        os.system('cls')
-        
-    else:
-        os.system('clear')
-
-
-def check_file_exists(filepath, description):
-    if not os.path.exists(filepath):
-        print(f"[Error] {description} not found: {filepath}")
-        return False
-    return True
 
 
 ##
