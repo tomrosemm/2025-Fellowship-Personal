@@ -1113,3 +1113,64 @@ def test_sumo_connection_wrapper(tested, passed):
     print()
     return tested, passed
 
+##
+# @brief Start SUMO and connect via TraCI.
+# @param sumo_cmd SUMO command list.
+# @param port Port to use for TraCI connection.
+# @param sumo_tools_path Path to SUMO tools directory.
+# @return tuple (proc, traci_module) - SUMO process and TraCI module.
+#
+# @details
+#   Steps:
+#     1. Add SUMO tools to path.
+#     2. Import TraCI.
+#     3. Start SUMO process.
+#     4. Connect via TraCI.
+#     5. Return process and TraCI module.
+##
+def start_sumo_and_traci(sumo_cmd, port, sumo_tools_path):
+    sys.path.append(sumo_tools_path)
+    try:
+        import traci
+    except ImportError:
+        print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
+        return None, None
+    proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    time.sleep(3)
+    if proc.poll() is not None:
+        stderr = proc.stderr.read().decode()
+        print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
+        return None, None
+    traci.init(port=port)
+    time.sleep(1)
+    return proc, traci
+
+##
+# @brief Clean up SUMO process and TraCI connection.
+# @param proc SUMO process.
+# @param port Port used by TraCI.
+# @param traci_module TraCI module.
+#
+# @details
+#   Steps:
+#     1. Close TraCI connection if active.
+#     2. Terminate SUMO process.
+#     3. Kill any processes still using the port.
+##
+def cleanup_sumo_and_traci(proc, port, traci_module=None):
+    try:
+        if traci_module and traci_module.isLoaded():
+            traci_module.close()
+    except Exception:
+        pass
+    try:
+        proc.terminate()
+        proc.wait(timeout=3)
+    except Exception:
+        try:
+            proc.kill()
+        except Exception:
+            pass
+    kill_processes_on_port(port)
+    time.sleep(1)
+

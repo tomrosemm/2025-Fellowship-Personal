@@ -32,10 +32,18 @@ from rsu import RSU
 from experiment import Experiment
 from timer import Timer
 
-from sumo_interface import kill_processes_on_port, cleanup_traci_connection
 from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
-from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
 from zkp import generate_zkp_proof_simulated
+
+from sumo_interface import (
+    kill_processes_on_port,
+    cleanup_traci_connection,
+    test_sumo_connection_wrapper,
+    start_sumo_and_traci,
+    cleanup_sumo_and_traci,
+    set_debug_mode as set_sumo_debug_mode
+)
+    
 
 from zokrates_interface import (
     run_zokrates_compile,
@@ -77,6 +85,8 @@ passed = 0
 # @brief Global variable to control debug output.
 DEBUG_MODE = DEFAULT_DEBUG_MODE
 
+## @var PRINT_DATA
+# @brief Global variable to control whether to print data in the SUMO interface.
 PRINT_DATA = DEFAULT_PRINT_DATA
 
 
@@ -278,7 +288,7 @@ def test_vehicle_rsu_blockchain_simulated():
 #   3. Vehicle creates ZKP proof.
 #   4. RSU verifies ZKP proof.
 #   5. Blockchain verification is performed if DEBUG_MODE is enabled.
-#   6. Print the result of infrastructure access decision.
+#   6. Print the result of the infrastructure access decision.
 ##
 def scenario_successful_authentication():
     
@@ -710,7 +720,7 @@ def test_simulated_end_to_end_multiple_vehicles():
     
     # Create RSU with the secrets of all vehicles
     # This simulates the RSU having access to all vehicle secrets
-    rsu = RSU(rsu_secrets)
+    unused_rsu = RSU(rsu_secrets)
     
     # Initialize a flag to track if all vehicles passed authentication
     all_passed = True
@@ -741,7 +751,7 @@ def test_simulated_end_to_end_multiple_vehicles():
         # If the verification result or blockchain outcome is False, set all_passed to False
         all_passed = all_passed and outcome
     
-    # Output the result of the infrastructure access decision for all vehicles, increment passed count if successful
+    # Output the result of the ZoKrates workflow and blockchain verification for all vehicles, increment passed count if successful
     if all_passed:
         passed += 1
         print("[Simulated] All vehicles granted access by infrastructure.\n")
@@ -1015,17 +1025,6 @@ def test_sumo_traci_data_transfer(print_data=True):
     # Set the SUMO_TOOLS_PATH from settings
     sys.path.append(SUMO_TOOLS_PATH)
     
-    # Try to import the TraCI module
-    try:
-        
-        import traci
-    
-    # If import fails, print error and return
-    except ImportError:
-        
-        print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
-        return
-
     # Define the SUMO network file path from settings
     SUMO_NET_FILE = SUMO_SIMPLE_NET_FILE
     
@@ -1048,29 +1047,13 @@ def test_sumo_traci_data_transfer(print_data=True):
     # Current command will start SUMO in non-GUI mode
     sumo_cmd = [sumo_binary, "-n", SUMO_NET_FILE, "--remote-port", str(port)]
     
-    # Try to start SUMO and connect via TraCI
+    # Start SUMO and connect via TraCI
+    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
+    
+    if proc is None or traci is None:
+        return
+    
     try:
-        
-        # Start SUMO process with the stored command
-        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # Wait for a moment to allow SUMO to start
-        time.sleep(3)
-        
-        # Check if the SUMO process has exited early
-        # If it has, read and print the STDERR output, then return
-        if proc.poll() is not None:
-            
-            stderr = proc.stderr.read().decode()
-            print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
-            return
-        
-        # Initialize TraCI connection to the specified port to connect to the running SUMO instance
-        traci.init(port=port)
-        
-        # Wait for a moment to ensure TraCI connection is established
-        time.sleep(1)
-        
         # Initialize a list to store simulation data
         sim_data = []
         
@@ -1108,39 +1091,9 @@ def test_sumo_traci_data_transfer(print_data=True):
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
     
-    # Ensure that TraCI connection is closed and SUMO process is terminated, regardless of success or failure
-    # This is done in a finally block to ensure cleanup occurs even if an error happens
+    # Cleanup SUMO and TraCI
     finally:
-        
-        # Try to close the TraCI connection if it is loaded
-        try:
-            
-            # Check if TraCI is loaded and close it
-            if 'traci' in locals() and traci.isLoaded():
-                traci.close()
-            
-        except Exception:
-            pass
-        
-        # Try to terminate the SUMO process gracefully
-        try:
-            proc.terminate()
-            proc.wait(timeout=3)
-        
-        # If termination fails, try to kill the process
-        except Exception:
-            
-            try:
-                proc.kill()
-                
-            except Exception:
-                pass
-        
-        # Clean up any processes that may still be running on the specified port
-        # This ensures that no leftover processes are blocking the port for future tests
-        kill_processes_on_port(port)
-        
-        time.sleep(1)
+        cleanup_sumo_and_traci(proc, port, traci)
     
     # Output the result of the SUMO TraCI data transfer test, increment passed count if successful
     if passed_local:
@@ -1183,26 +1136,11 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     # Define the port for TraCI connection from settings
     port = SUMO_PORT_DATA_CONFIG
     
-    # Set the SUMO_TOOLS_PATH from settings
-    sys.path.append(SUMO_TOOLS_PATH)
-    
-    # Try to import the TraCI module
-    try:
-        
-        import traci
-    
-    # If import fails, print error and return
-    except ImportError:
-        
-        print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
-        return
-
     # Define the path to the .sumocfg file from settings
     SUMO_SUMOCFG_FILE = SUMO_INTERSECTION_CONFIG_FILE
     
     # Check if the .sumocfg file exists, if not, print error and return
     if not os.path.exists(SUMO_SUMOCFG_FILE):
-        
         print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_SUMOCFG_FILE}")
         return
 
@@ -1220,29 +1158,13 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     # Create and store the command to start SUMO with the .sumocfg file and remote port
     sumo_cmd = [sumo_binary, "-c", SUMO_SUMOCFG_FILE, "--remote-port", str(port)]
     
-    # Try to start SUMO and connect via TraCI
+    # Start SUMO and connect via TraCI
+    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
+    
+    if proc is None or traci is None:
+        return
+    
     try:
-        
-        # Start SUMO process with the stored command
-        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # Wait for a moment to allow SUMO to start
-        time.sleep(3)
-        
-        # Check if the SUMO process has exited early
-        # If it has, read and print the STDERR output, then return
-        if proc.poll() is not None:
-            
-            stderr = proc.stderr.read().decode()
-            print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
-            return
-        
-        # Initialize TraCI connection to the specified port to connect to the running SUMO instance
-        traci.init(port=port)
-        
-        # Wait for a moment to ensure TraCI connection is established
-        time.sleep(1)
-        
         # Initialize a list to store simulation data
         sim_data = []
         
@@ -1275,44 +1197,12 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
     except Exception as e:
-        
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
     
-    # Ensure that TraCI connection is closed and SUMO process is terminated, regardless of success or failure
-    # This is done in a finally block to ensure cleanup occurs even if an error happens
+    # Cleanup SUMO and TraCI
     finally:
-        
-        # Try to close the TraCI connection if it is loaded
-        try:
-            
-            # Check if TraCI is loaded and close it
-            if 'traci' in locals() and traci.isLoaded():
-                traci.close()
-                
-        except Exception:
-            pass
-        
-        # Try to terminate the SUMO process gracefully
-        try:
-            
-            proc.terminate()
-            proc.wait(timeout=3)
-        
-        # If termination fails, try to kill the process
-        except Exception:
-            
-            try:
-                proc.kill()
-                
-            except Exception:
-                pass
-            
-        # Clean up any processes that may still be running on the specified port
-        # This ensures that no leftover processes are blocking the port for future tests
-        kill_processes_on_port(port)
-        
-        time.sleep(1)
+        cleanup_sumo_and_traci(proc, port, traci)
     
     # Output the result of the SUMO sumocfg TraCI data transfer test, increment passed count if successful
     if passed_local:
@@ -1355,18 +1245,6 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
     # Define the port for TraCI connection from settings
     port = SUMO_PORT_DATA_CONFIG + 1  # Use a different port to avoid conflicts
     
-    # Set the SUMO_TOOLS_PATH from settings
-    sys.path.append(SUMO_TOOLS_PATH)
-    
-    # Try to import the TraCI module
-    try:
-        import traci
-    
-    # If import fails, print error and return
-    except ImportError:
-        print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
-        return
-
     # Check if the intersection2.sumocfg file exists
     if not os.path.exists(SUMO_INTERSECTION2_CONFIG_FILE):
         print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_INTERSECTION2_CONFIG_FILE}")
@@ -1385,27 +1263,13 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
     # Create and store the command to start SUMO with the config file and remote port
     sumo_cmd = [sumo_binary, "-c", SUMO_INTERSECTION2_CONFIG_FILE, "--remote-port", str(port)]
     
-    # Try to start SUMO and connect via TraCI
+    # Start SUMO and connect via TraCI
+    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
+    
+    if proc is None or traci is None:
+        return
+    
     try:
-        
-        # Start SUMO process with the stored command
-        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # Wait for a moment to allow SUMO to start
-        time.sleep(3)
-        
-        # Check if the SUMO process has exited early
-        if proc.poll() is not None:
-            stderr = proc.stderr.read().decode()
-            print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
-            return
-        
-        # Initialize TraCI connection
-        traci.init(port=port)
-        
-        # Wait for a moment to ensure TraCI connection is established
-        time.sleep(1)
-        
         # Initialize a list to store simulation data
         sim_data = []
         
@@ -1437,39 +1301,20 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
         # If execution reaches here, set passed_local to True
         passed_local = True
     
-    # If any exception occurs during the TraCI data transfer
+    # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
     except Exception as e:
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
     
-    # Ensure cleanup occurs regardless of success or failure
+    # Cleanup SUMO and TraCI
     finally:
-        
-        # Try to close the TraCI connection if it is loaded
-        try:
-            if traci.isLoaded():
-                traci.close()
-        except Exception:
-            pass
-        
-        # Try to terminate the SUMO process gracefully
-        try:
-            proc.terminate()
-            proc.wait(timeout=3)
-        except Exception:
-            try:
-                proc.kill()
-            except Exception:
-                pass
-        
-        # Ensure the port is freed
-        kill_processes_on_port(port)
-        time.sleep(1)
+        cleanup_sumo_and_traci(proc, port, traci)
 
     # Output test result based on success or failure
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] intersection2.sumocfg data transfer test succeeded!\n")
+        
     else:
         print("[SUMO TraCI Test] intersection2.sumocfg data transfer test failed.\n")
     
@@ -1506,24 +1351,17 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 2
     
-    # Set the SUMO_TOOLS_PATH from settings
-    sys.path.append(SUMO_TOOLS_PATH)
+    #TODO: Uncomment the following line if SUMO_TOOLS_PATH needs to be appended to sys.path
+    # # Set the SUMO_TOOLS_PATH from settings
+    # sys.path.append(SUMO_TOOLS_PATH)
     
-    # Try to import the TraCI module
-    try:
-        import traci
-    
-    # If import fails, print error and return
-    except ImportError:
-        print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
-        return
-
     # Check if the straightaway1.sumocfg file exists
     if not os.path.exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE):
         print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY1_CONFIG_FILE}")
         return
     
     # Clean up port and traci connection before starting the test
+    # This ensures that no previous processes are blocking the port
     kill_processes_on_port(port)
     cleanup_traci_connection()
     
@@ -1536,27 +1374,13 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
     # Create and store the command to start SUMO with the config file and remote port
     sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY1_CONFIG_FILE, "--remote-port", str(port)]
     
-    # Try to start SUMO and connect via TraCI
+    # Start SUMO and connect via TraCI using the utility function
+    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
+    
+    if proc is None or traci is None:
+        return
+    
     try:
-        
-        # Start SUMO process with the stored command
-        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # Wait for a moment to allow SUMO to start
-        time.sleep(3)
-        
-        # Check if the SUMO process has exited early
-        if proc.poll() is not None:
-            stderr = proc.stderr.read().decode()
-            print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
-            return
-        
-        # Initialize TraCI connection
-        traci.init(port=port)
-        
-        # Wait for a moment to ensure TraCI connection is established
-        time.sleep(1)
-        
         # Initialize a list to store simulation data
         sim_data = []
         
@@ -1588,34 +1412,14 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
         # If execution reaches here, set passed_local to True
         passed_local = True
     
-    # If any exception occurs during the TraCI data transfer
+    # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
     except Exception as e:
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
     
-    # Ensure cleanup occurs regardless of success or failure
+    # Use the utility function to clean up SUMO and TraCI
     finally:
-        
-        # Try to close the TraCI connection if it is loaded
-        try:
-            if 'traci' in locals() and traci.isLoaded():
-                traci.close()
-        except Exception:
-            pass
-        
-        # Try to terminate the SUMO process gracefully
-        try:
-            proc.terminate()
-            proc.wait(timeout=3)
-        except Exception:
-            try:
-                proc.kill()
-            except Exception:
-                pass
-        
-        # Ensure the port is freed
-        kill_processes_on_port(port)
-        time.sleep(1)
+        cleanup_sumo_and_traci(proc, port, traci)
 
     # Output test result based on success or failure
     if passed_local:
@@ -1657,24 +1461,17 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 3
     
-    # Set the SUMO_TOOLS_PATH from settings
-    sys.path.append(SUMO_TOOLS_PATH)
+    #TODO: Uncomment the following line if SUMO_TOOLS_PATH needs to be appended to sys.path
+    # # Set the SUMO_TOOLS_PATH from settings
+    # sys.path.append(SUMO_TOOLS_PATH)
     
-    # Try to import the TraCI module
-    try:
-        import traci
-    
-    # If import fails, print error and return
-    except ImportError:
-        print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.")
-        return
-
     # Check if the straightaway2.sumocfg file exists
     if not os.path.exists(SUMO_STRAIGHTAWAY2_CONFIG_FILE):
         print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY2_CONFIG_FILE}")
         return
     
     # Clean up port and traci connection before starting the test
+    # This ensures that no previous processes are blocking the port
     kill_processes_on_port(port)
     cleanup_traci_connection()
     
@@ -1687,27 +1484,13 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
     # Create and store the command to start SUMO with the config file and remote port
     sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY2_CONFIG_FILE, "--remote-port", str(port)]
     
-    # Try to start SUMO and connect via TraCI
+    # Start SUMO and connect via TraCI using the utility function
+    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
+    
+    if proc is None or traci is None:
+        return
+    
     try:
-        
-        # Start SUMO process with the stored command
-        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # Wait for a moment to allow SUMO to start
-        time.sleep(3)
-        
-        # Check if the SUMO process has exited early
-        if proc.poll() is not None:
-            stderr = proc.stderr.read().decode()
-            print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}")
-            return
-        
-        # Initialize TraCI connection
-        traci.init(port=port)
-        
-        # Wait for a moment to ensure TraCI connection is established
-        time.sleep(1)
-        
         # Initialize a list to store simulation data
         sim_data = []
         
@@ -1739,34 +1522,14 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
         # If execution reaches here, set passed_local to True
         passed_local = True
     
-    # If any exception occurs during the TraCI data transfer
+    # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
     except Exception as e:
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
     
-    # Ensure cleanup occurs regardless of success or failure
+    # Use the utility function to clean up SUMO and TraCI
     finally:
-        
-        # Try to close the TraCI connection if it is loaded
-        try:
-            if traci.isLoaded():
-                traci.close()
-        except Exception:
-            pass
-        
-        # Try to terminate the SUMO process gracefully
-        try:
-            proc.terminate()
-            proc.wait(timeout=3)
-        except Exception:
-            try:
-                proc.kill()
-            except Exception:
-                pass
-        
-        # Ensure the port is freed
-        kill_processes_on_port(port)
-        time.sleep(1)
+        cleanup_sumo_and_traci(proc, port, traci)
 
     # Output test result based on success or failure
     if passed_local:
@@ -1809,18 +1572,6 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 4
     
-    # Set the SUMO_TOOLS_PATH from settings
-    sys.path.append(SUMO_TOOLS_PATH)
-    
-    # Try to import the TraCI module
-    try:
-        import traci
-    
-    # If import fails, print error and return
-    except ImportError:
-        print("[SUMO Manipulation Test] Could not import traci. Check SUMO_TOOLS_PATH.")
-        return
-
     # Check if the straightaway1.sumocfg file exists
     if not os.path.exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE):
         print(f"[SUMO Manipulation Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY1_CONFIG_FILE}")
@@ -1840,27 +1591,13 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
     # Create and store the command to start SUMO with the config file and remote port
     sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY1_CONFIG_FILE, "--remote-port", str(port)]
     
-    # Try to start SUMO and connect via TraCI
+    # Start SUMO and connect via TraCI using the utility function
+    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
+    
+    if proc is None or traci is None:
+        return
+    
     try:
-        
-        # Start SUMO process with the stored command
-        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # Wait for a moment to allow SUMO to start
-        time.sleep(3)
-        
-        # Check if the SUMO process has exited early
-        if proc.poll() is not None:
-            stderr = proc.stderr.read().decode()
-            print(f"[SUMO Manipulation Test] SUMO exited early. STDERR:\n{stderr}")
-            return
-        
-        # Initialize TraCI connection
-        traci.init(port=port)
-        
-        # Wait for a moment to ensure TraCI connection is established
-        time.sleep(1)
-        
         # Dictionary to track manipulations and their effects
         unused_manipulation_results = {}
         
@@ -1999,6 +1736,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
                         else:
                             print("[SUMO Manipulation Test] Failed to verify significant vehicle property changes.")
                             
+
                     except Exception as e:
                         print(f"Error reading final vehicle state: {e}")
                         passed_local = False
@@ -2008,29 +1746,9 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
         print(f"[SUMO Manipulation Test] Error during vehicle manipulation: {e}")
         passed_local = False
     
-    # Ensure cleanup occurs regardless of success or failure
+    # Use the utility function to clean up SUMO and TraCI
     finally:
-        
-        # Try to close the TraCI connection if it is loaded
-        try:
-            if 'traci' in locals() and traci.isLoaded():
-                traci.close()
-        except Exception:
-            pass
-        
-        # Try to terminate the SUMO process gracefully
-        try:
-            proc.terminate()
-            proc.wait(timeout=3)
-        except Exception:
-            try:
-                proc.kill()
-            except Exception:
-                pass
-        
-        # Ensure the port is freed
-        kill_processes_on_port(port)
-        time.sleep(1)
+        cleanup_sumo_and_traci(proc, port, traci)
 
     # Output test result based on success or failure
     if passed_local:
@@ -2171,18 +1889,6 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 5
     
-    # Set the SUMO_TOOLS_PATH from settings
-    sys.path.append(SUMO_TOOLS_PATH)
-    
-    # Try to import the TraCI module
-    try:
-        import traci
-    
-    # If import fails, print error and return
-    except ImportError:
-        print("[SUMO Small Step Test] Could not import traci. Check SUMO_TOOLS_PATH.")
-        return
-
     # Check if the straightaway1.sumocfg file exists
     if not os.path.exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE):
         print(f"[SUMO Small Step Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY1_CONFIG_FILE}")
@@ -2201,27 +1907,13 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
     # Create and store the command to start SUMO with the config file, small step length, and remote port
     sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY1_CONFIG_FILE, "--step-length", "0.01", "--remote-port", str(port)]
     
-    # Try to start SUMO and connect via TraCI
+    # Start SUMO and connect via TraCI using the utility function
+    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
+    
+    if proc is None or traci is None:
+        return
+    
     try:
-        
-        # Start SUMO process with the stored command
-        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        
-        # Wait for a moment to allow SUMO to start
-        time.sleep(3)
-        
-        # Check if the SUMO process has exited early
-        if proc.poll() is not None:
-            stderr = proc.stderr.read().decode()
-            print(f"[SUMO Small Step Test] SUMO exited early. STDERR:\n{stderr}")
-            return
-        
-        # Initialize TraCI connection
-        traci.init(port=port)
-        
-        # Wait for a moment to ensure TraCI connection is established
-        time.sleep(1)
-        
         # Initialize a list to store simulation data and time values
         sim_data = []
         time_values = []
@@ -2272,29 +1964,9 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
         print(f"[SUMO Small Step Test] Error during test: {e}")
         passed_local = False
     
-    # Ensure cleanup occurs regardless of success or failure
+    # Use the utility function to clean up SUMO and TraCI
     finally:
-        
-        # Try to close the TraCI connection if it is loaded
-        try:
-            if 'traci' in locals() and traci.isLoaded():
-                traci.close()
-        except Exception:
-            pass
-        
-        # Try to terminate the SUMO process gracefully
-        try:
-            proc.terminate()
-            proc.wait(timeout=3)
-        except Exception:
-            try:
-                proc.kill()
-            except Exception:
-                pass
-        
-        # Ensure the port is freed
-        kill_processes_on_port(port)
-        time.sleep(1)
+        cleanup_sumo_and_traci(proc, port, traci)
 
     # Output test result based on success or failure
     if passed_local:
@@ -2304,6 +1976,7 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
         print("[SUMO Small Step Test] Small step length test failed.\n")
     
     timer.stop()
+    
     # Print elapsed time for the test
     print(f"\nTest completed in {timer.elapsed()} seconds.\n")
 
@@ -2426,6 +2099,7 @@ def testAndScenarioRunner():
     time.sleep(2)
 
     timer.stop()
+    
     # Print elapsed time for the test
     print(f"\nAll tests completed in {timer.elapsed()} seconds.\n")
     
@@ -2440,4 +2114,9 @@ def testAndScenarioRunner():
 if __name__ == "__main__":
     
     testAndScenarioRunner()
+    print(f"\nTotal tests run: {tested}")
+    print(f"Total tests passed: {passed}")
+    print(f"Total tests failed: {tested - passed}")
+    print()
+    time.sleep(2)
 
