@@ -31,9 +31,12 @@ from vehicle import Vehicle
 from rsu import RSU
 from experiment import Experiment
 from timer import Timer
-
-from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
 from zkp import generate_zkp_proof_simulated
+
+from blockchain import (
+    simulate_blockchain_verification,
+    set_debug_mode as set_blockchain_debug_mode
+)
 
 from sumo_interface import (
     kill_processes_on_port,
@@ -41,9 +44,9 @@ from sumo_interface import (
     test_sumo_connection_wrapper,
     start_sumo_and_traci,
     cleanup_sumo_and_traci,
-    set_debug_mode as set_sumo_debug_mode
+    set_debug_mode as set_sumo_debug_mode,
+    run_sumo_simulation
 )
-    
 
 from zokrates_interface import (
     run_zokrates_compile,
@@ -52,7 +55,8 @@ from zokrates_interface import (
     run_zokrates_generate_proof,
     run_zokrates_verify,
     cleanup_zokrates_files,
-    set_debug_mode as set_zokrates_debug_mode
+    set_debug_mode as set_zokrates_debug_mode,
+    run_zokrates_workflow
 )
 
 from settings import (
@@ -70,12 +74,6 @@ from settings import (
     SUMO_STRAIGHTAWAY1_CONFIG_FILE,
     SUMO_STRAIGHTAWAY2_CONFIG_FILE
 )
-
-# # Add the path to intersection2.sumocfg
-# INTERSECTION2_SUMOCFG = os.path.join(
-#     os.path.dirname(__file__),
-#     "sumo", "Intersection 2", "intersection2.sumocfg"
-# )
 
 # Track number of tests run and passed
 tested = 0
@@ -114,16 +112,17 @@ def set_debug_mode(enabled):
     # set_blockchain_interface_debug_mode(enabled)
 
 
-"""
-@brief Set whether to print data in the SUMO interface.
-@param enabled True to enable printing data, False to disable.
-@details
-    Sets the print_data attribute in the SUMO interface.
-"""
+##
+# @brief Set whether to print data in the SUMO interface.
+# @param enabled True to enable printing data, False to disable.
+# @details
+#     Sets the print_data attribute in the SUMO interface.
+##
 def set_print_data(enabled):
     
     global PRINT_DATA
     PRINT_DATA = enabled
+
 
 ##
 # @brief Clears the console screen based on the operating system.
@@ -141,6 +140,13 @@ def clear_console():
         
     else:
         os.system('clear')
+
+
+def check_file_exists(filepath, description):
+    if not os.path.exists(filepath):
+        print(f"[Error] {description} not found: {filepath}")
+        return False
+    return True
 
 
 ##
@@ -205,7 +211,7 @@ def test_vehicle_rsu_interaction_simulated():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -274,7 +280,7 @@ def test_vehicle_rsu_blockchain_simulated():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -343,7 +349,7 @@ def scenario_successful_authentication():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -418,7 +424,7 @@ def scenario_failed_authentication():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -450,38 +456,11 @@ def test_zokrates_connection():
     # Set the circuit path for ZoKrates from settings
     circuit_path = ZOKRATES_DUMMY_CIRCUIT
     
-    ## Compile circuit
-    # If compilation fails, print error and return
-    if not run_zokrates_compile(circuit_path):
-        print("[ZoKrates Test] Compilation failed.")
-        return
-    
-    ## Run setup
-    # If setup fails, print error, clean up files, and return
-    if not run_zokrates_setup():
-        print("[ZoKrates Test] Setup failed.")
-        cleanup_zokrates_files()
-        return
-    
     # Args to use for computing witness (a=3, b=4)
     args = ["3", "4"]
     
-    ## Compute witness (inputs: a=3, b=4)
-    # If compute witness fails, print error, clean up files, and return
-    if not run_zokrates_compute_witness(args):
-        print("[ZoKrates Test] Compute witness failed.")
-        cleanup_zokrates_files()
-        return
-    
-    ## Generate proof
-    # If proof generation fails, print error, clean up files, and return
-    if not run_zokrates_generate_proof():
-        print("[ZoKrates Test] Proof generation failed.")
-        cleanup_zokrates_files()
-        return
-    
-    ## Verify proof
-    verification_result = run_zokrates_verify()
+    # Use run_zokrates_workflow to handle the ZoKrates operations
+    verification_result = run_zokrates_workflow(circuit_path, args)
     
     # Print verification result if DEBUG_MODE is enabled
     if DEBUG_MODE:
@@ -497,10 +476,7 @@ def test_zokrates_connection():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
-    
-    # Clean up ZoKrates artifacts after test
-    cleanup_zokrates_files()
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -540,39 +516,12 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
     # If DEBUG_MODE is enabled, print the inputs
     if DEBUG_MODE:
         print(f"Inputs: a={a}, b={b}")
-        
-    ## Compile circuit
-    # If compilation fails, print error and return
-    if not run_zokrates_compile(circuit_path):
-        print("[Real ZKP] Compilation failed.")
-        return
-    
-    ## Run setup
-    # If setup fails, print error, clean up files, and return
-    if not run_zokrates_setup():
-        print("[Real ZKP] Setup failed.")
-        cleanup_zokrates_files()
-        return
     
     # Args to use for computing witness (a, b)
     args = [str(a), str(b)]
     
-    ## Compute witness (inputs: a, b)
-    # If compute witness fails, print error, clean up files, and return
-    if not run_zokrates_compute_witness(args):
-        print("[Real ZKP] Compute witness failed.")
-        cleanup_zokrates_files()
-        return
-    
-    ## Generate proof
-    # If proof generation fails, print error, clean up files, and return
-    if not run_zokrates_generate_proof():
-        print("[Real ZKP] Proof generation failed.")
-        cleanup_zokrates_files()
-        return
-    
-    ## Verify proof
-    verification_result = run_zokrates_verify()
+    # Use run_zokrates_workflow to handle the ZoKrates operations
+    verification_result = run_zokrates_workflow(circuit_path, args)
     
     # Print verification result if DEBUG_MODE is enabled
     if DEBUG_MODE:
@@ -588,10 +537,7 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
-    
-    # Clean up ZoKrates artifacts after test
-    cleanup_zokrates_files()
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -674,7 +620,7 @@ def test_simulated_isolated_multiple_vehicles():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -761,17 +707,17 @@ def test_simulated_end_to_end_multiple_vehicles():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
-# @brief ZoKrates-integrated isolated test with multiple vehicles (zokrates/dummy.zok).
+# @brief Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok.
 # @details
-#   Runs ZoKrates workflow for multiple vehicles with random inputs.
+#   Runs ZoKrates CLI workflow with fixed inputs.
 #
 # Steps:
 #   1. For each vehicle:
-#      a. Generate random inputs.
+#      a. Generate inputs.
 #      b. Compile ZoKrates circuit.
 #      c. Run setup.
 #      d. Compute witness.
@@ -810,43 +756,11 @@ def test_zokrates_isolated_multiple_vehicles():
         if DEBUG_MODE:
             print(f"Vehicle {i+1}: Inputs a={a}, b={b}")
         
-        ## Compile circuit
-        # If compilation fails, print error, set all_passed to False, and continue to next vehicle
-        if not run_zokrates_compile(circuit_path):
-            print("[ZoKrates] Compilation failed.")
-            all_passed = False
-            continue
-        
-        ## Run setup
-        # If setup fails, print error, clean up files, set all_passed to False, and continue to next vehicle
-        if not run_zokrates_setup():
-            print("[ZoKrates] Setup failed.")
-            cleanup_zokrates_files()
-            all_passed = False
-            continue
-        
         # Args to use for computing witness (a, b)
         args = [str(a), str(b)]
         
-        ## Compute witness (inputs: a, b)
-        # If compute witness fails, print error, clean up files, set all_passed to False, and continue to next vehicle
-        if not run_zokrates_compute_witness(args):
-            print("[ZoKrates] Compute witness failed.")
-            cleanup_zokrates_files()
-            all_passed = False
-            continue
-        
-        ## Generate proof
-        # If proof generation fails, print error, clean up files, set all_passed to False, and continue to next vehicle
-        if not run_zokrates_generate_proof():
-            print("[ZoKrates] Proof generation failed.")
-            cleanup_zokrates_files()
-            all_passed = False
-            continue
-        
-        ## Verify proof
-        # Run ZoKrates verification and store the result
-        verification_result = run_zokrates_verify()
+        # Use run_zokrates_workflow to handle the ZoKrates operations
+        verification_result = run_zokrates_workflow(circuit_path, args)
         
         # If DEBUG_MODE is enabled, print the verification result
         if DEBUG_MODE:
@@ -855,9 +769,6 @@ def test_zokrates_isolated_multiple_vehicles():
         # If the verification result is False, set all_passed to False
         if not verification_result:
             all_passed = False
-        
-        # Clean up ZoKrates artifacts after each vehicle's test
-        cleanup_zokrates_files()
     
     # Output the result of the ZoKrates workflow for all vehicles, increment passed count if successful
     if all_passed:
@@ -869,7 +780,7 @@ def test_zokrates_isolated_multiple_vehicles():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -923,44 +834,12 @@ def test_zokrates_end_to_end_multiple_vehicles():
         if DEBUG_MODE:
             print(f"Vehicle {vid}: Inputs a={a}, b={b}")
         
-        ## Compile circuit
-        # If compilation fails, print error, set all_passed to False, and continue to next vehicle
-        if not run_zokrates_compile(circuit_path):
-            print("[ZoKrates] Compilation failed.")
-            all_passed = False
-            continue
-        
-        ## Run setup
-        # If setup fails, print error, clean up files, set all_passed to False, and continue to next vehicle
-        if not run_zokrates_setup():
-            print("[ZoKrates] Setup failed.")
-            cleanup_zokrates_files()
-            all_passed = False
-            continue
-        
         # Args to use for computing witness (a, b)
         # Convert inputs to strings for ZoKrates CLI
         args = [str(a), str(b)]
         
-        ## Compute witness (inputs: a, b)
-        # If compute witness fails, print error, clean up files, set all_passed to False, and continue to next vehicle
-        if not run_zokrates_compute_witness(args):
-            print("[ZoKrates] Compute witness failed.")
-            cleanup_zokrates_files()
-            all_passed = False
-            continue
-        
-        ## Generate proof
-        # If proof generation fails, print error, clean up files, set all_passed to False, and continue to next vehicle
-        if not run_zokrates_generate_proof():
-            print("[ZoKrates] Proof generation failed.")
-            cleanup_zokrates_files()
-            all_passed = False
-            continue
-        
-        ## Verify proof
-        # Run ZoKrates verification and store the result
-        verification_result = run_zokrates_verify()
+        # Use run_zokrates_workflow to handle the ZoKrates operations
+        verification_result = run_zokrates_workflow(circuit_path, args)
         
         # If DEBUG_MODE is enabled, print the verification result
         if DEBUG_MODE:
@@ -977,21 +856,18 @@ def test_zokrates_end_to_end_multiple_vehicles():
         # If the verification result or blockchain outcome is False, set all_passed to False
         if not (verification_result and outcome):
             all_passed = False
-        
-        # Clean up ZoKrates artifacts after each vehicle's test
-        cleanup_zokrates_files()
     
     # Output the result of the ZoKrates workflow and blockchain verification for all vehicles, increment passed count if successful
     if all_passed:
         passed += 1
-        print("[ZoKrates] All vehicles' end-to-end proofs and blockchain logs succeeded.\n")
+        print("[Zokrates] All vehicles' end-to-end proofs and blockchain logs succeeded.\n")
         
     else:
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1029,8 +905,7 @@ def test_sumo_traci_data_transfer(print_data=True):
     SUMO_NET_FILE = SUMO_SIMPLE_NET_FILE
     
     # Check if the SUMO network file exists, if not, print error and return
-    if not os.path.exists(SUMO_NET_FILE):
-        print(f"[SUMO TraCI Test] Network file not found: {SUMO_NET_FILE}")
+    if not check_file_exists(SUMO_NET_FILE, "SUMO network file"):
         return
     
     # Clean up port and traci
@@ -1054,35 +929,8 @@ def test_sumo_traci_data_transfer(print_data=True):
         return
     
     try:
-        # Initialize a list to store simulation data
-        sim_data = []
-        
-        # Run the simulation for a fixed number of steps (5 in this case)
-        for _ in range(5):
-            
-            # Perform a simulation step using TraCI
-            # This updates the simulation state and allows data retrieval
-            traci.simulationStep()
-            
-            # Retrieve and store the current simulation time, vehicle IDs, and their positions
-            sim_time = traci.simulation.getTime()
-            veh_ids = traci.vehicle.getIDList()
-            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
-            
-            # Store the retrieved data in a dictionary and append it to the sim_data list
-            sim_data.append({
-                "time": sim_time,
-                "vehicle_ids": veh_ids,
-                "positions": veh_positions
-            })
-            
-            # If print_data is True, print the current simulation time, vehicle IDs, and positions
-            if print_data:
-                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
-            
-            time.sleep(0.1)
-        
-        # If no exceptions occurred during the simulation and data retrieval, set passed_local to True to indicate success
+        # Use the centralized run_sumo_simulation function
+        sim_data = run_sumo_simulation(traci, 5, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1105,7 +953,7 @@ def test_sumo_traci_data_transfer(print_data=True):
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1140,8 +988,7 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     SUMO_SUMOCFG_FILE = SUMO_INTERSECTION_CONFIG_FILE
     
     # Check if the .sumocfg file exists, if not, print error and return
-    if not os.path.exists(SUMO_SUMOCFG_FILE):
-        print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_SUMOCFG_FILE}")
+    if not check_file_exists(SUMO_SUMOCFG_FILE, "SUMO configuration file"):
         return
 
     # Clean up port and traci connection before starting the test
@@ -1165,34 +1012,8 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
         return
     
     try:
-        # Initialize a list to store simulation data
-        sim_data = []
-        
-        # Run the simulation for 100 steps
-        for _ in range(100):
-            
-            # Perform a simulation step using TraCI
-            traci.simulationStep()
-            
-            # Retrieve and store the current simulation time, vehicle IDs, and their positions
-            sim_time = traci.simulation.getTime()
-            veh_ids = traci.vehicle.getIDList()
-            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
-            
-            # Store the retrieved data in a dictionary and append it to the sim_data list
-            sim_data.append({
-                "time": sim_time,
-                "vehicle_ids": veh_ids,
-                "positions": veh_positions
-            })
-            
-            # If print_data is True, print the current simulation time, vehicle IDs, and positions
-            if print_data:
-                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
-                
-            time.sleep(0.1)
-        
-        # If no exceptions occurred during the simulation and data retrieval, set passed_local to True to indicate success
+        # Use the centralized run_sumo_simulation function
+        sim_data = run_sumo_simulation(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1214,7 +1035,7 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
 
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1246,8 +1067,7 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
     port = SUMO_PORT_DATA_CONFIG + 1  # Use a different port to avoid conflicts
     
     # Check if the intersection2.sumocfg file exists
-    if not os.path.exists(SUMO_INTERSECTION2_CONFIG_FILE):
-        print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_INTERSECTION2_CONFIG_FILE}")
+    if not check_file_exists(SUMO_INTERSECTION2_CONFIG_FILE, "SUMO intersection2 configuration file"):
         return
     
     # Clean up port and traci
@@ -1270,35 +1090,8 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
         return
     
     try:
-        # Initialize a list to store simulation data
-        sim_data = []
-        
-        # Run the simulation for 100 steps to capture vehicle data
-        for _ in range(100):
-            
-            # Perform a simulation step using TraCI
-            traci.simulationStep()
-            
-            # Retrieve and store the current simulation time, vehicle IDs, and their positions
-            sim_time = traci.simulation.getTime()
-            veh_ids = traci.vehicle.getIDList()
-            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
-            
-            # Store the collected data
-            sim_data.append({
-                "time": sim_time,
-                "vehicle_ids": veh_ids,
-                "positions": veh_positions
-            })
-            
-            # If print_data flag is True, print the collected data
-            if print_data:
-                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
-            
-            # Short delay between steps
-            time.sleep(0.05)
-        
-        # If execution reaches here, set passed_local to True
+        # Use the centralized run_sumo_simulation function
+        sim_data = run_sumo_simulation(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1310,7 +1103,7 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
 
-    # Output test result based on success or failure
+    # Output the result of the SUMO TraCI data transfer test, increment passed count if successful
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] intersection2.sumocfg data transfer test succeeded!\n")
@@ -1320,7 +1113,7 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1351,13 +1144,8 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 2
     
-    #TODO: Uncomment the following line if SUMO_TOOLS_PATH needs to be appended to sys.path
-    # # Set the SUMO_TOOLS_PATH from settings
-    # sys.path.append(SUMO_TOOLS_PATH)
-    
     # Check if the straightaway1.sumocfg file exists
-    if not os.path.exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE):
-        print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY1_CONFIG_FILE}")
+    if not check_file_exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE, "SUMO straightaway1 configuration file"):
         return
     
     # Clean up port and traci connection before starting the test
@@ -1381,35 +1169,8 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
         return
     
     try:
-        # Initialize a list to store simulation data
-        sim_data = []
-        
-        # Run the simulation for 100 steps to capture vehicle data
-        for _ in range(100):
-            
-            # Perform a simulation step using TraCI
-            traci.simulationStep()
-            
-            # Retrieve and store the current simulation time, vehicle IDs, and their positions
-            sim_time = traci.simulation.getTime()
-            veh_ids = traci.vehicle.getIDList()
-            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
-            
-            # Store the collected data
-            sim_data.append({
-                "time": sim_time,
-                "vehicle_ids": veh_ids,
-                "positions": veh_positions
-            })
-            
-            # If print_data flag is True, print the collected data
-            if print_data:
-                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
-            
-            # Short delay between steps
-            time.sleep(0.05)
-        
-        # If execution reaches here, set passed_local to True
+        # Use the centralized run_sumo_simulation function
+        sim_data = run_sumo_simulation(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1417,11 +1178,11 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
     
-    # Use the utility function to clean up SUMO and TraCI
+    # Cleanup SUMO and TraCI
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
 
-    # Output test result based on success or failure
+    # Output the result of the SUMO TraCI data transfer test, increment passed count if successful
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] straightaway1.sumocfg data transfer test succeeded!\n")
@@ -1430,7 +1191,7 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1461,13 +1222,8 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 3
     
-    #TODO: Uncomment the following line if SUMO_TOOLS_PATH needs to be appended to sys.path
-    # # Set the SUMO_TOOLS_PATH from settings
-    # sys.path.append(SUMO_TOOLS_PATH)
-    
     # Check if the straightaway2.sumocfg file exists
-    if not os.path.exists(SUMO_STRAIGHTAWAY2_CONFIG_FILE):
-        print(f"[SUMO TraCI Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY2_CONFIG_FILE}")
+    if not check_file_exists(SUMO_STRAIGHTAWAY2_CONFIG_FILE, "SUMO straightaway2 configuration file"):
         return
     
     # Clean up port and traci connection before starting the test
@@ -1491,35 +1247,8 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
         return
     
     try:
-        # Initialize a list to store simulation data
-        sim_data = []
-        
-        # Run the simulation for 100 steps to capture vehicle data
-        for _ in range(100):
-            
-            # Perform a simulation step using TraCI
-            traci.simulationStep()
-            
-            # Retrieve and store the current simulation time, vehicle IDs, and their positions
-            sim_time = traci.simulation.getTime()
-            veh_ids = traci.vehicle.getIDList()
-            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
-            
-            # Store the collected data
-            sim_data.append({
-                "time": sim_time,
-                "vehicle_ids": veh_ids,
-                "positions": veh_positions
-            })
-            
-            # If print_data flag is True, print the collected data
-            if print_data:
-                print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
-            
-            # Short delay between steps
-            time.sleep(0.05)
-        
-        # If execution reaches here, set passed_local to True
+        # Use the centralized run_sumo_simulation function
+        sim_data = run_sumo_simulation(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1527,11 +1256,11 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
     
-    # Use the utility function to clean up SUMO and TraCI
+    # Cleanup SUMO and TraCI
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
 
-    # Output test result based on success or failure
+    # Output the result of the SUMO TraCI data transfer test, increment passed count if successful
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] straightaway2.sumocfg data transfer test succeeded!\n")
@@ -1540,7 +1269,7 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1573,8 +1302,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
     port = SUMO_PORT_DATA_CONFIG + 4
     
     # Check if the straightaway1.sumocfg file exists
-    if not os.path.exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE):
-        print(f"[SUMO Manipulation Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY1_CONFIG_FILE}")
+    if not check_file_exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE, "SUMO straightaway1 configuration file"):
         return
     
     # Clean up port and traci connection before starting the test
@@ -1732,7 +1460,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
                             
                             timer.stop()
                             # Print elapsed time for the test
-                            print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+                            print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
                         else:
                             print("[SUMO Manipulation Test] Failed to verify significant vehicle property changes.")
                             
@@ -1805,7 +1533,7 @@ def test_vehicle_to_infrastructure_VtoI_zkp():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
     
     return exp.result
 
@@ -1856,7 +1584,7 @@ def test_authentication_circuit_auth_zok():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
     
     return exp.result
 
@@ -1890,8 +1618,7 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
     port = SUMO_PORT_DATA_CONFIG + 5
     
     # Check if the straightaway1.sumocfg file exists
-    if not os.path.exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE):
-        print(f"[SUMO Small Step Test] .sumocfg file not found: {SUMO_STRAIGHTAWAY1_CONFIG_FILE}")
+    if not check_file_exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE, "SUMO straightaway1 configuration file"):
         return
     
     # Clean up port and traci connection before starting the test
@@ -1914,34 +1641,16 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
         return
     
     try:
-        # Initialize a list to store simulation data and time values
-        sim_data = []
+        # Initialize time values list to track step lengths
         time_values = []
         
-        # Run the simulation for 50 steps (since each is only 10ms)
-        for step in range(50):
-            
-            # Perform a simulation step using TraCI
-            traci.simulationStep()
-            
-            # Retrieve and store the current simulation time, vehicle IDs, and their positions
-            sim_time = traci.simulation.getTime()
-            time_values.append(sim_time)
-            veh_ids = traci.vehicle.getIDList()
-            veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
-            
-            # Store the collected data
-            sim_data.append({
-                "time": sim_time,
-                "vehicle_ids": veh_ids,
-                "positions": veh_positions
-            })
-            
-            # If print_data flag is True, print the collected data (only every 5 steps)
-            if print_data and step % 5 == 0:
-                print(f"\nTime: {sim_time:.3f}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+        # Use the centralized run_sumo_simulation function
+        sim_data = run_sumo_simulation(traci, 50, print_data)
         
-        # Calculate the actual step length by checking time differences
+        # Extract time values from simulation data
+        time_values = [step["time"] for step in sim_data]
+        
+        # Calculate step lengths
         step_lengths = [time_values[i+1] - time_values[i] for i in range(len(time_values)-1)]
         avg_step_length = sum(step_lengths) / len(step_lengths)
         
@@ -1978,7 +1687,7 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
     timer.stop()
     
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 def testAndScenarioRunner():
@@ -2101,7 +1810,7 @@ def testAndScenarioRunner():
     timer.stop()
     
     # Print elapsed time for the test
-    print(f"\nAll tests completed in {timer.elapsed()} seconds.\n")
+    print(f"\nAll tests completed in {timer.elapsed():.8f} seconds.\n")
     
     print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")

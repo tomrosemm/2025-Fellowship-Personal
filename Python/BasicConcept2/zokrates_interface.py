@@ -275,6 +275,41 @@ def hex_to_field_array(hex_str):
     return arr
 
 
+##
+# @brief Run complete ZoKrates workflow from compilation through verification
+# @param circuit_path Path to ZoKrates circuit file
+# @param args List of arguments for witness computation
+# @return True if workflow succeeds, False otherwise
+# @details
+#   Runs complete ZoKrates workflow:
+#   1. Compile circuit
+#   2. Run setup
+#   3. Compute witness
+#   4. Generate proof 
+#   5. Verify proof
+#   6. Clean up artifacts
+##
+def run_zokrates_workflow(circuit_path, args):
+    if not run_zokrates_compile(circuit_path):
+        print("[ZoKrates] Compilation failed.")
+        return False
+    if not run_zokrates_setup():
+        print("[ZoKrates] Setup failed.")
+        cleanup_zokrates_files()
+        return False
+    if not run_zokrates_compute_witness(args):
+        print("[ZoKrates] Compute witness failed.")
+        cleanup_zokrates_files()
+        return False
+    if not run_zokrates_generate_proof():
+        print("[ZoKrates] Proof generation failed.")
+        cleanup_zokrates_files()
+        return False
+    verification_result = run_zokrates_verify()
+    cleanup_zokrates_files()
+    return verification_result
+
+
 ## Main function to test the ZoKrates interface functionality.
 if __name__ == "__main__":
     

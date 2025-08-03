@@ -1174,3 +1174,35 @@ def cleanup_sumo_and_traci(proc, port, traci_module=None):
     kill_processes_on_port(port)
     time.sleep(1)
 
+##
+# @brief Run a SUMO simulation for a specified number of steps and collect vehicle data.
+#
+# @param traci TraCI module instance with an active connection.
+# @param steps Number of simulation steps to run.
+# @param print_data If True, print simulation data to screen.
+# @return List of dictionaries containing simulation data for each step.
+#
+# @details
+#   Steps:
+#     1. Run simulation for specified number of steps.
+#     2. For each step, collect simulation time, vehicle IDs, and positions.
+#     3. Optionally print the data to console.
+#     4. Return collected data as a list of dictionaries.
+##
+def run_sumo_simulation(traci, steps, print_data=True):
+    sim_data = []
+    for _ in range(steps):
+        traci.simulationStep()
+        sim_time = traci.simulation.getTime()
+        veh_ids = traci.vehicle.getIDList()
+        veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
+        sim_data.append({
+            "time": sim_time,
+            "vehicle_ids": veh_ids,
+            "positions": veh_positions
+        })
+        if print_data:
+            print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
+        time.sleep(0.1)
+    return sim_data
+
