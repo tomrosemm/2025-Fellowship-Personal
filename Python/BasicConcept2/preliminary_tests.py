@@ -2427,7 +2427,7 @@ def testAndScenarioRunner():
 
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed()} seconds.\n")
+    print(f"\nAll tests completed in {timer.elapsed()} seconds.\n")
     
     print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")
