@@ -563,6 +563,131 @@ def create_non_gui_config(original_config_path):
 
 
 ##
+# @brief Start the SUMO process with the specified config file and port.
+#
+# @return tuple (proc, sumo_binary, config_file, temp_config, temp_output_dir)
+#
+# @details
+#   Steps:
+#     1. Create a temporary config file without GUI elements.
+#     2. Build SUMO command.
+#     3. Start SUMO process.
+#     4. Wait for process to start.
+#     5. Return process and info.
+##
+def start_sumo_with_config(port, sumo_config_file):
+    # Create a modified configuration file without GUI elements
+    temp_config, temp_output_dir = create_non_gui_config(sumo_config_file)
+    
+    # If config creation failed, print error and return None values
+    if not temp_config:
+        print("[SUMO Config Test] Failed to create temporary config file.")
+        return None, None, None, None, None
+    
+    # Define SUMO binary (non-GUI version)
+    sumo_binary = "sumo"
+    
+    # Print debug info about SUMO binary
+    if DEBUG_MODE:
+        print(f"[SUMO Config Test] Using standard sumo binary with cleaned config")
+    
+    # Build comprehensive SUMO command with logging options
+    sumo_cmd = [
+        sumo_binary, 
+        "-c", temp_config, 
+        "--remote-port", str(port),
+        "--log", os.path.join(temp_output_dir, "sumo_run.log"),
+        "--message-log", os.path.join(temp_output_dir, "sumo_messages.log"),
+        "--error-log", os.path.join(temp_output_dir, "sumo_errors.log"),
+        "--no-step-log", 
+        "--no-warnings"
+    ]
+    
+    # Print full command in debug mode
+    if DEBUG_MODE:
+        print(f"[SUMO Config Test] SUMO command: {' '.join(sumo_cmd)}")
+    
+    # Try to start SUMO process
+    try:
+        # Start SUMO as a subprocess
+        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+        # Wait for SUMO to initialize
+        time.sleep(4)
+        
+        # Check if SUMO exited early (indicating an error)
+        if proc.poll() is not None:
+            
+            # Capture and print stderr and stdout
+            stderr = proc.stderr.read().decode()
+            stdout = proc.stdout.read().decode()
+            print(f"[SUMO Config Test] SUMO exited early with return code {proc.returncode}.")
+            print(f"[SUMO Config Test] STDERR output:\n{stderr}")
+            
+            # Print stdout if it exists
+            if stdout:
+                print(f"[SUMO Config Test] STDOUT output:\n{stdout}")
+            
+            # Check log files for additional error information
+            log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
+            
+            # Iterate through log files and print their content if they exist
+            for log_file in log_files:
+                log_path = os.path.join(temp_output_dir, log_file)
+                
+                if os.path.exists(log_path):
+                    with open(log_path, 'r') as f:
+                        content = f.read()
+                        if content:
+                            print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
+            
+            # Clean up temporary files
+            try:
+                
+                # Remove the temporary config file with unlink
+                os.unlink(temp_config)
+                
+                # Remove the temporary output directory with shutil
+                shutil.rmtree(temp_output_dir, ignore_errors=True)
+                
+            # Ignore errors during cleanup
+            except:
+                pass
+            
+            # Return Nones to indicate failure if SUMO could not start
+            return None, None, None, None, None
+        
+        # Print process ID in debug mode
+        if DEBUG_MODE:
+            print(f"[SUMO Config Test] SUMO process started with PID {proc.pid}")
+        
+        # Return process and configuration information
+        return proc, sumo_binary, sumo_config_file, temp_config, temp_output_dir
+    
+    # Handle any exceptions during SUMO startup
+    except Exception as e:
+        
+        # If in debug mode, print the error message
+        if DEBUG_MODE:
+            print(f"[SUMO Config Test] Failed to start SUMO: {e}")
+        
+        # Clean up temporary files on error
+        try:
+            
+            # Remove the temporary config file with unlink
+            os.unlink(temp_config)
+            
+            # Remove the temporary output directory with shutil
+            shutil.rmtree(temp_output_dir, ignore_errors=True)
+            
+        # Ignore errors during cleanup
+        except:
+            pass
+        
+        # Return Nones to indicate failure if SUMO could not start
+        return None, None, None, None, None
+        
+##
 # @brief Test the connection to SUMO using a .sumocfg configuration file.
 #
 # @return True if connection succeeded, False otherwise.
@@ -623,136 +748,8 @@ def test_sumo_config_connection():
         print(f"[SUMO Config Test] Create a .sumocfg file to test full SUMO functionality")
         return False
 
-
-    ##
-    # @brief Start the SUMO process with the specified config file and port.
-    #
-    # @return tuple (proc, sumo_binary, SUMO_CONFIG_FILE, temp_config, temp_output_dir)
-    #
-    # @details
-    #   Steps:
-    #     1. Create a temporary config file without GUI elements.
-    #     2. Build SUMO command.
-    #     3. Start SUMO process.
-    #     4. Wait for process to start.
-    #     5. Return process and info.
-    ##
-    def start_sumo_with_config():
-        
-        # Create a modified configuration file without GUI elements
-        temp_config, temp_output_dir = create_non_gui_config(SUMO_CONFIG_FILE)
-        
-        # If config creation failed, print error and return None values
-        if not temp_config:
-            print("[SUMO Config Test] Failed to create temporary config file.")
-            return None, None, None, None, None
-        
-        # Define SUMO binary (non-GUI version)
-        sumo_binary = "sumo"
-        
-        # Print debug info about SUMO binary
-        if DEBUG_MODE:
-            print(f"[SUMO Config Test] Using standard sumo binary with cleaned config")
-        
-        # Build comprehensive SUMO command with logging options
-        sumo_cmd = [
-            sumo_binary, 
-            "-c", temp_config, 
-            "--remote-port", str(port),
-            "--log", os.path.join(temp_output_dir, "sumo_run.log"),
-            "--message-log", os.path.join(temp_output_dir, "sumo_messages.log"),
-            "--error-log", os.path.join(temp_output_dir, "sumo_errors.log"),
-            "--no-step-log", 
-            "--no-warnings"
-        ]
-        
-        # Print full command in debug mode
-        if DEBUG_MODE:
-            print(f"[SUMO Config Test] SUMO command: {' '.join(sumo_cmd)}")
-        
-        # Try to start SUMO process
-        try:
-            
-            # Start SUMO as a subprocess
-            proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            
-            # Wait for SUMO to initialize
-            time.sleep(4)
-            
-            # Check if SUMO exited early (indicating an error)
-            if proc.poll() is not None:
-                
-                # Capture and print stderr and stdout
-                stderr = proc.stderr.read().decode()
-                stdout = proc.stdout.read().decode()
-                print(f"[SUMO Config Test] SUMO exited early with return code {proc.returncode}.")
-                print(f"[SUMO Config Test] STDERR output:\n{stderr}")
-                
-                # Print stdout if it exists
-                if stdout:
-                    print(f"[SUMO Config Test] STDOUT output:\n{stdout}")
-                
-                # Check log files for additional error information
-                log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
-                
-                # Iterate through log files and print their content if they exist
-                for log_file in log_files:
-                    log_path = os.path.join(temp_output_dir, log_file)
-                    
-                    if os.path.exists(log_path):
-                        with open(log_path, 'r') as f:
-                            content = f.read()
-                            if content:
-                                print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
-                
-                # Clean up temporary files
-                try:
-                    
-                    # Remove the temporary config file with unlink
-                    os.unlink(temp_config)
-                    
-                    # Remove the temporary output directory with shutil
-                    shutil.rmtree(temp_output_dir, ignore_errors=True)
-                    
-                # Ignore errors during cleanup
-                except:
-                    pass
-                
-                # Return Nones to indicate failure if SUMO could not start
-                return None, None, None, None, None
-            
-            # Print process ID in debug mode
-            if DEBUG_MODE:
-                print(f"[SUMO Config Test] SUMO process started with PID {proc.pid}")
-            
-            # Return process and configuration information
-            return proc, sumo_binary, SUMO_CONFIG_FILE, temp_config, temp_output_dir
-        
-        # Handle any exceptions during SUMO startup
-        except Exception as e:
-            
-            # If in debug mode, print the error message
-            if DEBUG_MODE:
-                print(f"[SUMO Config Test] Failed to start SUMO: {e}")
-            
-            # Clean up temporary files on error
-            try:
-                
-                # Remove the temporary config file with unlink
-                os.unlink(temp_config)
-                
-                # Remove the temporary output directory with shutil
-                shutil.rmtree(temp_output_dir, ignore_errors=True)
-                
-            # Ignore errors during cleanup
-            except:
-                pass
-            
-            # Return Nones to indicate failure if SUMO could not start
-            return None, None, None, None, None
-
     # Start the SUMO process with the configuration file
-    proc, sumo_binary, config_file, temp_config, temp_output_dir = start_sumo_with_config()
+    proc, sumo_binary, config_file, temp_config, temp_output_dir = start_sumo_with_config(port, SUMO_CONFIG_FILE)
     
     # If the process could not be started, print debug info and return False
     if not proc:
