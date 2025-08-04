@@ -1421,11 +1421,9 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
                         
                         # Verify that manipulations had an effect
                         speed_changed = abs(final_speed - initial_speed) > 0.1
-                        # Calculate absolute distance moved regardless of direction
-                        position_changed = abs(abs(final_position[0]) - abs(initial_position[0])) > 5.0
-                        # Or alternatively, calculate total movement
-                        total_movement = abs(final_position[0] - initial_position[0])
-                        position_changed = total_movement > 5.0
+                        # Calculate total movement as direct difference
+                        total_movement = final_position[0] - initial_position[0]
+                        position_changed = abs(total_movement) > 5.0
                         color_changed = final_color != initial_color
                         
                         passed_local = speed_changed or position_changed or color_changed
@@ -1436,7 +1434,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
                                 if speed_changed:
                                     print(f"- Speed changed from {initial_speed:.2f} to {final_speed:.2f}")
                                 if position_changed:
-                                    print(f"- Position changed by {total_movement:.2f} meters (Initial: {initial_position[0]:.2f}, Final: {final_position[0]:.2f})")
+                                    print(f"- Position changed {total_movement:.2f} meters (from {initial_position[0]:.2f} to {final_position[0]:.2f})")
                                 if color_changed:
                                     print(f"- Color changed from {initial_color} to {final_color}")
                             
