@@ -1291,8 +1291,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
     # Wait for a moment to ensure cleanup is complete
     time.sleep(2)
 
-    # Define the SUMO binary command - use GUI in debug mode for visual feedback
-    # sumo_binary = "sumo-gui" if DEBUG_MODE else "sumo"
+    # Define the SUMO binary command
     sumo_binary = "sumo"
     
     # Create and store the command to start SUMO with the config file and remote port
@@ -1305,10 +1304,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
         return
     
     try:
-        # Dictionary to track manipulations and their effects
-        unused_manipulation_results = {}
-        
-        # Run the simulation for 10 steps to let vehicles appear
+        # Run the simulation for steps to let vehicles appear
         veh_ids = []
         for step in range(15):
             traci.simulationStep()
@@ -1324,130 +1320,106 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
         if not veh_ids:
             print("[SUMO Manipulation Test] No vehicles found in simulation after 15 steps.")
             passed_local = False
-        else:
-            # We'll manipulate the first vehicle
-            vehicle_id = veh_ids[0]
+            return
             
-            # Store initial vehicle state
-            initial_speed = traci.vehicle.getSpeed(vehicle_id)
-            initial_position = traci.vehicle.getPosition(vehicle_id)
-            initial_color = traci.vehicle.getColor(vehicle_id)
-            
+        # We'll manipulate the first vehicle
+        vehicle_id = veh_ids[0]
+        
+        # Store initial vehicle state
+        initial_speed = traci.vehicle.getSpeed(vehicle_id)
+        initial_position = traci.vehicle.getPosition(vehicle_id)
+        initial_color = traci.vehicle.getColor(vehicle_id)
+        
+        if print_data:
+            print(f"\nInitial state of vehicle {vehicle_id}:")
+            print(f"Speed: {initial_speed:.2f} m/s")
+            print(f"Position: ({initial_position[0]:.2f}, {initial_position[1]:.2f})")
+            print(f"Color: {initial_color}")
+        
+        # 1. FIRST MANIPULATION: Change vehicle color to red
+        try:
+            traci.vehicle.setColor(vehicle_id, (255, 0, 0, 255))  # RGBA: Red
             if print_data:
-                print(f"\nInitial state of vehicle {vehicle_id}:")
-                print(f"Speed: {initial_speed:.2f} m/s")
-                print(f"Position: ({initial_position[0]:.2f}, {initial_position[1]:.2f})")
-                print(f"Color: {initial_color}")
+                print(f"\nChanged color of vehicle {vehicle_id} to red")
+        except Exception as e:
+            print(f"Failed to change color: {e}")
+        
+        # Run a step to apply changes
+        traci.simulationStep()
             
-            # Perform manipulations
+        # 2. SECOND MANIPULATION: Change vehicle speed
+        try:
+            new_speed = 15.0  # m/s
+            traci.vehicle.setSpeed(vehicle_id, new_speed)
+            if print_data:
+                print(f"Changed speed of vehicle {vehicle_id} to {new_speed} m/s")
+        except Exception as e:
+            print(f"Failed to change speed: {e}")
+        
+        # Run a step to apply changes
+        traci.simulationStep()
             
-            # 1. Change vehicle color to red
-            try:
-                traci.vehicle.setColor(vehicle_id, (255, 0, 0, 255))  # RGBA: Red
-                if print_data:
-                    print(f"\nChanged color of vehicle {vehicle_id} to red")
-            except Exception as e:
-                print(f"Failed to change color: {e}")
+        # 3. THIRD MANIPULATION: Move vehicle forward along lane
+        post_speed_position = None
+        try:
+            # Get position after speed change but before manual movement
+            post_speed_position = traci.vehicle.getPosition(vehicle_id)
             
-            # Run a few steps to observe changes
-            for _ in range(5):
-                traci.simulationStep()
-                time.sleep(0.1)
+            lane_id = traci.vehicle.getLaneID(vehicle_id)
+            current_lane_pos = traci.vehicle.getLanePosition(vehicle_id)
+            new_lane_pos = current_lane_pos + 10  # Move 10m forward
             
-            # 2. Change vehicle speed
-            try:
-                new_speed = 15.0  # m/s
-                traci.vehicle.setSpeed(vehicle_id, new_speed)
-                if print_data:
-                    print(f"Changed speed of vehicle {vehicle_id} to {new_speed} m/s")
-            except Exception as e:
-                print(f"Failed to change speed: {e}")
-            
-            # Run a few steps to observe changes
-            for _ in range(5):
-                traci.simulationStep()
-                time.sleep(0.1)
-            
-            # 3. Try to teleport vehicle forward
-            try:
-                current_position = traci.vehicle.getPosition(vehicle_id)
-                lane_id = traci.vehicle.getLaneID(vehicle_id)
+            traci.vehicle.moveTo(vehicle_id, lane_id, new_lane_pos)
+            if print_data:
+                print(f"Moved vehicle {vehicle_id} 10m forward along lane {lane_id}")
                 
-                # Try to move vehicle forward along the lane
-                current_lane_pos = traci.vehicle.getLanePosition(vehicle_id)
-                new_lane_pos = current_lane_pos + 10  # Move 10m forward
-                
-                traci.vehicle.moveTo(vehicle_id, lane_id, new_lane_pos)
-                if print_data:
-                    print(f"Moved vehicle {vehicle_id} 10m forward along lane {lane_id}")
-                    
-            except Exception as e:
-                # If lane positioning fails, try XY positioning
+        except Exception as e:
+            print(f"Failed to move vehicle along lane: {e}")
+        
+        # Run several steps to see the effects of all manipulations
+        for step in range(15):
+            traci.simulationStep()
+            
+            # Get final state after last step
+            if step == 14:
                 try:
-                    current_position = traci.vehicle.getPosition(vehicle_id)
-                    new_position = (current_position[0] + 10, current_position[1])
-                    angle = traci.vehicle.getAngle(vehicle_id)
+                    final_speed = traci.vehicle.getSpeed(vehicle_id)
+                    final_position = traci.vehicle.getPosition(vehicle_id)
+                    final_color = traci.vehicle.getColor(vehicle_id)
                     
-                    traci.vehicle.moveToXY(vehicle_id, "", 0, new_position[0], new_position[1], angle, keepRoute=2)
+                    # Calculate changes
+                    speed_change = final_speed - initial_speed
+                    position_change = final_position[0] - initial_position[0]
+                    
+                    # Position change due to speed (after speed was set but before manual movement)
+                    speed_position_change = 0
+                    if post_speed_position:
+                        speed_position_change = post_speed_position[0] - initial_position[0]
+                    
+                    # Position change due to manual movement and subsequent movement
+                    manual_and_subsequent = position_change - speed_position_change
+                    
                     if print_data:
-                        print(f"Teleported vehicle {vehicle_id} 50m forward using XY coordinates")
+                        print(f"\nFinal state of vehicle {vehicle_id} after manipulations:")
+                        print(f"Speed: {final_speed:.2f} m/s (was {initial_speed:.2f} m/s)")
+                        print(f"Position: ({final_position[0]:.2f}, {final_position[1]:.2f}) (was ({initial_position[0]:.2f}, {initial_position[1]:.2f}))")
+                        print(f"Color: {final_color} (was {initial_color})")
                         
-                except Exception as e2:
-                    print(f"Could not reposition vehicle: {e2}")
-            
-            # Run more steps to observe the effects of all manipulations
-            for step in range(15):
-                traci.simulationStep()
-                time.sleep(0.1)
-                
-                # Get final state after last step
-                if step == 14:
-                    try:
-                        final_speed = traci.vehicle.getSpeed(vehicle_id)
-                        final_position = traci.vehicle.getPosition(vehicle_id)
-                        final_color = traci.vehicle.getColor(vehicle_id)
-                        
-                        unused_manipulation_results = {
-                            "speed_change": {"initial": initial_speed, "final": final_speed},
-                            "position_change": {"initial": initial_position, "final": final_position},
-                            "color_change": {"initial": initial_color, "final": final_color}
-                        }
-                        
-                        if print_data:
-                            print(f"\nFinal state of vehicle {vehicle_id} after manipulations:")
-                            print(f"Speed: {final_speed:.2f} m/s (was {initial_speed:.2f} m/s)")
-                            print(f"Position: ({final_position[0]:.2f}, {final_position[1]:.2f}) (was ({initial_position[0]:.2f}, {initial_position[1]:.2f}))")
-                            print(f"Color: {final_color} (was {initial_color})")
-                        
-                        # Verify that manipulations had an effect
-                        speed_changed = abs(final_speed - initial_speed) > 0.1
-                        # Calculate total movement as direct difference
-                        total_movement = final_position[0] - initial_position[0]
-                        position_changed = abs(total_movement) > 5.0
-                        color_changed = final_color != initial_color
-                        
-                        passed_local = speed_changed or position_changed or color_changed
-                        
-                        if passed_local:
-                            if print_data:
-                                print("\n[SUMO Manipulation Test] Successfully manipulated vehicle properties:")
-                                if speed_changed:
-                                    print(f"- Speed changed from {initial_speed:.2f} to {final_speed:.2f}")
-                                if position_changed:
-                                    print(f"- Position changed {total_movement:.2f} meters (from {initial_position[0]:.2f} to {final_position[0]:.2f})")
-                                if color_changed:
-                                    print(f"- Color changed from {initial_color} to {final_color}")
-                            
-                            timer.stop()
-                            # Print elapsed time for the test
-                            print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
-                        else:
-                            print("[SUMO Manipulation Test] Failed to verify significant vehicle property changes.")
-                            
-
-                    except Exception as e:
-                        print(f"Error reading final vehicle state: {e}")
-                        passed_local = False
+                        print("\n[SUMO Manipulation Test] Successfully manipulated vehicle properties:")
+                        print(f"- Speed changed from {initial_speed:.2f} to {final_speed:.2f}")
+                        print(f"- Position changed {position_change:.2f} meters (from {initial_position[0]:.2f} to {final_position[0]:.2f})")
+                        print(f"- Color changed from {initial_color} to {final_color}")
+                    
+                    # Verify that manipulations had an effect
+                    speed_changed = abs(final_speed - initial_speed) > 0.1
+                    position_changed = abs(position_change) > 5.0
+                    color_changed = final_color != initial_color
+                    
+                    passed_local = speed_changed and position_changed and color_changed
+                    
+                except Exception as e:
+                    print(f"Error reading final vehicle state: {e}")
+                    passed_local = False
     
     # If any exception occurs during the manipulation
     except Exception as e:
@@ -1461,9 +1433,12 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
     # Output test result based on success or failure
     if passed_local:
         passed += 1
-        print("[SUMO Manipulation Test] Vehicle manipulation test succeeded!\n")
+        print("[SUMO Manipulation Test] Vehicle manipulation test succeeded!")
     else:
-        print("[SUMO Manipulation Test] Vehicle manipulation test failed.\n")
+        print("[SUMO Manipulation Test] Vehicle manipulation test failed.")
+    
+    timer.stop()
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1783,6 +1758,31 @@ def testAndScenarioRunner():
     # SUMO cleanup after connection tests
     cleanup_traci_connection()
     kill_processes_on_port(SUMO_PORT_BASIC)
+    kill_processes_on_port(SUMO_PORT_CONFIG)
+    kill_processes_on_port(SUMO_PORT_DATA)
+    time.sleep(2)
+
+    timer.stop()
+    
+    # Print elapsed time for the test
+    print(f"\nAll tests completed in {timer.elapsed():.8f} seconds.\n")
+    
+    print(f"\nTotal tests run: {tested}")
+    print(f"Total tests passed: {passed}")
+    print(f"Total tests failed: {tested - passed}")
+    print()
+    time.sleep(2)
+
+
+## Runs all tests and scenarios
+if __name__ == "__main__":
+    
+    testAndScenarioRunner()
+    print(f"\nTotal tests run: {tested}")
+    print(f"Total tests passed: {passed}")
+    print(f"Total tests failed: {tested - passed}")
+    print()
+    time.sleep(2)
     kill_processes_on_port(SUMO_PORT_CONFIG)
     kill_processes_on_port(SUMO_PORT_DATA)
     time.sleep(2)
