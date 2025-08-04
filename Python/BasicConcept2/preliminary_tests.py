@@ -45,11 +45,11 @@ from blockchain import (
 from sumo_interface import (
     kill_processes_on_port,
     cleanup_traci_connection,
-    test_sumo_connection_wrapper,
     start_sumo_and_traci,
     cleanup_sumo_and_traci,
     set_debug_mode as set_sumo_debug_mode,
-    run_sumo_simulation
+    run_sumo_simulation,
+    test_sumo_connection_wrapper
 )
 
 from zokrates_interface import (
@@ -1758,31 +1758,6 @@ def testAndScenarioRunner():
     # SUMO cleanup after connection tests
     cleanup_traci_connection()
     kill_processes_on_port(SUMO_PORT_BASIC)
-    kill_processes_on_port(SUMO_PORT_CONFIG)
-    kill_processes_on_port(SUMO_PORT_DATA)
-    time.sleep(2)
-
-    timer.stop()
-    
-    # Print elapsed time for the test
-    print(f"\nAll tests completed in {timer.elapsed():.8f} seconds.\n")
-    
-    print(f"\nTotal tests run: {tested}")
-    print(f"Total tests passed: {passed}")
-    print(f"Total tests failed: {tested - passed}")
-    print()
-    time.sleep(2)
-
-
-## Runs all tests and scenarios
-if __name__ == "__main__":
-    
-    testAndScenarioRunner()
-    print(f"\nTotal tests run: {tested}")
-    print(f"Total tests passed: {passed}")
-    print(f"Total tests failed: {tested - passed}")
-    print()
-    time.sleep(2)
     kill_processes_on_port(SUMO_PORT_CONFIG)
     kill_processes_on_port(SUMO_PORT_DATA)
     time.sleep(2)
