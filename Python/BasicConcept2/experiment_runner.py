@@ -10,6 +10,7 @@
 #   - Sets up and runs experiments with dummy.zok and auth.zok circuits.
 #   - Integrates with vehicle, RSU, ZoKrates, and blockchain modules.
 #   - Supports debug mode and cleanup of ZoKrates artifacts.
+#   - Logs experiment execution and results to files in the logs/ directory.
 ##
 
 # Imports
@@ -17,6 +18,9 @@ import secrets
 import os
 import time
 import random
+import logging
+from pathlib import Path
+import datetime
 
 from experiment import Experiment
 from vehicle import Vehicle
@@ -58,6 +62,57 @@ experiment_count = 0
 ## @brief Counter for the number of tests performed.
 tested = 0
 
+## @var logger
+## @brief Global logger for the experiment runner.
+logger = None
+
+##
+# @brief Set up logging for the experiment runner.
+# @details
+#   - Creates a logs directory if it doesn't exist.
+#   - Configures a logger with a timestamped filename.
+#   - Sets up logging level and format.
+##
+def setup_logging():
+    global logger
+    
+    # Create logs directory if it doesn't exist
+    logs_dir = Path("logs")
+    logs_dir.mkdir(exist_ok=True)
+    
+    # Create timestamped filename for the runner's log
+    timestamp_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_filename = f"{timestamp_str}_experiment_runner.log"
+    log_filepath = logs_dir / log_filename
+    
+    # Configure logger
+    logger = logging.getLogger("experiment_runner")
+    logger.setLevel(logging.DEBUG)
+    
+    # Clear any existing handlers
+    if logger.hasHandlers():
+        logger.handlers.clear()
+    
+    # Add file handler
+    file_handler = logging.FileHandler(log_filepath)
+    file_handler.setLevel(logging.DEBUG)
+    
+    # Add console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO if DEBUG_MODE else logging.WARNING)
+    
+    # Create formatter
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
+    
+    # Add handlers to the logger
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+    
+    logger.info("Experiment runner initialized")
+    return logger
+
 ##
 # @brief Enable or disable debug mode for detailed output.
 # @param enabled True to enable debug mode, False to disable.
@@ -76,6 +131,15 @@ def set_debug_mode(enabled):
     set_zokrates_debug_mode(enabled)
     set_blockchain_debug_mode(enabled)
     set_sumo_debug_mode(enabled)
+    
+    # Update console handler log level
+    if logger:
+        for handler in logger.handlers:
+            if isinstance(handler, logging.StreamHandler) and not isinstance(handler, logging.FileHandler):
+                handler.setLevel(logging.INFO if enabled else logging.WARNING)
+    
+    if logger:
+        logger.debug(f"Debug mode set to: {enabled}")
     
     # set_blockchain_interface_debug_mode(enabled)
 
@@ -96,9 +160,15 @@ def run_demo_experiment():
     experiment_count += 1
     name = f"Experiment_{experiment_count}"
     
+    if logger:
+        logger.info(f"Running demo experiment: {name}")
+    
     # Generate a vehicle ID and RSU ID for this experiment
     vehicle_id = f"Vehicle_{experiment_count}"
     rsu_id = f"RSU_{experiment_count}"
+    
+    if logger:
+        logger.debug(f"Vehicle ID: {vehicle_id}, RSU ID: {rsu_id}")
     
     # Path to the ZoKrates circuit file from settings
     zokrates_circuit_path = ZOKRATES_DUMMY_CIRCUIT
@@ -107,10 +177,20 @@ def run_demo_experiment():
     exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
     
     # Run the experiment and report results
+    if logger:
+        logger.info(f"Running experiment {name}")
+    
     exp.run()
+    
+    if logger:
+        logger.info(f"Reporting on experiment {name}")
+    
     exp.report()
     
     # Clean up ZoKrates-generated files after the experiment
+    if logger:
+        logger.debug("Cleaning up ZoKrates files")
+    
     cleanup_zokrates_files()
 
 
@@ -130,9 +210,15 @@ def run_auth_experiment():
     experiment_count += 1
     name = f"Auth_Experiment_{experiment_count}"
     
+    if logger:
+        logger.info(f"Running auth experiment: {name}")
+    
     # Generate a vehicle ID and RSU ID for this experiment
     vehicle_id = f"Auth_Vehicle_{experiment_count}"
     rsu_id = f"Auth_RSU_{experiment_count}"
+    
+    if logger:
+        logger.debug(f"Vehicle ID: {vehicle_id}, RSU ID: {rsu_id}")
     
     # Path to the ZoKrates circuit file from settings
     zokrates_circuit_path = ZOKRATES_AUTH_CIRCUIT
@@ -141,29 +227,53 @@ def run_auth_experiment():
     exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
     
     # Run the experiment and report results
+    if logger:
+        logger.info(f"Running experiment {name}")
+    
     exp.run()
+    
+    if logger:
+        logger.info(f"Reporting on experiment {name}")
+    
     exp.report()
     
     # Clean up ZoKrates-generated files after the experiment
+    if logger:
+        logger.debug("Cleaning up ZoKrates files")
+    
     cleanup_zokrates_files()
 
 
 def base_experiments_test():
+    
+    # Set up logging
+    setup_logging()
+    
+    if logger:
+        logger.info("Starting base experiments test")
     
     # Ensure no old files interfere
     cleanup_zokrates_files()  
     
     # Run both experiments
     print("\n=== Running Basic Dummy Circuit Experiment ===")
+    if logger:
+        logger.info("Running Basic Dummy Circuit Experiment")
+    
     run_demo_experiment()
     
     print("\n=== Running Cryptographically Meaningful Auth Circuit Experiment ===")
+    if logger:
+        logger.info("Running Cryptographically Meaningful Auth Circuit Experiment")
+    
     run_auth_experiment()
+    
+    if logger:
+        logger.info("Base experiments test completed")
     
     
 if __name__ == "__main__":
     
     ## @brief Main entry point for running experiments.
     base_experiments_test()
-    
-    
+
