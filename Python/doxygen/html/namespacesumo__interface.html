@@ -96,21 +96,24 @@ Functions</h2></td></tr>
 <tr class="memitem:a55b512a0c9dd34a2ef821f434235c495" id="r_a55b512a0c9dd34a2ef821f434235c495"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55b512a0c9dd34a2ef821f434235c495">check_config_file_references</a> (config_path)</td></tr>
 <tr class="memdesc:a55b512a0c9dd34a2ef821f434235c495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if all files referenced in the configuration file exist.  <br /></td></tr>
 <tr class="separator:a55b512a0c9dd34a2ef821f434235c495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7890c760ff9731a4754f45a3a2a8ca9f" id="r_a7890c760ff9731a4754f45a3a2a8ca9f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7890c760ff9731a4754f45a3a2a8ca9f">cleanup_sumo_and_traci</a> (proc, port, traci_module=None)</td></tr>
+<tr class="memdesc:a7890c760ff9731a4754f45a3a2a8ca9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up SUMO process and TraCI connection.  <br /></td></tr>
+<tr class="separator:a7890c760ff9731a4754f45a3a2a8ca9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54d7a9e00fe0fad505396b436d30ae19" id="r_a54d7a9e00fe0fad505396b436d30ae19"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54d7a9e00fe0fad505396b436d30ae19">cleanup_traci_connection</a> ()</td></tr>
 <tr class="memdesc:a54d7a9e00fe0fad505396b436d30ae19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ensure any existing TraCI connection is properly closed.  <br /></td></tr>
 <tr class="separator:a54d7a9e00fe0fad505396b436d30ae19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4f99080fc8565b51c76b1dc4e530727" id="r_ad4f99080fc8565b51c76b1dc4e530727"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4f99080fc8565b51c76b1dc4e530727">create_non_gui_config</a> (original_config_path)</td></tr>
 <tr class="memdesc:ad4f99080fc8565b51c76b1dc4e530727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a temporary config file without GUI elements and with essential simulation parameters.  <br /></td></tr>
 <tr class="separator:ad4f99080fc8565b51c76b1dc4e530727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a3295007acd70bce6006465891ad368" id="r_a9a3295007acd70bce6006465891ad368"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a3295007acd70bce6006465891ad368">is_port_available</a> (port)</td></tr>
-<tr class="memdesc:a9a3295007acd70bce6006465891ad368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a port is available for use.  <br /></td></tr>
-<tr class="separator:a9a3295007acd70bce6006465891ad368"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ecfbbe7bbb578fcca359736db14f2c5" id="r_a5ecfbbe7bbb578fcca359736db14f2c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ecfbbe7bbb578fcca359736db14f2c5">kill_processes_on_port</a> (port)</td></tr>
-<tr class="memdesc:a5ecfbbe7bbb578fcca359736db14f2c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kill any processes using the specified port.  <br /></td></tr>
-<tr class="separator:a5ecfbbe7bbb578fcca359736db14f2c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44bf2802129741a481079d630c89bd30" id="r_a44bf2802129741a481079d630c89bd30"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44bf2802129741a481079d630c89bd30">run_sumo_simulation</a> (traci, steps, print_data=True)</td></tr>
+<tr class="memdesc:a44bf2802129741a481079d630c89bd30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a SUMO simulation for a specified number of steps and collect vehicle data.  <br /></td></tr>
+<tr class="separator:a44bf2802129741a481079d630c89bd30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe50dc83f1d29648965392032fdfbd20" id="r_afe50dc83f1d29648965392032fdfbd20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe50dc83f1d29648965392032fdfbd20">set_debug_mode</a> (enabled)</td></tr>
 <tr class="memdesc:afe50dc83f1d29648965392032fdfbd20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable debug mode for detailed output.  <br /></td></tr>
 <tr class="separator:afe50dc83f1d29648965392032fdfbd20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8926912f5e6a9b9fda78c9e5f9e4dccb" id="r_a8926912f5e6a9b9fda78c9e5f9e4dccb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8926912f5e6a9b9fda78c9e5f9e4dccb">start_sumo_and_traci</a> (sumo_cmd, port, sumo_tools_path)</td></tr>
+<tr class="memdesc:a8926912f5e6a9b9fda78c9e5f9e4dccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start SUMO and connect via TraCI.  <br /></td></tr>
+<tr class="separator:a8926912f5e6a9b9fda78c9e5f9e4dccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8caca2dabe36412a0b3bee94f4188b4" id="r_aa8caca2dabe36412a0b3bee94f4188b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8caca2dabe36412a0b3bee94f4188b4">test_sumo_config_connection</a> ()</td></tr>
 <tr class="memdesc:aa8caca2dabe36412a0b3bee94f4188b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test the connection to SUMO using a .sumocfg configuration file.  <br /></td></tr>
 <tr class="separator:aa8caca2dabe36412a0b3bee94f4188b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,9 +123,6 @@ Functions</h2></td></tr>
 <tr class="memitem:aff2a8585577ecf8fb855cdd916dd4291" id="r_aff2a8585577ecf8fb855cdd916dd4291"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff2a8585577ecf8fb855cdd916dd4291">test_sumo_connection_wrapper</a> (tested, passed)</td></tr>
 <tr class="memdesc:aff2a8585577ecf8fb855cdd916dd4291"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run both SUMO connection tests and count as tests.  <br /></td></tr>
 <tr class="separator:aff2a8585577ecf8fb855cdd916dd4291"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5760783b27e5d8030c9cdb726d3f2b4a" id="r_a5760783b27e5d8030c9cdb726d3f2b4a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5760783b27e5d8030c9cdb726d3f2b4a">wait_for_port_available</a> (port, timeout=15)</td></tr>
-<tr class="memdesc:a5760783b27e5d8030c9cdb726d3f2b4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for a port to become available, forcefully cleaning if needed.  <br /></td></tr>
-<tr class="separator:a5760783b27e5d8030c9cdb726d3f2b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -157,6 +157,47 @@ Variables</h2></td></tr>
 <p>Steps:</p><ol type="1">
 <li>Parse XML and check file references.</li>
 <li>Return missing files if any. </li>
+</ol>
+
+</div>
+</div>
+<a id="a7890c760ff9731a4754f45a3a2a8ca9f" name="a7890c760ff9731a4754f45a3a2a8ca9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7890c760ff9731a4754f45a3a2a8ca9f">&#9670;&#160;</a></span>cleanup_sumo_and_traci()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cleanup_sumo_and_traci </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>proc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>port</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>traci_module</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clean up SUMO process and TraCI connection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">proc</td><td>SUMO process. </td></tr>
+    <tr><td class="paramname">port</td><td>Port used by TraCI. </td></tr>
+    <tr><td class="paramname">traci_module</td><td>TraCI module.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Steps:</p><ol type="1">
+<li>Close TraCI connection if active.</li>
+<li>Terminate SUMO process.</li>
+<li>Kill any processes still using the port. </li>
 </ol>
 
 </div>
@@ -216,62 +257,45 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a9a3295007acd70bce6006465891ad368" name="a9a3295007acd70bce6006465891ad368"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a3295007acd70bce6006465891ad368">&#9670;&#160;</a></span>is_port_available()</h2>
+<a id="a44bf2802129741a481079d630c89bd30" name="a44bf2802129741a481079d630c89bd30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44bf2802129741a481079d630c89bd30">&#9670;&#160;</a></span>run_sumo_simulation()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">is_port_available </td>
+          <td class="memname">run_sumo_simulation </td>
           <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>port</em></span></td><td>)</td>
-          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>traci</em></span>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Check if a port is available for use. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">port</td><td>Port number to check. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if port is available, False otherwise.</dd></dl>
-<p>Steps:</p><ol type="1">
-<li>Attempt to bind to the port.</li>
-<li>Return True if successful, False otherwise. </li>
-</ol>
-
-</div>
-</div>
-<a id="a5ecfbbe7bbb578fcca359736db14f2c5" name="a5ecfbbe7bbb578fcca359736db14f2c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ecfbbe7bbb578fcca359736db14f2c5">&#9670;&#160;</a></span>kill_processes_on_port()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">kill_processes_on_port </td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>port</em></span></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>steps</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>print_data</em></span><span class="paramdefsep"> = </span><span class="paramdefval">True</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Kill any processes using the specified port. </p>
+<p>Run a SUMO simulation for a specified number of steps and collect vehicle data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">port</td><td>Port number to clean up. </td></tr>
+    <tr><td class="paramname">traci</td><td>TraCI module instance with an active connection. </td></tr>
+    <tr><td class="paramname">steps</td><td>Number of simulation steps to run. </td></tr>
+    <tr><td class="paramname">print_data</td><td>If True, print simulation data to screen. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if any processes were killed, False otherwise.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>List of dictionaries containing simulation data for each step.</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Iterate over processes and kill those using the port.</li>
-<li>Wait for OS to release the port if any were killed. </li>
+<li>Run simulation for specified number of steps.</li>
+<li>For each step, collect simulation time, vehicle IDs, and positions.</li>
+<li>Optionally print the data to console.</li>
+<li>Return collected data as a list of dictionaries. </li>
 </ol>
 
 </div>
@@ -300,6 +324,50 @@ Variables</h2></td></tr>
 </dl>
 <p>Steps:</p><ol type="1">
 <li>Set the global DEBUG_MODE variable to the provided value. </li>
+</ol>
+
+</div>
+</div>
+<a id="a8926912f5e6a9b9fda78c9e5f9e4dccb" name="a8926912f5e6a9b9fda78c9e5f9e4dccb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8926912f5e6a9b9fda78c9e5f9e4dccb">&#9670;&#160;</a></span>start_sumo_and_traci()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">start_sumo_and_traci </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sumo_cmd</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>port</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sumo_tools_path</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start SUMO and connect via TraCI. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sumo_cmd</td><td>SUMO command list. </td></tr>
+    <tr><td class="paramname">port</td><td>Port to use for TraCI connection. </td></tr>
+    <tr><td class="paramname">sumo_tools_path</td><td>Path to SUMO tools directory. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>tuple (proc, traci_module) - SUMO process and TraCI module.</dd></dl>
+<p>Steps:</p><ol type="1">
+<li>Add SUMO tools to path.</li>
+<li>Import TraCI.</li>
+<li>Start SUMO process.</li>
+<li>Connect via TraCI.</li>
+<li>Return process and TraCI module. </li>
 </ol>
 
 </div>
@@ -384,41 +452,6 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>tuple (tested, passed) Updated counts of tests run and passed. </dd></dl>
-
-</div>
-</div>
-<a id="a5760783b27e5d8030c9cdb726d3f2b4a" name="a5760783b27e5d8030c9cdb726d3f2b4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5760783b27e5d8030c9cdb726d3f2b4a">&#9670;&#160;</a></span>wait_for_port_available()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">wait_for_port_available </td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>port</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>timeout</em></span><span class="paramdefsep"> = </span><span class="paramdefval">15</span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Wait for a port to become available, forcefully cleaning if needed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">port</td><td>Port number to wait for. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Timeout in seconds. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if port becomes available, False otherwise.</dd></dl>
-<p>Steps:</p><ol type="1">
-<li>Check port availability in a loop.</li>
-<li>After 3 failed attempts, try to kill processes on the port. </li>
-</ol>
 
 </div>
 </div>

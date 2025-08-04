@@ -114,6 +114,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a8bdfe1c21fa4a72001cf27470ed13000" id="r_a8bdfe1c21fa4a72001cf27470ed13000"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bdfe1c21fa4a72001cf27470ed13000">run_zokrates_verify</a> ()</td></tr>
 <tr class="memdesc:a8bdfe1c21fa4a72001cf27470ed13000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a ZoKrates proof using the verification key.  <br /></td></tr>
 <tr class="separator:a8bdfe1c21fa4a72001cf27470ed13000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b0c80b8a5cab8ddf02f5b59ed3d3d79" id="r_a6b0c80b8a5cab8ddf02f5b59ed3d3d79"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b0c80b8a5cab8ddf02f5b59ed3d3d79">run_zokrates_workflow</a> (circuit_path, args)</td></tr>
+<tr class="memdesc:a6b0c80b8a5cab8ddf02f5b59ed3d3d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run complete ZoKrates workflow from compilation through verification.  <br /></td></tr>
+<tr class="separator:a6b0c80b8a5cab8ddf02f5b59ed3d3d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe50dc83f1d29648965392032fdfbd20" id="r_afe50dc83f1d29648965392032fdfbd20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe50dc83f1d29648965392032fdfbd20">set_debug_mode</a> (enabled)</td></tr>
 <tr class="memdesc:afe50dc83f1d29648965392032fdfbd20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable debug mode for detailed output.  <br /></td></tr>
 <tr class="separator:afe50dc83f1d29648965392032fdfbd20"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -308,6 +311,45 @@ Variables</h2></td></tr>
 <li>Run the ZoKrates verify command</li>
 <li>Print the output from ZoKrates</li>
 <li>Return True if the output contains the success message, otherwise print error and return False </li>
+</ol>
+
+</div>
+</div>
+<a id="a6b0c80b8a5cab8ddf02f5b59ed3d3d79" name="a6b0c80b8a5cab8ddf02f5b59ed3d3d79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b0c80b8a5cab8ddf02f5b59ed3d3d79">&#9670;&#160;</a></span>run_zokrates_workflow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">run_zokrates_workflow </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>circuit_path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run complete ZoKrates workflow from compilation through verification. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">circuit_path</td><td>Path to ZoKrates circuit file </td></tr>
+    <tr><td class="paramname">args</td><td>List of arguments for witness computation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if workflow succeeds, False otherwise</dd></dl>
+<p>Runs complete ZoKrates workflow:</p><ol type="1">
+<li>Compile circuit</li>
+<li>Run setup</li>
+<li>Compute witness</li>
+<li>Generate proof</li>
+<li>Verify proof</li>
+<li>Clean up artifacts </li>
 </ol>
 
 </div>
