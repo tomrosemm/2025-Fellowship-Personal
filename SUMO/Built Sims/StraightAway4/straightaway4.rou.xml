@@ -15,14 +15,15 @@
 
     <!-- Driving Car Route Definitions -->
     <route id="route1" edges="E0 E1 E2"/>
+
     <route id="route_rsu" edges="E3"/>
 
     <!-- RSU Defined -->
     <vehicle id="rsu1" type="rsu" route="route_rsu" depart="0">
-        <stop parkingArea="pa_0" duration="100" parking="true"/>
+        <stop parkingArea="pa_0" duration="101000" parking="true"/>
     </vehicle>
 
-    <!-- Driving Car Defined -->
-    <vehicle id="car1" type="car" route="route1" depart="10"/>
+    <!-- Driving Car Defined
+    <vehicle id="car1" type="car" route="route1" depart="10"/> -->
     
 </routes>
