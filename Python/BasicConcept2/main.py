@@ -42,6 +42,19 @@ row_of_stars = "****************************************************************
 ##
 def main_menu():
     
+    # Define menu actions as a dictionary
+    menu_actions = {
+        "1": entire_groups_tests_menu,
+        "2": subgroups_tests_menu,
+        "3": individual_tests_menu,
+        "4": entire_groups_experiments_menu,
+        "5": subgroups_experiments_menu,
+        "6": individual_experiments_menu,
+        "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
+        "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
+        "e": None  # Special handling for exit
+    }
+    
     # Main loop for top-level CLI menu
     while True:
         
@@ -68,58 +81,42 @@ def main_menu():
         # Accept user input
         choice = input("Enter your choice: ").strip().lower()
         
-        # Process user choice
-        match choice:
-            case "1":
-                entire_groups_tests_menu()
-            case "2":
-                subgroups_tests_menu()
-            case "3":
-                individual_tests_menu()
-            case "4":
-                entire_groups_experiments_menu()
-            case "5":
-                subgroups_experiments_menu()
-            case "6":
-                individual_experiments_menu()
-            case "dbon":
-                ## @details
-                # Enable debug mode for detailed output
-                preliminary_tests.set_debug_mode(True)
-                print("Debug mode enabled.\n")
-            case "dboff":
-                ## @details
-                # Disable debug mode for less verbose output
-                preliminary_tests.set_debug_mode(False)
-                print("Debug mode disabled.\n")
-            case "e":
+        # Process user choice using the dictionary
+        if choice in menu_actions:
+            if choice == "e":
                 print("Exiting.")
                 break
-            case _:
-                print("Invalid choice. Please try again.")
+            else:
+                action = menu_actions[choice]
+                # If the action is a function, call it
+                if callable(action):
+                    action()
+        else:
+            print("Invalid choice. Please try again.")
 
 
 ##
 # @brief Menu for entire groups of tests
 ##
 def entire_groups_tests_menu():
-    
-    # Local flag for menu session
-    ##@var unused_print_sumo_data
-    ##@brief Controls whether SUMO TraCI data is printed during tests.
     unused_print_sumo_data = True
 
-    # Main loop for CLI menu
+    menu_actions = {
+        "1": lambda: (preliminary_tests.set_debug_mode(False), preliminary_tests.testAndScenarioRunner()),
+        "2": lambda: (preliminary_tests.set_debug_mode(True), preliminary_tests.testAndScenarioRunner(), preliminary_tests.set_debug_mode(False)),
+        "3": progressPresentationSuite,
+        "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
+        "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
+        "b": "back",
+        "e": "exit"
+    }
+
     while True:
-        
-        # Print menu header
         print("\n")
         print(row_of_stars)
         print("*** Entire Groups of Tests Menu ***")
         print(row_of_stars)
         print("\n")
-        
-        # Display menu options
         print("Select an option:")
         print("1 - Run all tests and scenarios with Debug Mode disabled")
         print("2 - Run all tests and scenarios with Debug Mode enabled")
@@ -128,61 +125,32 @@ def entire_groups_tests_menu():
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
-        
-        # Accept user input, strip whitespace, and convert to lowercase
         choice = input("Enter your choice: ").strip().lower()
-        
-        # Process user choice with match-case
-        match choice:
-            
-            case "1":
-                ## @test Run all tests and scenarios with Debug Mode disabled
-                preliminary_tests.set_debug_mode(False)
-                preliminary_tests.testAndScenarioRunner()
-                
-            case "2":
-                ## @test Run all tests and scenarios with Debug Mode enabled, then disable it again
-                preliminary_tests.set_debug_mode(True)
-                preliminary_tests.testAndScenarioRunner()
-                preliminary_tests.set_debug_mode(False)
-                
-            case "3":
-                ## @test Run Progress Presentation Suite
-                progressPresentationSuite()
-                
-            case "dbon":
-                ## @details
-                # Enable debug mode for detailed output
-                preliminary_tests.set_debug_mode(True)
-                print("Debug mode enabled.\n")
-                
-            case "dboff":
-                ## @details
-                # Disable debug mode for less verbose output
-                preliminary_tests.set_debug_mode(False)
-                print("Debug mode disabled.\n")
-                
-            case "b":
+        if choice in menu_actions:
+            action = menu_actions[choice]
+            if action == "back":
                 return
-                
-            case "e":
-                ## @details
-                # Exit the program
+            elif action == "exit":
                 print("Exiting.")
                 exit()
-            
-            case _:
-                ## @details
-                # Handle invalid input
-                print("Invalid choice. Please try again.")
-
-
+            elif callable(action):
+                action()
+        else:
+            print("Invalid choice. Please try again.")
 
 ##
 # @brief Menu for subgroups of tests.
 ##
 def subgroups_tests_menu():
-    
+    menu_actions = {
+        "1": fully_simulated_tests,
+        "2": zokrates_integration_tests,
+        "3": sumo_and_traci_tests,
+        "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
+        "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
+        "b": "back",
+        "e": "exit"
+    }
     while True:
         print("\n*** Subgroups of Tests Menu ***")
         print("1 - Fully Simulated Tests")
@@ -192,47 +160,50 @@ def subgroups_tests_menu():
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
-        
         choice = input("Enter your choice: ").strip().lower()
-        
-        match choice:
-            case "1":
-                fully_simulated_tests()
-                
-            case "2":
-                zokrates_integration_tests()
-            
-            case "3":
-                sumo_and_traci_tests()
-            
-            case "dbon":
-                ## @details
-                # Enable debug mode for detailed output
-                preliminary_tests.set_debug_mode(True)
-                print("Debug mode enabled.\n")
-                
-            case "dboff":
-                ## @details
-                # Disable debug mode for less verbose output
-                preliminary_tests.set_debug_mode(False)
-                print("Debug mode disabled.\n")
-                
-            case "b":
+        if choice in menu_actions:
+            action = menu_actions[choice]
+            if action == "back":
                 return
-            case "e":
+            elif action == "exit":
                 print("Exiting.")
                 exit()
-            case _:
-                print("Invalid choice. Please try again.")
-
+            elif callable(action):
+                action()
+        else:
+            print("Invalid choice. Please try again.")
 
 ##
 # @brief Menu for individual tests.
 ##
 def individual_tests_menu():
-    
+    menu_actions = {
+        "1": preliminary_tests.test_vehicle_rsu_interaction_simulated,
+        "2": preliminary_tests.test_vehicle_rsu_blockchain_simulated,
+        "3": preliminary_tests.scenario_successful_authentication,
+        "4": preliminary_tests.scenario_failed_authentication,
+        "5": preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy,
+        "6": preliminary_tests.test_simulated_isolated_multiple_vehicles,
+        "7": preliminary_tests.test_simulated_end_to_end_multiple_vehicles,
+        "8": preliminary_tests.test_zokrates_isolated_multiple_vehicles,
+        "9": preliminary_tests.test_zokrates_end_to_end_multiple_vehicles,
+        "10": lambda: setattr(preliminary_tests, "tested", preliminary_tests.test_sumo_connection_wrapper(preliminary_tests.tested, preliminary_tests.passed)[0]) or setattr(preliminary_tests, "passed", preliminary_tests.test_sumo_connection_wrapper(preliminary_tests.tested, preliminary_tests.passed)[1]),
+        "11": preliminary_tests.test_zokrates_connection,
+        "12": lambda: preliminary_tests.test_sumo_traci_data_transfer(print_data=preliminary_tests.PRINT_DATA),
+        "13": lambda: preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=preliminary_tests.PRINT_DATA),
+        "14": lambda: preliminary_tests.test_sumo_traci_data_transfer_intersection2(print_data=preliminary_tests.PRINT_DATA),
+        "15": lambda: preliminary_tests.test_sumo_traci_data_transfer_straightaway1(print_data=preliminary_tests.PRINT_DATA),
+        "16": lambda: preliminary_tests.test_sumo_traci_data_transfer_straightaway2(print_data=preliminary_tests.PRINT_DATA),
+        "17": lambda: preliminary_tests.test_sumo_live_manipulation_straightaway1(print_data=preliminary_tests.PRINT_DATA),
+        "18": preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp,
+        "19": preliminary_tests.test_authentication_circuit_auth_zok,
+        "20": lambda: preliminary_tests.test_sumo_small_step_length_straightaway1(print_data=preliminary_tests.PRINT_DATA),
+        "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
+        "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
+        "b": "back",
+        "e": "exit"
+    }
     while True:
-        
         print("\n*** Individual Tests Menu ***")
         print("1 - Run Simulated ZKP Test")
         print("2 - Run Simulated Blockchain ZKP Test")
@@ -258,225 +229,108 @@ def individual_tests_menu():
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
-        
         choice = input("Enter your choice: ").strip().lower()
-        
-        match choice:
-            case "1":
-                ## @test Run a single simulated ZKP experiment with zokrates/dummy.zok
-                preliminary_tests.test_vehicle_rsu_interaction_simulated()
-                
-            case "2":
-                ## @test Run a single simulated blockchain ZKP experiment with zokrates/dummy.zok
-                preliminary_tests.test_vehicle_rsu_blockchain_simulated()
-                
-            case "3":
-                ## @test Run a simulated end-to-end scenario with successful authentication
-                preliminary_tests.scenario_successful_authentication()
-                
-            case "4":
-                ## @test Run a simulated end-to-end scenario with failed authentication
-                preliminary_tests.scenario_failed_authentication()
-                
-            case "5":
-                ## @test Run a real ZoKrates end-to-end test with dummy.zok
-                preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy()
-                
-            case "6":
-                ## @test Run a simulated ZKP isolated test with multiple vehicles
-                preliminary_tests.test_simulated_isolated_multiple_vehicles()
-                
-            case "7":
-                ## @test Run a simulated end-to-end test with multiple vehicles
-                preliminary_tests.test_simulated_end_to_end_multiple_vehicles()
-                
-            case "8":
-                ## @test Run a ZoKrates-integrated isolated test with multiple vehicles using zokrates/dummy.zok
-                preliminary_tests.test_zokrates_isolated_multiple_vehicles()
-                
-            case "9":
-                ## @test Run a ZoKrates-integrated end-to-end test with multiple vehicles using zokrates/dummy.zok
-                preliminary_tests.test_zokrates_end_to_end_multiple_vehicles()
-                
-            case "10":
-                ## @test Run SUMO connection tests (basic network + configuration file)
-                preliminary_tests.tested, preliminary_tests.passed = preliminary_tests.test_sumo_connection_wrapper(
-                    preliminary_tests.tested, preliminary_tests.passed
-                )
-                
-            case "11":
-                ## @test Run ZoKrates CLI connection test with zokrates/dummy.zok
-                preliminary_tests.test_zokrates_connection()
-                
-            case "12":
-                ## @test Run SUMO TraCI data transfer test with sumo/Intersection 1/intersection1.sumocfg
-                preliminary_tests.test_sumo_traci_data_transfer(print_data=preliminary_tests.PRINT_DATA)
-                
-            case "13":
-                ## @test Run SUMO TraCI data transfer test with sumo/Intersection 1/intersection1.sumocfg for 100 steps
-                preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=preliminary_tests.PRINT_DATA)
-                
-            case "14":
-                ## @test Run SUMO TraCI data transfer test with sumo/Intersection 2/intersection2.sumocfg with explicit vehicles
-                preliminary_tests.test_sumo_traci_data_transfer_intersection2(print_data=preliminary_tests.PRINT_DATA)
-                
-            case "15":
-                ## @test Run SUMO TraCI data transfer test with sumo/StraightAway1/straightaway1.sumocfg
-                preliminary_tests.test_sumo_traci_data_transfer_straightaway1(print_data=preliminary_tests.PRINT_DATA)
-                
-            case "16":
-                ## @test Run SUMO TraCI data transfer test with sumo/StraightAway2/straightaway2.sumocfg
-                preliminary_tests.test_sumo_traci_data_transfer_straightaway2(print_data=preliminary_tests.PRINT_DATA)
-                
-            case "17":
-                ## @test Run SUMO Live Vehicle Manipulation Test with sumo/StraightAway1/straightaway1.sumocfg
-                preliminary_tests.test_sumo_live_manipulation_straightaway1(print_data=preliminary_tests.PRINT_DATA)
-        
-            case "18":
-                ## @test Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok
-                preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
-                
-            case "19":
-                ## @test Run Authentication Circuit Test with auth.zok
-                preliminary_tests.test_authentication_circuit_auth_zok()
-            
-            case "20":
-                ## @test Run SUMO with small step length of 10ms
-                preliminary_tests.test_sumo_small_step_length_straightaway1(
-                    print_data=preliminary_tests.PRINT_DATA
-                )
-            
-            case "dbon":
-                ## @details
-                # Enable debug mode for detailed output
-                preliminary_tests.set_debug_mode(True)
-                print("Debug mode enabled.\n")
-                
-            case "dboff":
-                ## @details
-                # Disable debug mode for less verbose output
-                preliminary_tests.set_debug_mode(False)
-                print("Debug mode disabled.\n")
-                
-            case "b":
+        if choice in menu_actions:
+            action = menu_actions[choice]
+            if action == "back":
                 return
-            case "e":
+            elif action == "exit":
                 print("Exiting.")
                 exit()
-            case _:
-                print("Invalid choice. Please try again.")
-
+            elif callable(action):
+                action()
+        else:
+            print("Invalid choice. Please try again.")
 
 ##
 # @brief Menu for entire groups of experiments.
 ##
 def entire_groups_experiments_menu():
-    
+    menu_actions = {
+        "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
+        "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
+        "b": "back",
+        "e": "exit"
+    }
     while True:
-        
         print("\n*** Entire Groups of Experiments Menu ***")
         print("Implementation pending")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
-        
         choice = input("Enter your choice: ").strip().lower()
-        
-        match choice:
-            case "dbon":
-                ## @details
-                # Enable debug mode for detailed output
-                preliminary_tests.set_debug_mode(True)
-                print("Debug mode enabled.\n")
-                
-            case "dboff":
-                ## @details
-                # Disable debug mode for less verbose output
-                preliminary_tests.set_debug_mode(False)
-                print("Debug mode disabled.\n")
-            case "b":
+        if choice in menu_actions:
+            action = menu_actions[choice]
+            if action == "back":
                 return
-            case "e":
+            elif action == "exit":
                 print("Exiting.")
                 exit()
-            case _:
-                print("Invalid choice. Please try again.")
-
+            elif callable(action):
+                action()
+        else:
+            print("Invalid choice. Please try again.")
 
 ##
 # @brief Menu for subgroups of experiments.
 ##
 def subgroups_experiments_menu():
-    
+    menu_actions = {
+        "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
+        "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
+        "b": "back",
+        "e": "exit"
+    }
     while True:
-        
         print("\n*** Subgroups of Experiments Menu ***")
         print("Implementation pending")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
-        
         choice = input("Enter your choice: ").strip().lower()
-        
-        match choice:
-            case "dbon":
-                ## @details
-                # Enable debug mode for detailed output
-                preliminary_tests.set_debug_mode(True)
-                print("Debug mode enabled.\n")
-                
-            case "dboff":
-                ## @details
-                # Disable debug mode for less verbose output
-                preliminary_tests.set_debug_mode(False)
-                print("Debug mode disabled.\n")
-            case "b":
+        if choice in menu_actions:
+            action = menu_actions[choice]
+            if action == "back":
                 return
-            case "e":
+            elif action == "exit":
                 print("Exiting.")
                 exit()
-            case _:
-                print("Invalid choice. Please try again.")
-
+            elif callable(action):
+                action()
+        else:
+            print("Invalid choice. Please try again.")
 
 ##
 # @brief Menu for individual experiments.
 ##
 def individual_experiments_menu():
-    
+    menu_actions = {
+        "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
+        "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
+        "b": "back",
+        "e": "exit"
+    }
     while True:
-        
         print("\n*** Individual Experiments Menu ***")
         print("Implementation pending")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
-        
         choice = input("Enter your choice: ").strip().lower()
-        
-        match choice:
-            case "dbon":
-                ## @details
-                # Enable debug mode for detailed output
-                preliminary_tests.set_debug_mode(True)
-                print("Debug mode enabled.\n")
-                
-            case "dboff":
-                ## @details
-                # Disable debug mode for less verbose output
-                preliminary_tests.set_debug_mode(False)
-                print("Debug mode disabled.\n")
-            case "b":
+        if choice in menu_actions:
+            action = menu_actions[choice]
+            if action == "back":
                 return
-            case "e":
+            elif action == "exit":
                 print("Exiting.")
                 exit()
-            case _:
-                print("Invalid choice. Please try again.")
-
+            elif callable(action):
+                action()
+        else:
+            print("Invalid choice. Please try again.")
 
 ## Test SubGroups
 def fully_simulated_tests():
@@ -639,6 +493,10 @@ def progressPresentationSuite():
 
 ## Main entry point for the script
 # If this script is run directly, start the main menu
+if __name__ == "__main__":
+    
+    ## @brief Main entry point for running the protocol simulation tests.
+    main_menu()
 if __name__ == "__main__":
     
     ## @brief Main entry point for running the protocol simulation tests.

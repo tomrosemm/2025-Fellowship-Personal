@@ -15,7 +15,34 @@
 import subprocess
 import os
 
-from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE, ZOKRATES_CLEANUP_FILES
+from settings import (
+    DEBUG_MODE as DEFAULT_DEBUG_MODE,
+    ZOKRATES_CLEANUP_FILES
+)
+
+
+# ## Unused, Leftover Functions
+# ##
+# # @brief Convert a hex string to an array of 4 field elements (each 64 bits).
+# #
+# # @param hex_str Hexadecimal string to convert.
+# # @return List of 4 integers representing field elements.
+# ##
+# def hex_to_field_array(hex_str):
+    
+#     # Create an empty list to hold the field elements
+#     arr = []
+    
+#     # Ensure the hex string is 32 bytes (64 hex characters) long
+#     padded_hex = hex_str.ljust(32, '0')[:32]
+    
+#     # Convert each 8-character segment to an integer and append to the list
+#     for i in range(0, 32, 8):
+#         arr.append(int(padded_hex[i:i+8], 16))
+    
+#     # Return the list of field elements
+#     return arr
+
 
 ## @var DEBUG_MODE
 ## @brief Global variable to control debug output.
@@ -251,28 +278,6 @@ def run_zokrates_verify():
             print("ZoKrates verify failed:", e)
             
         return False
-
-
-##
-# @brief Convert a hex string to an array of 4 field elements (each 64 bits).
-#
-# @param hex_str Hexadecimal string to convert.
-# @return List of 4 integers representing field elements.
-##
-def hex_to_field_array(hex_str):
-    
-    # Create an empty list to hold the field elements
-    arr = []
-    
-    # Ensure the hex string is 32 bytes (64 hex characters) long
-    padded_hex = hex_str.ljust(32, '0')[:32]
-    
-    # Convert each 8-character segment to an integer and append to the list
-    for i in range(0, 32, 8):
-        arr.append(int(padded_hex[i:i+8], 16))
-    
-    # Return the list of field elements
-    return arr
 
 
 ##
