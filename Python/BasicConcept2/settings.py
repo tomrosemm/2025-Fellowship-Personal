@@ -44,6 +44,10 @@ SUMO_INTERSECTION2_CONFIG_FILE = os.path.join(SUMO_DIR, "Intersection 2", "inter
 SUMO_STRAIGHTAWAY1_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway1", "straightaway1.sumocfg")
 # Path to SUMO straightaway2 configuration
 SUMO_STRAIGHTAWAY2_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway2", "straightaway2.sumocfg")
+# Path to SUMO straightaway3 configuration
+SUMO_STRAIGHTAWAY3_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway3", "straightaway3.sumocfg")
+# Path to SUMO straightaway4 configuration
+SUMO_STRAIGHTAWAY4_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway4", "straightaway4.sumocfg")
 
 
 ## Network Settings

@@ -637,15 +637,6 @@ def progressPresentationSuite():
     time.sleep(2)
 
 
-##
-# @brief Legacy function for backward compatibility.
-# @deprecated Use main_menu() instead.
-##
-# def cli_menu_loop():
-#     """Legacy function - redirects to main menu."""
-#     main_menu()
-
-
 ## Main entry point for the script
 # If this script is run directly, start the main menu
 if __name__ == "__main__":
