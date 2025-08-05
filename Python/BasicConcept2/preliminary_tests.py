@@ -23,7 +23,8 @@ import secrets
 import os
 import time
 import random
-import sys
+import shutil
+# import sys
 # import subprocess
 
 # Classes and functions
@@ -48,7 +49,8 @@ from sumo_interface import (
     start_sumo_and_traci,
     cleanup_sumo_and_traci,
     set_debug_mode as set_sumo_debug_mode,
-    run_sumo_simulation,
+    run_sumo_simulation_flexible,
+    start_sumo_simulation,
     test_sumo_connection_wrapper
 )
 
@@ -877,9 +879,6 @@ def test_sumo_traci_data_transfer(print_data=True):
     # Define the port for TraCI connection from settings
     port = SUMO_PORT_DATA
     
-    # Set the SUMO_TOOLS_PATH from settings
-    sys.path.append(SUMO_TOOLS_PATH)
-    
     # Define the SUMO network file path from settings
     SUMO_NET_FILE = SUMO_SIMPLE_NET_FILE
     
@@ -887,29 +886,22 @@ def test_sumo_traci_data_transfer(print_data=True):
     if not check_file_exists(SUMO_NET_FILE, "SUMO network file"):
         return
     
-    # Clean up port and traci
-    kill_processes_on_port(port)
-    cleanup_traci_connection()
-    
-    # Wait for a moment to ensure cleanup is complete
-    time.sleep(2)
-
-    # Define the SUMO binary command, "sumo" or "sumo-gui"
-    sumo_binary = "sumo"
-    
-    # Create and store the command to start SUMO with the network file and remote port
-    # Current command will start SUMO in non-GUI mode
-    sumo_cmd = [sumo_binary, "-n", SUMO_NET_FILE, "--remote-port", str(port)]
-    
-    # Start SUMO and connect via TraCI
-    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
+    # Start SUMO and connect via TraCI using the new unified function
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=SUMO_NET_FILE,
+        is_config=False,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
     
     if proc is None or traci is None:
         return
     
     try:
-        # Use the centralized run_sumo_simulation function
-        sim_data = run_sumo_simulation(traci, 5, print_data)
+        # Use the new flexible simulation runner
+        sim_data = run_sumo_simulation_flexible(traci, 5, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -917,12 +909,17 @@ def test_sumo_traci_data_transfer(print_data=True):
         
         print(f"[SUMO TraCI Test] Error during TraCI data transfer: {e}")
         passed_local = False
-    
-    # Cleanup SUMO and TraCI
+
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
-    
-    # Output the result of the SUMO TraCI data transfer test, increment passed count if successful
+        # Clean up temp config/output if created
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
+
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] Data transfer test succeeded!\n")
@@ -960,39 +957,27 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     timer = Timer("SUMO TraCI Data Transfer Test (intersection1.sumocfg) Timer")
     timer.start()
 
-    # Define the port for TraCI connection from settings
     port = SUMO_PORT_DATA_CONFIG
-    
-    # Define the path to the .sumocfg file from settings
     SUMO_SUMOCFG_FILE = SUMO_INTERSECTION_CONFIG_FILE
-    
-    # Check if the .sumocfg file exists, if not, print error and return
+
     if not check_file_exists(SUMO_SUMOCFG_FILE, "SUMO configuration file"):
         return
 
-    # Clean up port and traci connection before starting the test
-    # This ensures that no previous processes are blocking the port
-    kill_processes_on_port(port)
-    cleanup_traci_connection()
-    
-    # Wait for a moment to ensure cleanup is complete
-    time.sleep(2)
+    # Start SUMO and connect via TraCI using the new unified function
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=SUMO_SUMOCFG_FILE,
+        is_config=True,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
 
-    # Define the SUMO binary command, "sumo" or "sumo-gui"
-    sumo_binary = "sumo"
-    
-    # Create and store the command to start SUMO with the .sumocfg file and remote port
-    sumo_cmd = [sumo_binary, "-c", SUMO_SUMOCFG_FILE, "--remote-port", str(port)]
-    
-    # Start SUMO and connect via TraCI
-    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
-    
     if proc is None or traci is None:
         return
-    
+
     try:
-        # Use the centralized run_sumo_simulation function
-        sim_data = run_sumo_simulation(traci, 100, print_data)
+        sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1003,8 +988,13 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     # Cleanup SUMO and TraCI
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
-    
-    # Output the result of the SUMO sumocfg TraCI data transfer test, increment passed count if successful
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
+
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] .sumocfg data transfer test succeeded!\n")
@@ -1048,29 +1038,23 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
     # Check if the intersection2.sumocfg file exists
     if not check_file_exists(SUMO_INTERSECTION2_CONFIG_FILE, "SUMO intersection2 configuration file"):
         return
-    
-    # Clean up port and traci
-    kill_processes_on_port(port)
-    cleanup_traci_connection()
-    
-    # Wait for a moment to ensure cleanup is complete
-    time.sleep(2)
 
-    # Define the SUMO binary command
-    sumo_binary = "sumo"
-    
-    # Create and store the command to start SUMO with the config file and remote port
-    sumo_cmd = [sumo_binary, "-c", SUMO_INTERSECTION2_CONFIG_FILE, "--remote-port", str(port)]
-    
-    # Start SUMO and connect via TraCI
-    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
-    
+    # Start SUMO and connect via TraCI using the new unified function
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=SUMO_INTERSECTION2_CONFIG_FILE,
+        is_config=True,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
+
     if proc is None or traci is None:
         return
-    
+
     try:
         # Use the centralized run_sumo_simulation function
-        sim_data = run_sumo_simulation(traci, 100, print_data)
+        sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1081,8 +1065,13 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
     # Cleanup SUMO and TraCI
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
 
-    # Output the result of the SUMO TraCI data transfer test, increment passed count if successful
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] intersection2.sumocfg data transfer test succeeded!\n")
@@ -1126,30 +1115,23 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
     # Check if the straightaway1.sumocfg file exists
     if not check_file_exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE, "SUMO straightaway1 configuration file"):
         return
-    
-    # Clean up port and traci connection before starting the test
-    # This ensures that no previous processes are blocking the port
-    kill_processes_on_port(port)
-    cleanup_traci_connection()
-    
-    # Wait for a moment to ensure cleanup is complete
-    time.sleep(2)
 
-    # Define the SUMO binary command
-    sumo_binary = "sumo"
-    
-    # Create and store the command to start SUMO with the config file and remote port
-    sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY1_CONFIG_FILE, "--remote-port", str(port)]
-    
-    # Start SUMO and connect via TraCI using the utility function
-    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
-    
+    # Start SUMO and connect via TraCI using the new unified function
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=SUMO_STRAIGHTAWAY1_CONFIG_FILE,
+        is_config=True,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
+
     if proc is None or traci is None:
         return
-    
+
     try:
         # Use the centralized run_sumo_simulation function
-        sim_data = run_sumo_simulation(traci, 100, print_data)
+        sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1160,8 +1142,13 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
     # Cleanup SUMO and TraCI
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
 
-    # Output the result of the SUMO TraCI data transfer test, increment passed count if successful
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] straightaway1.sumocfg data transfer test succeeded!\n")
@@ -1200,34 +1187,26 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
     port = SUMO_PORT_DATA_CONFIG + 3
-    
-    # Check if the straightaway2.sumocfg file exists
+
     if not check_file_exists(SUMO_STRAIGHTAWAY2_CONFIG_FILE, "SUMO straightaway2 configuration file"):
         return
-    
-    # Clean up port and traci connection before starting the test
-    # This ensures that no previous processes are blocking the port
-    kill_processes_on_port(port)
-    cleanup_traci_connection()
-    
-    # Wait for a moment to ensure cleanup is complete
-    time.sleep(2)
 
-    # Define the SUMO binary command
-    sumo_binary = "sumo"
-    
-    # Create and store the command to start SUMO with the config file and remote port
-    sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY2_CONFIG_FILE, "--remote-port", str(port)]
-    
-    # Start SUMO and connect via TraCI using the utility function
-    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
-    
+    # Start SUMO and connect via TraCI using the new unified function
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=SUMO_STRAIGHTAWAY2_CONFIG_FILE,
+        is_config=True,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
+
     if proc is None or traci is None:
         return
-    
+
     try:
         # Use the centralized run_sumo_simulation function
-        sim_data = run_sumo_simulation(traci, 100, print_data)
+        sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1238,8 +1217,13 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
     # Cleanup SUMO and TraCI
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
 
-    # Output the result of the SUMO TraCI data transfer test, increment passed count if successful
     if passed_local:
         passed += 1
         print("[SUMO TraCI Test] straightaway2.sumocfg data transfer test succeeded!\n")
@@ -1283,23 +1267,17 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
     # Check if the straightaway1.sumocfg file exists
     if not check_file_exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE, "SUMO straightaway1 configuration file"):
         return
-    
-    # Clean up port and traci connection before starting the test
-    kill_processes_on_port(port)
-    cleanup_traci_connection()
-    
-    # Wait for a moment to ensure cleanup is complete
-    time.sleep(2)
 
-    # Define the SUMO binary command
-    sumo_binary = "sumo"
-    
-    # Create and store the command to start SUMO with the config file and remote port
-    sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY1_CONFIG_FILE, "--remote-port", str(port)]
-    
-    # Start SUMO and connect via TraCI using the utility function
-    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
-    
+    # Start SUMO and connect via TraCI using the new unified function
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=SUMO_STRAIGHTAWAY1_CONFIG_FILE,
+        is_config=True,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
+
     if proc is None or traci is None:
         return
     
@@ -1335,10 +1313,10 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
             print(f"Speed: {initial_speed:.2f} m/s")
             print(f"Position: ({initial_position[0]:.2f}, {initial_position[1]:.2f})")
             print(f"Color: {initial_color}")
-        
-        # 1. FIRST MANIPULATION: Change vehicle color to red
+
+        # 1. Change vehicle color to red
         try:
-            traci.vehicle.setColor(vehicle_id, (255, 0, 0, 255))  # RGBA: Red
+            traci.vehicle.setColor(vehicle_id, (255, 0, 0, 255))
             if print_data:
                 print(f"\nChanged color of vehicle {vehicle_id} to red")
         except Exception as e:
@@ -1346,10 +1324,10 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
         
         # Run a step to apply changes
         traci.simulationStep()
-            
-        # 2. SECOND MANIPULATION: Change vehicle speed
+
+        # 2. Change vehicle speed
         try:
-            new_speed = 15.0  # m/s
+            new_speed = 15.0
             traci.vehicle.setSpeed(vehicle_id, new_speed)
             if print_data:
                 print(f"Changed speed of vehicle {vehicle_id} to {new_speed} m/s")
@@ -1358,8 +1336,8 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
         
         # Run a step to apply changes
         traci.simulationStep()
-            
-        # 3. THIRD MANIPULATION: Move vehicle forward along lane
+
+        # 3. Move vehicle forward along lane
         post_speed_position = None
         try:
             # Get position after speed change but before manual movement
@@ -1367,8 +1345,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
             
             lane_id = traci.vehicle.getLaneID(vehicle_id)
             current_lane_pos = traci.vehicle.getLanePosition(vehicle_id)
-            new_lane_pos = current_lane_pos + 10  # Move 10m forward
-            
+            new_lane_pos = current_lane_pos + 10
             traci.vehicle.moveTo(vehicle_id, lane_id, new_lane_pos)
             if print_data:
                 print(f"Moved vehicle {vehicle_id} 10m forward along lane {lane_id}")
@@ -1429,8 +1406,13 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
     # Use the utility function to clean up SUMO and TraCI
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
 
-    # Output test result based on success or failure
     if passed_local:
         passed += 1
         print("[SUMO Manipulation Test] Vehicle manipulation test succeeded!")
@@ -1575,40 +1557,32 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
     # Check if the straightaway1.sumocfg file exists
     if not check_file_exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE, "SUMO straightaway1 configuration file"):
         return
-    
-    # Clean up port and traci connection before starting the test
-    kill_processes_on_port(port)
-    cleanup_traci_connection()
-    
-    # Wait for a moment to ensure cleanup is complete
-    time.sleep(2)
 
-    # Define the SUMO binary command
-    sumo_binary = "sumo"
-    
-    # Create and store the command to start SUMO with the config file, small step length, and remote port
-    sumo_cmd = [sumo_binary, "-c", SUMO_STRAIGHTAWAY1_CONFIG_FILE, "--step-length", "0.01", "--remote-port", str(port)]
-    
-    # Start SUMO and connect via TraCI using the utility function
-    proc, traci = start_sumo_and_traci(sumo_cmd, port, SUMO_TOOLS_PATH)
-    
+    # Start SUMO and connect via TraCI using the new unified function
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=SUMO_STRAIGHTAWAY1_CONFIG_FILE,
+        is_config=True,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        step_length=0.01,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
+
     if proc is None or traci is None:
         return
     
     try:
-        # Initialize time values to verify step length
-        time_values = []
-        
-        # Use the centralized run_sumo_simulation function
-        sim_data = run_sumo_simulation(traci, 50, print_data)
+        # Use the flexible simulation runner
+        sim_data = run_sumo_simulation_flexible(traci, 50, print_data)
         
         # Extract time values from simulation data
         time_values = [step["time"] for step in sim_data]
         
         # Calculate step lengths
         step_lengths = [time_values[i+1] - time_values[i] for i in range(len(time_values)-1)]
-        avg_step_length = sum(step_lengths) / len(step_lengths)
-        
+        avg_step_length = sum(step_lengths) / len(step_lengths) if step_lengths else 0.0
+
         if print_data:
             print(f"\nAverage step length: {avg_step_length:.5f} seconds")
         
@@ -1631,8 +1605,13 @@ def test_sumo_small_step_length_straightaway1(print_data=True):
     # Use the utility function to clean up SUMO and TraCI
     finally:
         cleanup_sumo_and_traci(proc, port, traci)
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
 
-    # Output test result based on success or failure
     if passed_local:
         passed += 1
         print("[SUMO Small Step Test] Small step length test succeeded!\n")
