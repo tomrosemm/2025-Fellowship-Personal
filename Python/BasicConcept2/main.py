@@ -186,18 +186,18 @@ def individual_tests_menu():
         "6": preliminary_tests.test_PartialWorkflow_MultipleVehicles_Simulated,
         "7": preliminary_tests.test_EndToEnd_MultipleVehicles_Simulated,
         "8": preliminary_tests.test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit,
-        "9": preliminary_tests.test_zokrates_end_to_end_multiple_vehicles,
+        "9": preliminary_tests.test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit,
         "10": lambda: setattr(preliminary_tests, "tested", preliminary_tests.test_sumo_connection_wrapper(preliminary_tests.tested, preliminary_tests.passed)[0]) or setattr(preliminary_tests, "passed", preliminary_tests.test_sumo_connection_wrapper(preliminary_tests.tested, preliminary_tests.passed)[1]),
         "11": preliminary_tests.test_Zokrates_BasicConnectionTest_UsingDummyCircuit,
-        "12": lambda: preliminary_tests.test_sumo_traci_data_transfer(print_data=preliminary_tests.PRINT_DATA),
-        "13": lambda: preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=preliminary_tests.PRINT_DATA),
-        "14": lambda: preliminary_tests.test_sumo_traci_data_transfer_intersection2(print_data=preliminary_tests.PRINT_DATA),
-        "15": lambda: preliminary_tests.test_sumo_traci_data_transfer_straightaway1(print_data=preliminary_tests.PRINT_DATA),
-        "16": lambda: preliminary_tests.test_sumo_traci_data_transfer_straightaway2(print_data=preliminary_tests.PRINT_DATA),
-        "17": lambda: preliminary_tests.test_sumo_live_manipulation_straightaway1(print_data=preliminary_tests.PRINT_DATA),
-        "18": preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp,
-        "19": preliminary_tests.test_authentication_circuit_auth_zok,
-        "20": lambda: preliminary_tests.test_sumo_small_step_length_straightaway1(print_data=preliminary_tests.PRINT_DATA),
+        "12": lambda: preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingSimpleNet(print_data=preliminary_tests.PRINT_DATA),
+        "13": lambda: preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(print_data=preliminary_tests.PRINT_DATA),
+        "14": lambda: preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(print_data=preliminary_tests.PRINT_DATA),
+        "15": lambda: preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(print_data=preliminary_tests.PRINT_DATA),
+        "16": lambda: preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(print_data=preliminary_tests.PRINT_DATA),
+        "17": lambda: preliminary_tests.test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=preliminary_tests.PRINT_DATA),
+        "18": preliminary_tests.test_Zokrates_UsingVtoICircuit,
+        "19": preliminary_tests.test_Zokrates_UsingAuthCircuit,
+        "20": lambda: preliminary_tests.test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(print_data=preliminary_tests.PRINT_DATA),
         "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
         "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
         "b": "back",
@@ -214,18 +214,18 @@ def individual_tests_menu():
         print("6 - Run Partial Workflow - Multiple Vehicles; Simulated Test")
         print("7 - Run End - To - End; Multiple Vehicles; Simulated Test")
         print("8 - Run Partial Workflow - Real Zokrates; Multiple Vehicles (using dummy.zok) Test")
-        print("9 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
+        print("9 - Run Partial Workflow - Real Zokrates, Simulated Blockchain; Multiple Vehicles (using dummy.zok) Test")
         print("10 - Run SUMO Connection Tests (Basic Network + Configuration File)")
         print("11 - Run Zokrates Basic Connection (using dummy.zok) Test")
-        print("12 - Run SUMO TraCI Data Transfer Test")
-        print("13 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
-        print("14 - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)")
-        print("15 - Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)")
-        print("16 - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)")
-        print("17 - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
-        print("18 - Run Vehicle-to-Infrastructure ZKP Test with zokrates/VtoI_test.zok")
-        print("19 - Run Authentication Circuit Test with auth.zok")
-        print("20 - Run SUMO Small Step Length Test (10ms steps)")
+        print("12 - Run Data Transfer (using simple.net.xml) Test")
+        print("13 - Run Data Transfer (using intersection1.sumocfg) Test")
+        print("14 - Run Data Transfer (using intersection2.sumocfg) Test")
+        print("15 - Run Data Transfer (using straightaway1.sumocfg) Test")
+        print("16 - Run Data Transfer (using straightaway2.sumocfg) Test")
+        print("17 - Run Live Manipulation (using straightaway1.sumocfg) Test")
+        print("18 - Run Zokrates (using VtoI_test.zok) Test")
+        print("19 - Run Zokrates (using auth.zok) Test")
+        print("20 - Run Data Transfer; Small Step (using straightaway1.sumocfg) Test")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
@@ -376,10 +376,10 @@ def zokrates_integration_tests():
     
     preliminary_tests.test_PartialWorkflow_RealZokrates_UsingDummyCircuit()
     preliminary_tests.test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit()
-    preliminary_tests.test_zokrates_end_to_end_multiple_vehicles()
+    preliminary_tests.test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit()
     preliminary_tests.test_Zokrates_BasicConnectionTest_UsingDummyCircuit()
-    preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
-    preliminary_tests.test_authentication_circuit_auth_zok()
+    preliminary_tests.test_Zokrates_UsingVtoICircuit()
+    preliminary_tests.test_Zokrates_UsingAuthCircuit()
 
 
 def sumo_and_traci_tests(print_sumo_data=True):
@@ -403,13 +403,13 @@ def sumo_and_traci_tests(print_sumo_data=True):
     preliminary_tests.tested, preliminary_tests.passed = preliminary_tests.test_sumo_connection_wrapper(
         preliminary_tests.tested, preliminary_tests.passed
     )
-    preliminary_tests.test_sumo_traci_data_transfer(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_traci_data_transfer_intersection2(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_traci_data_transfer_straightaway1(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_traci_data_transfer_straightaway2(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_live_manipulation_straightaway1(print_data=print_sumo_data)
-    preliminary_tests.test_sumo_small_step_length_straightaway1(print_data=print_sumo_data)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingSimpleNet(print_data=print_sumo_data)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(print_data=print_sumo_data)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(print_data=print_sumo_data)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(print_data=print_sumo_data)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(print_data=print_sumo_data)
+    preliminary_tests.test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=print_sumo_data)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(print_data=print_sumo_data)
     
     
 def progressPresentationSuite():
@@ -435,7 +435,7 @@ def progressPresentationSuite():
     # clear_console()
 
     # ZoKrates-Integrated End-to-End Test: Multiple Vehicles
-    preliminary_tests.test_zokrates_end_to_end_multiple_vehicles()
+    preliminary_tests.test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit()
     time.sleep(.5)
     # clear_console()
 
@@ -443,33 +443,33 @@ def progressPresentationSuite():
     # EX: test_sumo_traci_data_transfer(print_data=True)
     
     # Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
-    preliminary_tests.test_sumo_traci_data_transfer_sumocfg(True)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(True)
     time.sleep(.5)
     # clear_console()
 
     # Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
-    preliminary_tests.test_sumo_traci_data_transfer_intersection2(True)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(True)
     time.sleep(.5)
     # clear_console()
 
     # Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
-    preliminary_tests.test_sumo_traci_data_transfer_straightaway1(True)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(True)
     time.sleep(.5)
     # clear_console()
 
     # Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
-    preliminary_tests.test_sumo_traci_data_transfer_straightaway2(True)
+    preliminary_tests.test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(True)
     time.sleep(.5)
     # clear_console()
     
     # Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
-    preliminary_tests.test_sumo_live_manipulation_straightaway1(True)
+    preliminary_tests.test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(True)
     time.sleep(.5)
     # clear_console()
 
     # Run Vehicle-to-Infrastructure ZKP Test with the
     # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
-    preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
+    preliminary_tests.test_Zokrates_UsingVtoICircuit()
     time.sleep(.5)
     # clear_console()
 

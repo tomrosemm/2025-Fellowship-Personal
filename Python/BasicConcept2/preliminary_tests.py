@@ -781,17 +781,16 @@ def test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit():
 #      h. Clean up ZoKrates artifacts.
 #   2. Print whether all vehicles' proofs and blockchain logs succeeded.
 ##
-#test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit
-def test_zokrates_end_to_end_multiple_vehicles():
+def test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit():
     
     # Print test header
-    print("\n=== ZoKrates-Integrated End-to-End Test: Multiple Vehicles (dummy.zok) ===")
+    print("\n=== Partial Workflow - Real Zokrates, Simulated Blockchain; Multiple Vehicles (using dummy.zok) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("ZoKrates-Integrated End-to-End Test: Multiple Vehicles Timer")
+    timer = Timer("Partial Workflow - Real Zokrates, Simulated Blockchain; Multiple Vehicles (using dummy.zok) Test Timer")
     timer.start()
     
     # Set the circuit path for ZoKrates from settings
@@ -865,17 +864,16 @@ def test_zokrates_end_to_end_multiple_vehicles():
 #   4. Print/store the data.
 #   5. Clean up.
 ##
-# test_DataTransfer_SumoAndTraCI_UsingSimpleNet
-def test_sumo_traci_data_transfer(print_data=True):
+def test_DataTransfer_SumoAndTraCI_UsingSimpleNet(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (simple.net.xml)===")
+    print("\n=== Data Transfer (using simple.net.xml) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("SUMO TraCI Data Transfer Test (simple.net.xml) Timer")
+    timer = Timer("Data Transfer (using simple.net.xml) Test Timer")
     timer.start()
 
     # Define the port for TraCI connection from settings
@@ -947,17 +945,16 @@ def test_sumo_traci_data_transfer(print_data=True):
 #   4. Print/store the data.
 #   5. Clean up.
 ##
-# test_DataTransfer_SumoAndTraCI_UsingIntersection1Config
-def test_sumo_traci_data_transfer_sumocfg(print_data=True):
+def test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (intersection1.sumocfg, flow based demand, 100 steps) ===")
+    print("\n=== Data Transfer (using intersection1.sumocfg) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("SUMO TraCI Data Transfer Test (intersection1.sumocfg) Timer")
+    timer = Timer("Data Transfer (using intersection1.sumocfg) Test Timer")
     timer.start()
 
     port = SUMO_PORT_DATA_CONFIG
@@ -1023,17 +1020,16 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
 #   4. Print/store the data.
 #   5. Clean up.
 ##
-# test_DataTransfer_SumoAndTraCI_UsingIntersection2Config
-def test_sumo_traci_data_transfer_intersection2(print_data=True):
+def test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit routes and vehicles) ===")
+    print("\n=== Data Transfer (using intersection2.sumocfg) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("SUMO TraCI Data Transfer Test (intersection2.sumocfg) Timer")
+    timer = Timer("Data Transfer (using intersection2.sumocfg) Test Timer")
     timer.start()
 
     # Define the port for TraCI connection from settings
@@ -1101,17 +1097,16 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
 #   4. Print/store the data.
 #   5. Clean up.
 ##
-# test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config
-def test_sumo_traci_data_transfer_straightaway1(print_data=True):
+def test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (straightaway1.sumocfg, one vehicle) ===")
+    print("\n=== Data Transfer (using straightaway1.sumocfg) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("SUMO TraCI Data Transfer Test (straightaway1.sumocfg) Timer")
+    timer = Timer("Data Transfer (using straightaway1.sumocfg) Test Timer")
     timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
@@ -1178,17 +1173,16 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
 #   4. Print/store the data.
 #   5. Clean up.
 ##
-# test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config
-def test_sumo_traci_data_transfer_straightaway2(print_data=True):
+def test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(print_data=True):
     
     # Print test header
-    print("\n=== SUMO TraCI Data Transfer Test (straightaway2.sumocfg, 10 vehicles) ===")
+    print("\n=== Data Transfer (using straightaway2.sumocfg) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("SUMO TraCI Data Transfer Test (straightaway2.sumocfg) Timer")
+    timer = Timer("Data Transfer (using straightaway2.sumocfg) Test Timer")
     timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
@@ -1258,17 +1252,16 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
 #   5. Continue simulation to observe effects.
 #   6. Clean up.
 ##
-# test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config
-def test_sumo_live_manipulation_straightaway1(print_data=True):
+def test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=True):
     
     # Print test header
-    print("\n=== SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg, 1 vehicle) ===")
+    print("\n=== Live Manipulation (using straightaway1.sumocfg) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg) Timer")
+    timer = Timer("Live Manipulation (using straightaway1.sumocfg) Test Timer")
     timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
@@ -1442,17 +1435,16 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
 #   2. Run the experiment with a vehicle ID, secret key, and commitment.
 #   3. Check if the verification was successful.
 ##
-# test_Zokrates_UsingVtoICircuit
-def test_vehicle_to_infrastructure_VtoI_zkp():
+def test_Zokrates_UsingVtoICircuit():
     
     # Print test header
-    print("\n=== Vehicle-to-Infrastructure VtoI ZKP Test (VtoI_test.zok) ===")
+    print("\n=== Zokrates (using VtoI_test.zok) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("Vehicle-to-Infrastructure VtoI ZKP Test (VtoI_test.zok) Timer")
+    timer = Timer("Zokrates (using VtoI_test.zok) Test Timer")
     timer.start()
     
     # Set the circuit path for ZoKrates
@@ -1499,17 +1491,16 @@ def test_vehicle_to_infrastructure_VtoI_zkp():
 #   2. Run the experiment with a random vehicle ID and secret.
 #   3. Check if the verification was successful.
 ##
-# test_Zokrates_UsingAuthCircuit
-def test_authentication_circuit_auth_zok():
+def test_Zokrates_UsingAuthCircuit():
     
     # Print test header
-    print("\n=== Authentication Circuit Test (auth.zok) ===")
+    print("\n=== Zokrates (using auth.zok) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("Authentication Circuit Test (auth.zok) Timer")
+    timer = Timer("Zokrates (using auth.zok) Test Timer")
     timer.start()
     
     # Set the circuit path for ZoKrates
@@ -1559,17 +1550,16 @@ def test_authentication_circuit_auth_zok():
 #   4. Print/store the data.
 #   5. Clean up.
 ##
-# test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config
-def test_sumo_small_step_length_straightaway1(print_data=True):
+def test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(print_data=True):
     
     # Print test header
-    print("\n=== SUMO Small Step Length Test (straightaway1.sumocfg, step-length=0.01) ===")
+    print("\n=== Data Transfer; Small Step (using straightaway1.sumocfg) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("SUMO Small Step Length Test (straightaway1.sumocfg) Timer")
+    timer = Timer("Data Transfer; Small Step (using straightaway1.sumocfg) Test Timer")
     timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
@@ -1695,7 +1685,7 @@ def testAndScenarioRunner():
     # clear_console()
 
     # 11 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles
-    test_zokrates_end_to_end_multiple_vehicles()
+    test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit()
     time.sleep(.5)
     # clear_console()
 
@@ -1710,48 +1700,48 @@ def testAndScenarioRunner():
     # clear_console()
 
     # 14 - Run SUMO TraCI Data Transfer Test
-    test_sumo_traci_data_transfer(True)
+    test_DataTransfer_SumoAndTraCI_UsingSimpleNet(True)
     time.sleep(.5)
     # clear_console()
 
     # 15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
-    test_sumo_traci_data_transfer_sumocfg(True)
+    test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(True)
     time.sleep(.5)
     # clear_console()
 
     # 15b - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
-    test_sumo_traci_data_transfer_intersection2(True)
+    test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(True)
     time.sleep(.5)
     # clear_console()
 
     # 15c - Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
-    test_sumo_traci_data_transfer_straightaway1(True)
+    test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(True)
     time.sleep(.5)
     # clear_console()
 
     # 15d - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
-    test_sumo_traci_data_transfer_straightaway2(True)
+    test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(True)
     time.sleep(.5)
     # clear_console()
     
     # 15e - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
-    test_sumo_live_manipulation_straightaway1(True)
+    test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(True)
     time.sleep(.5)
     # clear_console()
 
     # 16 - Run Vehicle-to-Infrastructure ZKP Test with the
     # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
-    test_vehicle_to_infrastructure_VtoI_zkp()
+    test_Zokrates_UsingVtoICircuit()
     time.sleep(.5)
     # clear_console()
     
     # 17 - Run Authentication Circuit Test with auth.zok
-    test_authentication_circuit_auth_zok()
+    test_Zokrates_UsingAuthCircuit()
     time.sleep(.5)
     # clear_console()
     
     # 18 - Run SUMO Small Step Length Test (10ms steps)
-    test_sumo_small_step_length_straightaway1(True)
+    test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(True)
     time.sleep(.5)
     # clear_console()
     
