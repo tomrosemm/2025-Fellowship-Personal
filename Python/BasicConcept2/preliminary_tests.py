@@ -19,13 +19,13 @@
 
 ## Imports
 # Libraries
+# import sys
+# import subprocess
 import secrets
 import os
 import time
 import random
 import shutil
-# import sys
-# import subprocess
 
 # Classes and functions
 from vehicle import Vehicle
@@ -35,7 +35,7 @@ from timer import Timer
 from zkp import generate_zkp_proof_simulated
 
 from utilities import (
-    clear_console,
+    # clear_console,
     check_file_exists)
 
 from blockchain import (
@@ -44,22 +44,22 @@ from blockchain import (
 )
 
 from sumo_interface import (
-    kill_processes_on_port,
-    cleanup_traci_connection,
-    start_sumo_and_traci,
-    cleanup_sumo_and_traci,
+    # start_sumo_and_traci,
     set_debug_mode as set_sumo_debug_mode,
-    run_sumo_simulation_flexible,
+    kill_processes_on_port,
+    test_sumo_connection_wrapper,
+    cleanup_traci_connection,
+    cleanup_sumo_and_traci,
     start_sumo_simulation,
-    test_sumo_connection_wrapper
+    run_sumo_simulation_flexible
 )
 
 from zokrates_interface import (
-    run_zokrates_compile,
-    run_zokrates_setup,
-    run_zokrates_compute_witness,
-    run_zokrates_generate_proof,
-    run_zokrates_verify,
+    # run_zokrates_compile,
+    # run_zokrates_setup,
+    # run_zokrates_compute_witness,
+    # run_zokrates_generate_proof,
+    # run_zokrates_verify,
     cleanup_zokrates_files,
     set_debug_mode as set_zokrates_debug_mode,
     run_zokrates_workflow
