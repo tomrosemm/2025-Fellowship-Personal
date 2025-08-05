@@ -30,13 +30,13 @@ from timer import Timer
 from utilities import clear_console
 
 from zokrates_interface import (
+    # hex_to_field_array,
     run_zokrates_compile,
     run_zokrates_setup,
     run_zokrates_compute_witness,
     run_zokrates_generate_proof,
     run_zokrates_verify,
     cleanup_zokrates_files,
-    hex_to_field_array,
     set_debug_mode as set_zokrates_debug_mode
 )
 
