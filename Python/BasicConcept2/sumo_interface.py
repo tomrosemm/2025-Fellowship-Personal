@@ -1189,15 +1189,15 @@ def run_sumo_simulation_flexible(
         }
         for data_type in collect_data:
             if data_type == "position":
-                step_data["positions"] = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
+                step_data["position"] = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
             elif data_type == "speed":
-                step_data["speeds"] = {vid: traci.vehicle.getSpeed(vid) for vid in veh_ids}
+                step_data["speed"] = {vid: traci.vehicle.getSpeed(vid) for vid in veh_ids}
             elif data_type == "color":
-                step_data["colors"] = {vid: traci.vehicle.getColor(vid) for vid in veh_ids}
+                step_data["color"] = {vid: traci.vehicle.getColor(vid) for vid in veh_ids}
             elif data_type == "lane":
-                step_data["lanes"] = {vid: traci.vehicle.getLaneID(vid) for vid in veh_ids}
+                step_data["lane"] = {vid: traci.vehicle.getLaneID(vid) for vid in veh_ids}
             elif data_type == "lane_position":
-                step_data["lane_positions"] = {vid: traci.vehicle.getLanePosition(vid) for vid in veh_ids}
+                step_data["lane_position"] = {vid: traci.vehicle.getLanePosition(vid) for vid in veh_ids}
         for callback_name, callback_func in vehicle_callbacks.items():
             for vid in veh_ids:
                 try:
