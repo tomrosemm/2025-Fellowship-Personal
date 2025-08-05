@@ -4,7 +4,7 @@
 #
 # @brief
 #   Orchestrates the simulation of a privacy-preserving vehicle authentication protocol using One-Time Passwords (OTP), Zero-Knowledge 
-#   Proofs (ZKP) and blockchain logging. Demonstrates both simulated and (eventually) real workflows for ZoKrates-based ZKPs, blockchain 
+#   Proofs (ZKP) and blockchain logging. Demonstrates both simulated and real workflows for ZoKrates-based ZKPs, blockchain 
 #   verification and event logging, and SUMO integration for vehicle-RSU interactions.
 ##
 
