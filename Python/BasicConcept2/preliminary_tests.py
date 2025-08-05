@@ -1635,6 +1635,116 @@ def test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(prin
     print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
+def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(print_data=True):
+    """
+    Connects to straightaway5.sumocfg, spawns a car at step 10, and whenever a car completes its route,
+    immediately spawns another identical car, for 1010 steps.
+    """
+    print("\n=== SUMO Dynamic Car Spawning (straightaway5.sumocfg) Test ===")
+    global tested, passed
+    tested += 1
+
+    timer = Timer("SUMO Dynamic Car Spawning (straightaway5.sumocfg) Test Timer")
+    timer.start()
+
+    # Use the correct config file path and port
+    sumo_cfg = os.path.join(
+        os.path.dirname(__file__),
+        "..", "..", "SUMO", "Built Sims", "StraightAway5", "straightaway5.sumocfg"
+    )
+    sumo_cfg = os.path.abspath(sumo_cfg)
+    port = SUMO_PORT_DATA_CONFIG + 6  # Avoid port conflicts
+
+    # Check config file exists
+    if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
+        return
+
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=sumo_cfg,
+        is_config=True,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
+
+    if proc is None or traci is None:
+        return
+
+    try:
+        total_steps = 1010
+        car_counter = 0
+        next_spawn_step = 10
+        active_car_id = None
+        car_type = "car"
+        car_route = "route1"
+        car_depart = 10
+        finished_cars = 0
+
+        for step in range(total_steps):
+            traci.simulationStep()
+            sim_time = traci.simulation.getTime()
+
+            # Spawn the first car at step 10
+            if step == next_spawn_step and active_car_id is None:
+                car_counter += 1
+                active_car_id = f"car{car_counter}"
+                traci.vehicle.add(
+                    vehID=active_car_id,
+                    routeID=car_route,
+                    typeID=car_type,
+                    depart=sim_time
+                )
+                if print_data:
+                    print(f"Spawned {active_car_id} at step {step}")
+
+            # Check if the active car has finished its route
+            if active_car_id:
+                veh_ids = traci.vehicle.getIDList()
+                if active_car_id not in veh_ids:
+                    finished_cars += 1
+                    if print_data:
+                        print(f"{active_car_id} finished at step {step}")
+                    # Immediately spawn the next car
+                    car_counter += 1
+                    active_car_id = f"car{car_counter}"
+                    traci.vehicle.add(
+                        vehID=active_car_id,
+                        routeID=car_route,
+                        typeID=car_type,
+                        depart=sim_time
+                    )
+                    if print_data:
+                        print(f"Spawned {active_car_id} at step {step}")
+
+            if print_data and step % 100 == 0:
+                print(f"Step {step}: Active car: {active_car_id}, Finished cars: {finished_cars}")
+
+        passed_local = True
+
+    except Exception as e:
+        print(f"[SUMO Dynamic Car Spawning Test] Error: {e}")
+        passed_local = False
+
+    finally:
+        cleanup_sumo_and_traci(proc, port, traci)
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
+
+    if passed_local:
+        passed += 1
+        print("[SUMO Dynamic Car Spawning Test] Test succeeded!\n")
+    else:
+        print("[SUMO Dynamic Car Spawning Test] Test failed.\n")
+
+    timer.stop()
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    
+    
 def testAndScenarioRunner():
     
     # Use global variables to track tests, initialize counts
