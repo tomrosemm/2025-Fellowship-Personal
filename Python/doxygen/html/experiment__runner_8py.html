@@ -117,6 +117,9 @@ Functions</h2></td></tr>
 <tr class="memitem:afe50dc83f1d29648965392032fdfbd20" id="r_afe50dc83f1d29648965392032fdfbd20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#afe50dc83f1d29648965392032fdfbd20">set_debug_mode</a> (enabled)</td></tr>
 <tr class="memdesc:afe50dc83f1d29648965392032fdfbd20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable debug mode for detailed output.  <br /></td></tr>
 <tr class="separator:afe50dc83f1d29648965392032fdfbd20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2f20ba3630de0679f4ae044aa15d2ff" id="r_ae2f20ba3630de0679f4ae044aa15d2ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#ae2f20ba3630de0679f4ae044aa15d2ff">setup_logging</a> ()</td></tr>
+<tr class="memdesc:ae2f20ba3630de0679f4ae044aa15d2ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up logging for the experiment runner.  <br /></td></tr>
+<tr class="separator:ae2f20ba3630de0679f4ae044aa15d2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -126,6 +129,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a3d473005c4906abea048990af2bf1396" id="r_a3d473005c4906abea048990af2bf1396"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#a3d473005c4906abea048990af2bf1396">experiment_count</a> = 0</td></tr>
 <tr class="memdesc:a3d473005c4906abea048990af2bf1396"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counter for the number of experiments run.  <br /></td></tr>
 <tr class="separator:a3d473005c4906abea048990af2bf1396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b14e488ae28d98d262453f3e9cd6e4d" id="r_a0b14e488ae28d98d262453f3e9cd6e4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#a0b14e488ae28d98d262453f3e9cd6e4d">logger</a> = None</td></tr>
+<tr class="memdesc:a0b14e488ae28d98d262453f3e9cd6e4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global logger for the experiment runner.  <br /></td></tr>
+<tr class="separator:a0b14e488ae28d98d262453f3e9cd6e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a202b369a9c8ae3ed4de6b31303759a1a" id="r_a202b369a9c8ae3ed4de6b31303759a1a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#a202b369a9c8ae3ed4de6b31303759a1a">tested</a> = 0</td></tr>
 <tr class="memdesc:a202b369a9c8ae3ed4de6b31303759a1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counter for the number of tests performed.  <br /></td></tr>
 <tr class="separator:a202b369a9c8ae3ed4de6b31303759a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,7 +142,8 @@ Variables</h2></td></tr>
 <ul>
 <li>Sets up and runs experiments with dummy.zok and auth.zok circuits.</li>
 <li>Integrates with vehicle, RSU, ZoKrates, and blockchain modules.</li>
-<li>Supports debug mode and cleanup of ZoKrates artifacts. </li>
+<li>Supports debug mode and cleanup of ZoKrates artifacts.</li>
+<li>Logs experiment execution and results to files in the logs/ directory. </li>
 </ul>
 </div></div><!-- contents -->
 <!-- start footer part -->

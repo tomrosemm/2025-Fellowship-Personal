@@ -385,8 +385,9 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Tests manipulating vehicle parameters (speed, color, position) during a SUMO simulation.</p>
-<p>Steps:</p><ol type="1">
+<p>Tests manipulating vehicle parameters (speed, color, position) during a SUMO simulation. </p><pre class="fragment">***Position movement is still buggy. It's not needed in the actual framework, so it's
+            been left as is after a period of troubleshooting wasn't fruitful***
+</pre><p>Steps:</p><ol type="1">
 <li>Start SUMO with straightaway1.sumocfg.</li>
 <li>Connect via TraCI.</li>
 <li>Run the simulation for several steps to let vehicles appear.</li>

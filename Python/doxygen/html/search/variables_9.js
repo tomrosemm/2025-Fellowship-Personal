@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['passed_0',['passed',['../namespacepreliminary__tests.html#a561a5450b127e97c5ca67d0b349747a8',1,'preliminary_tests']]],
-  ['print_5fdata_1',['PRINT_DATA',['../namespacepreliminary__tests.html#ac9e79b5d2884cd8ac50eecac329107d1',1,'preliminary_tests.PRINT_DATA'],['../namespacesettings.html#aeffbf09973beddd8c5b02aeeec85d583',1,'settings.PRINT_DATA']]],
-  ['proof_2',['proof',['../namespacezkp.html#a7bc06438c4738df41835e3c3ee1171b2',1,'zkp']]],
-  ['provider_5furl_3',['provider_url',['../namespaceblockchain__interface.html#a0dfc25644067776fa8e662304648a3da',1,'blockchain_interface']]]
+  ['otp_0',['otp',['../namespaceotp.html#a8712cb73a4d6b370658d8bc9a77fba3e',1,'otp.otp'],['../namespacersu.html#a8712cb73a4d6b370658d8bc9a77fba3e',1,'rsu.otp'],['../namespacevehicle.html#a8712cb73a4d6b370658d8bc9a77fba3e',1,'vehicle.otp'],['../namespacezkp.html#ac35cb4db03562b73ac2c9ff9eb957c68',1,'zkp.otp']]]
 ];

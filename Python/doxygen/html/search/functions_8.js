@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kill_5fprocesses_5fon_5fport_0',['kill_processes_on_port',['../namespaceutilities.html#a5ecfbbe7bbb578fcca359736db14f2c5',1,'utilities']]]
+  ['log_5fauth_0',['log_auth',['../classblockchain__interface_1_1_blockchain_interface.html#a19cfad93c538ab9b93faa63306e9429c',1,'blockchain_interface::BlockchainInterface']]]
 ];

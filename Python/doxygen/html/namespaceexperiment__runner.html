@@ -104,6 +104,9 @@ Functions</h2></td></tr>
 <tr class="memitem:afe50dc83f1d29648965392032fdfbd20" id="r_afe50dc83f1d29648965392032fdfbd20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe50dc83f1d29648965392032fdfbd20">set_debug_mode</a> (enabled)</td></tr>
 <tr class="memdesc:afe50dc83f1d29648965392032fdfbd20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable debug mode for detailed output.  <br /></td></tr>
 <tr class="separator:afe50dc83f1d29648965392032fdfbd20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2f20ba3630de0679f4ae044aa15d2ff" id="r_ae2f20ba3630de0679f4ae044aa15d2ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2f20ba3630de0679f4ae044aa15d2ff">setup_logging</a> ()</td></tr>
+<tr class="memdesc:ae2f20ba3630de0679f4ae044aa15d2ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up logging for the experiment runner.  <br /></td></tr>
+<tr class="separator:ae2f20ba3630de0679f4ae044aa15d2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -113,6 +116,9 @@ Variables</h2></td></tr>
 <tr class="memitem:a3d473005c4906abea048990af2bf1396" id="r_a3d473005c4906abea048990af2bf1396"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d473005c4906abea048990af2bf1396">experiment_count</a> = 0</td></tr>
 <tr class="memdesc:a3d473005c4906abea048990af2bf1396"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counter for the number of experiments run.  <br /></td></tr>
 <tr class="separator:a3d473005c4906abea048990af2bf1396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b14e488ae28d98d262453f3e9cd6e4d" id="r_a0b14e488ae28d98d262453f3e9cd6e4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b14e488ae28d98d262453f3e9cd6e4d">logger</a> = None</td></tr>
+<tr class="memdesc:a0b14e488ae28d98d262453f3e9cd6e4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global logger for the experiment runner.  <br /></td></tr>
+<tr class="separator:a0b14e488ae28d98d262453f3e9cd6e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a202b369a9c8ae3ed4de6b31303759a1a" id="r_a202b369a9c8ae3ed4de6b31303759a1a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a202b369a9c8ae3ed4de6b31303759a1a">tested</a> = 0</td></tr>
 <tr class="memdesc:a202b369a9c8ae3ed4de6b31303759a1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counter for the number of tests performed.  <br /></td></tr>
 <tr class="separator:a202b369a9c8ae3ed4de6b31303759a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,6 +220,30 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ae2f20ba3630de0679f4ae044aa15d2ff" name="ae2f20ba3630de0679f4ae044aa15d2ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2f20ba3630de0679f4ae044aa15d2ff">&#9670;&#160;</a></span>setup_logging()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">setup_logging </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set up logging for the experiment runner. </p>
+<ul>
+<li>Creates a logs directory if it doesn't exist.</li>
+<li>Configures a logger with a timestamped filename.</li>
+<li>Sets up logging level and format. </li>
+</ul>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="a84cb21ca8841a588311a03bd9c054d76" name="a84cb21ca8841a588311a03bd9c054d76"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a84cb21ca8841a588311a03bd9c054d76">&#9670;&#160;</a></span>DEBUG_MODE</h2>
@@ -244,6 +274,22 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Counter for the number of experiments run. </p>
+
+</div>
+</div>
+<a id="a0b14e488ae28d98d262453f3e9cd6e4d" name="a0b14e488ae28d98d262453f3e9cd6e4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b14e488ae28d98d262453f3e9cd6e4d">&#9670;&#160;</a></span>logger</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">logger = None</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Global logger for the experiment runner. </p>
 
 </div>
 </div>

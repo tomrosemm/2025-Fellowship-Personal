@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['individual_5fexperiments_5fmenu_0',['individual_experiments_menu',['../namespacemain.html#af40c0fb51b91635e2959ca4e442c4e48',1,'main']]],
-  ['individual_5ftests_5fmenu_1',['individual_tests_menu',['../namespacemain.html#a6e0cb9505ed6ad3f879dd2e522c73402',1,'main']]],
-  ['interface_2',['interface',['../namespaceblockchain__interface.html#ae6deea6e7d03b5d4db98ea209159e57f',1,'blockchain_interface']]],
-  ['is_5fport_5favailable_3',['is_port_available',['../namespaceutilities.html#a9a3295007acd70bce6006465891ad368',1,'utilities']]],
-  ['is_5frunning_4',['is_running',['../classtimer_1_1_timer.html#a99075801ee59f226caf1917ea4326af6',1,'timer::Timer']]]
+  ['debug_5fmode_0',['DEBUG_MODE',['../classexperiment_1_1_experiment.html#aa36bae710d7db132738f1a82cdd29172',1,'experiment.Experiment.DEBUG_MODE'],['../classexperiment_1_1_experiment.html#aa36bae710d7db132738f1a82cdd29172',1,'experiment.Experiment.DEBUG_MODE'],['../namespaceblockchain.html#a84cb21ca8841a588311a03bd9c054d76',1,'blockchain.DEBUG_MODE'],['../namespaceblockchain__interface.html#a84cb21ca8841a588311a03bd9c054d76',1,'blockchain_interface.DEBUG_MODE'],['../namespaceexperiment__runner.html#a84cb21ca8841a588311a03bd9c054d76',1,'experiment_runner.DEBUG_MODE'],['../namespacepreliminary__tests.html#a84cb21ca8841a588311a03bd9c054d76',1,'preliminary_tests.DEBUG_MODE'],['../namespacesettings.html#af45d890adeeb7d0fee9c277eb84c1d3c',1,'settings.DEBUG_MODE'],['../namespacesumo__interface.html#a84cb21ca8841a588311a03bd9c054d76',1,'sumo_interface.DEBUG_MODE'],['../namespaceutilities.html#a84cb21ca8841a588311a03bd9c054d76',1,'utilities.DEBUG_MODE'],['../namespacezokrates__interface.html#a84cb21ca8841a588311a03bd9c054d76',1,'zokrates_interface.DEBUG_MODE']]]
 ];

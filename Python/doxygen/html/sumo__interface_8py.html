@@ -118,15 +118,21 @@ Functions</h2></td></tr>
 <tr class="memitem:ad4f99080fc8565b51c76b1dc4e530727" id="r_ad4f99080fc8565b51c76b1dc4e530727"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#ad4f99080fc8565b51c76b1dc4e530727">create_non_gui_config</a> (original_config_path)</td></tr>
 <tr class="memdesc:ad4f99080fc8565b51c76b1dc4e530727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a temporary config file without GUI elements and with essential simulation parameters.  <br /></td></tr>
 <tr class="separator:ad4f99080fc8565b51c76b1dc4e530727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44bf2802129741a481079d630c89bd30" id="r_a44bf2802129741a481079d630c89bd30"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#a44bf2802129741a481079d630c89bd30">run_sumo_simulation</a> (traci, steps, print_data=True)</td></tr>
-<tr class="memdesc:a44bf2802129741a481079d630c89bd30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a SUMO simulation for a specified number of steps and collect vehicle data.  <br /></td></tr>
-<tr class="separator:a44bf2802129741a481079d630c89bd30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19bdca5e38b93dc7e918cc262f9c6d2d" id="r_a19bdca5e38b93dc7e918cc262f9c6d2d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#a19bdca5e38b93dc7e918cc262f9c6d2d">run_sumo_simulation_flexible</a> (traci, steps, print_data=True, collect_data=None, step_delay=0.1, vehicle_callbacks=None)</td></tr>
+<tr class="memdesc:a19bdca5e38b93dc7e918cc262f9c6d2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a SUMO simulation for a specified number of steps and collect vehicle data, with flexible options.  <br /></td></tr>
+<tr class="separator:a19bdca5e38b93dc7e918cc262f9c6d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe50dc83f1d29648965392032fdfbd20" id="r_afe50dc83f1d29648965392032fdfbd20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#afe50dc83f1d29648965392032fdfbd20">set_debug_mode</a> (enabled)</td></tr>
 <tr class="memdesc:afe50dc83f1d29648965392032fdfbd20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable debug mode for detailed output.  <br /></td></tr>
 <tr class="separator:afe50dc83f1d29648965392032fdfbd20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8926912f5e6a9b9fda78c9e5f9e4dccb" id="r_a8926912f5e6a9b9fda78c9e5f9e4dccb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#a8926912f5e6a9b9fda78c9e5f9e4dccb">start_sumo_and_traci</a> (sumo_cmd, port, sumo_tools_path)</td></tr>
-<tr class="memdesc:a8926912f5e6a9b9fda78c9e5f9e4dccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start SUMO and connect via TraCI.  <br /></td></tr>
-<tr class="separator:a8926912f5e6a9b9fda78c9e5f9e4dccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f9d3e963a12d68ecc0f76c86ea94c69" id="r_a0f9d3e963a12d68ecc0f76c86ea94c69"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#a0f9d3e963a12d68ecc0f76c86ea94c69">start_sumo</a> ()</td></tr>
+<tr class="memdesc:a0f9d3e963a12d68ecc0f76c86ea94c69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the SUMO process with the specified network file and port.  <br /></td></tr>
+<tr class="separator:a0f9d3e963a12d68ecc0f76c86ea94c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00f1315a049d2ae153d1ac4399fd5e17" id="r_a00f1315a049d2ae153d1ac4399fd5e17"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#a00f1315a049d2ae153d1ac4399fd5e17">start_sumo_simulation</a> (file_path, is_config=False, port=8813, sumo_binary=&quot;sumo&quot;, connect_traci=True, step_length=None, additional_args=None, sumo_tools_path=None)</td></tr>
+<tr class="memdesc:a00f1315a049d2ae153d1ac4399fd5e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a SUMO simulation with flexible configuration.  <br /></td></tr>
+<tr class="separator:a00f1315a049d2ae153d1ac4399fd5e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a493bf0155f96ce3c2aa19c6c494397f2" id="r_a493bf0155f96ce3c2aa19c6c494397f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#a493bf0155f96ce3c2aa19c6c494397f2">start_sumo_with_config</a> (port, sumo_config_file)</td></tr>
+<tr class="memdesc:a493bf0155f96ce3c2aa19c6c494397f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the SUMO process with the specified config file and port.  <br /></td></tr>
+<tr class="separator:a493bf0155f96ce3c2aa19c6c494397f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8caca2dabe36412a0b3bee94f4188b4" id="r_aa8caca2dabe36412a0b3bee94f4188b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#aa8caca2dabe36412a0b3bee94f4188b4">test_sumo_config_connection</a> ()</td></tr>
 <tr class="memdesc:aa8caca2dabe36412a0b3bee94f4188b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test the connection to SUMO using a .sumocfg configuration file.  <br /></td></tr>
 <tr class="separator:aa8caca2dabe36412a0b3bee94f4188b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,7 +146,7 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a84cb21ca8841a588311a03bd9c054d76" id="r_a84cb21ca8841a588311a03bd9c054d76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesumo__interface.html#a84cb21ca8841a588311a03bd9c054d76">DEBUG_MODE</a> = DEFAULT_DEBUG_MODE</td></tr>
-<tr class="memdesc:a84cb21ca8841a588311a03bd9c054d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variable to control debug output.  <br /></td></tr>
+<tr class="memdesc:a84cb21ca8841a588311a03bd9c054d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unused, Leftover Functions.  <br /></td></tr>
 <tr class="separator:a84cb21ca8841a588311a03bd9c054d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>

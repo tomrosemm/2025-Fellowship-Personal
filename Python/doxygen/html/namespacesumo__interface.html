@@ -105,15 +105,21 @@ Functions</h2></td></tr>
 <tr class="memitem:ad4f99080fc8565b51c76b1dc4e530727" id="r_ad4f99080fc8565b51c76b1dc4e530727"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4f99080fc8565b51c76b1dc4e530727">create_non_gui_config</a> (original_config_path)</td></tr>
 <tr class="memdesc:ad4f99080fc8565b51c76b1dc4e530727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a temporary config file without GUI elements and with essential simulation parameters.  <br /></td></tr>
 <tr class="separator:ad4f99080fc8565b51c76b1dc4e530727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44bf2802129741a481079d630c89bd30" id="r_a44bf2802129741a481079d630c89bd30"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44bf2802129741a481079d630c89bd30">run_sumo_simulation</a> (traci, steps, print_data=True)</td></tr>
-<tr class="memdesc:a44bf2802129741a481079d630c89bd30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a SUMO simulation for a specified number of steps and collect vehicle data.  <br /></td></tr>
-<tr class="separator:a44bf2802129741a481079d630c89bd30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19bdca5e38b93dc7e918cc262f9c6d2d" id="r_a19bdca5e38b93dc7e918cc262f9c6d2d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19bdca5e38b93dc7e918cc262f9c6d2d">run_sumo_simulation_flexible</a> (traci, steps, print_data=True, collect_data=None, step_delay=0.1, vehicle_callbacks=None)</td></tr>
+<tr class="memdesc:a19bdca5e38b93dc7e918cc262f9c6d2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a SUMO simulation for a specified number of steps and collect vehicle data, with flexible options.  <br /></td></tr>
+<tr class="separator:a19bdca5e38b93dc7e918cc262f9c6d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe50dc83f1d29648965392032fdfbd20" id="r_afe50dc83f1d29648965392032fdfbd20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe50dc83f1d29648965392032fdfbd20">set_debug_mode</a> (enabled)</td></tr>
 <tr class="memdesc:afe50dc83f1d29648965392032fdfbd20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable debug mode for detailed output.  <br /></td></tr>
 <tr class="separator:afe50dc83f1d29648965392032fdfbd20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8926912f5e6a9b9fda78c9e5f9e4dccb" id="r_a8926912f5e6a9b9fda78c9e5f9e4dccb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8926912f5e6a9b9fda78c9e5f9e4dccb">start_sumo_and_traci</a> (sumo_cmd, port, sumo_tools_path)</td></tr>
-<tr class="memdesc:a8926912f5e6a9b9fda78c9e5f9e4dccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start SUMO and connect via TraCI.  <br /></td></tr>
-<tr class="separator:a8926912f5e6a9b9fda78c9e5f9e4dccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f9d3e963a12d68ecc0f76c86ea94c69" id="r_a0f9d3e963a12d68ecc0f76c86ea94c69"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f9d3e963a12d68ecc0f76c86ea94c69">start_sumo</a> ()</td></tr>
+<tr class="memdesc:a0f9d3e963a12d68ecc0f76c86ea94c69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the SUMO process with the specified network file and port.  <br /></td></tr>
+<tr class="separator:a0f9d3e963a12d68ecc0f76c86ea94c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00f1315a049d2ae153d1ac4399fd5e17" id="r_a00f1315a049d2ae153d1ac4399fd5e17"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00f1315a049d2ae153d1ac4399fd5e17">start_sumo_simulation</a> (file_path, is_config=False, port=8813, sumo_binary=&quot;sumo&quot;, connect_traci=True, step_length=None, additional_args=None, sumo_tools_path=None)</td></tr>
+<tr class="memdesc:a00f1315a049d2ae153d1ac4399fd5e17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a SUMO simulation with flexible configuration.  <br /></td></tr>
+<tr class="separator:a00f1315a049d2ae153d1ac4399fd5e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a493bf0155f96ce3c2aa19c6c494397f2" id="r_a493bf0155f96ce3c2aa19c6c494397f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a493bf0155f96ce3c2aa19c6c494397f2">start_sumo_with_config</a> (port, sumo_config_file)</td></tr>
+<tr class="memdesc:a493bf0155f96ce3c2aa19c6c494397f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the SUMO process with the specified config file and port.  <br /></td></tr>
+<tr class="separator:a493bf0155f96ce3c2aa19c6c494397f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8caca2dabe36412a0b3bee94f4188b4" id="r_aa8caca2dabe36412a0b3bee94f4188b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8caca2dabe36412a0b3bee94f4188b4">test_sumo_config_connection</a> ()</td></tr>
 <tr class="memdesc:aa8caca2dabe36412a0b3bee94f4188b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test the connection to SUMO using a .sumocfg configuration file.  <br /></td></tr>
 <tr class="separator:aa8caca2dabe36412a0b3bee94f4188b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,7 +133,7 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a84cb21ca8841a588311a03bd9c054d76" id="r_a84cb21ca8841a588311a03bd9c054d76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84cb21ca8841a588311a03bd9c054d76">DEBUG_MODE</a> = DEFAULT_DEBUG_MODE</td></tr>
-<tr class="memdesc:a84cb21ca8841a588311a03bd9c054d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variable to control debug output.  <br /></td></tr>
+<tr class="memdesc:a84cb21ca8841a588311a03bd9c054d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unused, Leftover Functions.  <br /></td></tr>
 <tr class="separator:a84cb21ca8841a588311a03bd9c054d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -257,14 +263,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a44bf2802129741a481079d630c89bd30" name="a44bf2802129741a481079d630c89bd30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44bf2802129741a481079d630c89bd30">&#9670;&#160;</a></span>run_sumo_simulation()</h2>
+<a id="a19bdca5e38b93dc7e918cc262f9c6d2d" name="a19bdca5e38b93dc7e918cc262f9c6d2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19bdca5e38b93dc7e918cc262f9c6d2d">&#9670;&#160;</a></span>run_sumo_simulation_flexible()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">run_sumo_simulation </td>
+          <td class="memname">run_sumo_simulation_flexible </td>
           <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>traci</em></span>, </td>
         </tr>
@@ -276,27 +282,39 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>print_data</em></span><span class="paramdefsep"> = </span><span class="paramdefval">True</span>&#160;)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>print_data</em></span><span class="paramdefsep"> = </span><span class="paramdefval">True</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>collect_data</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>step_delay</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0.1</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>vehicle_callbacks</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Run a SUMO simulation for a specified number of steps and collect vehicle data. </p>
+<p>Run a SUMO simulation for a specified number of steps and collect vehicle data, with flexible options. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">traci</td><td>TraCI module instance with an active connection. </td></tr>
     <tr><td class="paramname">steps</td><td>Number of simulation steps to run. </td></tr>
     <tr><td class="paramname">print_data</td><td>If True, print simulation data to screen. </td></tr>
+    <tr><td class="paramname">collect_data</td><td>List of data types to collect (e.g. ["position", "speed", "color"]) </td></tr>
+    <tr><td class="paramname">step_delay</td><td>Time in seconds to wait between steps. </td></tr>
+    <tr><td class="paramname">vehicle_callbacks</td><td>Dictionary of callback functions to execute on vehicles. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>List of dictionaries containing simulation data for each step.</dd></dl>
-<p>Steps:</p><ol type="1">
-<li>Run simulation for specified number of steps.</li>
-<li>For each step, collect simulation time, vehicle IDs, and positions.</li>
-<li>Optionally print the data to console.</li>
-<li>Return collected data as a list of dictionaries. </li>
-</ol>
+<dl class="section return"><dt>Returns</dt><dd>List of dictionaries containing simulation data for each step. </dd></dl>
 
 </div>
 </div>
@@ -328,46 +346,126 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a8926912f5e6a9b9fda78c9e5f9e4dccb" name="a8926912f5e6a9b9fda78c9e5f9e4dccb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8926912f5e6a9b9fda78c9e5f9e4dccb">&#9670;&#160;</a></span>start_sumo_and_traci()</h2>
+<a id="a0f9d3e963a12d68ecc0f76c86ea94c69" name="a0f9d3e963a12d68ecc0f76c86ea94c69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f9d3e963a12d68ecc0f76c86ea94c69">&#9670;&#160;</a></span>start_sumo()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">start_sumo_and_traci </td>
+          <td class="memname">start_sumo </td>
           <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sumo_cmd</em></span>, </td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start the SUMO process with the specified network file and port. </p>
+<dl class="section return"><dt>Returns</dt><dd>tuple: (proc, sumo_binary, SUMO_NET_FILE)</dd></dl>
+<p>Steps:</p><ol type="1">
+<li>Build SUMO command.</li>
+<li>Start SUMO process.</li>
+<li>Wait for process to start.</li>
+<li>Return process and info. </li>
+</ol>
+
+</div>
+</div>
+<a id="a00f1315a049d2ae153d1ac4399fd5e17" name="a00f1315a049d2ae153d1ac4399fd5e17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00f1315a049d2ae153d1ac4399fd5e17">&#9670;&#160;</a></span>start_sumo_simulation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">start_sumo_simulation </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>file_path</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>is_config</em></span><span class="paramdefsep"> = </span><span class="paramdefval">False</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>port</em></span><span class="paramdefsep"> = </span><span class="paramdefval">8813</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sumo_binary</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;sumo&quot;</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>connect_traci</em></span><span class="paramdefsep"> = </span><span class="paramdefval">True</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>step_length</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>additional_args</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sumo_tools_path</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start a SUMO simulation with flexible configuration. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file_path</td><td>Path to SUMO network file or config file. </td></tr>
+    <tr><td class="paramname">is_config</td><td>If True, file_path is treated as a config file; otherwise as a network file. </td></tr>
+    <tr><td class="paramname">port</td><td>Port to use for TraCI connection. </td></tr>
+    <tr><td class="paramname">sumo_binary</td><td>SUMO binary to use ('sumo' or 'sumo-gui'). </td></tr>
+    <tr><td class="paramname">connect_traci</td><td>If True, establishes TraCI connection. </td></tr>
+    <tr><td class="paramname">step_length</td><td>Simulation step length in seconds. </td></tr>
+    <tr><td class="paramname">additional_args</td><td>Dictionary of additional command-line arguments. </td></tr>
+    <tr><td class="paramname">sumo_tools_path</td><td>Path to SUMO tools directory. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>tuple (proc, traci_module, config_file, temp_config, temp_output_dir) </dd></dl>
+
+</div>
+</div>
+<a id="a493bf0155f96ce3c2aa19c6c494397f2" name="a493bf0155f96ce3c2aa19c6c494397f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a493bf0155f96ce3c2aa19c6c494397f2">&#9670;&#160;</a></span>start_sumo_with_config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">start_sumo_with_config </td>
+          <td>(</td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>port</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sumo_tools_path</em></span>&#160;)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sumo_config_file</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Start SUMO and connect via TraCI. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sumo_cmd</td><td>SUMO command list. </td></tr>
-    <tr><td class="paramname">port</td><td>Port to use for TraCI connection. </td></tr>
-    <tr><td class="paramname">sumo_tools_path</td><td>Path to SUMO tools directory. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>tuple (proc, traci_module) - SUMO process and TraCI module.</dd></dl>
+<p>Start the SUMO process with the specified config file and port. </p>
+<dl class="section return"><dt>Returns</dt><dd>tuple (proc, sumo_binary, config_file, temp_config, temp_output_dir)</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Add SUMO tools to path.</li>
-<li>Import TraCI.</li>
+<li>Create a temporary config file without GUI elements.</li>
+<li>Build SUMO command.</li>
 <li>Start SUMO process.</li>
-<li>Connect via TraCI.</li>
-<li>Return process and TraCI module. </li>
+<li>Wait for process to start.</li>
+<li>Return process and info. </li>
 </ol>
 
 </div>
@@ -468,6 +566,56 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Unused, Leftover Functions. </p>
+<h2><a class="anchor" id="autotoc_md0"></a>
+autotoc_md0</h2>
+<h1><a class="anchor" id="autotoc_md1"></a>
+autotoc_md1</h1>
+<p>Start SUMO and connect via TraCI. </p>
+<h1><a class="anchor" id="autotoc_md2"></a>
+autotoc_md2</h1>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sumo_cmd</td><td>SUMO command list. </td></tr>
+  </table>
+  </dd>
+</dl>
+<h1><a class="anchor" id="autotoc_md3"></a>
+autotoc_md3</h1>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>Port to use for TraCI connection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<h1><a class="anchor" id="autotoc_md4"></a>
+autotoc_md4</h1>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sumo_tools_path</td><td>Path to SUMO tools directory. </td></tr>
+  </table>
+  </dd>
+</dl>
+<h1><a class="anchor" id="autotoc_md5"></a>
+autotoc_md5</h1>
+<dl class="section return"><dt>Returns</dt><dd>tuple (proc, traci_module) - SUMO process and TraCI module. # </dd></dl>
+<h1><a class="anchor" id="autotoc_md6"></a>
+autotoc_md6</h1>
+<h1><a class="anchor" id="autotoc_md7"></a>
+Steps:</h1>
+<h1><a class="anchor" id="autotoc_md8"></a>
+1. Add SUMO tools to path.</h1>
+<h1><a class="anchor" id="autotoc_md9"></a>
+2. Import TraCI.</h1>
+<h1><a class="anchor" id="autotoc_md10"></a>
+3. Start SUMO process.</h1>
+<h1><a class="anchor" id="autotoc_md11"></a>
+4. Connect via TraCI.</h1>
+<h1><a class="anchor" id="autotoc_md12"></a>
+5. Return process and TraCI module.</h1>
+<h2><a class="anchor" id="autotoc_md13"></a>
+autotoc_md13</h2>
+<p>def start_sumo_and_traci(sumo_cmd, port, sumo_tools_path): sys.path.append(sumo_tools_path) try: import traci except ImportError: print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.") return None, None proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE) time.sleep(3) if proc.poll() is not None: stderr = proc.stderr.read().decode() print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}") return None, None traci.init(port=port) time.sleep(1) return proc, traci</p>
 <p>Global variable to control debug output. </p>
 
 </div>
