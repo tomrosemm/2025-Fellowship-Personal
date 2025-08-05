@@ -142,16 +142,16 @@ def set_print_data(enabled):
 #   4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
 #   5. Output the result of the verification and authentication status.
 ##
-def test_vehicle_rsu_interaction_simulated():
+def test_VehicleRsuBasicInteraction_SimulatedZkp():
     
     # Print test header
-    print("\n=== Simulated ZKP Test ===")
+    print("\n=== Vehicle - Rsu Basic Interaction; Simulated Zkp ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("Simulated ZKP Test Timer")
+    timer = Timer("Vehicle - Rsu Basic Interaction; Simulated Zkp Test Timer")
     timer.start()
     
     # Generate entities with random secrets
@@ -196,7 +196,7 @@ def test_vehicle_rsu_interaction_simulated():
 
 
 ##
-# @brief Simulate the full workflow, including using ZoKrates for the ZKP as well as blockchain verification and logging.
+# @brief Simulate the full workflow, using simulated ZKP and simulated blockchain verification and logging.
 # @details
 #   Simulates authentication and blockchain verification using hash-based ZKP.
 #
@@ -208,23 +208,23 @@ def test_vehicle_rsu_interaction_simulated():
 #   5. Simulate blockchain smart contract verification and logging of the authentication attempt.
 #   6. Output the result of the infrastructure access decision.
 ##
-def test_vehicle_rsu_blockchain_simulated():
+def test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain():
     
     # Print test header
-    print("\n=== Simulated Blockchain ZKP Test ===")
+    print("\n=== Vehicle - Rsu Basic Interaction; Simulated Zkp And Blockchain ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("Simulated Blockchain ZKP Test Timer")
+    timer = Timer("Vehicle - Rsu Basic Interaction; Simulated Zkp And Blockchain Test Timer")
     timer.start()
     
     # Generate entities with random secrets
     vehicle_id = "VEH123"
     vehicle_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, vehicle_secret)
-    rsu = RSU({vehicle_id: vehicle_secret})
+    unused_rsu = RSU({vehicle_id: vehicle_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
@@ -277,23 +277,23 @@ def test_vehicle_rsu_blockchain_simulated():
 #   5. Blockchain verification is performed if DEBUG_MODE is enabled.
 #   6. Print the result of the infrastructure access decision.
 ##
-def scenario_successful_authentication():
+def test_EndToEnd_SimulatedZkpAndBlockchain_Success():
     
     # Print test header
-    print("\n=== End-to-End Simulated Scenario: Successful Authentication ===")
+    print("\n=== End - To - End; Simulated Zkp And Blockchain; Success Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("End-to-End Simulated Scenario: Successful Authentication Timer")
+    timer = Timer("End - To - End; Simulated Zkp And Blockchain; Success Test Timer")
     timer.start()
     
     # Generate entities with matching secrets
     vehicle_id = "VEH001"
     vehicle_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, vehicle_secret)
-    rsu = RSU({vehicle_id: vehicle_secret})
+    unused_rsu = RSU({vehicle_id: vehicle_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
@@ -346,16 +346,16 @@ def scenario_successful_authentication():
 #   5. Blockchain verification is performed if DEBUG_MODE is enabled.
 #   6. Print expected denial of infrastructure access.
 ##
-def scenario_failed_authentication():
+def test_EndToEnd_SimulatedZkpAndBlockchain_Failure():
     
     # Print test header
-    print("\n=== End-to-End Simulated Scenario: Failed Authentication ===")
+    print("\n=== End - To - End; Simulated Zkp And Blockchain; Failure Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("End-to-End Simulated Scenario: Failed Authentication Timer")
+    timer = Timer("End - To - End; Simulated Zkp And Blockchain; Failure Test Timer")
     timer.start()
     
     # Generate entities with wrong secret
@@ -363,7 +363,7 @@ def scenario_failed_authentication():
     correct_secret = secrets.token_hex(16)
     wrong_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, wrong_secret)
-    rsu = RSU({vehicle_id: correct_secret})
+    unused_rsu = RSU({vehicle_id: correct_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
@@ -422,16 +422,16 @@ def scenario_failed_authentication():
 #   6. Clean up ZoKrates artifacts after test.
 #   7. Print the result of the ZoKrates workflow.
 ##
-def test_zokrates_connection():
+def test_Zokrates_BasicConnectionTest_UsingDummyCircuit():
     
     # Print test header
-    print("\n=== ZoKrates CLI Connection Test (dummy.zok) ===")
+    print("\n=== Zokrates Basic Connection (using dummy.zok) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("ZoKrates Connection Test Timer")
+    timer = Timer("Zokrates Basic Connection (using dummy.zok) Test Timer")
     timer.start()
     
     # Set the circuit path for ZoKrates from settings
@@ -475,16 +475,16 @@ def test_zokrates_connection():
 #   7. Clean up ZoKrates artifacts after test.
 #   8. Print the result of the workflow.
 ##
-def test_vehicle_rsu_interaction_real_zokrates_dummy():
+def test_PartialWorkflow_RealZokrates_UsingDummyCircuit():
     
     # Print test header
-    print("\n=== Real ZoKrates End-to-End Test (dummy.zok) ===")
+    print("\n=== Partial Workflow - Real Zokrates (using dummy.zok) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("Real ZoKrates End-to-End Test Timer")
+    timer = Timer("Partial Workflow - Real Zokrates (using dummy.zok) Test Timer")
     timer.start()
     
     # Set the circuit path for ZoKrates from settings
@@ -532,16 +532,16 @@ def test_vehicle_rsu_interaction_real_zokrates_dummy():
 #   3. RSU verifies each ZKP proof.
 #   4. Print whether all vehicles authenticated successfully.
 ##
-def test_simulated_isolated_multiple_vehicles():
+def test_PartialWorkflow_MultipleVehicles_Simulated():
     
     # Print test header
-    print("\n=== Simulated ZKP Isolated Test: Multiple Vehicles ===")
+    print("\n=== Partial Workflow - Multiple Vehicles; Simulated Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("Simulated ZKP Isolated Test: Multiple Vehicles Timer")
+    timer = Timer("Partial Workflow - Multiple Vehicles; Simulated Test Timer")
     timer.start()
     
     # Variables to hold vehicles and RSU secrets
@@ -616,16 +616,16 @@ def test_simulated_isolated_multiple_vehicles():
 #   4. Blockchain verification is performed if DEBUG_MODE is enabled.
 #   5. Print whether all vehicles were granted access by infrastructure.
 ##
-def test_simulated_end_to_end_multiple_vehicles():
+def test_EndToEnd_MultipleVehicles_Simulated():
     
     # Print test header
-    print("\n=== Simulated End-to-End Test: Multiple Vehicles ===")
+    print("\n=== End - To - End; Multiple Vehicles; Simulated Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("Simulated End-to-End Test: Multiple Vehicles Timer")
+    timer = Timer("End - To - End; Multiple Vehicles; Simulated Test Timer")
     timer.start()
     
     # Variables to hold vehicles and RSU secrets
@@ -707,16 +707,16 @@ def test_simulated_end_to_end_multiple_vehicles():
 #      g. Clean up ZoKrates artifacts.
 #   2. Print whether all vehicles' proofs were verified successfully.
 ##
-def test_zokrates_isolated_multiple_vehicles():
+def test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit():
     
     # Print test header
-    print("\n=== ZoKrates-Integrated Isolated Test: Multiple Vehicles (dummy.zok) ===")
+    print("\n=== Partial Workflow - Real Zokrates; Multiple Vehicles (using dummy.zok) Test ===")
     
     # Use global variables to track tests, increment tested count
     global tested, passed
     tested += 1
     
-    timer = Timer("ZoKrates-Integrated Isolated Test: Multiple Vehicles Timer")
+    timer = Timer("Partial Workflow - Real Zokrates; Multiple Vehicles (using dummy.zok) Test Timer")
     timer.start()
     
     # Set the circuit path for ZoKrates from settings
@@ -781,6 +781,7 @@ def test_zokrates_isolated_multiple_vehicles():
 #      h. Clean up ZoKrates artifacts.
 #   2. Print whether all vehicles' proofs and blockchain logs succeeded.
 ##
+#test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit
 def test_zokrates_end_to_end_multiple_vehicles():
     
     # Print test header
@@ -864,6 +865,7 @@ def test_zokrates_end_to_end_multiple_vehicles():
 #   4. Print/store the data.
 #   5. Clean up.
 ##
+# test_DataTransfer_SumoAndTraCI_UsingSimpleNet
 def test_sumo_traci_data_transfer(print_data=True):
     
     # Print test header
@@ -901,7 +903,7 @@ def test_sumo_traci_data_transfer(print_data=True):
     
     try:
         # Use the new flexible simulation runner
-        sim_data = run_sumo_simulation_flexible(traci, 5, print_data)
+        unused_sim_data = run_sumo_simulation_flexible(traci, 5, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -945,6 +947,7 @@ def test_sumo_traci_data_transfer(print_data=True):
 #   4. Print/store the data.
 #   5. Clean up.
 ##
+# test_DataTransfer_SumoAndTraCI_UsingIntersection1Config
 def test_sumo_traci_data_transfer_sumocfg(print_data=True):
     
     # Print test header
@@ -1020,6 +1023,7 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
 #   4. Print/store the data.
 #   5. Clean up.
 ##
+# test_DataTransfer_SumoAndTraCI_UsingIntersection2Config
 def test_sumo_traci_data_transfer_intersection2(print_data=True):
     
     # Print test header
@@ -1097,6 +1101,7 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
 #   4. Print/store the data.
 #   5. Clean up.
 ##
+# test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config
 def test_sumo_traci_data_transfer_straightaway1(print_data=True):
     
     # Print test header
@@ -1173,6 +1178,7 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
 #   4. Print/store the data.
 #   5. Clean up.
 ##
+# test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config
 def test_sumo_traci_data_transfer_straightaway2(print_data=True):
     
     # Print test header
@@ -1252,6 +1258,7 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
 #   5. Continue simulation to observe effects.
 #   6. Clean up.
 ##
+# test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config
 def test_sumo_live_manipulation_straightaway1(print_data=True):
     
     # Print test header
@@ -1345,7 +1352,6 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
         try:
             # Get position after speed change but before manual movement
             post_speed_position = traci.vehicle.getPosition(vehicle_id)
-            
             lane_id = traci.vehicle.getLaneID(vehicle_id)
             current_lane_pos = traci.vehicle.getLanePosition(vehicle_id)
             new_lane_pos = current_lane_pos + 10
@@ -1436,6 +1442,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
 #   2. Run the experiment with a vehicle ID, secret key, and commitment.
 #   3. Check if the verification was successful.
 ##
+# test_Zokrates_UsingVtoICircuit
 def test_vehicle_to_infrastructure_VtoI_zkp():
     
     # Print test header
@@ -1465,7 +1472,6 @@ def test_vehicle_to_infrastructure_VtoI_zkp():
         print(f"[VtoI_test.zok] args={args}")
 
     # Run ZoKrates workflow
-    from zokrates_interface import run_zokrates_workflow, cleanup_zokrates_files
     verification_result = run_zokrates_workflow(circuit_path, args)
 
     if DEBUG_MODE:
@@ -1493,6 +1499,7 @@ def test_vehicle_to_infrastructure_VtoI_zkp():
 #   2. Run the experiment with a random vehicle ID and secret.
 #   3. Check if the verification was successful.
 ##
+# test_Zokrates_UsingAuthCircuit
 def test_authentication_circuit_auth_zok():
     
     # Print test header
@@ -1522,7 +1529,6 @@ def test_authentication_circuit_auth_zok():
         print(f"[auth.zok] args={args}")
 
     # Run ZoKrates workflow
-    from zokrates_interface import run_zokrates_workflow, cleanup_zokrates_files
     verification_result = run_zokrates_workflow(circuit_path, args)
 
     if DEBUG_MODE:
@@ -1553,6 +1559,7 @@ def test_authentication_circuit_auth_zok():
 #   4. Print/store the data.
 #   5. Clean up.
 ##
+# test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config
 def test_sumo_small_step_length_straightaway1(print_data=True):
     
     # Print test header
@@ -1648,42 +1655,42 @@ def testAndScenarioRunner():
     timer.start()
 
     # 3 - Run Simulated ZKP Test
-    test_vehicle_rsu_interaction_simulated()
+    test_VehicleRsuBasicInteraction_SimulatedZkp()
     time.sleep(.5)
     # clear_console()
 
     # 4 - Run Simulated Blockchain ZKP Test
-    test_vehicle_rsu_blockchain_simulated()
+    test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain()
     time.sleep(.5)
     # clear_console()
 
     # 5 - Run Simulated End-to-End Scenario: Successful Authentication
-    scenario_successful_authentication()
+    test_EndToEnd_SimulatedZkpAndBlockchain_Success()
     time.sleep(.5)
     # clear_console()
 
     # 6 - Run Simulated End-to-End Scenario: Failed Authentication
-    scenario_failed_authentication()
+    test_EndToEnd_SimulatedZkpAndBlockchain_Failure()
     time.sleep(.5)
     # clear_console()
 
     # 7 - Run Real ZoKrates End-to-End Test with dummy.zok
-    test_vehicle_rsu_interaction_real_zokrates_dummy()
+    test_PartialWorkflow_RealZokrates_UsingDummyCircuit()
     time.sleep(.5)
     # clear_console()
 
     # 8 - Simulated ZKP Isolated Test: Multiple Vehicles
-    test_simulated_isolated_multiple_vehicles()
+    test_PartialWorkflow_MultipleVehicles_Simulated()
     time.sleep(.5)
     # clear_console()
 
     # 9 - Simulated End-to-End Test: Multiple Vehicles
-    test_simulated_end_to_end_multiple_vehicles()
+    test_EndToEnd_MultipleVehicles_Simulated()
     time.sleep(.5)
     # clear_console()
 
     # 10 - ZoKrates-Integrated Isolated Test: Multiple Vehicles
-    test_zokrates_isolated_multiple_vehicles()
+    test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit()
     time.sleep(.5)
     # clear_console()
 
@@ -1698,7 +1705,7 @@ def testAndScenarioRunner():
     # clear_console()
 
     # 13 - Run ZoKrates CLI Connection Test
-    test_zokrates_connection()
+    test_Zokrates_BasicConnectionTest_UsingDummyCircuit()
     time.sleep(.5)
     # clear_console()
 

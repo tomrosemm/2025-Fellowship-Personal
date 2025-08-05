@@ -178,17 +178,17 @@ def subgroups_tests_menu():
 ##
 def individual_tests_menu():
     menu_actions = {
-        "1": preliminary_tests.test_vehicle_rsu_interaction_simulated,
-        "2": preliminary_tests.test_vehicle_rsu_blockchain_simulated,
-        "3": preliminary_tests.scenario_successful_authentication,
-        "4": preliminary_tests.scenario_failed_authentication,
-        "5": preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy,
-        "6": preliminary_tests.test_simulated_isolated_multiple_vehicles,
-        "7": preliminary_tests.test_simulated_end_to_end_multiple_vehicles,
-        "8": preliminary_tests.test_zokrates_isolated_multiple_vehicles,
+        "1": preliminary_tests.test_VehicleRsuBasicInteraction_SimulatedZkp,
+        "2": preliminary_tests.test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain,
+        "3": preliminary_tests.test_EndToEnd_SimulatedZkpAndBlockchain_Success,
+        "4": preliminary_tests.test_EndToEnd_SimulatedZkpAndBlockchain_Failure,
+        "5": preliminary_tests.test_PartialWorkflow_RealZokrates_UsingDummyCircuit,
+        "6": preliminary_tests.test_PartialWorkflow_MultipleVehicles_Simulated,
+        "7": preliminary_tests.test_EndToEnd_MultipleVehicles_Simulated,
+        "8": preliminary_tests.test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit,
         "9": preliminary_tests.test_zokrates_end_to_end_multiple_vehicles,
         "10": lambda: setattr(preliminary_tests, "tested", preliminary_tests.test_sumo_connection_wrapper(preliminary_tests.tested, preliminary_tests.passed)[0]) or setattr(preliminary_tests, "passed", preliminary_tests.test_sumo_connection_wrapper(preliminary_tests.tested, preliminary_tests.passed)[1]),
-        "11": preliminary_tests.test_zokrates_connection,
+        "11": preliminary_tests.test_Zokrates_BasicConnectionTest_UsingDummyCircuit,
         "12": lambda: preliminary_tests.test_sumo_traci_data_transfer(print_data=preliminary_tests.PRINT_DATA),
         "13": lambda: preliminary_tests.test_sumo_traci_data_transfer_sumocfg(print_data=preliminary_tests.PRINT_DATA),
         "14": lambda: preliminary_tests.test_sumo_traci_data_transfer_intersection2(print_data=preliminary_tests.PRINT_DATA),
@@ -203,19 +203,20 @@ def individual_tests_menu():
         "b": "back",
         "e": "exit"
     }
+    
     while True:
         print("\n*** Individual Tests Menu ***")
-        print("1 - Run Simulated ZKP Test")
-        print("2 - Run Simulated Blockchain ZKP Test")
-        print("3 - Run Simulated End-to-End Scenario: Successful Authentication")
-        print("4 - Run Simulated End-to-End Scenario: Failed Authentication")
-        print("5 - Run Real ZoKrates End-to-End Test with dummy.zok")
-        print("6 - Simulated ZKP Isolated Test: Multiple Vehicles")
-        print("7 - Simulated End-to-End Test: Multiple Vehicles")
-        print("8 - ZoKrates-Integrated Isolated Test: Multiple Vehicles")
+        print("1 - Run Vehicle - Rsu Basic Interaction; Simulated Zkp Test")
+        print("2 - Run Vehicle - Rsu Basic Interaction; Simulated Zkp And Blockchain Test")
+        print("3 - Run End - To - End; Simulated Zkp And Blockchain; Success Test")
+        print("4 - Run End - To - End; Simulated Zkp And Blockchain; Failure Test")
+        print("5 - Run Partial Workflow - Real Zokrates (using dummy.zok) Test")
+        print("6 - Run Partial Workflow - Multiple Vehicles; Simulated Test")
+        print("7 - Run End - To - End; Multiple Vehicles; Simulated Test")
+        print("8 - Run Partial Workflow - Real Zokrates; Multiple Vehicles (using dummy.zok) Test")
         print("9 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
         print("10 - Run SUMO Connection Tests (Basic Network + Configuration File)")
-        print("11 - Run ZoKrates CLI Connection Test")
+        print("11 - Run Zokrates Basic Connection (using dummy.zok) Test")
         print("12 - Run SUMO TraCI Data Transfer Test")
         print("13 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
         print("14 - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)")
@@ -349,12 +350,12 @@ def fully_simulated_tests():
     print("Simulated ZKP Isolated Test: Multiple Vehicles")
     print("Simulated End-to-End Test: Multiple Vehicles")
     
-    preliminary_tests.test_vehicle_rsu_interaction_simulated()
-    preliminary_tests.test_vehicle_rsu_blockchain_simulated()
-    preliminary_tests.scenario_successful_authentication()
-    preliminary_tests.scenario_failed_authentication()
-    preliminary_tests.test_simulated_isolated_multiple_vehicles()
-    preliminary_tests.test_simulated_end_to_end_multiple_vehicles()
+    preliminary_tests.test_VehicleRsuBasicInteraction_SimulatedZkp()
+    preliminary_tests.test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain()
+    preliminary_tests.test_EndToEnd_SimulatedZkpAndBlockchain_Success()
+    preliminary_tests.test_EndToEnd_SimulatedZkpAndBlockchain_Failure()
+    preliminary_tests.test_PartialWorkflow_MultipleVehicles_Simulated()
+    preliminary_tests.test_EndToEnd_MultipleVehicles_Simulated()
                 
                 
 def zokrates_integration_tests():
@@ -373,10 +374,10 @@ def zokrates_integration_tests():
     print("Run Vehicle-to-Infrastructure ZKP Test with VtoI_test.zok")
     print("Run Authentication Circuit Test with auth.zok")
     
-    preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy()
-    preliminary_tests.test_zokrates_isolated_multiple_vehicles()
+    preliminary_tests.test_PartialWorkflow_RealZokrates_UsingDummyCircuit()
+    preliminary_tests.test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit()
     preliminary_tests.test_zokrates_end_to_end_multiple_vehicles()
-    preliminary_tests.test_zokrates_connection()
+    preliminary_tests.test_Zokrates_BasicConnectionTest_UsingDummyCircuit()
     preliminary_tests.test_vehicle_to_infrastructure_VtoI_zkp()
     preliminary_tests.test_authentication_circuit_auth_zok()
 
@@ -419,17 +420,17 @@ def progressPresentationSuite():
     initial_passed = preliminary_tests.passed
 
     # Run ZoKrates CLI Connection Test
-    preliminary_tests.test_zokrates_connection()
+    preliminary_tests.test_Zokrates_BasicConnectionTest_UsingDummyCircuit()
     time.sleep(.5)
     # clear_console()
     
     # Run Real ZoKrates End-to-End Test with dummy.zok
-    preliminary_tests.test_vehicle_rsu_interaction_real_zokrates_dummy()
+    preliminary_tests.test_PartialWorkflow_RealZokrates_UsingDummyCircuit()
     time.sleep(.5)
     # clear_console()
 
     # ZoKrates-Integrated Isolated Test: Multiple Vehicles
-    preliminary_tests.test_zokrates_isolated_multiple_vehicles()
+    preliminary_tests.test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit()
     time.sleep(.5)
     # clear_console()
 
