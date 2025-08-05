@@ -1042,34 +1042,176 @@ def cleanup_sumo_and_traci(proc, port, traci_module=None):
     time.sleep(1)
 
 ##
-# @brief Run a SUMO simulation for a specified number of steps and collect vehicle data.
+# @brief Start a SUMO simulation with flexible configuration.
+#
+# @param file_path Path to SUMO network file or config file.
+# @param is_config If True, file_path is treated as a config file; otherwise as a network file.
+# @param port Port to use for TraCI connection.
+# @param sumo_binary SUMO binary to use ('sumo' or 'sumo-gui').
+# @param connect_traci If True, establishes TraCI connection.
+# @param step_length Simulation step length in seconds.
+# @param additional_args Dictionary of additional command-line arguments.
+# @param sumo_tools_path Path to SUMO tools directory.
+# @return tuple (proc, traci_module, config_file, temp_config, temp_output_dir)
+##
+def start_sumo_simulation(
+    file_path,
+    is_config=False,
+    port=8813,
+    sumo_binary="sumo",
+    connect_traci=True,
+    step_length=None,
+    additional_args=None,
+    sumo_tools_path=None
+):
+    # Use default SUMO_TOOLS_PATH if not provided
+    if sumo_tools_path is None:
+        sumo_tools_path = SUMO_TOOLS_PATH
+
+    kill_processes_on_port(port)
+    cleanup_traci_connection()
+    if not wait_for_port_available(port, timeout=15):
+        print(f"[SUMO Simulation] Port {port} is not available after cleanup attempts.")
+        return None, None, None, None, None
+
+    traci_module = None
+    if connect_traci:
+        sys.path.append(sumo_tools_path)
+        try:
+            import traci
+            traci_module = traci
+        except ImportError as e:
+            print(f"[SUMO Simulation] Could not import traci: {e}")
+            return None, None, None, None, None
+
+    temp_config = None
+    temp_output_dir = None
+    sumo_cmd = [sumo_binary]
+
+    if is_config:
+        # For config files, create a temporary non-GUI config if using non-GUI SUMO
+        if sumo_binary == "sumo":
+            temp_config, temp_output_dir = create_non_gui_config(file_path)
+            if temp_config:
+                sumo_cmd.extend(["-c", temp_config])
+            else:
+                sumo_cmd.extend(["-c", file_path])
+        else:
+            sumo_cmd.extend(["-c", file_path])
+    else:
+        sumo_cmd.extend(["-n", file_path])
+
+    if step_length is not None:
+        sumo_cmd.extend(["--step-length", str(step_length)])
+    sumo_cmd.extend(["--remote-port", str(port)])
+
+    if additional_args:
+        for arg, value in additional_args.items():
+            if value is None:
+                sumo_cmd.append(f"--{arg}")
+            else:
+                sumo_cmd.extend([f"--{arg}", str(value)])
+
+    if DEBUG_MODE:
+        print(f"[SUMO Simulation] Starting SUMO with command: {' '.join(sumo_cmd)}")
+
+    try:
+        proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        time.sleep(3)
+        if proc.poll() is not None:
+            stderr = proc.stderr.read().decode()
+            stdout = proc.stdout.read().decode()
+            print(f"[SUMO Simulation] SUMO exited early with return code {proc.returncode}.")
+            print(f"[SUMO Simulation] STDERR output:\n{stderr}")
+            if stdout:
+                print(f"[SUMO Simulation] STDOUT output:\n{stdout}")
+            if temp_config:
+                try: os.unlink(temp_config)
+                except: pass
+            if temp_output_dir and os.path.exists(temp_output_dir):
+                try: shutil.rmtree(temp_output_dir)
+                except: pass
+            return None, None, None, None, None
+        if DEBUG_MODE:
+            print(f"[SUMO Simulation] SUMO process started with PID {proc.pid}")
+        if connect_traci and traci_module:
+            try:
+                traci_module.init(port=port)
+                if DEBUG_MODE:
+                    print(f"[SUMO Simulation] TraCI connection established on port {port}")
+            except Exception as e:
+                print(f"[SUMO Simulation] Failed to connect to TraCI: {e}")
+                proc.terminate()
+                return None, None, None, None, None
+        return proc, traci_module, file_path, temp_config, temp_output_dir
+    except Exception as e:
+        print(f"[SUMO Simulation] Failed to start SUMO: {e}")
+        if temp_config:
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
+        return None, None, None, None, None
+
+##
+# @brief Run a SUMO simulation for a specified number of steps and collect vehicle data, with flexible options.
 #
 # @param traci TraCI module instance with an active connection.
 # @param steps Number of simulation steps to run.
 # @param print_data If True, print simulation data to screen.
+# @param collect_data List of data types to collect (e.g. ["position", "speed", "color"])
+# @param step_delay Time in seconds to wait between steps.
+# @param vehicle_callbacks Dictionary of callback functions to execute on vehicles.
 # @return List of dictionaries containing simulation data for each step.
-#
-# @details
-#   Steps:
-#     1. Run simulation for specified number of steps.
-#     2. For each step, collect simulation time, vehicle IDs, and positions.
-#     3. Optionally print the data to console.
-#     4. Return collected data as a list of dictionaries.
 ##
-def run_sumo_simulation(traci, steps, print_data=True):
+def run_sumo_simulation_flexible(
+    traci,
+    steps,
+    print_data=True,
+    collect_data=None,
+    step_delay=0.1,
+    vehicle_callbacks=None
+):
+    if collect_data is None:
+        collect_data = ["position"]
+    if vehicle_callbacks is None:
+        vehicle_callbacks = {}
+
     sim_data = []
-    for _ in range(steps):
+    for step_num in range(steps):
         traci.simulationStep()
         sim_time = traci.simulation.getTime()
         veh_ids = traci.vehicle.getIDList()
-        veh_positions = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
-        sim_data.append({
+        step_data = {
             "time": sim_time,
             "vehicle_ids": veh_ids,
-            "positions": veh_positions
-        })
+        }
+        for data_type in collect_data:
+            if data_type == "position":
+                step_data["positions"] = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
+            elif data_type == "speed":
+                step_data["speeds"] = {vid: traci.vehicle.getSpeed(vid) for vid in veh_ids}
+            elif data_type == "color":
+                step_data["colors"] = {vid: traci.vehicle.getColor(vid) for vid in veh_ids}
+            elif data_type == "lane":
+                step_data["lanes"] = {vid: traci.vehicle.getLaneID(vid) for vid in veh_ids}
+            elif data_type == "lane_position":
+                step_data["lane_positions"] = {vid: traci.vehicle.getLanePosition(vid) for vid in veh_ids}
+        for callback_name, callback_func in vehicle_callbacks.items():
+            for vid in veh_ids:
+                try:
+                    callback_func(traci, vid, step_num)
+                except Exception as e:
+                    if DEBUG_MODE:
+                        print(f"Callback {callback_name} failed for vehicle {vid}: {e}")
+        sim_data.append(step_data)
         if print_data:
-            print(f"\nTime: {sim_time}, Vehicles: {veh_ids}, Positions: {veh_positions}")
-        time.sleep(0.1)
+            print(f"\nTime: {sim_time}, Vehicles: {veh_ids}")
+            for data_type in collect_data:
+                if data_type in step_data and step_data[data_type]:
+                    print(f"{data_type.capitalize()}: {step_data[data_type]}")
+        if step_delay > 0:
+            time.sleep(step_delay)
     return sim_data
 
