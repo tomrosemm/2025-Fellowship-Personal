@@ -30,8 +30,8 @@ from zokrates_interface import (
     run_zokrates_setup,
     run_zokrates_compute_witness,
     run_zokrates_generate_proof,
-    run_zokrates_verify,
-    hex_to_field_array,
+    run_zokrates_verify
+    # hex_to_field_array,
 )
 
 from blockchain import simulate_blockchain_verification
