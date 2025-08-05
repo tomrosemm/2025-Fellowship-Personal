@@ -977,7 +977,7 @@ def test_sumo_traci_data_transfer_sumocfg(print_data=True):
         return
 
     try:
-        sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
+        unused_sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1054,7 +1054,7 @@ def test_sumo_traci_data_transfer_intersection2(print_data=True):
 
     try:
         # Use the centralized run_sumo_simulation function
-        sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
+        unused_sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1131,7 +1131,7 @@ def test_sumo_traci_data_transfer_straightaway1(print_data=True):
 
     try:
         # Use the centralized run_sumo_simulation function
-        sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
+        unused_sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1206,7 +1206,7 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
 
     try:
         # Use the centralized run_sumo_simulation function
-        sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
+        unused_sim_data = run_sumo_simulation_flexible(traci, 100, print_data)
         passed_local = True
     
     # If any exception occurs during the TraCI data transfer, print the error and set passed_local to False
@@ -1368,7 +1368,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
                     final_color = traci.vehicle.getColor(vehicle_id)
                     
                     # Calculate changes
-                    speed_change = final_speed - initial_speed
+                    unused_speed_change = final_speed - initial_speed
                     position_change = final_position[0] - initial_position[0]
                     
                     # Position change due to speed (after speed was set but before manual movement)
@@ -1377,7 +1377,7 @@ def test_sumo_live_manipulation_straightaway1(print_data=True):
                         speed_position_change = post_speed_position[0] - initial_position[0]
                     
                     # Position change due to manual movement and subsequent movement
-                    manual_and_subsequent = position_change - speed_position_change
+                    unused_manual_and_subsequent = position_change - speed_position_change
                     
                     if print_data:
                         print(f"\nFinal state of vehicle {vehicle_id} after manipulations:")
@@ -1451,31 +1451,37 @@ def test_vehicle_to_infrastructure_VtoI_zkp():
     # Set the circuit path for ZoKrates
     circuit_path = "zokrates/VtoI_test.zok"
     
-    # Generate a random vehicle ID and RSU ID for this experiment
-    vehicle_id = f"VtoI_Vehicle_{random.randint(1000, 9999)}"
-    rsu_id = f"VtoI_RSU_{random.randint(1000, 9999)}"
-    
-    # Create an Experiment instance with the specified parameters
-    exp = Experiment("VtoI_Test", vehicle_id, rsu_id, circuit_path)
-    
-    # Run the experiment
-    exp.run()
-    
-    # Check if the experiment was successful
-    if exp.result:
-        print(f"[PASS] Vehicle-to-Infrastructure ZKP Test passed - Vehicle ID: {vehicle_id}")
+    # Generate random secret key and vehicle ID
+    sk = random.randint(1, 999)
+    vid = random.randint(1, 999999999)
+    commitment = (sk * sk) + vid
+
+    # Prepare arguments for ZoKrates
+    args = [str(sk), str(vid), str(commitment)]
+
+    # Print debug info if DEBUG_MODE is enabled
+    if DEBUG_MODE:
+        print(f"[VtoI_test.zok] sk={sk}, vid={vid}, commitment={commitment}")
+        print(f"[VtoI_test.zok] args={args}")
+
+    # Run ZoKrates workflow
+    from zokrates_interface import run_zokrates_workflow, cleanup_zokrates_files
+    verification_result = run_zokrates_workflow(circuit_path, args)
+
+    if DEBUG_MODE:
+        print(f"[VtoI_test.zok] Verification result: {verification_result}")
+
+    if verification_result:
+        print(f"[PASS] Vehicle-to-Infrastructure ZKP Test passed - sk: {sk}, vid: {vid}")
         passed += 1
     else:
-        print(f"[FAIL] Vehicle-to-Infrastructure ZKP Test failed - Vehicle ID: {vehicle_id}")
-    
-    # Clean up ZoKrates-generated files
+        print(f"[FAIL] Vehicle-to-Infrastructure ZKP Test failed - sk: {sk}, vid: {vid}")
+
     cleanup_zokrates_files()
-    
     timer.stop()
-    # Print elapsed time for the test
     print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
-    
-    return exp.result
+    return verification_result
+
 
 ##
 # @brief Test the authentication circuit (auth.zok) for field-based proof.
@@ -1502,31 +1508,36 @@ def test_authentication_circuit_auth_zok():
     # Set the circuit path for ZoKrates
     circuit_path = "zokrates/auth.zok"
     
-    # Generate a random vehicle ID and RSU ID for this experiment
-    vehicle_id = f"Auth_Vehicle_{random.randint(1000, 9999)}"
-    rsu_id = f"Auth_RSU_{random.randint(1000, 9999)}"
-    
-    # Create an Experiment instance with the specified parameters
-    exp = Experiment("Auth_Test", vehicle_id, rsu_id, circuit_path)
-    
-    # Run the experiment
-    exp.run()
-    
-    # Check if the experiment was successful
-    if exp.result:
-        print(f"[PASS] Authentication Circuit Test passed - Vehicle ID: {vehicle_id}")
+    # Generate random secret and timestamp
+    secret = random.randint(1, 100000)
+    timestamp = int(time.time())
+    otp = secret + timestamp
+
+    # Prepare arguments for ZoKrates
+    args = [str(secret), str(timestamp), str(otp)]
+
+    # Print debug info if DEBUG_MODE is enabled
+    if DEBUG_MODE:
+        print(f"[auth.zok] secret={secret}, timestamp={timestamp}, otp={otp}")
+        print(f"[auth.zok] args={args}")
+
+    # Run ZoKrates workflow
+    from zokrates_interface import run_zokrates_workflow, cleanup_zokrates_files
+    verification_result = run_zokrates_workflow(circuit_path, args)
+
+    if DEBUG_MODE:
+        print(f"[auth.zok] Verification result: {verification_result}")
+
+    if verification_result:
+        print(f"[PASS] Authentication Circuit Test passed - secret: {secret}, timestamp: {timestamp}")
         passed += 1
     else:
-        print(f"[FAIL] Authentication Circuit Test failed - Vehicle ID: {vehicle_id}")
-    
-    # Clean up ZoKrates-generated files
+        print(f"[FAIL] Authentication Circuit Test failed - secret: {secret}, timestamp: {timestamp}")
+
     cleanup_zokrates_files()
-    
     timer.stop()
-    # Print elapsed time for the test
     print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
-    
-    return exp.result
+    return verification_result
 
 
 ##
