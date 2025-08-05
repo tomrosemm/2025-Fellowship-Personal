@@ -1241,6 +1241,9 @@ def test_sumo_traci_data_transfer_straightaway2(print_data=True):
 # @details
 #   Tests manipulating vehicle parameters (speed, color, position) during a SUMO simulation.
 #
+#       ***Position movement is still buggy. It's not needed in the actual framework, so it's
+#                   been left as is after a period of troubleshooting wasn't fruitful***
+#
 # Steps:
 #   1. Start SUMO with straightaway1.sumocfg.
 #   2. Connect via TraCI.
