@@ -497,7 +497,3 @@ if __name__ == "__main__":
     
     ## @brief Main entry point for running the protocol simulation tests.
     main_menu()
-if __name__ == "__main__":
-    
-    ## @brief Main entry point for running the protocol simulation tests.
-    main_menu()
