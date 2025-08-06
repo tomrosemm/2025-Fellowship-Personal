@@ -199,6 +199,7 @@ def individual_tests_menu():
         "19": preliminary_tests.test_Zokrates_UsingAuthCircuit,
         "20": lambda: preliminary_tests.test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(print_data=preliminary_tests.PRINT_DATA),
         "21": lambda: preliminary_tests.test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(print_data=preliminary_tests.PRINT_DATA),
+        "22": lambda: preliminary_tests.test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(print_data=preliminary_tests.PRINT_DATA),
         "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
         "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
         "b": "back",
@@ -228,6 +229,7 @@ def individual_tests_menu():
         print("19 - Run Zokrates (using auth.zok) Test")
         print("20 - Run Data Transfer; Small Step (using straightaway1.sumocfg) Test")
         print("21 - Run Dynamic Car Spawning (using straightaway5.sumocfg) Test")
+        print("22 - Run RSU Message With Delay (using straightaway5.sumocfg) Test")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
@@ -402,6 +404,7 @@ def sumo_and_traci_tests(print_sumo_data=True):
     print("Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)")
     print("Run SUMO Small Step Length Test (10ms steps)")
     print("Run SUMO Dynamic Car Spawning Test (straightaway5.sumocfg)")
+    print("Run SUMO RSU Message With Delay Test (straightaway5.sumocfg)")
     
     preliminary_tests.tested, preliminary_tests.passed = preliminary_tests.test_sumo_connection_wrapper(
         preliminary_tests.tested, preliminary_tests.passed
@@ -414,7 +417,8 @@ def sumo_and_traci_tests(print_sumo_data=True):
     preliminary_tests.test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=print_sumo_data)
     preliminary_tests.test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(print_data=print_sumo_data)
     preliminary_tests.test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(print_data=print_sumo_data)
-    
+    preliminary_tests.test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(print_data=print_sumo_data)
+
     
 def progressPresentationSuite():
     

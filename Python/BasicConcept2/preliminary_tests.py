@@ -1744,6 +1744,115 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
     print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
     
     
+def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(print_data=True):
+    """
+    Connects to straightaway5.sumocfg, spawns a car at step 10, and whenever a car completes its route,
+    immediately spawns another identical car, for 1010 steps.
+    """
+    print("\n=== Live Manipulation - Rsu Message With Delay; (using straightaway5.sumocfg) Test ===")
+    global tested, passed
+    tested += 1
+
+    timer = Timer("Live Manipulation - Rsu Message With Delay; (using straightaway5.sumocfg) Test Timer")
+    timer.start()
+
+    # Use the correct config file path and port
+    sumo_cfg = os.path.join(
+        os.path.dirname(__file__),
+        "..", "..", "SUMO", "Built Sims", "StraightAway5", "straightaway5.sumocfg"
+    )
+    sumo_cfg = os.path.abspath(sumo_cfg)
+    port = SUMO_PORT_DATA_CONFIG + 6  # Avoid port conflicts
+
+    # Check config file exists
+    if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
+        return
+
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=sumo_cfg,
+        is_config=True,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
+
+    if proc is None or traci is None:
+        return
+
+    try:
+        total_steps = 1010
+        car_counter = 0
+        active_cars = {}  # Track active cars and their spawn times
+        car_type = "car"
+        car_route = "route1"
+        finished_cars = 0
+
+        for step in range(total_steps):
+            traci.simulationStep()
+            sim_time = traci.simulation.getTime()
+
+            # Check for cars that have finished their routes
+            for car_id in list(active_cars.keys()):
+                if car_id not in traci.vehicle.getIDList():
+                    finished_cars += 1
+                    if print_data:
+                        print(f"{car_id} finished at step {step}")
+                    del active_cars[car_id]
+
+            # Spawn a new car if no active cars are present and we're past step 10
+            if not active_cars and step >= 10:
+                car_counter += 1
+                new_car_id = f"car{car_counter}"
+                traci.vehicle.add(
+                    vehID=new_car_id,
+                    routeID=car_route,
+                    typeID=car_type,
+                    depart=sim_time
+                )
+                active_cars[new_car_id] = step
+                if print_data:
+                    print(f"Spawned {new_car_id} at step {step}")
+
+            # Print vehicle list and position for debugging
+            if print_data:
+                veh_ids = traci.vehicle.getIDList()
+                print(f"Step {step}: Vehicles in sim: {veh_ids}")
+                for car_id in veh_ids:
+                    try:
+                        pos = traci.vehicle.getPosition(car_id)
+                        print(f"Step {step}: {car_id} position: {pos}")
+                    except Exception as e:
+                        print(f"Step {step}: Could not get position for {car_id}: {e}")
+
+            if print_data and step % 100 == 0:
+                print(f"Step {step}: Active cars: {list(active_cars.keys())}, Finished cars: {finished_cars}")
+
+        passed_local = True
+
+    except Exception as e:
+        print(f"[Live Manipulation - Rsu Message With Delay] Error: {e}")
+        passed_local = False
+
+    finally:
+        cleanup_sumo_and_traci(proc, port, traci)
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
+
+    if passed_local:
+        passed += 1
+        print("[Live Manipulation - Rsu Message With Delay] Test succeeded!\n")
+    else:
+        print("[Live Manipulation - Rsu Message With Delay] Test failed.\n")
+
+    timer.stop()
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+
+
 def testAndScenarioRunner():
     
     # Use global variables to track tests, initialize counts
@@ -1851,6 +1960,18 @@ def testAndScenarioRunner():
     
     # 18 - Run SUMO Small Step Length Test (10ms steps)
     test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # --- Add any tests not already in the runner ---
+
+    # 19 - Run Dynamic Car Spawning (using straightaway5.sumocfg) Test
+    test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(True)
+    time.sleep(.5)
+    # clear_console()
+
+    # 20 - Run RSU Message With Delay (using straightaway5.sumocfg) Test
+    test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(True)
     time.sleep(.5)
     # clear_console()
     
