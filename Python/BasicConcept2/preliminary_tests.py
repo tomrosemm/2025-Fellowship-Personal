@@ -1800,8 +1800,36 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         car_type = "car"
         car_route = "route1"
         finished_cars = 0
+        rsu_car_close_flag = False  # Flag for RSU-car proximity
 
         for step in range(total_steps):
+            # --- Move RSU-car distance logic to top level of loop ---
+            rsu_ids = []
+            car_ids = []
+            try:
+                rsu_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "rsu"]
+                car_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "car"]
+                if rsu_ids and car_ids:
+                    rsu_pos = traci.vehicle.getPosition(rsu_ids[0])
+                    car_pos = traci.vehicle.getPosition(car_ids[0])
+                    dx = rsu_pos[0] - car_pos[0]
+                    dy = rsu_pos[1] - car_pos[1]
+                    dist = (dx**2 + dy**2) ** 0.5
+                    # --- Flag logic ---
+                    if dist < 50:
+                        if not rsu_car_close_flag:
+                            rsu_car_close_flag = True
+                            print(f"*** FLAG RAISED: RSU and car are within 50 meters at step {step} (distance: {dist:.2f} m) ***")
+                    else:
+                        if rsu_car_close_flag:
+                            rsu_car_close_flag = False
+                            print(f"*** FLAG LOWERED: RSU and car are now farther than 50 meters at step {step} (distance: {dist:.2f} m) ***")
+                    if step % 1000 == 0:
+                        print(f"Step {step}: Distance between RSU ({rsu_ids[0]}) and car ({car_ids[0]}): {dist:.2f} m")
+            except Exception as e:
+                if step % 1000 == 0:
+                    print(f"Step {step}: Could not compute RSU-car distance: {e}")
+
             # Exit if we've reached total_steps
             if step >= total_steps - 1:
                 print(f"\nReached max steps ({total_steps}). Ending simulation.")
@@ -1836,19 +1864,6 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
             # Print status every 1000 steps to track progress
             if step % 1000 == 0:
                 print(f"Step {step}: Active cars: {list(active_cars.keys())}, Total finished cars: {finished_cars}")
-                
-                try:
-                    rsu_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "rsu"]
-                    car_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "car"]
-                    if rsu_ids and car_ids:
-                        rsu_pos = traci.vehicle.getPosition(rsu_ids[0])
-                        car_pos = traci.vehicle.getPosition(car_ids[0])
-                        dx = rsu_pos[0] - car_pos[0]
-                        dy = rsu_pos[1] - car_pos[1]
-                        dist = (dx**2 + dy**2) ** 0.5
-                        print(f"Step {step}: Distance between RSU ({rsu_ids[0]}) and car ({car_ids[0]}): {dist:.2f} m")
-                except Exception as e:
-                    print(f"Step {step}: Could not compute RSU-car distance: {e}")
                 
 
             # Print vehicle list and position for debugging if requested
@@ -2014,6 +2029,7 @@ def testAndScenarioRunner():
     kill_processes_on_port(SUMO_PORT_BASIC)
     kill_processes_on_port(SUMO_PORT_CONFIG)
     kill_processes_on_port(SUMO_PORT_DATA)
+    kill_processes_on_port(SUMO_PORT_DYNAMIC_SPAWN)
     time.sleep(2)
 
     timer.stop()

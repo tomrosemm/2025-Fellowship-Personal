@@ -50,7 +50,7 @@ class Vehicle:
     #   1. Store the vehicle's ID
     #   2. Store the vehicle's secret
     ##
-    def __init__(self, vehicle_id, secret):
+    def __init__(self, vehicle_id, secret, detection_range=500):
         
         # Store the vehicle's ID
         ## @var vehicle_id is the unique identifier for the vehicle
@@ -62,7 +62,7 @@ class Vehicle:
         
         # Set detection range
         ## @var detection_range is the range within which the vehicle can detect RSUs
-        self.detection_range = 500
+        self.detection_range = detection_range
 
 
     ##

@@ -52,12 +52,12 @@ class RSU:
     #   Steps:
     #     1. Store the mapping of vehicle IDs to secrets.
     ##
-    def __init__(self, vehicle_secrets):
+    def __init__(self, vehicle_secrets, broadcast_range=500):
         
         ## @var vehicle_secrets is a dict mapping vehicle_id to secret
         self.vehicle_secrets = vehicle_secrets
         
-        self.broadcast_range = 500
+        self.broadcast_range = broadcast_range
 
 
     ##
