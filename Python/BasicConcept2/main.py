@@ -199,7 +199,7 @@ def individual_tests_menu():
         "19": preliminary_tests.test_Zokrates_UsingAuthCircuit,
         "20": lambda: preliminary_tests.test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(print_data=preliminary_tests.PRINT_DATA),
         "21": lambda: preliminary_tests.test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(print_data=preliminary_tests.PRINT_DATA),
-        "22": lambda: preliminary_tests.test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(print_data=preliminary_tests.PRINT_DATA),
+        "22": lambda: preliminary_tests.test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(print_data=preliminary_tests.PRINT_DATA),
         "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
         "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
         "b": "back",
@@ -417,7 +417,7 @@ def sumo_and_traci_tests(print_sumo_data=True):
     preliminary_tests.test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=print_sumo_data)
     preliminary_tests.test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(print_data=print_sumo_data)
     preliminary_tests.test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(print_data=print_sumo_data)
-    preliminary_tests.test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(print_data=print_sumo_data)
+    preliminary_tests.test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(print_data=print_sumo_data)
 
     
 def progressPresentationSuite():

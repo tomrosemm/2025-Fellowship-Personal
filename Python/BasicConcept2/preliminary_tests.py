@@ -1744,25 +1744,25 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
     print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
     
     
-def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(print_data=True):
+def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(print_data=True):
     """
     Connects to straightaway5.sumocfg, spawns a car at step 10, and whenever a car completes its route,
     immediately spawns another identical car, for 1010 steps.
     """
-    print("\n=== Live Manipulation - Rsu Message With Delay; (using straightaway5.sumocfg) Test ===")
+    print("\n=== Live Manipulation - Rsu Message With Delay; (using straightaway6.sumocfg) Test ===")
     global tested, passed
     tested += 1
 
-    timer = Timer("Live Manipulation - Rsu Message With Delay; (using straightaway5.sumocfg) Test Timer")
+    timer = Timer("Live Manipulation - Rsu Message With Delay; (using straightaway6.sumocfg) Test Timer")
     timer.start()
 
     # Use the correct config file path and port
     sumo_cfg = os.path.join(
         os.path.dirname(__file__),
-        "..", "..", "SUMO", "Built Sims", "StraightAway5", "straightaway5.sumocfg"
+        "..", "..", "SUMO", "Built Sims", "StraightAway6", "straightaway6.sumocfg"
     )
     sumo_cfg = os.path.abspath(sumo_cfg)
-    port = SUMO_PORT_DATA_CONFIG + 6  # Avoid port conflicts
+    port = SUMO_PORT_DATA_CONFIG + 7  # Avoid port conflicts
 
     # Check config file exists
     if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
@@ -1774,6 +1774,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(pr
         port=port,
         sumo_binary="sumo",
         connect_traci=True,
+        step_length=0.01,  # Added step_length parameter
         sumo_tools_path=SUMO_TOOLS_PATH
     )
 
@@ -1781,7 +1782,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(pr
         return
 
     try:
-        total_steps = 1010
+        total_steps = 101000
         car_counter = 0
         active_cars = {}  # Track active cars and their spawn times
         car_type = "car"
@@ -1801,7 +1802,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(pr
                     del active_cars[car_id]
 
             # Spawn a new car if no active cars are present and we're past step 10
-            if not active_cars and step >= 10:
+            if not active_cars and step >= 1000:
                 car_counter += 1
                 new_car_id = f"car{car_counter}"
                 traci.vehicle.add(
@@ -1971,7 +1972,7 @@ def testAndScenarioRunner():
     # clear_console()
 
     # 20 - Run RSU Message With Delay (using straightaway5.sumocfg) Test
-    test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway5(True)
+    test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(True)
     time.sleep(.5)
     # clear_console()
     
