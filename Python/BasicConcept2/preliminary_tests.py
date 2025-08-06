@@ -1674,56 +1674,50 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
     try:
         total_steps = 1010
         car_counter = 0
-        next_spawn_step = 10
-        active_car_id = None
+        active_cars = {}  # Track active cars and their spawn times
         car_type = "car"
         car_route = "route1"
-        car_depart = 10
         finished_cars = 0
 
         for step in range(total_steps):
             traci.simulationStep()
             sim_time = traci.simulation.getTime()
 
-            veh_ids = traci.vehicle.getIDList()
-            # Only consider vehicles that are not the RSU
-            cars_in_sim = [vid for vid in veh_ids if vid.startswith("car")]
+            # Check for cars that have finished their routes
+            for car_id in list(active_cars.keys()):
+                if car_id not in traci.vehicle.getIDList():
+                    finished_cars += 1
+                    if print_data:
+                        print(f"{car_id} finished at step {step}")
+                    del active_cars[car_id]
 
-            # Spawn the first car at step 10, or spawn a new car only if no cars are present
-            if (step == next_spawn_step and active_car_id is None) or (not cars_in_sim and active_car_id is None):
+            # Spawn a new car if no active cars are present
+            if not active_cars:
                 car_counter += 1
-                active_car_id = f"car{car_counter}"
+                new_car_id = f"car{car_counter}"
                 traci.vehicle.add(
-                    vehID=active_car_id,
+                    vehID=new_car_id,
                     routeID=car_route,
                     typeID=car_type,
                     depart=sim_time
                 )
+                active_cars[new_car_id] = step
                 if print_data:
-                    print(f"Spawned {active_car_id} at step {step}")
-
-            # Check if the active car has finished its route
-            if active_car_id and active_car_id not in veh_ids:
-                finished_cars += 1
-                if print_data:
-                    print(f"{active_car_id} finished at step {step}")
-                # Only set active_car_id to None, so next loop can spawn a new car if no cars are present
-                active_car_id = None
+                    print(f"Spawned {new_car_id} at step {step}")
 
             # Print vehicle list and position for debugging
             if print_data:
+                veh_ids = traci.vehicle.getIDList()
                 print(f"Step {step}: Vehicles in sim: {veh_ids}")
-                if active_car_id and active_car_id in veh_ids:
+                for car_id in veh_ids:
                     try:
-                        pos = traci.vehicle.getPosition(active_car_id)
-                        print(f"Step {step}: {active_car_id} position: {pos}")
+                        pos = traci.vehicle.getPosition(car_id)
+                        print(f"Step {step}: {car_id} position: {pos}")
                     except Exception as e:
-                        print(f"Step {step}: Could not get position for {active_car_id}: {e}")
-                elif active_car_id:
-                    print(f"Step {step}: {active_car_id} not present in simulation.")
+                        print(f"Step {step}: Could not get position for {car_id}: {e}")
 
             if print_data and step % 100 == 0:
-                print(f"Step {step}: Active car: {active_car_id}, Finished cars: {finished_cars}")
+                print(f"Step {step}: Active cars: {list(active_cars.keys())}, Finished cars: {finished_cars}")
 
         passed_local = True
 
