@@ -1680,6 +1680,11 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
         finished_cars = 0
 
         for step in range(total_steps):
+            # Exit if we've reached total_steps
+            if step >= total_steps - 1:
+                print(f"\nReached max steps ({total_steps}). Ending simulation.")
+                print(f"Total cars finished: {finished_cars}")
+                break
             traci.simulationStep()
             sim_time = traci.simulation.getTime()
 
@@ -1790,6 +1795,12 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         finished_cars = 0
 
         for step in range(total_steps):
+            # Exit if we've reached total_steps
+            if step >= total_steps - 1:
+                print(f"\nReached max steps ({total_steps}). Ending simulation.")
+                print(f"Total cars finished: {finished_cars}")
+                break
+
             traci.simulationStep()
             sim_time = traci.simulation.getTime()
 

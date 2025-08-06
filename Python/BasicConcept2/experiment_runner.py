@@ -313,6 +313,10 @@ def run_test_1_level_1_experiment(print_data=True):
         car_route = "route1"
 
         for step in range(total_steps):
+            # Exit if we've reached total_steps
+            if step >= total_steps - 1:
+                print(f"\nReached max steps ({total_steps}). Ending simulation.")
+                break
             traci.simulationStep()
             sim_time = traci.simulation.getTime()
 
