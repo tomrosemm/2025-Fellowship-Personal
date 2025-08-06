@@ -13,31 +13,43 @@
 #   - Logs experiment execution and results to files in the logs/ directory.
 ##
 
-# Imports
-import secrets
+## Imports
+# Libraries
+# import secrets
+# import time
+# import random
 import os
-
-import time
-import random
 import logging
 from pathlib import Path
 import datetime
 
+# from utilities import clear_console
 from experiment import Experiment
 from vehicle import Vehicle
 from rsu import RSU
 from timer import Timer
-from utilities import clear_console
-from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
-from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
+from timer import Timer
+from utilities import check_file_exists
+
+from blockchain import (
+    # simulate_blockchain_verification,
+    set_debug_mode as set_blockchain_debug_mode
+)
+
+from sumo_interface import (
+    # test_sumo_connection_wrapper,
+    set_debug_mode as set_sumo_debug_mode,
+    start_sumo_simulation,
+    cleanup_sumo_and_traci
+)
 
 from zokrates_interface import (
     # hex_to_field_array,
-    run_zokrates_compile,
-    run_zokrates_setup,
-    run_zokrates_compute_witness,
-    run_zokrates_generate_proof,
-    run_zokrates_verify,
+    # run_zokrates_compile,
+    # run_zokrates_setup,
+    # run_zokrates_compute_witness,
+    # run_zokrates_generate_proof,
+    # run_zokrates_verify,
     cleanup_zokrates_files,
     set_debug_mode as set_zokrates_debug_mode
 )
@@ -45,7 +57,9 @@ from zokrates_interface import (
 from settings import (
     DEBUG_MODE as DEFAULT_DEBUG_MODE,
     ZOKRATES_DUMMY_CIRCUIT,
-    ZOKRATES_AUTH_CIRCUIT
+    ZOKRATES_AUTH_CIRCUIT,
+    SUMO_PORT_DATA_CONFIG,
+    SUMO_TOOLS_PATH
 )
 
 # Uncomment if blockchain_interface is used
@@ -259,11 +273,7 @@ def run_test_1_level_1_experiment(print_data=True):
     exp = Experiment(name, f"Vehicle_{experiment_count}", f"RSU_{experiment_count}", None)
     exp.logger.info(f"Running experiment: {name}")
 
-    from settings import SUMO_PORT_DATA_CONFIG, SUMO_TOOLS_PATH
-    import os
-    from timer import Timer
-    from utilities import check_file_exists
-    from sumo_interface import start_sumo_simulation, cleanup_sumo_and_traci
+    
 
     timer = Timer(f"{name} Timer")
     timer.start()
