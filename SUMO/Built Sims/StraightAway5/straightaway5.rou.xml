@@ -5,7 +5,7 @@
     </vType>
 
     <!-- Driving Car vType -->
-    <vType id="car" accel="0.8" decel="4.5" sigma="0.5" length="5" maxSpeed="25"/>
+    <vType id="car" accel="0.1" decel="4.5" sigma="0.5" length="5" maxSpeed="25"/>
 
 
     <!-- Driving Car Route Definitions -->
