@@ -316,8 +316,8 @@ def run_test_1_level_1_experiment(print_data=True):
                         print(f"{car_id} finished at step {step}")
                     del active_cars[car_id]
 
-            # Spawn a new car if no active cars are present
-            if not active_cars:
+            # Spawn a new car if no active cars are present and we're past step 10
+            if not active_cars and step >= 10:
                 car_counter += 1
                 new_car_id = f"car{car_counter}"
                 traci.vehicle.add(
