@@ -189,7 +189,7 @@ def run_demo_experiment():
     zokrates_circuit_path = ZOKRATES_DUMMY_CIRCUIT
     
     # Create an Experiment instance with the specified parameters
-    exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
+    exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path, use_zokrates=True, use_blockchain=False)
     
     # Run the experiment and report results
     if logger:
@@ -239,7 +239,7 @@ def run_auth_experiment():
     zokrates_circuit_path = ZOKRATES_AUTH_CIRCUIT
     
     # Create an Experiment instance with the specified parameters
-    exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path)
+    exp = Experiment(name, vehicle_id, rsu_id, zokrates_circuit_path, use_zokrates=True, use_blockchain=False)
     
     # Run the experiment and report results
     if logger:
@@ -269,11 +269,9 @@ def run_test_1_level_1_experiment(print_data=True):
     experiment_count += 1
     name = f"Test_1_Level_1_{experiment_count}"
     
-    # Create experiment instance like other experiment functions do
-    exp = Experiment(name, f"Vehicle_{experiment_count}", f"RSU_{experiment_count}", None)
+    # Create experiment instance without ZoKrates or blockchain
+    exp = Experiment(name, f"Vehicle_{experiment_count}", f"RSU_{experiment_count}", None, use_zokrates=False, use_blockchain=False)
     exp.logger.info(f"Running experiment: {name}")
-
-    
 
     timer = Timer(f"{name} Timer")
     timer.start()
