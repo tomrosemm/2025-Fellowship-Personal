@@ -331,33 +331,59 @@ def run_test_1_level_1_experiment(print_data=True):
         car_counter = 0
         next_spawn_step = 10
         active_car_id = None
+        spawn_delay = 5  # Wait 5 steps after a car completes before spawning a new one
+        steps_since_completion = 0
+        car_spawn_times = {}  # Track when each car was spawned
         car_type = "car"
         car_route = "route1"
         finished_cars = 0
-        exp_logger.info(f"Initialized simulation parameters: steps={total_steps}, spawn_step={next_spawn_step}")
+        exp_logger.info(f"Initialized simulation parameters: steps={total_steps}, spawn_step={next_spawn_step}, spawn_delay={spawn_delay}")
 
         for step in range(total_steps):
             traci.simulationStep()
             sim_time = traci.simulation.getTime()
             veh_ids = traci.vehicle.getIDList()
             cars_in_sim = [vid for vid in veh_ids if vid.startswith("car")]
-
-            if (step == next_spawn_step and active_car_id is None) or (not cars_in_sim and active_car_id is None):
+            
+            # Check if any active car has completed its route
+            if active_car_id and active_car_id not in veh_ids:
+                # Calculate how long the car was in the simulation
+                start_step = car_spawn_times.get(active_car_id, step)
+                travel_time = step - start_step
+                
+                finished_cars += 1
+                throughput += 1
+                exp_logger.info(f"Vehicle {active_car_id} completed route at step {step} (travel time: {travel_time} steps)")
+                if print_data:
+                    print(f"{active_car_id} finished at step {step} (travel time: {travel_time} steps)")
+                
+                active_car_id = None
+                steps_since_completion = 0  # Reset counter when a car completes
+                continue  # Skip spawning in the same step
+            
+            # Increment counter for steps since last car completed
+            if active_car_id is None:
+                steps_since_completion += 1
+            
+            # Spawn a car if it's the initial spawn step or if enough time has passed since the last car completed
+            should_spawn = (step == next_spawn_step) or (active_car_id is None and steps_since_completion >= spawn_delay)
+            
+            if should_spawn:
                 car_counter += 1
                 active_car_id = f"car{car_counter}"
                 traci.vehicle.add(vehID=active_car_id, routeID=car_route, typeID=car_type, depart=sim_time)
+                car_spawn_times[active_car_id] = step  # Track when this car was spawned
+                
                 exp_logger.info(f"Spawned {active_car_id} at step {step}")
                 if print_data:
                     print(f"Spawned {active_car_id} at step {step}")
 
-            if active_car_id and active_car_id not in veh_ids:
-                finished_cars += 1
-                throughput += 1
-                exp_logger.info(f"Vehicle {active_car_id} completed route at step {step}")
-                active_car_id = None
-
+            # Log status every 100 steps
             if step % 100 == 0:
-                exp_logger.info(f"Step {step}: Active car: {active_car_id}, Finished cars: {finished_cars}")
+                status_msg = f"Step {step}: Active car: {active_car_id}, Finished cars: {finished_cars}"
+                exp_logger.info(status_msg)
+                if print_data:
+                    print(status_msg)
 
         exp_logger.info(f"Final throughput: {throughput} cars completed in {total_steps} steps")
 
