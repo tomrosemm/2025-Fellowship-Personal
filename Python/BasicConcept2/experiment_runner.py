@@ -22,6 +22,7 @@ import os
 import logging
 from pathlib import Path
 import datetime
+import shutil
 
 # from utilities import clear_console
 from experiment import Experiment
@@ -59,7 +60,9 @@ from settings import (
     ZOKRATES_DUMMY_CIRCUIT,
     ZOKRATES_AUTH_CIRCUIT,
     SUMO_PORT_DATA_CONFIG,
-    SUMO_TOOLS_PATH
+    SUMO_TOOLS_PATH,
+    SUMO_PORT_DYNAMIC_SPAWN,
+    
 )
 
 # Uncomment if blockchain_interface is used
@@ -282,7 +285,7 @@ def run_test_1_level_1_experiment(print_data=True):
         "..", "..", "SUMO", "Built Sims", "StraightAway5", "straightaway5.sumocfg"
     )
     sumo_cfg = os.path.abspath(sumo_cfg)
-    port = SUMO_PORT_DATA_CONFIG + 6  # Avoid port conflicts
+    port = SUMO_PORT_DYNAMIC_SPAWN  # Avoid port conflicts
 
     # Check config file exists
     if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):

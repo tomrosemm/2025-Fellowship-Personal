@@ -78,7 +78,14 @@ from settings import (
     ZOKRATES_DUMMY_CIRCUIT,
     SUMO_INTERSECTION2_CONFIG_FILE,
     SUMO_STRAIGHTAWAY1_CONFIG_FILE,
-    SUMO_STRAIGHTAWAY2_CONFIG_FILE
+    SUMO_STRAIGHTAWAY2_CONFIG_FILE,
+    SUMO_PORT_DYNAMIC_SPAWN,
+    SUMO_PORT_LIVE_MANIPULATION,
+    SUMO_PORT_SMALL_STEP,
+    SUMO_PORT_DATA_INTERSECTION2_CONFIG,
+    SUMO_PORT_DATA_STRAIGHTAWAY1_CONFIG,
+    SUMO_PORT_DATA_STRAIGHTAWAY2_CONFIG,
+    SUMO_PORT_RSUWITHDELAY
 )
 
 # Track number of tests run and passed
@@ -191,7 +198,8 @@ def test_VehicleRsuBasicInteraction_SimulatedZkp():
         print("[Simulated] Authentication failed.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -259,7 +267,8 @@ def test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain():
         print("[Simulated] Access denied by infrastructure.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -327,7 +336,8 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Success():
         print("Access denied by infrastructure.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -401,7 +411,8 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Failure():
         print("Access denied by infrastructure (expected).\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -452,7 +463,8 @@ def test_Zokrates_BasicConnectionTest_UsingDummyCircuit():
         print("[ZoKrates Test] ZoKrates connection or workflow failed.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -512,7 +524,8 @@ def test_PartialWorkflow_RealZokrates_UsingDummyCircuit():
         print("[Real ZKP] End-to-end ZoKrates workflow failed.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -594,7 +607,8 @@ def test_PartialWorkflow_MultipleVehicles_Simulated():
         print("[Simulated] Some vehicles failed authentication.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -680,7 +694,8 @@ def test_EndToEnd_MultipleVehicles_Simulated():
         print("[Simulated] Some vehicles denied access.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -752,7 +767,8 @@ def test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit():
         print("[ZoKrates] Some vehicles' proofs failed verification.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -838,7 +854,8 @@ def test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingD
         print("[ZoKrates] Some vehicles failed end-to-end ZoKrates or blockchain verification.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -918,7 +935,8 @@ def test_DataTransfer_SumoAndTraCI_UsingSimpleNet(print_data=True):
         print("[SUMO TraCI Test] Data transfer test failed.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -992,7 +1010,8 @@ def test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(print_data=True):
         print("[SUMO TraCI Test] .sumocfg data transfer test failed.\n")
 
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1021,7 +1040,7 @@ def test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(print_data=True):
     timer.start()
 
     # Define the port for TraCI connection from settings
-    port = SUMO_PORT_DATA_CONFIG + 1  # Use a different port to avoid conflicts
+    port = SUMO_PORT_DATA_INTERSECTION2_CONFIG
     
     # Check if the intersection2.sumocfg file exists
     if not check_file_exists(SUMO_INTERSECTION2_CONFIG_FILE, "SUMO intersection2 configuration file"):
@@ -1068,7 +1087,8 @@ def test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(print_data=True):
         print("[SUMO TraCI Test] intersection2.sumocfg data transfer test failed.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1097,7 +1117,7 @@ def test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(print_data=True):
     timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
-    port = SUMO_PORT_DATA_CONFIG + 2
+    port = SUMO_PORT_DATA_STRAIGHTAWAY1_CONFIG
     
     # Check if the straightaway1.sumocfg file exists
     if not check_file_exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE, "SUMO straightaway1 configuration file"):
@@ -1143,7 +1163,8 @@ def test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(print_data=True):
         print("[SUMO TraCI Test] straightaway1.sumocfg data transfer test failed.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1172,7 +1193,7 @@ def test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(print_data=True):
     timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
-    port = SUMO_PORT_DATA_CONFIG + 3
+    port = SUMO_PORT_DATA_STRAIGHTAWAY2_CONFIG
 
     if not check_file_exists(SUMO_STRAIGHTAWAY2_CONFIG_FILE, "SUMO straightaway2 configuration file"):
         return
@@ -1217,7 +1238,8 @@ def test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(print_data=True):
         print("[SUMO TraCI Test] straightaway2.sumocfg data transfer test failed.\n")
     
     timer.stop()
-    print(timer)
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1250,7 +1272,7 @@ def test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=True)
     timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
-    port = SUMO_PORT_DATA_CONFIG + 4
+    port = SUMO_PORT_LIVE_MANIPULATION
     
     # Check if the straightaway1.sumocfg file exists
     if not check_file_exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE, "SUMO straightaway1 configuration file"):
@@ -1407,7 +1429,7 @@ def test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=True)
         print("[SUMO Manipulation Test] Vehicle manipulation test failed.")
     
     timer.stop()
-    print(timer)
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 ##
@@ -1462,7 +1484,7 @@ def test_Zokrates_UsingVtoICircuit():
 
     cleanup_zokrates_files()
     timer.stop()
-    print(timer)
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
     return verification_result
 
 
@@ -1518,7 +1540,7 @@ def test_Zokrates_UsingAuthCircuit():
 
     cleanup_zokrates_files()
     timer.stop()
-    print(timer)
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
     return verification_result
 
 
@@ -1548,7 +1570,7 @@ def test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(prin
     timer.start()
 
     # Define the port for TraCI connection from settings, using a different port to avoid conflicts
-    port = SUMO_PORT_DATA_CONFIG + 5
+    port = SUMO_PORT_SMALL_STEP
     
     # Check if the straightaway1.sumocfg file exists
     if not check_file_exists(SUMO_STRAIGHTAWAY1_CONFIG_FILE, "SUMO straightaway1 configuration file"):
@@ -1615,7 +1637,9 @@ def test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(prin
         print("[SUMO Small Step Test] Small step length test failed.\n")
     
     timer.stop()
-    print(timer)
+    
+    # Print elapsed time for the test
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(print_data=True):
@@ -1636,7 +1660,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
         "..", "..", "SUMO", "Built Sims", "StraightAway5", "straightaway5.sumocfg"
     )
     sumo_cfg = os.path.abspath(sumo_cfg)
-    port = SUMO_PORT_DATA_CONFIG + 6  # Avoid port conflicts
+    port = SUMO_PORT_DYNAMIC_SPAWN  # Avoid port conflicts
 
     # Check config file exists
     if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
@@ -1729,7 +1753,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
         print("[SUMO Dynamic Car Spawning Test] Test failed.\n")
 
     timer.stop()
-    print(timer)
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
     
     
 def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(print_data=True):
@@ -1750,7 +1774,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         "..", "..", "SUMO", "Built Sims", "StraightAway6", "straightaway6.sumocfg"
     )
     sumo_cfg = os.path.abspath(sumo_cfg)
-    port = SUMO_PORT_DATA_CONFIG + 7  # Avoid port conflicts
+    port = SUMO_PORT_RSUWITHDELAY
 
     # Check config file exists
     if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
@@ -1860,7 +1884,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         print("[Live Manipulation - Rsu Message With Delay] Test failed.\n")
 
     timer.stop()
-    print(timer)
+    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
 
 
 def testAndScenarioRunner():
@@ -1993,7 +2017,9 @@ def testAndScenarioRunner():
     time.sleep(2)
 
     timer.stop()
-    print(timer)
+    
+    # Print elapsed time for the test
+    print(f"\nAll tests completed in {timer.elapsed():.8f} seconds.\n")
     
     print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")
