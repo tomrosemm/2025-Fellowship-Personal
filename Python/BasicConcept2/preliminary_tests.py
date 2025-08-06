@@ -1764,6 +1764,8 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
     print("\n=== Live Manipulation - Rsu Message With Delay; (using straightaway6.sumocfg) Test ===")
     global tested, passed
     tested += 1
+    flags_raised = 0
+    flags_lowered = 0
 
     timer = Timer("Live Manipulation - Rsu Message With Delay; (using straightaway6.sumocfg) Test Timer")
     timer.start()
@@ -1820,10 +1822,12 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                         if not rsu_car_close_flag:
                             rsu_car_close_flag = True
                             print(f"*** FLAG RAISED: RSU and car are within 50 meters at step {step} (distance: {dist:.2f} m) ***")
+                            flags_raised += 1
                     else:
                         if rsu_car_close_flag:
                             rsu_car_close_flag = False
                             print(f"*** FLAG LOWERED: RSU and car are now farther than 50 meters at step {step} (distance: {dist:.2f} m) ***")
+                            flags_lowered += 1
                     if step % 1000 == 0:
                         print(f"Step {step}: Distance between RSU ({rsu_ids[0]}) and car ({car_ids[0]}): {dist:.2f} m")
             except Exception as e:
@@ -1834,6 +1838,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
             if step >= total_steps - 1:
                 print(f"\nReached max steps ({total_steps}). Ending simulation.")
                 print(f"Total cars finished: {finished_cars}")
+                print(f"Flags raised: {flags_raised}, Flags lowered: {flags_lowered}")
                 break
 
             traci.simulationStep()
