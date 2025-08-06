@@ -1818,7 +1818,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                     dy = rsu_pos[1] - car_pos[1]
                     dist = (dx**2 + dy**2) ** 0.5
                     # --- Flag logic ---
-                    if dist < 150:
+                    if dist < 100:
                         if not rsu_car_close_flag:
                             rsu_car_close_flag = True
                             print(f"*** FLAG RAISED: RSU and car are within 50 meters at step {step} (distance: {dist:.2f} m) ***")
