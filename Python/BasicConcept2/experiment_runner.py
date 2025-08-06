@@ -254,8 +254,10 @@ def run_test_1_level_1_experiment(print_data=True):
     global experiment_count
     experiment_count += 1
     name = f"Test_1_Level_1_{experiment_count}"
-    if logger:
-        logger.info(f"Running experiment: {name}")
+    
+    # Create experiment instance like other experiment functions do
+    exp = Experiment(name, f"Vehicle_{experiment_count}", f"RSU_{experiment_count}", None)
+    exp.logger.info(f"Running experiment: {name}")
 
     from settings import SUMO_PORT_DATA_CONFIG, SUMO_TOOLS_PATH
     import os
@@ -298,49 +300,45 @@ def run_test_1_level_1_experiment(print_data=True):
     try:
         total_steps = 1010
         car_counter = 0
-        next_spawn_step = 10
-        active_car_id = None
+        active_cars = {}  # Track active cars and their spawn times
         car_type = "car"
         car_route = "route1"
-        finished_cars = 0
 
         for step in range(total_steps):
             traci.simulationStep()
             sim_time = traci.simulation.getTime()
-            veh_ids = traci.vehicle.getIDList()
-            cars_in_sim = [vid for vid in veh_ids if vid.startswith("car")]
 
-            # Spawn the first car at step 10, or spawn a new car only if no cars are present
-            if (step == next_spawn_step and active_car_id is None) or (not cars_in_sim and active_car_id is None):
+            # Check for cars that have finished their routes
+            for car_id in list(active_cars.keys()):
+                if car_id not in traci.vehicle.getIDList():
+                    throughput += 1
+                    if print_data:
+                        print(f"{car_id} finished at step {step}")
+                    del active_cars[car_id]
+
+            # Spawn a new car if no active cars are present
+            if not active_cars:
                 car_counter += 1
-                active_car_id = f"car{car_counter}"
+                new_car_id = f"car{car_counter}"
                 traci.vehicle.add(
-                    vehID=active_car_id,
+                    vehID=new_car_id,
                     routeID=car_route,
                     typeID=car_type,
                     depart=sim_time
                 )
+                active_cars[new_car_id] = step
                 if print_data:
-                    print(f"Spawned {active_car_id} at step {step}")
-
-            # Check if the active car has finished its route
-            if active_car_id and active_car_id not in veh_ids:
-                finished_cars += 1
-                throughput += 1
-                if print_data:
-                    print(f"{active_car_id} finished at step {step}")
-                active_car_id = None
+                    print(f"Spawned {new_car_id} at step {step}")
 
             if print_data and step % 100 == 0:
-                print(f"Step {step}: Active car: {active_car_id}, Finished cars: {finished_cars}")
+                print(f"Step {step}: Active cars: {list(active_cars.keys())}, Throughput: {throughput}")
+                exp.logger.info(f"Step {step}: Active cars: {list(active_cars.keys())}, Throughput: {throughput}")
 
-        if logger:
-            logger.info(f"Experiment {name} throughput: {throughput} cars finished in {total_steps} steps.")
+        exp.logger.info(f"Experiment {name} throughput: {throughput} cars finished in {total_steps} steps.")
         print(f"\nExperiment {name} throughput: {throughput} cars finished in {total_steps} steps.")
 
     except Exception as e:
-        if logger:
-            logger.error(f"[{name}] Error: {e}")
+        exp.logger.error(f"[{name}] Error: {e}")
         print(f"[{name}] Error: {e}")
 
     finally:
@@ -353,8 +351,7 @@ def run_test_1_level_1_experiment(print_data=True):
             except: pass
 
     timer.stop()
-    if logger:
-        logger.info(f"{name} completed in {timer.elapsed():.8f} seconds.")
+    exp.logger.info(f"{name} completed in {timer.elapsed():.8f} seconds.")
     print(f"\n{name} completed in {timer.elapsed():.8f} seconds.\n")
 
 
