@@ -15,7 +15,7 @@
 
     <!-- RSU Defined -->
     <vehicle id="rsu1" type="rsu" route="route_rsu" depart="0">
-        <stop parkingArea="pa_0" duration="51000" parking="true"/>
+        <stop parkingArea="pa_0" duration="101000" parking="true"/>
     </vehicle>
 
     <!-- Driving Car Defined
