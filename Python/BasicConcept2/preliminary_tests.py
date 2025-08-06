@@ -1828,7 +1828,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             rsu_car_close_flag = False
                             print(f"*** FLAG LOWERED: RSU and car are now farther than 50 meters at step {step} (distance: {dist:.2f} m) ***")
                             flags_lowered += 1
-                    if step % 1000 == 0:
+                    if step % 100 == 0:
                         print(f"Step {step}: Distance between RSU ({rsu_ids[0]}) and car ({car_ids[0]}): {dist:.2f} m")
             except Exception as e:
                 if step % 1000 == 0:
@@ -1872,7 +1872,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                 
 
             # Print vehicle list and position for debugging if requested
-            if print_data:
+            if print_data and DEBUG_MODE:
                 veh_ids = traci.vehicle.getIDList()
                 print(f"Step {step}: Vehicles in sim: {veh_ids}")
                 for car_id in veh_ids:
