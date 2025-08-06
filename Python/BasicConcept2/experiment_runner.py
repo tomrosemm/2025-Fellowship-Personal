@@ -382,11 +382,6 @@ def base_experiments_test():
     
     run_auth_experiment()
     
-    experiment__Test_1()
-
-
-def experiment__Test_1():
-    
     # Run Test_1_Level_1 experiment
     print("\n=== Running Test_1_Level_1 Experiment (Dynamic Car Spawning Throughput) ===")
     if logger:
