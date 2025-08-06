@@ -1782,7 +1782,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         return
 
     try:
-        total_steps = 101000
+        total_steps = 51000
         car_counter = 0
         active_cars = {}
         car_type = "car"
