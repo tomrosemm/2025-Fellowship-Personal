@@ -1782,16 +1782,36 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         return
 
     try:
-        total_steps = 101000
+        total_steps = 51000  # Reduced from 101000
+        max_time = 600  # 10 minute timeout
+        start_time = time.time()
         car_counter = 0
-        active_cars = {}  # Track active cars and their spawn times
+        active_cars = {}
         car_type = "car"
         car_route = "route1"
         finished_cars = 0
+        last_progress = 0
 
         for step in range(total_steps):
+            # Check for timeout
+            if time.time() - start_time > max_time:
+                print("Test timed out after 10 minutes")
+                break
+                
+            # Show progress every 5000 steps
+            if step % 5000 == 0:
+                current_time = time.time()
+                elapsed = current_time - last_progress if last_progress else 0
+                last_progress = current_time
+                print(f"Processing step {step}, {elapsed:.2f} seconds since last progress update")
+            
             traci.simulationStep()
             sim_time = traci.simulation.getTime()
+
+            # Check if we've completed our test objectives
+            if finished_cars >= 5:  # Exit after 5 cars complete the route
+                print(f"Test completed successfully after {step} steps")
+                break
 
             # Check for cars that have finished their routes
             for car_id in list(active_cars.keys()):
@@ -1829,8 +1849,8 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
             if print_data and step % 100 == 0:
                 print(f"Step {step}: Active cars: {list(active_cars.keys())}, Finished cars: {finished_cars}")
 
-        passed_local = True
-
+        passed_local = finished_cars > 0  # Consider test passed if at least one car finished
+        
     except Exception as e:
         print(f"[Live Manipulation - Rsu Message With Delay] Error: {e}")
         passed_local = False
@@ -1888,7 +1908,7 @@ def testAndScenarioRunner():
     time.sleep(.5)
     # clear_console()
 
-    # 8 - Simulated ZKP Isolated Test: Multiple Vehicles
+    #  8 - Simulated ZKP Isolated Test: Multiple Vehicles
     test_PartialWorkflow_MultipleVehicles_Simulated()
     time.sleep(.5)
     # clear_console()

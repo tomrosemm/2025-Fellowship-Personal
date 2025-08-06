@@ -229,7 +229,7 @@ def individual_tests_menu():
         print("19 - Run Zokrates (using auth.zok) Test")
         print("20 - Run Data Transfer; Small Step (using straightaway1.sumocfg) Test")
         print("21 - Run Dynamic Car Spawning (using straightaway5.sumocfg) Test")
-        print("22 - Run RSU Message With Delay (using straightaway5.sumocfg) Test")
+        print("22 - Run RSU Message With Delay (using straightaway6.sumocfg) Test")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
