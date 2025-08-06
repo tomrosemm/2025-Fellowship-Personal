@@ -56,6 +56,8 @@ class RSU:
         
         ## @var vehicle_secrets is a dict mapping vehicle_id to secret
         self.vehicle_secrets = vehicle_secrets
+        
+        self.broadcast_range = 500
 
 
     ##

@@ -1710,7 +1710,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
                 if print_data:
                     print(f"Spawned {new_car_id} at step {step}")
 
-            # Print vehicle list and position for debugging
+            # Print vehicle list and position for debugging if requested
             if print_data:
                 veh_ids = traci.vehicle.getIDList()
                 print(f"Step {step}: Vehicles in sim: {veh_ids}")
@@ -1751,8 +1751,8 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
     
 def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(print_data=True):
     """
-    Connects to straightaway5.sumocfg, spawns a car at step 10, and whenever a car completes its route,
-    immediately spawns another identical car, for 1010 steps.
+    Connects to straightaway6.sumocfg, spawns a car at step 1000, and whenever a car completes its route,
+    immediately spawns another identical car, for 51000 steps.
     """
     print("\n=== Live Manipulation - Rsu Message With Delay; (using straightaway6.sumocfg) Test ===")
     global tested, passed
@@ -1829,6 +1829,20 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
             # Print status every 1000 steps to track progress
             if step % 1000 == 0:
                 print(f"Step {step}: Active cars: {list(active_cars.keys())}, Total finished cars: {finished_cars}")
+                
+                try:
+                    rsu_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "rsu"]
+                    car_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "car"]
+                    if rsu_ids and car_ids:
+                        rsu_pos = traci.vehicle.getPosition(rsu_ids[0])
+                        car_pos = traci.vehicle.getPosition(car_ids[0])
+                        dx = rsu_pos[0] - car_pos[0]
+                        dy = rsu_pos[1] - car_pos[1]
+                        dist = (dx**2 + dy**2) ** 0.5
+                        print(f"Step {step}: Distance between RSU ({rsu_ids[0]}) and car ({car_ids[0]}): {dist:.2f} m")
+                except Exception as e:
+                    print(f"Step {step}: Could not compute RSU-car distance: {e}")
+                
 
             # Print vehicle list and position for debugging if requested
             if print_data:
