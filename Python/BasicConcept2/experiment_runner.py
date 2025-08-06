@@ -363,6 +363,18 @@ def run_test_1_level_1_experiment(print_data=True):
     print(f"\n{name} completed in {timer.elapsed():.8f} seconds.\n")
 
 
+def run_test_1_level_2_experiment(print_data=True):
+    return
+
+
+def run_test_1_level_3_experiment(print_data=True):
+    return
+
+
+def run_test_1_level_4_experiment(print_data=True):
+    return
+
+
 def base_experiments_test():
     
     # Set up logging

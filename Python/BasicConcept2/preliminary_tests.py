@@ -28,9 +28,9 @@ import random
 import shutil
 
 # Classes and functions
+# from experiment import Experiment
 from vehicle import Vehicle
 from rsu import RSU
-from experiment import Experiment
 from timer import Timer
 from zkp import generate_zkp_proof_simulated
 
