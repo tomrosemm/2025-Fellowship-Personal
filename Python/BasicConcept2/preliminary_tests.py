@@ -1825,9 +1825,9 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             flags_raised += 1
                             # Slow down car to 25 m/s over 1 second
                             try:
-                                traci.vehicle.slowDown(car_ids[0], 10.0, 0.25)
+                                traci.vehicle.slowDown(car_ids[0], 5.0, 0.1)
                                 if print_data:
-                                    print(f"Slowing down {car_ids[0]} to 25 m/s over 1 second")
+                                    print(f"Slowing down {car_ids[0]} to 5 m/s over 0.1 second")
                             except Exception as e:
                                 print(f"Could not slow down car {car_ids[0]}: {e}")
                     else:
@@ -1837,7 +1837,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             flags_lowered += 1
                             # Speed up car to 45 m/s over 1 second
                             try:
-                                traci.vehicle.slowDown(car_ids[0], 45.0, 0.25)
+                                traci.vehicle.slowDown(car_ids[0], 45.0, 0.1)
                                 if print_data:
                                     print(f"Speeding up {car_ids[0]} to 45 m/s over 1 second")
                             except Exception as e:
