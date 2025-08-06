@@ -245,6 +245,119 @@ def run_auth_experiment():
     cleanup_zokrates_files()
 
 
+def run_test_1_level_1_experiment(print_data=True):
+    """
+    Experiment: Test_1_Level_1
+    Spawns cars dynamically in SUMO (straightaway5.sumocfg), tracks throughput (number of cars completing their routes).
+    Reports and logs throughput at the end.
+    """
+    global experiment_count
+    experiment_count += 1
+    name = f"Test_1_Level_1_{experiment_count}"
+    if logger:
+        logger.info(f"Running experiment: {name}")
+
+    from settings import SUMO_PORT_DATA_CONFIG, SUMO_TOOLS_PATH
+    import os
+    from timer import Timer
+    from utilities import check_file_exists
+    from sumo_interface import start_sumo_simulation, cleanup_sumo_and_traci
+
+    timer = Timer(f"{name} Timer")
+    timer.start()
+
+    # Use the correct config file path and port
+    sumo_cfg = os.path.join(
+        os.path.dirname(__file__),
+        "..", "..", "SUMO", "Built Sims", "StraightAway5", "straightaway5.sumocfg"
+    )
+    sumo_cfg = os.path.abspath(sumo_cfg)
+    port = SUMO_PORT_DATA_CONFIG + 6  # Avoid port conflicts
+
+    # Check config file exists
+    if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
+        if logger:
+            logger.error(f"Config file not found: {sumo_cfg}")
+        return
+
+    proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
+        file_path=sumo_cfg,
+        is_config=True,
+        port=port,
+        sumo_binary="sumo",
+        connect_traci=True,
+        sumo_tools_path=SUMO_TOOLS_PATH
+    )
+
+    if proc is None or traci is None:
+        if logger:
+            logger.error("Failed to start SUMO or connect to TraCI.")
+        return
+
+    throughput = 0
+    try:
+        total_steps = 1010
+        car_counter = 0
+        next_spawn_step = 10
+        active_car_id = None
+        car_type = "car"
+        car_route = "route1"
+        finished_cars = 0
+
+        for step in range(total_steps):
+            traci.simulationStep()
+            sim_time = traci.simulation.getTime()
+            veh_ids = traci.vehicle.getIDList()
+            cars_in_sim = [vid for vid in veh_ids if vid.startswith("car")]
+
+            # Spawn the first car at step 10, or spawn a new car only if no cars are present
+            if (step == next_spawn_step and active_car_id is None) or (not cars_in_sim and active_car_id is None):
+                car_counter += 1
+                active_car_id = f"car{car_counter}"
+                traci.vehicle.add(
+                    vehID=active_car_id,
+                    routeID=car_route,
+                    typeID=car_type,
+                    depart=sim_time
+                )
+                if print_data:
+                    print(f"Spawned {active_car_id} at step {step}")
+
+            # Check if the active car has finished its route
+            if active_car_id and active_car_id not in veh_ids:
+                finished_cars += 1
+                throughput += 1
+                if print_data:
+                    print(f"{active_car_id} finished at step {step}")
+                active_car_id = None
+
+            if print_data and step % 100 == 0:
+                print(f"Step {step}: Active car: {active_car_id}, Finished cars: {finished_cars}")
+
+        if logger:
+            logger.info(f"Experiment {name} throughput: {throughput} cars finished in {total_steps} steps.")
+        print(f"\nExperiment {name} throughput: {throughput} cars finished in {total_steps} steps.")
+
+    except Exception as e:
+        if logger:
+            logger.error(f"[{name}] Error: {e}")
+        print(f"[{name}] Error: {e}")
+
+    finally:
+        cleanup_sumo_and_traci(proc, port, traci)
+        if temp_config and os.path.exists(temp_config):
+            try: os.unlink(temp_config)
+            except: pass
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            try: shutil.rmtree(temp_output_dir)
+            except: pass
+
+    timer.stop()
+    if logger:
+        logger.info(f"{name} completed in {timer.elapsed():.8f} seconds.")
+    print(f"\n{name} completed in {timer.elapsed():.8f} seconds.\n")
+
+
 def base_experiments_test():
     
     # Set up logging
@@ -256,7 +369,7 @@ def base_experiments_test():
     # Ensure no old files interfere
     cleanup_zokrates_files()  
     
-    # Run both experiments
+    # Run both test experiments
     print("\n=== Running Basic Dummy Circuit Experiment ===")
     if logger:
         logger.info("Running Basic Dummy Circuit Experiment")
@@ -269,6 +382,17 @@ def base_experiments_test():
     
     run_auth_experiment()
     
+    experiment__Test_1()
+
+
+def experiment__Test_1():
+    
+    # Run Test_1_Level_1 experiment
+    print("\n=== Running Test_1_Level_1 Experiment (Dynamic Car Spawning Throughput) ===")
+    if logger:
+        logger.info("Running Test_1_Level_1 Experiment (Dynamic Car Spawning Throughput)")
+    run_test_1_level_1_experiment(print_data=True)
+
     if logger:
         logger.info("Base experiments test completed")
     
