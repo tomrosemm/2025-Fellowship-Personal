@@ -1685,8 +1685,12 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
             traci.simulationStep()
             sim_time = traci.simulation.getTime()
 
-            # Spawn the first car at step 10
-            if step == next_spawn_step and active_car_id is None:
+            veh_ids = traci.vehicle.getIDList()
+            # Only consider vehicles that are not the RSU
+            cars_in_sim = [vid for vid in veh_ids if vid.startswith("car")]
+
+            # Spawn the first car at step 10, or spawn a new car only if no cars are present
+            if (step == next_spawn_step and active_car_id is None) or (not cars_in_sim and active_car_id is None):
                 car_counter += 1
                 active_car_id = f"car{car_counter}"
                 traci.vehicle.add(
@@ -1699,27 +1703,15 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
                     print(f"Spawned {active_car_id} at step {step}")
 
             # Check if the active car has finished its route
-            if active_car_id:
-                veh_ids = traci.vehicle.getIDList()
-                if active_car_id not in veh_ids:
-                    finished_cars += 1
-                    if print_data:
-                        print(f"{active_car_id} finished at step {step}")
-                    # Immediately spawn the next car
-                    car_counter += 1
-                    active_car_id = f"car{car_counter}"
-                    traci.vehicle.add(
-                        vehID=active_car_id,
-                        routeID=car_route,
-                        typeID=car_type,
-                        depart=sim_time
-                    )
-                    if print_data:
-                        print(f"Spawned {active_car_id} at step {step}")
+            if active_car_id and active_car_id not in veh_ids:
+                finished_cars += 1
+                if print_data:
+                    print(f"{active_car_id} finished at step {step}")
+                # Only set active_car_id to None, so next loop can spawn a new car if no cars are present
+                active_car_id = None
 
             # Print vehicle list and position for debugging
             if print_data:
-                veh_ids = traci.vehicle.getIDList()
                 print(f"Step {step}: Vehicles in sim: {veh_ids}")
                 if active_car_id and active_car_id in veh_ids:
                     try:
