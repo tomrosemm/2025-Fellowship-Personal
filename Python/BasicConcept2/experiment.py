@@ -24,6 +24,8 @@ from pathlib import Path
 
 from vehicle import Vehicle
 from rsu import RSU
+from blockchain import simulate_blockchain_verification
+from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE
 
 from zokrates_interface import (
     run_zokrates_compile,
@@ -33,9 +35,6 @@ from zokrates_interface import (
     run_zokrates_verify
     # hex_to_field_array,
 )
-
-from blockchain import simulate_blockchain_verification
-from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE
 
 
 ##

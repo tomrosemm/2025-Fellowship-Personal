@@ -95,6 +95,442 @@ def set_debug_mode(enabled):
 
 
 ##
+# @brief Test the connection to SUMO using TraCI.
+#
+# @return True if connection succeeded, False otherwise.
+#
+# @details
+#   Steps:
+#     1. Aggressively clean up port and connections.
+#     2. Start SUMO with network file.
+#     3. Attempt to connect via TraCI.
+#     4. Clean up after test.
+##
+def test_sumo_connection():
+    
+    # Aggressive cleanup before starting test
+    kill_processes_on_port(SUMO_PORT_BASIC)
+    cleanup_traci_connection()
+    
+    # Wait for port to be available
+    print("Wait time begins for processes to die and OS to release port")
+    time.sleep(10) 
+    print("Wait time ends for processes to die and OS to release port")
+
+
+    # Clean up any existing connections first
+    cleanup_traci_connection()
+    
+    # Wait for port to be available
+    port = SUMO_PORT_BASIC
+    
+    # If port is not available, wait for it to become available until timeout
+    if not wait_for_port_available(port, timeout=15):
+        
+        # If port is not available, print failure info and return False
+        print(f"[SUMO Test] Port {port} is not available after waiting and cleanup attempts.")
+        return False
+    
+    # Get SUMO tools path from settings
+    sys.path.append(SUMO_TOOLS_PATH)
+
+    # Try to import traci and handle import errors
+    try:
+        
+        import traci
+    
+    # If traci import fails, print debug info and return False
+    except ImportError as e:
+        
+        if DEBUG_MODE:
+            print(f"[SUMO Test] Could not import traci: {e}")
+            print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
+            
+        return False
+
+    # Define the path to the SUMO network file from settings
+    SUMO_NET_FILE = SUMO_SIMPLE_NET_FILE
+    
+    # Check if the SUMO network file exists
+    if not os.path.exists(SUMO_NET_FILE):
+        
+        # If network file does not exist, print debug info and return False
+        print(f"[SUMO Test] Network file not found: {SUMO_NET_FILE}")
+        return False
+
+    # Start the SUMO process with the network file
+    proc, sumo_binary, net_file = start_sumo()
+    
+    # If the process could not be started, print debug info and return False
+    if not proc:
+        
+        print("[SUMO Test] Could not start SUMO process.")
+        return False
+    
+    # Initialize connection status
+    connected = False
+    
+    # Try to connect to SUMO via TraCI
+    try:
+        
+        time.sleep(2)
+        
+        # Initialize TraCI connection to SUMO using the specified port, setting connected to true if successful
+        traci.init(port=port)
+        connected = True
+        
+        # If debug mode is enabled, print connection info
+        if DEBUG_MODE:
+            print("[SUMO Test] Successfully connected to SUMO via traci!")
+            print(f"  SUMO binary used: {sumo_binary}")
+            print(f"  Network file: {net_file}")
+            print(f"  SUMO process PID: {proc.pid}")
+            print("  SUMO process started and connection established.")
+    
+    # If TraCI connection fails, print debug info if DEBUG_MODE is enabled and return False
+    except Exception as e:
+        
+        if DEBUG_MODE:
+            print(f"[SUMO Test] Failed to connect to SUMO: {e}")
+
+    # Finally block to ensure cleanup after the test
+    # This block will always execute regardless of success or failure
+    finally:
+        
+        # Try to close the TraCI connection if it is loaded
+        try:
+            
+            # If TraCI is loaded, close the connection
+            if traci.isLoaded():
+                traci.close()
+                
+                # If debug mode is enabled, print debug info
+                if DEBUG_MODE:
+                    print("  SUMO TraCI connection closed.")
+        
+        # If closing TraCI fails, print debug info if Debug mode is enabled
+        except Exception as e:
+            
+            if DEBUG_MODE:
+                print(f"  TraCI close error: {e}")
+        
+        # Try to terminate the SUMO process
+        try:
+            
+            # Terminate the SUMO process and wait for it to finish with a timeout of 3 seconds
+            proc.terminate()
+            proc.wait(timeout=3)
+            
+            # If debug mode is enabled, print debug info
+            if DEBUG_MODE:
+                print("  SUMO process terminated.")
+        
+        # If terminating SUMO fails, try to kill the process
+        except subprocess.TimeoutExpired:
+            
+            proc.kill()
+            
+            # If debug mode is enabled, print debug info
+            if DEBUG_MODE:
+                print("  SUMO process killed (timeout).")
+        
+        # If killing the process fails, print debug info if Debug mode is enabled
+        except Exception as e:
+            
+            if DEBUG_MODE:
+                print(f"  SUMO process termination error: {e}")
+        
+        # Force cleanup
+        kill_processes_on_port(port)
+        
+        time.sleep(2)
+    
+    return connected
+
+
+##
+# @brief Test the connection to SUMO using a .sumocfg configuration file.
+#
+# @return True if connection succeeded, False otherwise.
+#
+# @details
+#   Steps:
+#     1. Aggressively clean up port and connections.
+#     2. Start SUMO with config file.
+#     3. Attempt to connect via TraCI.
+#     4. Clean up after test.
+##
+def test_sumo_config_connection():
+    
+    # Aggressive cleanup before starting test
+    kill_processes_on_port(SUMO_PORT_CONFIG)
+    
+    # Wait for port to be available
+    print("Wait time begins for processes to die and OS to release port")
+    time.sleep(10) 
+    print("Wait time ends for processes to die and OS to release port")
+    
+    cleanup_traci_connection()
+    
+    # Define the port to use for SUMO connection
+    port = SUMO_PORT_CONFIG
+    
+    # If port is not available, wait for it to become available until timeout
+    if not wait_for_port_available(port, timeout=15):
+        
+        # If port is not available and timeout expires, print failure info and return False
+        print(f"[SUMO Config Test] Port {port} is not available after waiting and cleanup attempts.")
+        return False
+    
+    # Get SUMO tools path from settings
+    sys.path.append(SUMO_TOOLS_PATH)
+
+    # Try to import traci
+    try:
+        
+        import traci
+    
+    # If traci import fails, print debug info if DEBUG_MODE is enabled and return False
+    except ImportError as e:
+        
+        if DEBUG_MODE:
+            print(f"[SUMO Config Test] Could not import traci: {e}")
+            print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
+            
+        return False
+
+    # Define the path to the SUMO configuration file from settings
+    SUMO_CONFIG_FILE = SUMO_CITY_CONFIG_FILE
+    
+    # Check if the SUMO configuration file exists; if not, print debug info and return False
+    if not os.path.exists(SUMO_CONFIG_FILE):
+        
+        print(f"[SUMO Config Test] Configuration file not found: {SUMO_CONFIG_FILE}")
+        print(f"[SUMO Config Test] Create a .sumocfg file to test full SUMO functionality")
+        return False
+
+    # Start the SUMO process with the configuration file
+    proc, sumo_binary, config_file, temp_config, temp_output_dir = start_sumo_with_config(port, SUMO_CONFIG_FILE)
+    
+    # If the process could not be started, print debug info and return False
+    if not proc:
+        
+        print("[SUMO Config Test] Could not start SUMO process with configuration file.")
+        return False
+    
+    # Initialize connection status
+    connected = False
+    
+    # Try to connect to SUMO via TraCI
+    try:
+        
+        time.sleep(2)
+        
+        # If debug mode is enabled, print connection attempt info
+        if DEBUG_MODE:
+            print("[SUMO Config Test] Attempting to connect to SUMO via traci...")
+        
+        # Initialize TraCI connection to SUMO using the specified port, raising an exception if it fails and setting connected to true if successful
+        traci.init(port=port)
+        connected = True
+        
+        # If debug mode is enabled, print connection success info
+        if DEBUG_MODE:
+            print("[SUMO Config Test] Successfully connected to SUMO via traci with configuration file!")
+            print(f"  SUMO binary used: {sumo_binary}")
+            print(f"  Configuration file: {config_file}")
+            print(f"  SUMO process PID: {proc.pid}")
+            print("  SUMO process started with full configuration and connection established.")
+        
+        # If debug mode is enabled, print simulation step info
+        if DEBUG_MODE:
+            print("  Performing simulation step...")
+        
+        # Perform a simple simulation step to verify functionality
+        traci.simulationStep()
+        
+        # If debug mode is enabled, print success info
+        if DEBUG_MODE:
+            print("  Successfully performed simulation step.")
+            print("  Simulation time:", traci.simulation.getTime())
+    
+    # If TraCI connection fails, print debug info if DEBUG_MODE is enabled and return False
+    except Exception as e:
+        
+        if DEBUG_MODE:
+            
+            print(f"[SUMO Config Test] Failed to connect to SUMO: {e}")
+            
+            # Try to capture stderr from the process if it's still running
+            if proc and proc.poll() is None:
+                
+                try:
+                    stderr = proc.stderr.read(4096).decode()
+                    if stderr:
+                        print(f"[SUMO Config Test] SUMO process stderr:\n{stderr}")
+                        
+                except:
+                    pass
+    
+    # Finally block to ensure cleanup after the test
+    # This block will always execute regardless of success or failure            
+    finally:
+        
+        # Try to close the TraCI connection if it is loaded
+        try:
+            if traci.isLoaded():
+                traci.close()
+                
+                # If debug mode is enabled, print debug info
+                if DEBUG_MODE:
+                    print("  SUMO TraCI connection closed.")
+                    
+        # If closing TraCI fails, print debug info if DEBUG_MODE is enabled    
+        except Exception as e:
+            
+            if DEBUG_MODE:
+                print(f"  TraCI close error: {e}")
+        
+        # Try to terminate the SUMO process
+        try:
+            
+            proc.terminate()
+            proc.wait(timeout=3)
+            
+            # If debug mode is enabled, print debug info
+            if DEBUG_MODE:
+                print("  SUMO process terminated.")
+                
+        # If terminating SUMO fails, try to kill the process
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            
+            # If debug mode is enabled, print debug info
+            if DEBUG_MODE:
+                print("  SUMO process killed (timeout).")
+                
+        # If killing the process fails, print debug info if DEBUG_MODE is enabled
+        except Exception as e:
+            
+            if DEBUG_MODE:
+                print(f"  SUMO process termination error: {e}")
+        
+        # Clean up temporary files
+        if temp_config:
+            
+            # Try to remove the temporary config file
+            try:
+
+                # Remove the temporary config file with unlink
+                os.unlink(temp_config)
+                
+                # If debug mode is enabled, print debug info
+                if DEBUG_MODE:
+                    print(f"  Cleaned up temporary config file: {temp_config}")
+                    
+            # If unlink fails, print debug info if DEBUG_MODE is enabled
+            except Exception as e:
+                
+                if DEBUG_MODE:
+                    print(f"  Failed to clean up temp config: {e}")
+        
+        # Clean up output directory
+        if temp_output_dir and os.path.exists(temp_output_dir):
+            
+            # Try to remove the temporary output directory
+            try:
+                
+                # Check log files before removal
+                log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
+                
+                # Iterate through log files and print their content if they exist, if DEBUG_MODE is enabled
+                for log_file in log_files:
+                    log_path = os.path.join(temp_output_dir, log_file)
+                    if os.path.exists(log_path):
+                        if DEBUG_MODE:
+                            with open(log_path, 'r') as f:
+                                content = f.read()
+                                if content:
+                                    print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
+                
+                # Remove the temp directory with shutil
+                shutil.rmtree(temp_output_dir, ignore_errors=True)
+                
+                # If debug mode is enabled, print debug info
+                if DEBUG_MODE:
+                    print(f"  Cleaned up temporary output directory: {temp_output_dir}")
+            
+            # If removing the temp directory fails, print debug info if DEBUG_MODE is enabled
+            except Exception as e:
+                
+                if DEBUG_MODE:
+                    print(f"  Failed to clean up temp output directory: {e}")
+        
+        # Force cleanup port
+        kill_processes_on_port(port)
+
+        time.sleep(2)
+    
+    # Return the connection status
+    return connected
+
+
+##
+# @brief Run both SUMO connection tests and count as tests.
+#
+# @param tested Current count of tests run.
+# @param passed Current count of tests passed.
+# @return tuple (tested, passed) Updated counts of tests run and passed.
+##
+def test_sumo_connection_wrapper(tested, passed):
+    
+    # Print header for SUMO connection tests
+    print("\n=== SUMO Connection Tests ===")
+    
+    # Test 1: Basic network file connection
+    print("\n--- SUMO Basic Network Test (simple.net) ---")
+    
+    # Increment the count of tests run
+    tested += 1
+    
+    # Run the basic SUMO connection test, storing the result in result1
+    result1 = test_sumo_connection()
+    
+    # If the basic connection test succeeded, increment the count of passed tests and print success message
+    # Otherwise, print failure message
+    if result1:
+        
+        passed += 1
+        print("[SUMO Basic Test] SUMO basic network connection test completed successfully.")
+        
+    else:
+        
+        print("[SUMO Basic Test] SUMO basic network connection test failed.")
+    
+    # Test 2: Configuration file connection
+    print("\n--- SUMO Configuration File Test (threebythreecityblock1.sumocfg) ---")
+    
+    # Increment the count of tests run
+    tested += 1
+    
+    # Run the SUMO configuration connection test, storing the result in result2
+    result2 = test_sumo_config_connection()
+    
+    # If the configuration connection test succeeded, increment the count of passed tests and print success message
+    # Otherwise, print failure message
+    if result2:
+        
+        passed += 1
+        print("[SUMO Config Test] SUMO configuration file connection test completed successfully.")
+        
+    else:
+        print("[SUMO Config Test] SUMO configuration file connection test failed.")
+    
+    print()
+    return tested, passed
+
+
+##
 # @brief Check if all files referenced in the configuration file exist.
 #
 # @param config_path Path to SUMO configuration file.
@@ -455,160 +891,6 @@ def cleanup_traci_connection():
 
 
 ##
-# @brief Test the connection to SUMO using TraCI.
-#
-# @return True if connection succeeded, False otherwise.
-#
-# @details
-#   Steps:
-#     1. Aggressively clean up port and connections.
-#     2. Start SUMO with network file.
-#     3. Attempt to connect via TraCI.
-#     4. Clean up after test.
-##
-def test_sumo_connection():
-    
-    # Aggressive cleanup before starting test
-    kill_processes_on_port(SUMO_PORT_BASIC)
-    cleanup_traci_connection()
-    
-    # Wait for port to be available
-    print("Wait time begins for processes to die and OS to release port")
-    time.sleep(10) 
-    print("Wait time ends for processes to die and OS to release port")
-
-
-    # Clean up any existing connections first
-    cleanup_traci_connection()
-    
-    # Wait for port to be available
-    port = SUMO_PORT_BASIC
-    
-    # If port is not available, wait for it to become available until timeout
-    if not wait_for_port_available(port, timeout=15):
-        
-        # If port is not available, print failure info and return False
-        print(f"[SUMO Test] Port {port} is not available after waiting and cleanup attempts.")
-        return False
-    
-    # Get SUMO tools path from settings
-    sys.path.append(SUMO_TOOLS_PATH)
-
-    # Try to import traci and handle import errors
-    try:
-        
-        import traci
-    
-    # If traci import fails, print debug info and return False
-    except ImportError as e:
-        
-        if DEBUG_MODE:
-            print(f"[SUMO Test] Could not import traci: {e}")
-            print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
-            
-        return False
-
-    # Define the path to the SUMO network file from settings
-    SUMO_NET_FILE = SUMO_SIMPLE_NET_FILE
-    
-    # Check if the SUMO network file exists
-    if not os.path.exists(SUMO_NET_FILE):
-        
-        # If network file does not exist, print debug info and return False
-        print(f"[SUMO Test] Network file not found: {SUMO_NET_FILE}")
-        return False
-
-    # Start the SUMO process with the network file
-    proc, sumo_binary, net_file = start_sumo()
-    
-    # If the process could not be started, print debug info and return False
-    if not proc:
-        
-        print("[SUMO Test] Could not start SUMO process.")
-        return False
-    
-    # Initialize connection status
-    connected = False
-    
-    # Try to connect to SUMO via TraCI
-    try:
-        
-        time.sleep(2)
-        
-        # Initialize TraCI connection to SUMO using the specified port, setting connected to true if successful
-        traci.init(port=port)
-        connected = True
-        
-        # If debug mode is enabled, print connection info
-        if DEBUG_MODE:
-            print("[SUMO Test] Successfully connected to SUMO via traci!")
-            print(f"  SUMO binary used: {sumo_binary}")
-            print(f"  Network file: {net_file}")
-            print(f"  SUMO process PID: {proc.pid}")
-            print("  SUMO process started and connection established.")
-    
-    # If TraCI connection fails, print debug info if DEBUG_MODE is enabled and return False
-    except Exception as e:
-        
-        if DEBUG_MODE:
-            print(f"[SUMO Test] Failed to connect to SUMO: {e}")
-
-    # Finally block to ensure cleanup after the test
-    # This block will always execute regardless of success or failure
-    finally:
-        
-        # Try to close the TraCI connection if it is loaded
-        try:
-            
-            # If TraCI is loaded, close the connection
-            if traci.isLoaded():
-                traci.close()
-                
-                # If debug mode is enabled, print debug info
-                if DEBUG_MODE:
-                    print("  SUMO TraCI connection closed.")
-        
-        # If closing TraCI fails, print debug info if Debug mode is enabled
-        except Exception as e:
-            
-            if DEBUG_MODE:
-                print(f"  TraCI close error: {e}")
-        
-        # Try to terminate the SUMO process
-        try:
-            
-            # Terminate the SUMO process and wait for it to finish with a timeout of 3 seconds
-            proc.terminate()
-            proc.wait(timeout=3)
-            
-            # If debug mode is enabled, print debug info
-            if DEBUG_MODE:
-                print("  SUMO process terminated.")
-        
-        # If terminating SUMO fails, try to kill the process
-        except subprocess.TimeoutExpired:
-            
-            proc.kill()
-            
-            # If debug mode is enabled, print debug info
-            if DEBUG_MODE:
-                print("  SUMO process killed (timeout).")
-        
-        # If killing the process fails, print debug info if Debug mode is enabled
-        except Exception as e:
-            
-            if DEBUG_MODE:
-                print(f"  SUMO process termination error: {e}")
-        
-        # Force cleanup
-        kill_processes_on_port(port)
-        
-        time.sleep(2)
-    
-    return connected
-
-
-##
 # @brief Start the SUMO process with the specified config file and port.
 #
 # @return tuple (proc, sumo_binary, config_file, temp_config, temp_output_dir)
@@ -732,287 +1014,6 @@ def start_sumo_with_config(port, sumo_config_file):
         
         # Return Nones to indicate failure if SUMO could not start
         return None, None, None, None, None
-        
-##
-# @brief Test the connection to SUMO using a .sumocfg configuration file.
-#
-# @return True if connection succeeded, False otherwise.
-#
-# @details
-#   Steps:
-#     1. Aggressively clean up port and connections.
-#     2. Start SUMO with config file.
-#     3. Attempt to connect via TraCI.
-#     4. Clean up after test.
-##
-def test_sumo_config_connection():
-    
-    # Aggressive cleanup before starting test
-    kill_processes_on_port(SUMO_PORT_CONFIG)
-    
-    # Wait for port to be available
-    print("Wait time begins for processes to die and OS to release port")
-    time.sleep(10) 
-    print("Wait time ends for processes to die and OS to release port")
-    
-    cleanup_traci_connection()
-    
-    # Define the port to use for SUMO connection
-    port = SUMO_PORT_CONFIG
-    
-    # If port is not available, wait for it to become available until timeout
-    if not wait_for_port_available(port, timeout=15):
-        
-        # If port is not available and timeout expires, print failure info and return False
-        print(f"[SUMO Config Test] Port {port} is not available after waiting and cleanup attempts.")
-        return False
-    
-    # Get SUMO tools path from settings
-    sys.path.append(SUMO_TOOLS_PATH)
-
-    # Try to import traci
-    try:
-        
-        import traci
-    
-    # If traci import fails, print debug info if DEBUG_MODE is enabled and return False
-    except ImportError as e:
-        
-        if DEBUG_MODE:
-            print(f"[SUMO Config Test] Could not import traci: {e}")
-            print(f"Check that SUMO_TOOLS_PATH is correct: {SUMO_TOOLS_PATH}")
-            
-        return False
-
-    # Define the path to the SUMO configuration file from settings
-    SUMO_CONFIG_FILE = SUMO_CITY_CONFIG_FILE
-    
-    # Check if the SUMO configuration file exists; if not, print debug info and return False
-    if not os.path.exists(SUMO_CONFIG_FILE):
-        
-        print(f"[SUMO Config Test] Configuration file not found: {SUMO_CONFIG_FILE}")
-        print(f"[SUMO Config Test] Create a .sumocfg file to test full SUMO functionality")
-        return False
-
-    # Start the SUMO process with the configuration file
-    proc, sumo_binary, config_file, temp_config, temp_output_dir = start_sumo_with_config(port, SUMO_CONFIG_FILE)
-    
-    # If the process could not be started, print debug info and return False
-    if not proc:
-        
-        print("[SUMO Config Test] Could not start SUMO process with configuration file.")
-        return False
-    
-    # Initialize connection status
-    connected = False
-    
-    # Try to connect to SUMO via TraCI
-    try:
-        
-        time.sleep(2)
-        
-        # If debug mode is enabled, print connection attempt info
-        if DEBUG_MODE:
-            print("[SUMO Config Test] Attempting to connect to SUMO via traci...")
-        
-        # Initialize TraCI connection to SUMO using the specified port, raising an exception if it fails and setting connected to true if successful
-        traci.init(port=port)
-        connected = True
-        
-        # If debug mode is enabled, print connection success info
-        if DEBUG_MODE:
-            print("[SUMO Config Test] Successfully connected to SUMO via traci with configuration file!")
-            print(f"  SUMO binary used: {sumo_binary}")
-            print(f"  Configuration file: {config_file}")
-            print(f"  SUMO process PID: {proc.pid}")
-            print("  SUMO process started with full configuration and connection established.")
-        
-        # If debug mode is enabled, print simulation step info
-        if DEBUG_MODE:
-            print("  Performing simulation step...")
-        
-        # Perform a simple simulation step to verify functionality
-        traci.simulationStep()
-        
-        # If debug mode is enabled, print success info
-        if DEBUG_MODE:
-            print("  Successfully performed simulation step.")
-            print("  Simulation time:", traci.simulation.getTime())
-    
-    # If TraCI connection fails, print debug info if DEBUG_MODE is enabled and return False
-    except Exception as e:
-        
-        if DEBUG_MODE:
-            
-            print(f"[SUMO Config Test] Failed to connect to SUMO: {e}")
-            
-            # Try to capture stderr from the process if it's still running
-            if proc and proc.poll() is None:
-                
-                try:
-                    stderr = proc.stderr.read(4096).decode()
-                    if stderr:
-                        print(f"[SUMO Config Test] SUMO process stderr:\n{stderr}")
-                        
-                except:
-                    pass
-    
-    # Finally block to ensure cleanup after the test
-    # This block will always execute regardless of success or failure            
-    finally:
-        
-        # Try to close the TraCI connection if it is loaded
-        try:
-            if traci.isLoaded():
-                traci.close()
-                
-                # If debug mode is enabled, print debug info
-                if DEBUG_MODE:
-                    print("  SUMO TraCI connection closed.")
-                    
-        # If closing TraCI fails, print debug info if DEBUG_MODE is enabled    
-        except Exception as e:
-            
-            if DEBUG_MODE:
-                print(f"  TraCI close error: {e}")
-        
-        # Try to terminate the SUMO process
-        try:
-            
-            proc.terminate()
-            proc.wait(timeout=3)
-            
-            # If debug mode is enabled, print debug info
-            if DEBUG_MODE:
-                print("  SUMO process terminated.")
-                
-        # If terminating SUMO fails, try to kill the process
-        except subprocess.TimeoutExpired:
-            proc.kill()
-            
-            # If debug mode is enabled, print debug info
-            if DEBUG_MODE:
-                print("  SUMO process killed (timeout).")
-                
-        # If killing the process fails, print debug info if DEBUG_MODE is enabled
-        except Exception as e:
-            
-            if DEBUG_MODE:
-                print(f"  SUMO process termination error: {e}")
-        
-        # Clean up temporary files
-        if temp_config:
-            
-            # Try to remove the temporary config file
-            try:
-                
-                # Remove the temporary config file with unlink
-                os.unlink(temp_config)
-                
-                # If debug mode is enabled, print debug info
-                if DEBUG_MODE:
-                    print(f"  Cleaned up temporary config file: {temp_config}")
-                    
-            # If unlink fails, print debug info if DEBUG_MODE is enabled
-            except Exception as e:
-                
-                if DEBUG_MODE:
-                    print(f"  Failed to clean up temp config: {e}")
-        
-        # Clean up output directory
-        if temp_output_dir and os.path.exists(temp_output_dir):
-            
-            # Try to remove the temporary output directory
-            try:
-                
-                # Check log files before removal
-                log_files = ["sumo_run.log", "sumo_messages.log", "sumo_errors.log"]
-                
-                # Iterate through log files and print their content if they exist, if DEBUG_MODE is enabled
-                for log_file in log_files:
-                    log_path = os.path.join(temp_output_dir, log_file)
-                    if os.path.exists(log_path):
-                        if DEBUG_MODE:
-                            with open(log_path, 'r') as f:
-                                content = f.read()
-                                if content:
-                                    print(f"[SUMO Config Test] Content of {log_file}:\n{content}")
-                
-                # Remove the temp directory with shutil
-                shutil.rmtree(temp_output_dir, ignore_errors=True)
-                
-                # If debug mode is enabled, print debug info
-                if DEBUG_MODE:
-                    print(f"  Cleaned up temporary output directory: {temp_output_dir}")
-            
-            # If removing the temp directory fails, print debug info if DEBUG_MODE is enabled
-            except Exception as e:
-                
-                if DEBUG_MODE:
-                    print(f"  Failed to clean up temp output directory: {e}")
-        
-        # Force cleanup port
-        kill_processes_on_port(port)
-
-        time.sleep(2)
-    
-    # Return the connection status
-    return connected
-
-
-##
-# @brief Run both SUMO connection tests and count as tests.
-#
-# @param tested Current count of tests run.
-# @param passed Current count of tests passed.
-# @return tuple (tested, passed) Updated counts of tests run and passed.
-##
-def test_sumo_connection_wrapper(tested, passed):
-    
-    # Print header for SUMO connection tests
-    print("\n=== SUMO Connection Tests ===")
-    
-    # Test 1: Basic network file connection
-    print("\n--- SUMO Basic Network Test (simple.net) ---")
-    
-    # Increment the count of tests run
-    tested += 1
-    
-    # Run the basic SUMO connection test, storing the result in result1
-    result1 = test_sumo_connection()
-    
-    # If the basic connection test succeeded, increment the count of passed tests and print success message
-    # Otherwise, print failure message
-    if result1:
-        
-        passed += 1
-        print("[SUMO Basic Test] SUMO basic network connection test completed successfully.")
-        
-    else:
-        
-        print("[SUMO Basic Test] SUMO basic network connection test failed.")
-    
-    # Test 2: Configuration file connection
-    print("\n--- SUMO Configuration File Test (threebythreecityblock1.sumocfg) ---")
-    
-    # Increment the count of tests run
-    tested += 1
-    
-    # Run the SUMO configuration connection test, storing the result in result2
-    result2 = test_sumo_config_connection()
-    
-    # If the configuration connection test succeeded, increment the count of passed tests and print success message
-    # Otherwise, print failure message
-    if result2:
-        
-        passed += 1
-        print("[SUMO Config Test] SUMO configuration file connection test completed successfully.")
-        
-    else:
-        print("[SUMO Config Test] SUMO configuration file connection test failed.")
-    
-    print()
-    return tested, passed
 
 
 ##

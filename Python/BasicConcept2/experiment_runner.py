@@ -28,6 +28,8 @@ from vehicle import Vehicle
 from rsu import RSU
 from timer import Timer
 from utilities import clear_console
+from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
+from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
 
 from zokrates_interface import (
     # hex_to_field_array,
@@ -40,8 +42,6 @@ from zokrates_interface import (
     set_debug_mode as set_zokrates_debug_mode
 )
 
-from blockchain import simulate_blockchain_verification, set_debug_mode as set_blockchain_debug_mode
-from sumo_interface import test_sumo_connection_wrapper, set_debug_mode as set_sumo_debug_mode
 from settings import (
     DEBUG_MODE as DEFAULT_DEBUG_MODE,
     ZOKRATES_DUMMY_CIRCUIT,

@@ -1,3 +1,19 @@
+##
+# @file utilities.py
+# @author Tom Rose
+#
+# @brief
+#   Utility functions for port management, debugging, and console operations.
+#   Used by various modules to manage ports, debug output, and perform system-level tasks.
+#
+# @details
+#   - Enable/disable debug mode.
+#   - Kill processes using a specific port.
+#   - Check port availability and wait for ports to become free.
+#   - Clear the console screen.
+#   - Check for file existence with descriptive error output.
+##
+
 import psutil
 import socket
 import time
@@ -193,3 +209,4 @@ def check_file_exists(filepath, description):
         print(f"[Error] {description} not found: {filepath}")
         return False
     return True
+
