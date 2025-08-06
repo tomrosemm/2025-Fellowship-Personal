@@ -1717,6 +1717,11 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
                     if print_data:
                         print(f"Spawned {active_car_id} at step {step}")
 
+            # Optionally print car position for debugging
+            if print_data and active_car_id and active_car_id in traci.vehicle.getIDList():
+                pos = traci.vehicle.getPosition(active_car_id)
+                print(f"Step {step}: {active_car_id} position: {pos}")
+
             if print_data and step % 100 == 0:
                 print(f"Step {step}: Active car: {active_car_id}, Finished cars: {finished_cars}")
 
