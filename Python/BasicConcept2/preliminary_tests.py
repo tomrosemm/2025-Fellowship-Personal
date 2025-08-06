@@ -1717,10 +1717,18 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
                     if print_data:
                         print(f"Spawned {active_car_id} at step {step}")
 
-            # Optionally print car position for debugging
-            if print_data and active_car_id and active_car_id in traci.vehicle.getIDList():
-                pos = traci.vehicle.getPosition(active_car_id)
-                print(f"Step {step}: {active_car_id} position: {pos}")
+            # Print vehicle list and position for debugging
+            if print_data:
+                veh_ids = traci.vehicle.getIDList()
+                print(f"Step {step}: Vehicles in sim: {veh_ids}")
+                if active_car_id and active_car_id in veh_ids:
+                    try:
+                        pos = traci.vehicle.getPosition(active_car_id)
+                        print(f"Step {step}: {active_car_id} position: {pos}")
+                    except Exception as e:
+                        print(f"Step {step}: Could not get position for {active_car_id}: {e}")
+                elif active_car_id:
+                    print(f"Step {step}: {active_car_id} not present in simulation.")
 
             if print_data and step % 100 == 0:
                 print(f"Step {step}: Active car: {active_car_id}, Finished cars: {finished_cars}")
