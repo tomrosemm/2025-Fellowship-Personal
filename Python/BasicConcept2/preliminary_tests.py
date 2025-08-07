@@ -1857,7 +1857,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             traci.vehicle.setSpeed(car_id, 0)
                             
                             # Calculate resume step (2 seconds later)
-                            resume_step = step + 200
+                            resume_step = step + 100
                             stopped_cars[car_id] = resume_step
                             
                             # Mark this car as having triggered a stop

@@ -464,7 +464,7 @@ def run_test_1_level_2_experiment(print_data=True):
                         try:
                             current_speed = traci.vehicle.getSpeed(car_id)
                             traci.vehicle.setSpeed(car_id, 0)
-                            resume_step = step + 200
+                            resume_step = step + 100
                             stopped_cars[car_id] = resume_step
                             cars_that_triggered_stop.add(car_id)
                             flags_raised += 1
