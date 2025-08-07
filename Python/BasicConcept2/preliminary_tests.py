@@ -1821,7 +1821,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                     if dist < 100:
                         if not rsu_car_close_flag:
                             rsu_car_close_flag = True
-                            print(f"*** FLAG RAISED: RSU and car are within 50 meters at step {step} (distance: {dist:.2f} m) ***")
+                            print(f"*** FLAG RAISED: RSU and car are within 100 meters at step {step} (distance: {dist:.2f} m) ***")
                             flags_raised += 1
                             # Slow down car to 25 m/s over 1 second
                             try:
@@ -1844,6 +1844,11 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                                 print(f"Could not speed up car {car_ids[0]}: {e}")
                     if step % 100 == 0:
                         print(f"Step {step}: Distance between RSU ({rsu_ids[0]}) and car ({car_ids[0]}): {dist:.2f} m")
+                        try:
+                            car_speed = traci.vehicle.getSpeed(car_ids[0])
+                            print(f"Step {step}: Speed of car ({car_ids[0]}): {car_speed:.2f} m/s")
+                        except Exception as e:
+                            print(f"Step {step}: Could not get speed for car {car_ids[0]}: {e}")
             except Exception as e:
                 if step % 1000 == 0:
                     print(f"Step {step}: Could not compute RSU-car distance: {e}")
