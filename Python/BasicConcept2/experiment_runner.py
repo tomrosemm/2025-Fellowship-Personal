@@ -270,13 +270,24 @@ def run_auth_experiment():
     cleanup_zokrates_files()
 
 
-"""
-Experiment: Test_1_Level_1
-Spawns cars dynamically in SUMO (straightaway5.sumocfg), tracks throughput (number of cars completing their routes).
-Reports and logs throughput at the end.
-"""
+##
+# @brief Run Test_1_Level_1 experiment: dynamic car spawning throughput in SUMO
+# @param print_data If True, print simulation data to screen
+# @details
+#   Spawns cars dynamically in SUMO (straightaway5.sumocfg), tracks throughput (number of cars completing their routes).
+#   Reports and logs throughput at the end.
+#
+# Steps:
+#   1. Set up experiment parameters and logger
+#   2. Start SUMO simulation and connect via TraCI
+#   3. Spawn cars dynamically after a certain step
+#   4. Track and count cars that finish their routes (throughput)
+#   5. Print and log throughput results
+#   6. Clean up SUMO and temporary files
+##
 def run_test_1_level_1_experiment(print_data=True):
 
+    # Increment experiment count and set up experiment parameters
     global experiment_count
     experiment_count += 1
     name = f"Test_1_Level_1_{experiment_count}"
@@ -285,6 +296,7 @@ def run_test_1_level_1_experiment(print_data=True):
     exp = Experiment(name, f"Vehicle_{experiment_count}", f"RSU_{experiment_count}", None, use_zokrates=False, use_blockchain=False)
     exp.logger.info(f"Running experiment: {name}")
 
+    # Start timer for the experiment
     timer = Timer(f"{name} Timer")
     timer.start()
 
@@ -302,6 +314,7 @@ def run_test_1_level_1_experiment(print_data=True):
             logger.error(f"Config file not found: {sumo_cfg}")
         return
 
+    # Start SUMO and connect via TraCI
     proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
         file_path=sumo_cfg,
         is_config=True,
@@ -311,6 +324,7 @@ def run_test_1_level_1_experiment(print_data=True):
         sumo_tools_path=SUMO_TOOLS_PATH
     )
 
+    # If SUMO or TraCI failed to start, exit early
     if proc is None or traci is None:
         if logger:
             logger.error("Failed to start SUMO or connect to TraCI.")
@@ -324,6 +338,7 @@ def run_test_1_level_1_experiment(print_data=True):
         car_type = "car"
         car_route = "route1"
 
+        # Main simulation loop
         for step in range(total_steps):
             # Exit if we've reached total_steps
             if step >= total_steps - 1:
@@ -340,7 +355,7 @@ def run_test_1_level_1_experiment(print_data=True):
                         print(f"{car_id} finished at step {step}")
                     del active_cars[car_id]
 
-            # Spawn a new car if no active cars are present and we're past step 10
+            # Spawn a new car if no active cars are present and we're past spawn step
             if not active_cars and step >= TEST_1_LEVEL_1_SPAWN_STEP:
                 car_counter += 1
                 new_car_id = f"car{car_counter}"
@@ -354,10 +369,12 @@ def run_test_1_level_1_experiment(print_data=True):
                 if print_data:
                     print(f"Spawned {new_car_id} at step {step}")
 
+            # Print and log status every 100 steps
             if print_data and step % 100 == 0:
                 print(f"Step {step}: Active cars: {list(active_cars.keys())}, Throughput: {throughput}")
                 exp.logger.info(f"Step {step}: Active cars: {list(active_cars.keys())}, Throughput: {throughput}")
 
+        # Log and print final throughput
         exp.logger.info(f"Experiment {name} throughput: {throughput} cars finished in {total_steps} steps.")
         print(f"\nExperiment {name} throughput: {throughput} cars finished in {total_steps} steps.")
 
@@ -366,6 +383,7 @@ def run_test_1_level_1_experiment(print_data=True):
         print(f"[{name}] Error: {e}")
 
     finally:
+        # Clean up SUMO and TraCI connections and temporary files
         cleanup_sumo_and_traci(proc, port, traci)
         if temp_config and os.path.exists(temp_config):
             try: os.unlink(temp_config)
@@ -374,19 +392,32 @@ def run_test_1_level_1_experiment(print_data=True):
             try: shutil.rmtree(temp_output_dir)
             except: pass
 
+    # Stop timer and log/print experiment duration
     timer.stop()
     exp.logger.info(f"{name} completed in {timer.elapsed():.8f} seconds.")
     print(f"\n{name} completed in {timer.elapsed():.8f} seconds.\n")
 
 
-"""
-Experiment: Test_1_Level_2
-Connects to straightaway6.sumocfg, spawns a car at step 1000, and whenever a car completes its route,
-immediately spawns another identical car, for 51000 steps.
-Implements RSU-car proximity logic: stops car for 2 seconds when within 125m of RSU, then resumes.
-"""
+##
+# @brief Run Test_1_Level_2 experiment: RSU-car proximity logic and throughput in SUMO
+# @param print_data If True, print simulation data to screen
+# @details
+#   Connects to straightaway6.sumocfg, spawns a car at step 1000, and whenever a car completes its route,
+#   immediately spawns another identical car, for 51000 steps.
+#   Implements RSU-car proximity logic: stops car for 2 seconds when within a specified range of RSU, then resumes.
+#
+# Steps:
+#   1. Set up experiment parameters and logger
+#   2. Start SUMO simulation and connect via TraCI
+#   3. Spawn cars dynamically after a certain step
+#   4. Stop cars for 2 seconds when near RSU, then resume
+#   5. Track and count cars that finish their routes (throughput)
+#   6. Print and log throughput results
+#   7. Clean up SUMO and temporary files
+##
 def run_test_1_level_2_experiment(print_data=True):
 
+    # Increment experiment count and set up experiment parameters
     global experiment_count
     experiment_count += 1
     name = f"Test_1_Level_2_{experiment_count}"
@@ -395,6 +426,7 @@ def run_test_1_level_2_experiment(print_data=True):
     exp = Experiment(name, f"Vehicle_{experiment_count}", f"RSU_{experiment_count}", None, use_zokrates=False, use_blockchain=False)
     exp.logger.info(f"Running experiment: {name}")
 
+    # Start timer for the experiment
     timer = Timer(f"{name} Timer")
     timer.start()
 
@@ -412,6 +444,7 @@ def run_test_1_level_2_experiment(print_data=True):
             logger.error(f"Config file not found: {sumo_cfg}")
         return
 
+    # Start SUMO and connect via TraCI
     proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
         file_path=sumo_cfg,
         is_config=True,
@@ -422,6 +455,7 @@ def run_test_1_level_2_experiment(print_data=True):
         sumo_tools_path=SUMO_TOOLS_PATH
     )
 
+    # If SUMO or TraCI failed to start, exit early
     if proc is None or traci is None:
         if logger:
             logger.error("Failed to start SUMO or connect to TraCI.")
@@ -441,6 +475,7 @@ def run_test_1_level_2_experiment(print_data=True):
         cars_that_triggered_stop = set()
         stopped_cars = {}  # car_id -> step to resume at
 
+        # Main simulation loop
         for step in range(total_steps):
             # --- Handle cars that need to resume after stop ---
             for car_id in list(stopped_cars.keys()):
@@ -458,6 +493,7 @@ def run_test_1_level_2_experiment(print_data=True):
             rsu_ids = []
             car_ids = []
             try:
+                # Get RSU and car IDs from simulation
                 rsu_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "rsu"]
                 car_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "car" and vid not in cars_that_triggered_stop]
                 for car_id in car_ids:
@@ -470,6 +506,7 @@ def run_test_1_level_2_experiment(print_data=True):
                     dx = rsu_pos[0] - car_pos[0]
                     dy = rsu_pos[1] - car_pos[1]
                     dist = (dx**2 + dy**2) ** 0.5
+                    # Stop car if within RSU range
                     if dist < TEST_1_LEVEL_2_RSU_RANGE:
                         try:
                             current_speed = traci.vehicle.getSpeed(car_id)
@@ -506,7 +543,7 @@ def run_test_1_level_2_experiment(print_data=True):
                         print(f"{car_id} finished at step {step}")
                     del active_cars[car_id]
 
-            # Spawn a new car if no active cars are present and we're past step 1000
+            # Spawn a new car if no active cars are present and we're past spawn step
             if not active_cars and step >= TEST_1_LEVEL_2_SPAWN_STEP:
                 car_counter += 1
                 new_car_id = f"car{car_counter}"
@@ -520,9 +557,11 @@ def run_test_1_level_2_experiment(print_data=True):
                 if print_data:
                     print(f"Spawned {new_car_id} at step {step}")
 
+            # Print and log status every 1000 steps
             if step % 1000 == 0:
                 print(f"Step {step}: Active cars: {list(active_cars.keys())}, Total finished cars: {finished_cars}")
 
+            # Print vehicle list and position for debugging if requested
             if print_data and DEBUG_MODE:
                 veh_ids = traci.vehicle.getIDList()
                 print(f"Step {step}: Vehicles in sim: {veh_ids}")
@@ -533,6 +572,7 @@ def run_test_1_level_2_experiment(print_data=True):
                     except Exception as e:
                         print(f"Step {step}: Could not get position for {car_id}: {e}")
 
+        # Log and print final throughput
         exp.logger.info(f"Experiment {name} throughput: {throughput} cars finished in {total_steps} steps.")
         print(f"\nExperiment {name} throughput: {throughput} cars finished in {total_steps} steps.")
 
@@ -541,6 +581,7 @@ def run_test_1_level_2_experiment(print_data=True):
         print(f"[{name}] Error: {e}")
 
     finally:
+        # Clean up SUMO and TraCI connections and temporary files
         cleanup_sumo_and_traci(proc, port, traci)
         if temp_config and os.path.exists(temp_config):
             try: os.unlink(temp_config)
@@ -549,6 +590,7 @@ def run_test_1_level_2_experiment(print_data=True):
             try: shutil.rmtree(temp_output_dir)
             except: pass
 
+    # Stop timer and log/print experiment duration
     timer.stop()
     exp.logger.info(f"{name} completed in {timer.elapsed():.8f} seconds.")
     print(f"\n{name} completed in {timer.elapsed():.8f} seconds.\n")
@@ -562,6 +604,24 @@ def run_test_1_level_4_experiment(print_data=True):
     return
 
 
+##
+# @brief Runs all base experiments for ZKP/blockchain and SUMO throughput/proximity logic
+# @details
+#   Sets up logging, cleans up ZoKrates files, and runs a sequence of experiments:
+#   - Basic dummy circuit experiment
+#   - Auth circuit experiment
+#   - Test_1_Level_1 (dynamic car spawning throughput)
+#   - Test_1_Level_2 (RSU-car proximity logic)
+#   Logs and prints results for each experiment.
+#
+# Steps:
+#   1. Set up logging and clean up ZoKrates files
+#   2. Run basic dummy circuit experiment
+#   3. Run cryptographically meaningful auth circuit experiment
+#   4. Run Test_1_Level_1 experiment (dynamic car spawning throughput)
+#   5. Run Test_1_Level_2 experiment (RSU-car proximity logic)
+#   6. Log completion of base experiments
+##
 def base_experiments_test():
     
     # Set up logging
@@ -577,13 +637,11 @@ def base_experiments_test():
     print("\n=== Running Basic Dummy Circuit Experiment ===")
     if logger:
         logger.info("Running Basic Dummy Circuit Experiment")
-    
     run_demo_experiment()
     
     print("\n=== Running Cryptographically Meaningful Auth Circuit Experiment ===")
     if logger:
         logger.info("Running Cryptographically Meaningful Auth Circuit Experiment")
-    
     run_auth_experiment()
     
     # Run Test_1_Level_1 experiment

@@ -6,14 +6,13 @@
 #   Contains test routines to simulate and validate the ZKP-OTP authentication protocol
 #   between Vehicle and RSU entities. Demonstrates authentication using both simulated
 #   and real (ZoKrates-based) zero-knowledge proof workflows, as well as a blockchain verification simulation.
-#   Includes tests for basic connection with related software/tools, such as ZoKrates and SUMO.
+#   Includes tests for basic connection with related software/tools, such as ZoKrates and SUMO
 #
 # @details
-#   - Simulates generation of one-time passwords (OTP) and timestamps by vehicles.
-#   - Demonstrates creation of zero-knowledge proofs (ZKP) for OTP and timestamp.
-#   - Shows verification of ZKPs by RSUs using both simulated (hash-based) and real ZoKrates CLI methods.
-#   - Includes a workflow for simulating blockchain-based verification and logging.
-#   - Provides functions for each workflow, which can be run directly for demonstration and prototyping.
+#   - Simulates generation of one-time passwords (OTP) and timestamps by vehicles
+#   - Demonstrates creation of zero-knowledge proofs (ZKP) for OTP and timestamp
+#   - Shows verification of ZKPs by RSUs using both simulated (hash-based) and real ZoKrates CLI methods
+#   - Includes a workflow for simulating blockchain-based verification and logging
 #   - Requires: vehicle.py, rsu.py, zokrates_interface.py, blockchain.py
 ##
 
@@ -88,28 +87,40 @@ from settings import (
     SUMO_PORT_RSUWITHDELAY
 )
 
+
+# Unused, Leftover Functions
+# ##
+# # @brief Set whether to print data in the SUMO interface
+# # @param enabled True to enable printing data, False to disable
+# # @details
+# #     Sets the print_data attribute in the SUMO interface
+# ##
+# def set_print_data(enabled):
+    
+#     global PRINT_DATA
+#     PRINT_DATA = enabled
+
 # Track number of tests run and passed
 tested = 0
 passed = 0
 
 ## @var DEBUG_MODE
-# @brief Global variable to control debug output.
+# @brief Global variable to control debug output
 DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 ## @var PRINT_DATA
-# @brief Global variable to control whether to print data in the SUMO interface.
+# @brief Global variable to control whether to print data in the SUMO interface
 PRINT_DATA = DEFAULT_PRINT_DATA
 
 
-##
-# @brief Enable or disable debug mode for detailed output.
-# @param enabled True to enable debug mode, False to disable.
+# @brief Enable or disable debug mode for detailed output
+# @param enabled True to enable debug mode, False to disable
 # @details
-#   Sets the global DEBUG_MODE variable and propagates debug mode to all relevant modules/classes.
+#   Sets the global DEBUG_MODE variable and propagates debug mode to all relevant modules/classes
 #
 # Steps:
-#   1. Set the global DEBUG_MODE variable.
-#   2. Set debug mode for ZoKrates, Blockchain, and SUMO interfaces.
+#   1. Set the global DEBUG_MODE variable
+#   2. Set debug mode for ZoKrates, (Blockchain), and SUMO interfaces
 ##
 def set_debug_mode(enabled):
     
@@ -126,28 +137,16 @@ def set_debug_mode(enabled):
 
 
 ##
-# @brief Set whether to print data in the SUMO interface.
-# @param enabled True to enable printing data, False to disable.
+# @brief Test the workflow using a simulated ZKP (hash-based)
 # @details
-#     Sets the print_data attribute in the SUMO interface.
-##
-def set_print_data(enabled):
-    
-    global PRINT_DATA
-    PRINT_DATA = enabled
-
-
-##
-# @brief Test the workflow using a simulated ZKP (hash-based).
-# @details
-#   Simulates authentication between a vehicle and RSU using a hash-based ZKP.
+#   Simulates authentication between a vehicle and RSU using a hash-based ZKP
 #
 # Steps:
-#   1. Generate a random vehicle secret and create Vehicle and RSU entities.
-#   2. Vehicle generates an OTP and timestamp.
-#   3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
-#   4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
-#   5. Output the result of the verification and authentication status.
+#   1. Generate a random vehicle secret and create Vehicle and RSU entities
+#   2. Vehicle generates an OTP and timestamp
+#   3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp
+#   4. Verify the ZKP proof using the known vehicle secret and timestamp
+#   5. Output the result of the verification and authentication status
 ##
 def test_VehicleRsuBasicInteraction_SimulatedZkp():
     
@@ -158,6 +157,7 @@ def test_VehicleRsuBasicInteraction_SimulatedZkp():
     global tested, passed
     tested += 1
     
+    # Start timer for the test
     timer = Timer("Vehicle - Rsu Basic Interaction; Simulated Zkp Test Timer")
     timer.start()
     
@@ -165,23 +165,23 @@ def test_VehicleRsuBasicInteraction_SimulatedZkp():
     vehicle_id = "VEH123"
     vehicle_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, vehicle_secret)
-    unused_rsu = RSU({vehicle_id: vehicle_secret})
+    # unused_rsu = RSU({vehicle_id: vehicle_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
     
-    # Print debug information if DEBUG_MODE is enabled
+    # Print debug information of otp and timestamp if DEBUG_MODE is enabled
     if DEBUG_MODE:
         print(f"\n[Simulated] OTP: {otp}\n\nTimestamp: {timestamp}\n")
         
-    # Use simulated ZKP proof
+    # Use simulated ZKP proof generated from the otp and timestamp
     zkp_proof = generate_zkp_proof_simulated(otp, timestamp)
     
     # Print ZKP proof if DEBUG_MODE is enabled
     if DEBUG_MODE:
         print(f"[Simulated] ZKP Proof: {zkp_proof}\n")
         
-    # RSU verifies ZKP proof using simulated logic
+    # ZKP proof is verified using simulated logic
     expected_zkp = generate_zkp_proof_simulated(otp, timestamp)
     verification_result = (zkp_proof == expected_zkp)
     
@@ -189,7 +189,7 @@ def test_VehicleRsuBasicInteraction_SimulatedZkp():
     if DEBUG_MODE:
         print(f"[Simulated] Verification result: {verification_result}\n")
 
-    # Output authentication result, increment passed count if successful
+    # Print authentication result, increment passed count if successful
     if verification_result:
         passed += 1
         print("[Simulated] Vehicle authenticated. Session started.\n")
@@ -199,21 +199,21 @@ def test_VehicleRsuBasicInteraction_SimulatedZkp():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Simulate the full workflow, using simulated ZKP and simulated blockchain verification and logging.
+# @brief Simulate the full workflow, using simulated ZKP and simulated blockchain verification and logging
 # @details
-#   Simulates authentication and blockchain verification using hash-based ZKP.
+#   Simulates authentication and blockchain verification using hash-based ZKP
 #
 # Steps:
-#   1. Generate a random vehicle secret and create Vehicle and RSU entities.
-#   2. Vehicle generates an OTP and timestamp.
-#   3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp.
-#   4. RSU verifies the ZKP proof using the known vehicle secret and timestamp.
-#   5. Simulate blockchain smart contract verification and logging of the authentication attempt.
-#   6. Output the result of the infrastructure access decision.
+#   1. Generate a random vehicle secret and create Vehicle and RSU entities
+#   2. Vehicle generates an OTP and timestamp
+#   3. Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp
+#   4. Verify the ZKP proof using the known vehicle secret and timestamp
+#   5. Simulate blockchain smart contract verification and logging of the authentication attempt
+#   6. Output the result of the infrastructure access decision
 ##
 def test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain():
     
@@ -224,6 +224,7 @@ def test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain():
     global tested, passed
     tested += 1
     
+    # Start timer for the test
     timer = Timer("Vehicle - Rsu Basic Interaction; Simulated Zkp And Blockchain Test Timer")
     timer.start()
     
@@ -231,12 +232,12 @@ def test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain():
     vehicle_id = "VEH123"
     vehicle_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, vehicle_secret)
-    unused_rsu = RSU({vehicle_id: vehicle_secret})
+    # unused_rsu = RSU({vehicle_id: vehicle_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
     
-    # Print debug information if DEBUG_MODE is enabled
+    # Print debug information of otp and timestamp if DEBUG_MODE is enabled
     if DEBUG_MODE:
         print(f"\n[Simulated] OTP: {otp}\n\nTimestamp: {timestamp}\n")
         
@@ -247,7 +248,7 @@ def test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain():
     if DEBUG_MODE:
         print(f"[Simulated] ZKP Proof: {zkp_proof}\n")
     
-    # RSU verifies ZKP proof using simulated logic
+    # ZKP proof is verified using simulated logic
     expected_zkp = generate_zkp_proof_simulated(otp, timestamp)
     verification_result = (zkp_proof == expected_zkp)
     
@@ -255,7 +256,7 @@ def test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain():
     if DEBUG_MODE:
         print(f"[Simulated] RSU Verification result: {verification_result}\n")
 
-    # Simulate blockchain verification and logging if DEBUG_MODE is enabled
+    # Simulate blockchain verification and logging if DEBUG_MODE is enabled, else use verification result directly
     outcome = simulate_blockchain_verification(vehicle_id, zkp_proof, timestamp, verification_result) if DEBUG_MODE else verification_result
     
     # Output the result of the infrastructure access decision, increment passed count if successful
@@ -268,21 +269,21 @@ def test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief End-to-end scenario: Vehicle authenticates successfully and is granted access.
+# @brief End-to-end scenario: Vehicle authenticates successfully and is granted access
 # @details
-#   Simulates a successful authentication scenario for a vehicle.
+#   Simulates a successful authentication scenario for a vehicle
 #
 # Steps:
-#   1. Create vehicle and RSU with matching secrets.
-#   2. Vehicle generates OTP and timestamp.
-#   3. Vehicle creates ZKP proof.
-#   4. RSU verifies ZKP proof.
-#   5. Blockchain verification is performed if DEBUG_MODE is enabled.
-#   6. Print the result of the infrastructure access decision.
+#   1. Create vehicle and RSU with matching secrets
+#   2. Vehicle generates OTP and timestamp
+#   3. Vehicle creates ZKP proof
+#   4. Verifies ZKP proof
+#   5. Blockchain verification is performed if DEBUG_MODE is enabled
+#   6. Print the result of the infrastructure access decision
 ##
 def test_EndToEnd_SimulatedZkpAndBlockchain_Success():
     
@@ -293,6 +294,7 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Success():
     global tested, passed
     tested += 1
     
+    # Start timer for the test
     timer = Timer("End - To - End; Simulated Zkp And Blockchain; Success Test Timer")
     timer.start()
     
@@ -300,7 +302,7 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Success():
     vehicle_id = "VEH001"
     vehicle_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, vehicle_secret)
-    unused_rsu = RSU({vehicle_id: vehicle_secret})
+    # unused_rsu = RSU({vehicle_id: vehicle_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
@@ -316,7 +318,7 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Success():
     if DEBUG_MODE:
         print(f"Vehicle {vehicle_id} created ZKP proof: {zkp_proof}\n")
     
-    # RSU verifies ZKP proof using simulated logic
+    # Verify ZKP proof using simulated logic
     expected_zkp = generate_zkp_proof_simulated(otp, timestamp)
     verification_result = (zkp_proof == expected_zkp)
     
@@ -337,21 +339,21 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Success():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief End-to-end scenario: Vehicle fails authentication due to wrong secret.
+# @brief End-to-end scenario: Vehicle fails authentication due to wrong secret
 # @details
-#   Simulates a failed authentication scenario for a vehicle with incorrect secret.
+#   Simulates a failed authentication scenario for a vehicle with incorrect secret
 #
 # Steps:
-#   1. Create vehicle with wrong secret and RSU with correct secret.
-#   2. Vehicle generates OTP and timestamp.
-#   3. Vehicle creates ZKP proof.
-#   4. RSU verifies ZKP proof using expected secret.
-#   5. Blockchain verification is performed if DEBUG_MODE is enabled.
-#   6. Print expected denial of infrastructure access.
+#   1. Create vehicle with wrong secret and RSU with correct secret
+#   2. Vehicle generates OTP and timestamp
+#   3. Vehicle creates ZKP proof
+#   4. Verify ZKP proof using expected secret
+#   5. Blockchain verification is performed if DEBUG_MODE is enabled
+#   6. Print expected denial of infrastructure access
 ##
 def test_EndToEnd_SimulatedZkpAndBlockchain_Failure():
     
@@ -362,6 +364,7 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Failure():
     global tested, passed
     tested += 1
     
+    # Start timer for the test
     timer = Timer("End - To - End; Simulated Zkp And Blockchain; Failure Test Timer")
     timer.start()
     
@@ -370,7 +373,7 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Failure():
     correct_secret = secrets.token_hex(16)
     wrong_secret = secrets.token_hex(16)
     vehicle = Vehicle(vehicle_id, wrong_secret)
-    unused_rsu = RSU({vehicle_id: correct_secret})
+    # unused_rsu = RSU({vehicle_id: correct_secret})
 
     # Generate OTP and timestamp
     otp, timestamp = vehicle.generate_otp()
@@ -386,13 +389,13 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Failure():
     if DEBUG_MODE:
         print(f"Vehicle {vehicle_id} created ZKP proof: {zkp_proof}\n")
         
-    # RSU expects correct secret, so expected_zkp is based on correct_secret
+    # Expected_zkp is based on correct_secret
     otp_expected, _ = Vehicle(vehicle_id, correct_secret).generate_otp()
     
     # Generate expected ZKP proof using the correct secret
     expected_zkp = generate_zkp_proof_simulated(otp_expected, timestamp)
     
-    # RSU verifies ZKP proof using expected logic
+    # Verify the ZKP proof using expected logic
     verification_result = (zkp_proof == expected_zkp)
     
     # Print verification result if DEBUG_MODE is enabled
@@ -412,22 +415,22 @@ def test_EndToEnd_SimulatedZkpAndBlockchain_Failure():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok.
+# @brief Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok
 # @details
-#   Runs ZoKrates CLI workflow with fixed inputs.
+#   Runs ZoKrates CLI workflow with fixed inputs
 #
 # Steps:
-#   1. Compile the ZoKrates circuit.
-#   2. Run setup.
-#   3. Compute witness (inputs: a=3, b=4).
-#   4. Generate proof.
-#   5. Verify proof.
-#   6. Clean up ZoKrates artifacts after test.
-#   7. Print the result of the ZoKrates workflow.
+#   1. Compile the ZoKrates circuit
+#   2. Run setup
+#   3. Compute witness (inputs: a=3, b=4)
+#   4. Generate proof
+#   5. Verify proof
+#   6. Clean up ZoKrates artifacts after test
+#   7. Print the result of the ZoKrates workflow
 ##
 def test_Zokrates_BasicConnectionTest_UsingDummyCircuit():
     
@@ -438,6 +441,7 @@ def test_Zokrates_BasicConnectionTest_UsingDummyCircuit():
     global tested, passed
     tested += 1
     
+    # Start timer for the test
     timer = Timer("Zokrates Basic Connection (using dummy.zok) Test Timer")
     timer.start()
     
@@ -464,23 +468,23 @@ def test_Zokrates_BasicConnectionTest_UsingDummyCircuit():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test the end-to-end ZoKrates workflow using zokrates/dummy.zok and random inputs.
+# @brief Test the end-to-end ZoKrates workflow using zokrates/dummy.zok and random inputs
 # @details
-#   Simulates a real ZKP workflow using the ZoKrates CLI.
+#   Simulates a real ZKP workflow using the ZoKrates CLI
 #
 # Steps:
-#   1. Generate random field inputs for dummy.zok.
-#   2. Compile circuit.
-#   3. Run setup.
-#   4. Compute witness.
-#   5. Generate proof.
-#   6. Verify proof.
-#   7. Clean up ZoKrates artifacts after test.
-#   8. Print the result of the workflow.
+#   1. Generate random field inputs for dummy.zok
+#   2. Compile circuit
+#   3. Run setup
+#   4. Compute witness
+#   5. Generate proof
+#   6. Verify proof
+#   7. Clean up ZoKrates artifacts after test
+#   8. Print the result of the workflow
 ##
 def test_PartialWorkflow_RealZokrates_UsingDummyCircuit():
     
@@ -491,6 +495,7 @@ def test_PartialWorkflow_RealZokrates_UsingDummyCircuit():
     global tested, passed
     tested += 1
     
+    # Start timer for the test
     timer = Timer("Partial Workflow - Real Zokrates (using dummy.zok) Test Timer")
     timer.start()
     
@@ -525,19 +530,19 @@ def test_PartialWorkflow_RealZokrates_UsingDummyCircuit():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Simulated ZKP isolated test with multiple vehicles.
+# @brief Simulated ZKP isolated test with multiple vehicles
 # @details
-#   Simulates authentication for multiple vehicles using hash-based ZKP.
+#   Simulates authentication for multiple vehicles using hash-based ZKP
 #
 # Steps:
-#   1. Create multiple vehicles, each with a unique secret.
-#   2. Each vehicle generates OTP and timestamp, creates ZKP proof.
-#   3. RSU verifies each ZKP proof.
-#   4. Print whether all vehicles authenticated successfully.
+#   1. Create multiple vehicles, each with a unique secret
+#   2. Each vehicle generates OTP and timestamp, creates ZKP proof
+#   3. Each ZKP proof is verified
+#   4. Print whether all vehicles authenticated successfully
 ##
 def test_PartialWorkflow_MultipleVehicles_Simulated():
     
@@ -548,6 +553,7 @@ def test_PartialWorkflow_MultipleVehicles_Simulated():
     global tested, passed
     tested += 1
     
+    # Start timer for the test
     timer = Timer("Partial Workflow - Multiple Vehicles; Simulated Test Timer")
     timer.start()
     
@@ -559,24 +565,24 @@ def test_PartialWorkflow_MultipleVehicles_Simulated():
     # For each vehicle, create a unique ID and secret
     for i in range(num_vehicles):
         
-        # Generate vehicle ID formatted as VEH001, VEH002, etc.
+        # Generate vehicle ID formatted as VEH001, VEH002, etc
         vid = f"VEH{i+1:03d}"
         
         # Generate a random secret for the vehicle and store it
-        # in both the vehicles and RSU secrets dictionaries
+        # in the vehicles dictionary
         secret = secrets.token_hex(16)
         vehicles[vid] = Vehicle(vid, secret)
-        rsu_secrets[vid] = secret
+        # rsu_secrets[vid] = secret
     
-    # Create RSU with the secrets of all vehicles
-    # This simulates the RSU having access to all vehicle secrets
-    unused_rsu = RSU(rsu_secrets)
+    # # Create RSU with the secrets of all vehicles
+    # # This simulates the RSU having access to all vehicle secrets
+    # unused_rsu = RSU(rsu_secrets)
     
     # Initialize a flag to track if all vehicles passed authentication
     all_passed = True
     
-    # Circuit path for the simulated ZKP proof
-    unused_circuit_path = "zokrates/dummy.zok"
+    # # Circuit path for the simulated ZKP proof
+    # unused_circuit_path = "zokrates/dummy.zok"
     
     # For each vehicle, generate OTP, timestamp, and ZKP proof
     for vid, vehicle in vehicles.items():
@@ -598,7 +604,7 @@ def test_PartialWorkflow_MultipleVehicles_Simulated():
         # If the result is False, set all_passed to False
         all_passed = all_passed and result
     
-    # Output the result of the authentication for all vehicles, increment passed count if successful
+    # Output the result of the authentication for all vehicles, incrementing passed count if successful
     if all_passed:
         passed += 1
         print("[Simulated] All vehicles authenticated successfully.\n")
@@ -608,20 +614,20 @@ def test_PartialWorkflow_MultipleVehicles_Simulated():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Simulated end-to-end test with multiple vehicles (RSU + blockchain).
+# @brief Simulated end-to-end test with multiple vehicles (RSU + blockchain)
 # @details
-#   Simulates authentication and blockchain verification for multiple vehicles.
+#   Simulates authentication and blockchain verification for multiple vehicles
 #
 # Steps:
-#   1. Create multiple vehicles, each with a unique secret.
-#   2. Each vehicle generates OTP and timestamp, creates ZKP proof.
-#   3. RSU verifies each ZKP proof.
-#   4. Blockchain verification is performed if DEBUG_MODE is enabled.
-#   5. Print whether all vehicles were granted access by infrastructure.
+#   1. Create multiple vehicles, each with a unique secret
+#   2. Each vehicle generates OTP and timestamp, creates ZKP proof
+#   3. RSU verifies each ZKP proof
+#   4. Blockchain verification is performed if DEBUG_MODE is enabled
+#   5. Print whether all vehicles were granted access by infrastructure
 ##
 def test_EndToEnd_MultipleVehicles_Simulated():
     
@@ -632,6 +638,7 @@ def test_EndToEnd_MultipleVehicles_Simulated():
     global tested, passed
     tested += 1
     
+    # Start timer for the test
     timer = Timer("End - To - End; Multiple Vehicles; Simulated Test Timer")
     timer.start()
     
@@ -643,24 +650,24 @@ def test_EndToEnd_MultipleVehicles_Simulated():
     # For each vehicle, create a unique ID and secret
     for i in range(num_vehicles):
         
-        # Generate vehicle ID formatted as VEH001, VEH002, etc.
+        # Generate vehicle ID formatted as VEH001, VEH002, etc
         vid = f"VEH{i+1:03d}"
         
         # Generate a random secret for the vehicle and store it
-        # in both the vehicles and RSU secrets dictionaries
+        # in the vehicle dictionary
         secret = secrets.token_hex(16)
         vehicles[vid] = Vehicle(vid, secret)
-        rsu_secrets[vid] = secret
+    #     rsu_secrets[vid] = secret
     
-    # Create RSU with the secrets of all vehicles
-    # This simulates the RSU having access to all vehicle secrets
-    unused_rsu = RSU(rsu_secrets)
+    # # Create RSU with the secrets of all vehicles
+    # # This simulates the RSU having access to all vehicle secrets
+    # unused_rsu = RSU(rsu_secrets)
     
     # Initialize a flag to track if all vehicles passed authentication
     all_passed = True
     
-    # Circuit path for the simulated ZKP proof
-    unused_circuit_path = "zokrates/dummy.zok"
+    # # Circuit path for the simulated ZKP proof
+    # unused_circuit_path = "zokrates/dummy.zok"
     
     # For each vehicle, generate OTP, timestamp, and ZKP proof
     for vid, vehicle in vehicles.items():
@@ -695,24 +702,24 @@ def test_EndToEnd_MultipleVehicles_Simulated():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok.
+# @brief Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok
 # @details
-#   Runs ZoKrates CLI workflow with fixed inputs.
+#   Runs ZoKrates CLI workflow with fixed inputs
 #
 # Steps:
 #   1. For each vehicle:
-#      a. Generate inputs.
-#      b. Compile ZoKrates circuit.
-#      c. Run setup.
-#      d. Compute witness.
-#      e. Generate proof.
-#      f. Verify proof.
-#      g. Clean up ZoKrates artifacts.
-#   2. Print whether all vehicles' proofs were verified successfully.
+#      a. Generate inputs
+#      b. Compile ZoKrates circuit
+#      c. Run setup
+#      d. Compute witness
+#      e. Generate proof
+#      f. Verify proof
+#      g. Clean up ZoKrates artifacts
+#   2. Print whether all vehicles' proofs were verified successfully
 ##
 def test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit():
     
@@ -768,25 +775,25 @@ def test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit():
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief ZoKrates-integrated end-to-end test with multiple vehicles (zokrates/dummy.zok + simulated blockchain).
+# @brief ZoKrates-integrated end-to-end test with multiple vehicles (zokrates/dummy.zok + simulated blockchain)
 # @details
-#   Runs ZoKrates workflow and blockchain verification for multiple vehicles.
+#   Runs ZoKrates workflow and blockchain verification for multiple vehicles
 #
 # Steps:
 #   1. For each vehicle:
-#      a. Generate random inputs.
-#      b. Compile ZoKrates circuit.
-#      c. Run setup.
-#      d. Compute witness.
-#      e. Generate proof.
-#      f. Verify proof.
-#      g. Simulate blockchain verification if DEBUG_MODE is enabled.
-#      h. Clean up ZoKrates artifacts.
-#   2. Print whether all vehicles' proofs and blockchain logs succeeded.
+#      a. Generate random inputs
+#      b. Compile ZoKrates circuit
+#      c. Run setup
+#      d. Compute witness
+#      e. Generate proof
+#      f. Verify proof
+#      g. Simulate blockchain verification if DEBUG_MODE is enabled
+#      h. Clean up ZoKrates artifacts
+#   2. Print whether all vehicles' proofs and blockchain logs succeeded
 ##
 def test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit():
     
@@ -855,21 +862,21 @@ def test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingD
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test connecting to SUMO via TraCI, retrieving and storing simulation data.
-# @param print_data If True, print simulation data to screen.
+# @brief Test connecting to SUMO via TraCI, retrieving and storing simulation data
+# @param print_data If True, print simulation data to screen
 # @details
-#   Tests SUMO connection and data retrieval using TraCI.
+#   Tests SUMO connection and data retrieval using TraCI
 #
 # Steps:
-#   1. Start SUMO with a simple network.
-#   2. Connect via TraCI.
-#   3. Retrieve simulation time, vehicle IDs, and positions.
-#   4. Print/store the data.
-#   5. Clean up.
+#   1. Start SUMO with a simple network
+#   2. Connect via TraCI
+#   3. Retrieve simulation time, vehicle IDs, and positions
+#   4. Print/store the data
+#   5. Clean up
 ##
 def test_DataTransfer_SumoAndTraCI_UsingSimpleNet(print_data=True):
     
@@ -936,21 +943,21 @@ def test_DataTransfer_SumoAndTraCI_UsingSimpleNet(print_data=True):
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps.
-# @param print_data If True, print simulation data to screen.
+# @brief Test connecting to SUMO via TraCI using a .sumocfg file, retrieving and storing simulation data for 100 steps
+# @param print_data If True, print simulation data to screen
 # @details
-#   Tests SUMO connection and data retrieval using TraCI with a .sumocfg file.
+#   Tests SUMO connection and data retrieval using TraCI with a .sumocfg file
 #
 # Steps:
-#   1. Start SUMO with a configuration file.
-#   2. Connect via TraCI.
-#   3. Retrieve simulation time, vehicle IDs, and positions for 100 steps.
-#   4. Print/store the data.
-#   5. Clean up.
+#   1. Start SUMO with a configuration file
+#   2. Connect via TraCI
+#   3. Retrieve simulation time, vehicle IDs, and positions for 100 steps
+#   4. Print/store the data
+#   5. Clean up
 ##
 def test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(print_data=True):
     
@@ -1011,21 +1018,21 @@ def test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(print_data=True):
 
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test connecting to SUMO via TraCI using intersection2.sumocfg with explicit vehicles.
-# @param print_data If True, print simulation data to screen.
+# @brief Test connecting to SUMO via TraCI using intersection2.sumocfg with explicit vehicles
+# @param print_data If True, print simulation data to screen
 # @details
-#   Tests SUMO connection and data retrieval using TraCI with intersection2.sumocfg.
+#   Tests SUMO connection and data retrieval using TraCI with intersection2.sumocfg
 #
 # Steps:
-#   1. Start SUMO with intersection2.sumocfg.
-#   2. Connect via TraCI.
-#   3. Retrieve simulation time, vehicle IDs, and positions.
-#   4. Print/store the data.
-#   5. Clean up.
+#   1. Start SUMO with intersection2.sumocfg
+#   2. Connect via TraCI
+#   3. Retrieve simulation time, vehicle IDs, and positions
+#   4. Print/store the data
+#   5. Clean up
 ##
 def test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(print_data=True):
     
@@ -1088,21 +1095,21 @@ def test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(print_data=True):
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test connecting to SUMO via TraCI using straightaway1.sumocfg.
-# @param print_data If True, print simulation data to screen.
+# @brief Test connecting to SUMO via TraCI using straightaway1.sumocfg
+# @param print_data If True, print simulation data to screen
 # @details
-#   Tests SUMO connection and data retrieval using TraCI with straightaway1.sumocfg.
+#   Tests SUMO connection and data retrieval using TraCI with straightaway1.sumocfg
 #
 # Steps:
-#   1. Start SUMO with straightaway1.sumocfg.
-#   2. Connect via TraCI.
-#   3. Retrieve simulation time, vehicle IDs, and positions.
-#   4. Print/store the data.
-#   5. Clean up.
+#   1. Start SUMO with straightaway1.sumocfg
+#   2. Connect via TraCI
+#   3. Retrieve simulation time, vehicle IDs, and positions
+#   4. Print/store the data
+#   5. Clean up
 ##
 def test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(print_data=True):
     
@@ -1164,21 +1171,21 @@ def test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(print_data=True):
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test connecting to SUMO via TraCI using straightaway2.sumocfg.
-# @param print_data If True, print simulation data to screen.
+# @brief Test connecting to SUMO via TraCI using straightaway2.sumocfg
+# @param print_data If True, print simulation data to screen
 # @details
-#   Tests SUMO connection and data retrieval using TraCI with straightaway2.sumocfg.
+#   Tests SUMO connection and data retrieval using TraCI with straightaway2.sumocfg
 #
 # Steps:
-#   1. Start SUMO with straightaway2.sumocfg.
-#   2. Connect via TraCI.
-#   3. Retrieve simulation time, vehicle IDs, and positions.
-#   4. Print/store the data.
-#   5. Clean up.
+#   1. Start SUMO with straightaway2.sumocfg
+#   2. Connect via TraCI
+#   3. Retrieve simulation time, vehicle IDs, and positions
+#   4. Print/store the data
+#   5. Clean up
 ##
 def test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(print_data=True):
     
@@ -1239,25 +1246,25 @@ def test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(print_data=True):
     
     timer.stop()
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test manipulating SUMO vehicles in real-time using TraCI with straightaway1.sumocfg.
-# @param print_data If True, print simulation data to screen.
+# @brief Test manipulating SUMO vehicles in real-time using TraCI with straightaway1.sumocfg
+# @param print_data If True, print simulation data to screen
 # @details
-#   Tests manipulating vehicle parameters (speed, color, position) during a SUMO simulation.
+#   Tests manipulating vehicle parameters (speed, color, position) during a SUMO simulation
 #
 #       ***Position movement is still buggy. It's not needed in the actual framework, so it's
 #                   been left as is after a period of troubleshooting wasn't fruitful***
 #
 # Steps:
-#   1. Start SUMO with straightaway1.sumocfg.
-#   2. Connect via TraCI.
-#   3. Run the simulation for several steps to let vehicles appear.
-#   4. Manipulate vehicle parameters (color, speed, position).
-#   5. Continue simulation to observe effects.
-#   6. Clean up.
+#   1. Start SUMO with straightaway1.sumocfg
+#   2. Connect via TraCI
+#   3. Run the simulation for several steps to let vehicles appear
+#   4. Manipulate vehicle parameters (color, speed, position)
+#   5. Continue simulation to observe effects
+#   6. Clean up
 ##
 def test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=True):
     
@@ -1429,18 +1436,18 @@ def test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=True)
         print("[SUMO Manipulation Test] Vehicle manipulation test failed.")
     
     timer.stop()
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
 ##
-# @brief Test the zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication.
+# @brief Test the zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
 # @details
-#   Tests the vehicle-to-infrastructure authentication circuit which uses a commitment scheme.
+#   Tests the vehicle-to-infrastructure authentication circuit which uses a commitment scheme
 #
 # Steps:
-#   1. Create an experiment with the VtoI_test.zok circuit.
-#   2. Run the experiment with a vehicle ID, secret key, and commitment.
-#   3. Check if the verification was successful.
+#   1. Create an experiment with the VtoI_test.zok circuit
+#   2. Run the experiment with a vehicle ID, secret key, and commitment
+#   3. Check if the verification was successful
 ##
 def test_Zokrates_UsingVtoICircuit():
     
@@ -1484,19 +1491,19 @@ def test_Zokrates_UsingVtoICircuit():
 
     cleanup_zokrates_files()
     timer.stop()
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
     return verification_result
 
 
 ##
-# @brief Test the authentication circuit (auth.zok) for field-based proof.
+# @brief Test the authentication circuit (auth.zok) for field-based proof
 # @details
-#   Tests the authentication circuit which uses simple field arithmetic for authentication.
+#   Tests the authentication circuit which uses simple field arithmetic for authentication
 #
 # Steps:
-#   1. Create an experiment with the auth.zok circuit.
-#   2. Run the experiment with a random vehicle ID and secret.
-#   3. Check if the verification was successful.
+#   1. Create an experiment with the auth.zok circuit
+#   2. Run the experiment with a random vehicle ID and secret
+#   3. Check if the verification was successful
 ##
 def test_Zokrates_UsingAuthCircuit():
     
@@ -1540,22 +1547,22 @@ def test_Zokrates_UsingAuthCircuit():
 
     cleanup_zokrates_files()
     timer.stop()
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
     return verification_result
 
 
 ##
-# @brief Test SUMO with a 10ms step length using straightaway1.sumocfg.
-# @param print_data If True, print simulation data to screen.
+# @brief Test SUMO with a 10ms step length using straightaway1.sumocfg
+# @param print_data If True, print simulation data to screen
 # @details
-#   Tests SUMO running with a small step length of 10ms for more precise simulation.
+#   Tests SUMO running with a small step length of 10ms for more precise simulation
 #
 # Steps:
-#   1. Start SUMO with straightaway1.sumocfg and --step-length 0.01.
-#   2. Connect via TraCI.
-#   3. Retrieve simulation time for several steps to verify the step length.
-#   4. Print/store the data.
-#   5. Clean up.
+#   1. Start SUMO with straightaway1.sumocfg and --step-length 0.01
+#   2. Connect via TraCI
+#   3. Retrieve simulation time for several steps to verify the step length
+#   4. Print/store the data
+#   5. Clean up
 ##
 def test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(print_data=True):
     
@@ -1639,14 +1646,26 @@ def test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(prin
     timer.stop()
     
     # Print elapsed time for the test
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
+##
+# @brief Test dynamic car spawning in SUMO using straightaway5.sumocfg
+# @param print_data If True, print simulation data to screen
+# @details
+#   Connects to SUMO with straightaway5.sumocfg, spawns a car at step 10, and whenever a car completes its route,
+#   immediately spawns another identical car, for 1010 steps.
+#
+# Steps:
+#   1. Start SUMO with straightaway5.sumocfg
+#   2. Connect via TraCI
+#   3. Spawn a car at step 10
+#   4. When a car finishes its route, spawn another identical car
+#   5. Print vehicle positions and simulation data if print_data is True
+#   6. Clean up after simulation
+##
 def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(print_data=True):
-    """
-    Connects to straightaway5.sumocfg, spawns a car at step 10, and whenever a car completes its route,
-    immediately spawns another identical car, for 1010 steps.
-    """
+    # Print test header
     print("\n=== SUMO Dynamic Car Spawning (straightaway5.sumocfg) Test ===")
     global tested, passed
     tested += 1
@@ -1666,6 +1685,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
     if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
         return
 
+    # Start SUMO and connect via TraCI using the unified function
     proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
         file_path=sumo_cfg,
         is_config=True,
@@ -1675,6 +1695,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
         sumo_tools_path=SUMO_TOOLS_PATH
     )
 
+    # If SUMO or TraCI failed to start, exit early
     if proc is None or traci is None:
         return
 
@@ -1686,6 +1707,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
         car_route = "route1"
         finished_cars = 0
 
+        # Main simulation loop
         for step in range(total_steps):
             # Exit if we've reached total_steps
             if step >= total_steps - 1:
@@ -1707,6 +1729,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
             if not active_cars and step >= 10:
                 car_counter += 1
                 new_car_id = f"car{car_counter}"
+                # Add a new car to the simulation
                 traci.vehicle.add(
                     vehID=new_car_id,
                     routeID=car_route,
@@ -1728,6 +1751,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
                     except Exception as e:
                         print(f"Step {step}: Could not get position for {car_id}: {e}")
 
+            # Print summary every 100 steps
             if print_data and step % 100 == 0:
                 print(f"Step {step}: Active cars: {list(active_cars.keys())}, Finished cars: {finished_cars}")
 
@@ -1738,6 +1762,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
         passed_local = False
 
     finally:
+        # Clean up SUMO and TraCI connections and temporary files
         cleanup_sumo_and_traci(proc, port, traci)
         if temp_config and os.path.exists(temp_config):
             try: os.unlink(temp_config)
@@ -1746,6 +1771,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
             try: shutil.rmtree(temp_output_dir)
             except: pass
 
+    # Print test result
     if passed_local:
         passed += 1
         print("[SUMO Dynamic Car Spawning Test] Test succeeded!\n")
@@ -1753,14 +1779,26 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
         print("[SUMO Dynamic Car Spawning Test] Test failed.\n")
 
     timer.stop()
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
-    
-    
+    print(timer)
+
+
+##
+# @brief Test RSU message delay and car stopping in SUMO using straightaway6.sumocfg
+# @param print_data If True, print simulation data to screen
+# @details
+#   Connects to SUMO with straightaway6.sumocfg, spawns a car at step 1000, and whenever a car completes its route,
+#   immediately spawns another identical car, for 51000 steps. Cars are stopped for 2 seconds when near RSU.
+#
+# Steps:
+#   1. Start SUMO with straightaway6.sumocfg
+#   2. Connect via TraCI
+#   3. Spawn a car at step 1000
+#   4. When a car approaches RSU, stop it for 2 seconds, then resume
+#   5. Print vehicle positions and simulation data if print_data is True
+#   6. Clean up after simulation
+##
 def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(print_data=True):
-    """
-    Connects to straightaway6.sumocfg, spawns a car at step 1000, and whenever a car completes its route,
-    immediately spawns another identical car, for 51000 steps.
-    """
+    # Print test header
     print("\n=== Live Manipulation - Rsu Message With Delay; (using straightaway6.sumocfg) Test ===")
     global tested, passed
     tested += 1
@@ -1782,6 +1820,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
     if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
         return
 
+    # Start SUMO and connect via TraCI using the unified function
     proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
         file_path=sumo_cfg,
         is_config=True,
@@ -1792,6 +1831,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         sumo_tools_path=SUMO_TOOLS_PATH
     )
 
+    # If SUMO or TraCI failed to start, exit early
     if proc is None or traci is None:
         return
 
@@ -1809,6 +1849,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         # Track cars that are currently stopped and when they should resume
         stopped_cars = {}  # car_id -> step to resume at
 
+        # Main simulation loop
         for step in range(total_steps):
             # --- Handle cars that need to resume after stop ---
             for car_id in list(stopped_cars.keys()):
@@ -1829,6 +1870,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
             rsu_ids = []
             car_ids = []
             try:
+                # Get RSU and car IDs from simulation
                 rsu_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "rsu"]
                 car_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "car" and vid not in cars_that_triggered_stop]
                 
@@ -1896,10 +1938,12 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                         print(f"{car_id} finished at step {step}")
                     del active_cars[car_id]
 
-            # Spawn a new car if no active cars are present and we're past step 1000
+            # Spawn a new car if no active cars are present and we're at or past step 1000
             if not active_cars and step >= 1000:
                 car_counter += 1
                 new_car_id = f"car{car_counter}"
+                
+                # Add a new car to the simulation
                 traci.vehicle.add(
                     vehID=new_car_id,
                     routeID=car_route,
@@ -1914,8 +1958,6 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
             if step % 1000 == 0:
                 print(f"Step {step}: Active cars: {list(active_cars.keys())}, Total finished cars: {finished_cars}")
                 
-
-
             # Print vehicle list and position for debugging if requested
             if print_data and DEBUG_MODE:
                 veh_ids = traci.vehicle.getIDList()
@@ -1934,6 +1976,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         passed_local = False
 
     finally:
+        # Clean up SUMO and TraCI connections and temporary files
         cleanup_sumo_and_traci(proc, port, traci)
         if temp_config and os.path.exists(temp_config):
             try: os.unlink(temp_config)
@@ -1942,6 +1985,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
             try: shutil.rmtree(temp_output_dir)
             except: pass
 
+    # Print test result
     if passed_local:
         passed += 1
         print("[Live Manipulation - Rsu Message With Delay] Test succeeded!\n")
@@ -1949,15 +1993,28 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         print("[Live Manipulation - Rsu Message With Delay] Test failed.\n")
 
     timer.stop()
-    print(f"\nTest completed in {timer.elapsed():.8f} seconds.\n")
+    print(timer)
 
 
+##
+# @brief Runs all tests and scenarios for the ZKP-OTP authentication protocol and related modules
+# @details
+#   Executes all test routines in sequence, including simulated and real ZKP workflows,
+#   blockchain verification, SUMO connection/data transfer, and vehicle manipulation scenarios.
+#
+# Steps:
+#   1. Initialize test counters and timer
+#   2. Run each test function in sequence, with brief pauses between tests
+#   3. Perform SUMO cleanup after connection tests
+#   4. Print summary of total tests run, passed, and failed
+##
 def testAndScenarioRunner():
     
     # Use global variables to track tests, initialize counts
     global tested, passed
     tested, passed = 0, 0
     
+    # Start timer for the entire test suite
     timer = Timer("Test and Scenario Runner Timer")
     timer.start()
 
@@ -2082,11 +2139,11 @@ def testAndScenarioRunner():
     kill_processes_on_port(SUMO_PORT_DYNAMIC_SPAWN)
     time.sleep(2)
 
+    # Stop timer and print elapsed time for the test suite
     timer.stop()
-    
-    # Print elapsed time for the test
     print(f"\nAll tests completed in {timer.elapsed():.8f} seconds.\n")
     
+    # Print summary of test results
     print(f"\nTotal tests run: {tested}")
     print(f"Total tests passed: {passed}")
     print(f"Total tests failed: {tested - passed}")
