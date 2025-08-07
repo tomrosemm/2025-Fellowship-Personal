@@ -1842,10 +1842,10 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                                 try:
                                     # Get current speed
                                     current_speed = traci.vehicle.getSpeed(car_ids[0])
-                                    target_speed = 1.0
+                                    target_speed = 10.0
                                     # Only slow down if current speed is significantly higher than target
                                     if current_speed > target_speed + 0.5:
-                                        traci.vehicle.slowDown(car_ids[0], target_speed, 1.0)
+                                        traci.vehicle.slowDown(car_ids[0], target_speed, 0.25)
                                         last_speed_change_step = step
                                         print(f"Command sent to slow down {car_ids[0]} to {target_speed} m/s over 1.0 second")
                                     else:
@@ -1871,7 +1871,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                                     target_speed = 45.0
                                     # Only speed up if current speed is significantly lower than target
                                     if current_speed < target_speed - 0.5:
-                                        traci.vehicle.slowDown(car_ids[0], target_speed, 1.0)
+                                        traci.vehicle.slowDown(car_ids[0], target_speed, 0.25)
                                         last_speed_change_step = step
                                         print(f"Command sent to speed up {car_ids[0]} to {target_speed} m/s over 1.0 second")
                                     else:
