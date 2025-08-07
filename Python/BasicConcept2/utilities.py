@@ -3,35 +3,40 @@
 # @author Tom Rose
 #
 # @brief
-#   Utility functions for port management, debugging, and console operations.
-#   Used by various modules to manage ports, debug output, and perform system-level tasks.
+#   Utility functions for port management, debugging, and console operations
+#   Used by various modules to manage ports, debug output, and perform system-level tasks
 #
 # @details
-#   - Enable/disable debug mode.
-#   - Kill processes using a specific port.
-#   - Check port availability and wait for ports to become free.
-#   - Clear the console screen.
-#   - Check for file existence with descriptive error output.
+#   - Enable/disable debug mode
+#   - Kill processes using a specific port
+#   - Check port availability and wait for ports to become free
+#   - Clear the console screen
+#   - Check for file existence with descriptive error output
 ##
 
+## Imports
+# Libraries
 import psutil
 import socket
 import time
 import os
 
+# Classes and functions
 from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE
 
+## @var DEBUG_MODE
+# @brief Global variable to control debug output
 DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 
 ##
-# @brief Enable or disable debug mode for detailed output.
+# @brief Enable or disable debug mode for detailed output
 #
-# @param enabled True to enable debug mode, False to disable.
+# @param enabled - True to enable debug mode, False to disable
 #
 # @details
 #   Steps:
-#     1. Set the global DEBUG_MODE variable to the provided value.
+#     1. Set the global DEBUG_MODE variable to the provided value
 ##
 def set_debug_mode(enabled):
     
@@ -41,15 +46,15 @@ def set_debug_mode(enabled):
 
 
 ##
-# @brief Kill any processes using the specified port.
+# @brief Kill any processes using the specified port
 #
-# @param port Port number to clean up.
-# @return True if any processes were killed, False otherwise.
+# @param port Port number to clean up
+# @return True if any processes were killed, False otherwise
 #
 # @details
 #   Steps:
-#     1. Iterate over processes and kill those using the port.
-#     2. Wait for OS to release the port if any were killed.
+#     1. Iterate over processes and kill those using the port
+#     2. Wait for OS to release the port if any were killed
 ##
 def kill_processes_on_port(port):
     
@@ -57,14 +62,17 @@ def kill_processes_on_port(port):
     killed_any = False
 
     # Try to iterate over all running processes
+    # This may raise exceptions if a process ends or is inaccessible
     try:
         
-        # Iterate over all running processes, requesting pid, name, and connections info
+        # Iterate over each running process, requesting pid, name, and connections info
         for proc in psutil.process_iter(['pid', 'name', 'connections']):
             
+            # Try to access the process's connections
+            # This may raise exceptions if the process has ended or is inaccessible
             try:
                 
-                # Get the list of connections for this process
+                # Get the list of connections for current process
                 connections = proc.info['connections']
 
                 # If the process has any connections
@@ -73,7 +81,7 @@ def kill_processes_on_port(port):
                     # Iterate over each connection
                     for conn in connections:
                         
-                        # Check if the connection has a local address and the port matches
+                        # Check if the connection has a local address attribute and that the port matches
                         if hasattr(conn, 'laddr') and conn.laddr and conn.laddr.port == port:
                             
                             # If debug mode, print which process is being killed
@@ -86,7 +94,12 @@ def kill_processes_on_port(port):
                             
             # Structure to handle exceptions for processes that may have ended or are inaccessible
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                pass
+                
+                # If debug mode is enabled, print an error message and return killed_any
+                if DEBUG_MODE:
+                    print(f"[Port Cleanup] Error accessing process {proc.info['pid']}: {proc.info['name']}")
+                
+                return killed_any
             
     # Structure to handle any unexpected exceptions during process iteration
     except Exception as e:
@@ -96,6 +109,8 @@ def kill_processes_on_port(port):
             print(f"[Port Cleanup] Error during port cleanup: {e}")
 
     # If any processes were killed, wait for the OS to release the port
+    # The entire time of 10 seconds is probably unnecessary for most cases, but allows
+    # The testing suite to run back to back without errors
     if killed_any:
         print("Wait time begins for processes to die and OS to release port")
         time.sleep(10)
@@ -106,22 +121,22 @@ def kill_processes_on_port(port):
 
 
 ##
-# @brief Check if a port is available for use.
+# @brief Check if a port is available for use
 #
-# @param port Port number to check.
-# @return True if port is available, False otherwise.
+# @param port Port number to check
+# @return True if bind succeeds and port is available, False otherwise
 #
 # @details
 #   Steps:
-#     1. Attempt to bind to the port.
-#     2. Return True if successful, False otherwise.
+#     1. Attempt to bind to the port
+#     2. Return True if successful, False otherwise
 ##
 def is_port_available(port):
     
     # Try to create a socket to check if the port is available
     try:
         
-        # Create a TCP socket
+        # Create a TCP socket using IPv4 and the SOCK_STREAM protocol, using a with statement to close it automatically even if an error occurs
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             
             # Attempt to bind to localhost:port
@@ -130,22 +145,27 @@ def is_port_available(port):
             # If bind succeeds, port is available; return True
             return True
         
-    # If binding fails, port is in use; return False
+    # If binding fails, port is in use; print debug info if debug mode is enabled, then return False
     except OSError:
+        
+        # If debug mode is enabled, print debug info
+        if DEBUG_MODE:
+            print("Binding to port failed, port is likely in use")
+            
         return False
 
 
 ##
-# @brief Wait for a port to become available, forcefully cleaning if needed.
+# @brief Wait for a port to become available, forcefully cleaning if needed
 #
-# @param port Port number to wait for.
-# @param timeout Timeout in seconds.
-# @return True if port becomes available, False otherwise.
+# @param port Port number to wait for
+# @param timeout Timeout in seconds
+# @return True if port becomes available, False otherwise
 #
 # @details
 #   Steps:
-#     1. Check port availability in a loop.
-#     2. After 3 failed attempts, try to kill processes on the port.
+#     1. Check port availability in a loop
+#     2. After 3 failed attempts, try to kill processes on the port
 ##
 def wait_for_port_available(port, timeout=15):
     
@@ -179,34 +199,53 @@ def wait_for_port_available(port, timeout=15):
             if killed and DEBUG_MODE:
                 print(f"[Port Management] Killed processes on port {port}")
 
-        # Wait 1 second before next attempt
+        # Wait 1 second between attempts
         time.sleep(1)
 
-    # If timeout expires and port is still not available, return False
+    # If timeout expires and port is still not available, print debug info if debug mode is enabled, then return False
+    if DEBUG_MODE:
+        print(f"[Port Management] Timeout expired, port {port} still not available")
+        
     return False
 
 
 ##
-# @brief Clears the console screen based on the operating system.
+# @brief Clears the console screen based on the operating system
 # @details
-#   Clears the console using the appropriate command for the OS.
+#   Clears the console using the appropriate command for the OS
 #
 # Steps:
-#   1. If Windows, use 'cls'.
-#   2. Otherwise, use 'clear'.
+#   1. If Windows, use 'cls'
+#   2. Otherwise, use 'clear'
 ##
 def clear_console():
     
+    # If Windows, use 'cls'; otherwise, 
     if os.name == 'nt':
         os.system('cls')
-        
+    
+    # If not Windows, use 'clear'
     else:
         os.system('clear')
 
 
+##
+# @brief Check if a file exists and return the result, printing an error if not
+#
+# @param filepath Path to the file to check
+# @param description Description of the file for error output
+# @return True if file exists, False otherwise
+#
+# @details
+#   Steps:
+#     1. Check if the file exists at the given path
+#     2. Print an error message if not found
+##
 def check_file_exists(filepath, description):
+    
     if not os.path.exists(filepath):
         print(f"[Error] {description} not found: {filepath}")
         return False
+    
     return True
 

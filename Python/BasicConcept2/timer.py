@@ -3,24 +3,27 @@
 # @author Tom Rose
 #
 # @brief
-#   Provides a Timer class for creating named timer objects with start, stop, reset, and edit functionality.
+#   Provides a Timer class for creating named timer objects with start, stop, reset, and edit functionality
 #
 # @details
-#   - Allows creation of named timers for tracking elapsed time.
-#   - Supports starting, stopping, resetting, editing, and querying elapsed time.
-#   - Designed for integration in experiments or simulations requiring timing.
+#   - Allows creation of named timers for tracking elapsed time
+#   - Supports starting, stopping, resetting, editing, and querying elapsed time
+#   - Designed for integration in experiments or simulations requiring timing
 ##
 
+## Imports
+# Libraries
 import time
+
 
 ##
 # @class Timer
-# @brief Represents a named timer object for measuring elapsed time.
+# @brief Represents a named timer object for measuring elapsed time
 #
 # @details
-#   - Each Timer instance can be started, stopped, reset, or edited.
-#   - Elapsed time can be queried at any point.
-#   - Supports checking if the timer is currently running.
+#   - Each Timer instance can be started, stopped, reset, or edited
+#   - Elapsed time can be queried at any point
+#   - Supports checking if the timer is currently running
 #
 # Usage:
 #   timer = Timer("MyTimer")
@@ -30,31 +33,36 @@ import time
 #   elapsed = timer.elapsed()
 ##
 class Timer:
+    
+    
     ##
-    # @brief Initialize a Timer instance.
-    # @param name Name of the timer.
-    # @param start_time Initial elapsed time (default 0).
+    # @brief Initialize a Timer instance
+    # @param name Name of the timer
+    # @param start_time Initial elapsed time (default 0)
     ##
     def __init__(self, name, start_time=0):
         self.name = name
         self._elapsed = start_time
+        # Set initial _start to None to represent not running
         self._start = None
         self._running = False
 
+
     ##
-    # @brief Start the timer.
+    # @brief Start the timer
     # @details
-    #   Starts timing if not already running.
+    #   Starts timer if not already running
     ##
     def start(self):
         if not self._running:
             self._start = time.time()
             self._running = True
 
+
     ##
-    # @brief Stop the timer.
+    # @brief Stop the timer
     # @details
-    #   Stops timing and accumulates elapsed time.
+    #   Stops timer if running and accumulates elapsed time
     ##
     def stop(self):
         if self._running:
@@ -62,31 +70,34 @@ class Timer:
             self._start = None
             self._running = False
 
+
     ##
-    # @brief Reset the timer.
-    # @param new_time New elapsed time to set (default 0).
+    # @brief Reset the timer
+    # @param new_time New elapsed time to set (default 0)
     # @details
-    #   Resets elapsed time and stops the timer.
+    #   Resets elapsed time and stops the timer
     ##
     def reset(self, new_time=0):
         self._elapsed = new_time
         self._start = None
         self._running = False
 
+
     ##
-    # @brief Edit the elapsed time.
-    # @param new_time New elapsed time to set.
+    # @brief Edit the elapsed time
+    # @param new_time New elapsed time to set
     # @details
-    #   Sets elapsed time; if running, restarts timing from now.
+    #   Sets elapsed time; if running, restarts timing from now
     ##
     def edit(self, new_time):
         self._elapsed = new_time
         if self._running:
             self._start = time.time()
 
+
     ##
-    # @brief Get the current elapsed time.
-    # @return Elapsed time in seconds (float).
+    # @brief Get the current elapsed time
+    # @return Elapsed time in seconds (float)
     ##
     def elapsed(self):
         if self._running:
@@ -94,15 +105,20 @@ class Timer:
         return self._elapsed
 
     ##
-    # @brief Check if the timer is currently running.
-    # @return True if running, False otherwise.
+    # @brief Check if the timer is currently running
+    # @return True if running, False otherwise
     ##
     def is_running(self):
         return self._running
 
     ##
-    # @brief String representation of the Timer.
-    # @return String with timer name, elapsed time, and running status.
+    # @brief String representation of the Timer
+    # @return String with timer name, elapsed time, and running status
+    #
+    # @details
+    # Usage:
+    #   print(timer)  # Outputs: <Timer name=MyTimer, elapsed=5.0, running=True>
     ##
     def __repr__(self):
         return f"<Timer(name={self.name}, elapsed={self.elapsed()}, running={self._running})>"
+

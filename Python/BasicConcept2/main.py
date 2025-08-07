@@ -8,9 +8,6 @@
 #   verification and event logging, and SUMO integration for vehicle-RSU interactions.
 ##
 
-## @note
-# Could use hash table for menu options to avoid long match-case statements, not strictly needed atm
-
 # Imports
 import time
 
@@ -24,8 +21,8 @@ from settings import (
 )
 
 
-# Row of stars for menu formatting
-##@var row_of_stars
+## @var row_of_stars
+# @brief Row of stars for menu formatting
 row_of_stars = "*********************************************************************"
 
 ##
