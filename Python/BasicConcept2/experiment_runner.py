@@ -3,14 +3,14 @@
 # @author Tom Rose
 #
 # @brief
-#   Provides routines to run and report on ZKP/blockchain experiments using the Experiment class.
-#   Supports running experiments with different ZoKrates circuits and configurations for automated testing.
+#   Provides routines to run and report on ZKP/blockchain experiments using the Experiment class
+#   Supports running experiments with different ZoKrates circuits and configurations for automated testing
 #
 # @details
-#   - Sets up and runs experiments with dummy.zok and auth.zok circuits.
-#   - Integrates with vehicle, RSU, ZoKrates, and blockchain modules.
-#   - Supports debug mode and cleanup of ZoKrates artifacts.
-#   - Logs experiment execution and results to files in the logs/ directory.
+#   - Sets up and runs experiments with dummy.zok and auth.zok circuits
+#   - Integrates with vehicle, RSU, ZoKrates, and blockchain modules
+#   - Supports debug mode and cleanup of ZoKrates artifacts
+#   - Logs experiment execution and results to files in the logs/ directory
 ##
 
 ## Imports
@@ -24,6 +24,7 @@ from pathlib import Path
 import datetime
 import shutil
 
+# Classes and functions
 # from utilities import clear_console
 from experiment import Experiment
 from vehicle import Vehicle
@@ -72,31 +73,28 @@ from settings import (
     TEST_1_LEVEL_2_RSU_RANGE
 )
 
-# Uncomment if blockchain_interface is used
-# from blockchain_interface import set_debug_mode as set_blockchain_interface_debug_mode
-
 ## @var DEBUG_MODE
-## @brief Global variable to control debug output.
+## @brief Global variable to control debug output
 DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 ## @var experiment_count
-## @brief Counter for the number of experiments run.
+## @brief Counter for the number of experiments run
 experiment_count = 0
 
 ## @var tested
-## @brief Counter for the number of tests performed.
+## @brief Counter for the number of tests performed
 tested = 0
 
 ## @var logger
-## @brief Global logger for the experiment runner.
+## @brief Global logger for the experiment runner
 logger = None
 
 ##
-# @brief Set up logging for the experiment runner.
+# @brief Set up logging for the experiment runner
 # @details
-#   - Creates a logs directory if it doesn't exist.
-#   - Configures a logger with a timestamped filename.
-#   - Sets up logging level and format.
+#   - Creates a logs directory if it doesn't exist
+#   - Configures a logger with a timestamped filename
+#   - Sets up logging level and format
 ##
 def setup_logging():
     global logger
@@ -140,11 +138,11 @@ def setup_logging():
 
 
 ##
-# @brief Enable or disable debug mode for detailed output.
-# @param enabled True to enable debug mode, False to disable.
+# @brief Enable or disable debug mode for detailed output
+# @param enabled True to enable debug mode, False to disable
 # @details
-#   - Sets the global DEBUG_MODE variable.
-#   - Propagates debug mode to all relevant modules/classes.
+#   - Sets the global DEBUG_MODE variable
+#   - Propagates debug mode to all relevant modules/classes
 ##
 def set_debug_mode(enabled):
     
@@ -171,13 +169,13 @@ def set_debug_mode(enabled):
 
 
 ##
-# @brief Run a demo experiment using the Experiment class with zokrates/dummy.zok.
+# @brief Run a demo experiment using the Experiment class with zokrates/dummy.zok
 # @details
 #   Steps:
-#     1. Increment experiment count and set up experiment parameters.
-#     2. Instantiate Experiment with zokrates/dummy.zok.
-#     3. Run and report the experiment.
-#     4. Clean up ZoKrates-generated files.
+#     1. Increment experiment count and set up experiment parameters
+#     2. Instantiate Experiment with zokrates/dummy.zok
+#     3. Run and report the experiment
+#     4. Clean up ZoKrates-generated files
 ##
 def run_demo_experiment():
     
@@ -221,13 +219,13 @@ def run_demo_experiment():
 
 
 ##
-# @brief Run an experiment using the zokrates/auth.zok circuit which provides a simple field-based proof.
+# @brief Run an experiment using the zokrates/auth.zok circuit which provides a simple field-based proof
 # @details
 #   Steps:
-#     1. Increment experiment count and set up experiment parameters.
-#     2. Instantiate Experiment with zokrates/auth.zok.
-#     3. Run and report the experiment.
-#     4. Clean up ZoKrates-generated files.
+#     1. Increment experiment count and set up experiment parameters
+#     2. Instantiate Experiment with zokrates/auth.zok
+#     3. Run and report the experiment
+#     4. Clean up ZoKrates-generated files
 ##
 def run_auth_experiment():
     
@@ -274,8 +272,8 @@ def run_auth_experiment():
 # @brief Run Test_1_Level_1 experiment: dynamic car spawning throughput in SUMO
 # @param print_data If True, print simulation data to screen
 # @details
-#   Spawns cars dynamically in SUMO (straightaway5.sumocfg), tracks throughput (number of cars completing their routes).
-#   Reports and logs throughput at the end.
+#   Spawns cars dynamically in SUMO (straightaway5.sumocfg), tracks throughput (number of cars completing their routes)
+#   Reports and logs throughput at the end
 #
 # Steps:
 #   1. Set up experiment parameters and logger
@@ -306,7 +304,7 @@ def run_test_1_level_1_experiment(print_data=True):
         "..", "..", "SUMO", "Built Sims", "StraightAway5", "straightaway5.sumocfg"
     )
     sumo_cfg = os.path.abspath(sumo_cfg)
-    port = SUMO_PORT_DYNAMIC_SPAWN  # Avoid port conflicts
+    port = SUMO_PORT_DYNAMIC_SPAWN
 
     # Check config file exists
     if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):

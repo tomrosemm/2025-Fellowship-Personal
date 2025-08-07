@@ -26,7 +26,7 @@ from settings import (
 row_of_stars = "*********************************************************************"
 
 ##
-# @brief Top-level command-line interface menu for organizing protocol simulation tests and experiments.
+# @brief Top-level command-line interface menu for organizing protocol simulation tests and experiments
 #
 # @details
 #   Provides hierarchical navigation through:
@@ -49,7 +49,7 @@ def main_menu():
         "6": individual_experiments_menu,
         "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
         "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
-        "e": None  # Special handling for exit
+        "e": None
     }
     
     # Main loop for top-level CLI menu
@@ -80,14 +80,21 @@ def main_menu():
         
         # Process user choice using the dictionary
         if choice in menu_actions:
+            
+            # If choice is 'e', exit the program
             if choice == "e":
                 print("Exiting.")
                 break
+            
+            # Otherwise, call the corresponding function
             else:
                 action = menu_actions[choice]
+                
                 # If the action is a function, call it
                 if callable(action):
                     action()
+                    
+        # If the choice is not recognized, print an error message
         else:
             print("Invalid choice. Please try again.")
 
@@ -96,7 +103,7 @@ def main_menu():
 # @brief Menu for entire groups of tests
 ##
 def entire_groups_tests_menu():
-    unused_print_sumo_data = True
+    # unused_print_sumo_data = True
 
     menu_actions = {
         "1": lambda: (preliminary_tests.set_debug_mode(False), preliminary_tests.testAndScenarioRunner()),
@@ -109,11 +116,15 @@ def entire_groups_tests_menu():
     }
 
     while True:
+        
+        # Print menu header
         print("\n")
         print(row_of_stars)
         print("*** Entire Groups of Tests Menu ***")
         print(row_of_stars)
         print("\n")
+        
+        # Display menu options
         print("Select an option:")
         print("1 - Run all tests and scenarios with Debug Mode disabled")
         print("2 - Run all tests and scenarios with Debug Mode enabled")
@@ -122,16 +133,30 @@ def entire_groups_tests_menu():
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
+        
+        # Accept user input
         choice = input("Enter your choice: ").strip().lower()
+        
+        # Process user choice using the dictionary
         if choice in menu_actions:
+            
+            # If the action is a function, call it
             action = menu_actions[choice]
+            
+            # If the action is 'back', return to the main menu
             if action == "back":
                 return
+            
+            # If the action is 'exit', exit the program
             elif action == "exit":
                 print("Exiting.")
                 exit()
+                
+            # If the action is a function, call it
             elif callable(action):
                 action()
+                
+        # If the choice is not recognized, print an error message
         else:
             print("Invalid choice. Please try again.")
 

@@ -3,54 +3,56 @@
 # @author Tom Rose
 #
 # @brief
-#   Defines the RSU (Roadside Unit) class, which verifies zero-knowledge proofs (ZKPs) submitted by vehicles for authentication.
+#   Defines the RSU (Roadside Unit) class, which verifies zero-knowledge proofs (ZKPs) submitted by vehicles for authentication
 #
 # @details
-#   - The RSU is initialized with a mapping of vehicle IDs to their secrets.
-#   - Upon receiving a ZKP, the RSU reconstructs the expected OTP and ZKP using the stored secret and provided timestamp.
-#   - The RSU compares the received ZKP to the expected value to determine authentication success.
+#   - The RSU is initialized with a mapping of vehicle IDs to their secrets
+#   - Upon receiving a ZKP, the RSU reconstructs the expected OTP and ZKP using the stored secret and provided timestamp
+#   - The RSU compares the received ZKP to the expected value to determine authentication success
 ##
 
-# "Roadside Unit (RSU) communication range can vary, but typically falls within the range of 300 meters to 500 meters" - AI Summary Quote on Google, supported somewhat by
+# "Roadside Unit (RSU) communication range can vary, but typically falls within the range of 300 meters to 500 meters" - Summary Quote on Google, supported somewhat by
 # the ranges in https://www.mdpi.com/2071-1050/15/14/11112#:~:text=These%20revealed%20the%20following:,flow%20density%20of%20future%20highways but not directly stated
 
 # "~8000 ft (2500 meter) range, open-field, line-of-sight" - Connected Vehicle Roadside Unit (RSU) Data sheet
 
-# Imports
+## Imports
+# Libraries
 import os
 import hashlib
 
-from otp import generate_otp
+# Classes and Functions
+# from otp import generate_otp
 from zkp import generate_zkp_proof_real
 from vehicle import Vehicle
 
 
 ##
 # @class RSU
-# @brief Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledge proofs (ZKPs).
+# @brief Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledge proofs (ZKPs)
 #
 # @details
-#   - Initialized with a mapping of vehicle IDs to their corresponding secrets.
-#   - Upon receiving a ZKP proof, reconstructs the expected OTP and ZKP using the stored secret and provided timestamp.
-#   - Compares the received ZKP to the expected value to determine authentication success.
+#   - Initialized with a mapping of vehicle IDs to their corresponding secrets
+#   - Upon receiving a ZKP proof, reconstructs the expected OTP and ZKP using the stored secret and provided timestamp
+#   - Compares the received ZKP to the expected value to determine authentication success
 #
 # Usage:
 #   rsu = RSU(vehicle_secrets)
 #   is_valid = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)
 #
-# @param vehicle_secrets Mapping from vehicle_id (str) to secret (str).
+# @param vehicle_secrets Mapping from vehicle_id (str) to secret (str)
 ##
 class RSU:
     
     
     ##
-    # @brief Initialize an RSU instance.
+    # @brief Initialize an RSU instance
     #
-    # @param vehicle_secrets Mapping from vehicle_id to secret.
+    # @param vehicle_secrets Mapping from vehicle_id to secret
     #
     # @details
     #   Steps:
-    #     1. Store the mapping of vehicle IDs to secrets.
+    #     1. Store the mapping of vehicle IDs to secrets
     ##
     def __init__(self, vehicle_secrets, broadcast_range=500):
         
@@ -61,22 +63,22 @@ class RSU:
 
 
     ##
-    # @brief Verify the ZKP proof from a vehicle using a ZoKrates circuit.
+    # @brief Verify the ZKP proof from a vehicle using a ZoKrates circuit
     #
-    # @param vehicle_id The vehicle's unique identifier.
-    # @param zkp_proof The ZKP proof to verify.
-    # @param timestamp The timestamp used in OTP generation.
-    # @param circuit_path Path to the ZoKrates .zok circuit file.
+    # @param vehicle_id The vehicle's unique identifier
+    # @param zkp_proof The ZKP proof to verify
+    # @param timestamp The timestamp used in OTP generation
+    # @param circuit_path Path to the ZoKrates .zok circuit file
     #
-    # @return True if the proof is valid, False otherwise.
+    # @return True if the proof is valid, False otherwise
     #
     # @details
     #   Steps:
-    #     1. Retrieve the secret for the vehicle.
-    #     2. Determine circuit type and verify accordingly.
-    #     3. For auth.zok, check tuple values.
-    #     4. For dummy.zok, accept any digit string.
-    #     5. For other circuits, use real ZKP logic.
+    #     1. Retrieve the secret for the vehicle
+    #     2. Determine circuit type and verify accordingly
+    #     3. For auth.zok, check tuple values
+    #     4. For dummy.zok, accept any digit string
+    #     5. For other circuits, use real ZKP logic
     ##
     def verify_zkp(self, vehicle_id, zkp_proof, timestamp, circuit_path):
         
@@ -87,7 +89,7 @@ class RSU:
         if not secret:
             return False
         
-        # Determine the circuit type based on the provided path
+        # Determine the circuit type based on the provided path, default to empty string if None
         circuit_name = os.path.basename(circuit_path) if circuit_path else ""
         
         # Handle different circuit types
@@ -142,6 +144,7 @@ class RSU:
                 
                 # Return True if the computed commitment matches the provided commitment
                 return str(computed_commitment) == str(commitment_val)
+            
             return False
         
         # By default, use real ZKP logic
@@ -158,8 +161,6 @@ class RSU:
 
 ## Simple test for RSU class
 if __name__ == "__main__":
-    
-    ## @test Simple test for RSU class
     
     # Create a test vehicle with an id and secret
     vehicle_id = "TEST_VEHICLE"

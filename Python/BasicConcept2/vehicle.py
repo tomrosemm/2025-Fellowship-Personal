@@ -126,8 +126,6 @@ class Vehicle:
 ## Simple test for Vehicle class
 if __name__ == "__main__":
     
-    ## @test Simple test for Vehicle class
-    
     # Create a test vehicle with a unique ID and secret
     test_vehicle = Vehicle("TEST_VEHICLE", "mysecret")
     

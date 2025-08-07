@@ -3,19 +3,20 @@
 # @author Tom Rose
 #
 # @brief
-#   Provides utility functions for managing SUMO simulation processes and TraCI connections.
+#   Provides utility functions for managing SUMO simulation processes and TraCI connections
 #   Includes port cleanup, connection testing, configuration file handling, and data transfer routines
-#   for integration with SUMO in automated testing and simulation workflows.
+#   for integration with SUMO in automated testing and simulation workflows
 #
 # @details
-#   - Cleans up processes using specific ports to avoid conflicts.
-#   - Checks and waits for port availability before launching SUMO.
-#   - Starts SUMO with network or configuration files and connects via TraCI.
-#   - Supports aggressive cleanup and diagnostics for robust automated testing.
-#   - Handles temporary configuration file creation and output management.
+#   - Cleans up processes using specific ports to avoid conflicts
+#   - Checks and waits for port availability before launching SUMO
+#   - Starts SUMO with network or configuration files and connects via TraCI
+#   - Supports aggressive cleanup and diagnostics for robust automated testing
+#   - Handles temporary configuration file creation and output management
 ##
 
-# Imports
+## Imports
+# Libraries
 import sys
 import subprocess
 import os
@@ -24,6 +25,7 @@ import xml.etree.ElementTree as ET
 import tempfile
 import shutil
 
+# Classes and Functions
 from settings import (
     DEBUG_MODE as DEFAULT_DEBUG_MODE,
     SUMO_TOOLS_PATH,
@@ -41,19 +43,19 @@ from utilities import (
 
 ## Unused, Leftover Functions
 # ##
-# # @brief Start SUMO and connect via TraCI.
-# # @param sumo_cmd SUMO command list.
-# # @param port Port to use for TraCI connection.
-# # @param sumo_tools_path Path to SUMO tools directory.
-# # @return tuple (proc, traci_module) - SUMO process and TraCI module.
+# # @brief Start SUMO and connect via TraCI
+# # @param sumo_cmd SUMO command list
+# # @param port Port to use for TraCI connection
+# # @param sumo_tools_path Path to SUMO tools directory
+# # @return tuple (proc, traci_module) - SUMO process and TraCI module
 # #
 # # @details
 # #   Steps:
-# #     1. Add SUMO tools to path.
-# #     2. Import TraCI.
-# #     3. Start SUMO process.
-# #     4. Connect via TraCI.
-# #     5. Return process and TraCI module.
+# #     1. Add SUMO tools to path
+# #     2. Import TraCI
+# #     3. Start SUMO process
+# #     4. Connect via TraCI
+# #     5. Return process and TraCI module
 # ##
 # def start_sumo_and_traci(sumo_cmd, port, sumo_tools_path):
 #     sys.path.append(sumo_tools_path)
@@ -74,18 +76,18 @@ from utilities import (
 
 
 ## @var DEBUG_MODE
-# @brief Global variable to control debug output.
+# @brief Global variable to control debug output
 DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 
 ##
-# @brief Enable or disable debug mode for detailed output.
+# @brief Enable or disable debug mode for detailed output
 #
-# @param enabled True to enable debug mode, False to disable.
+# @param enabled True to enable debug mode, False to disable
 #
 # @details
 #   Steps:
-#     1. Set the global DEBUG_MODE variable to the provided value.
+#     1. Set the global DEBUG_MODE variable to the provided value
 ##
 def set_debug_mode(enabled):
     
@@ -95,16 +97,16 @@ def set_debug_mode(enabled):
 
 
 ##
-# @brief Test the connection to SUMO using TraCI.
+# @brief Test the connection to SUMO using TraCI
 #
-# @return True if connection succeeded, False otherwise.
+# @return True if connection succeeded, False otherwise
 #
 # @details
 #   Steps:
-#     1. Aggressively clean up port and connections.
-#     2. Start SUMO with network file.
-#     3. Attempt to connect via TraCI.
-#     4. Clean up after test.
+#     1. Aggressively clean up port and connections
+#     2. Start SUMO with network file
+#     3. Attempt to connect via TraCI
+#     4. Clean up after test
 ##
 def test_sumo_connection():
     
@@ -249,16 +251,16 @@ def test_sumo_connection():
 
 
 ##
-# @brief Test the connection to SUMO using a .sumocfg configuration file.
+# @brief Test the connection to SUMO using a .sumocfg configuration file
 #
-# @return True if connection succeeded, False otherwise.
+# @return True if connection succeeded, False otherwise
 #
 # @details
 #   Steps:
-#     1. Aggressively clean up port and connections.
-#     2. Start SUMO with config file.
-#     3. Attempt to connect via TraCI.
-#     4. Clean up after test.
+#     1. Aggressively clean up port and connections
+#     2. Start SUMO with config file
+#     3. Attempt to connect via TraCI
+#     4. Clean up after test
 ##
 def test_sumo_config_connection():
     
@@ -476,11 +478,11 @@ def test_sumo_config_connection():
 
 
 ##
-# @brief Run both SUMO connection tests and count as tests.
+# @brief Run both SUMO connection tests and count as tests
 #
-# @param tested Current count of tests run.
-# @param passed Current count of tests passed.
-# @return tuple (tested, passed) Updated counts of tests run and passed.
+# @param tested Current count of tests run
+# @param passed Current count of tests passed
+# @return tuple (tested, passed) Updated counts of tests run and passed
 ##
 def test_sumo_connection_wrapper(tested, passed):
     
@@ -531,15 +533,15 @@ def test_sumo_connection_wrapper(tested, passed):
 
 
 ##
-# @brief Check if all files referenced in the configuration file exist.
+# @brief Check if all files referenced in the configuration file exist
 #
-# @param config_path Path to SUMO configuration file.
-# @return tuple (bool, list) - True if all files exist, list of missing files.
+# @param config_path Path to SUMO configuration file
+# @return tuple (bool, list) - True if all files exist, list of missing files
 #
 # @details
 #   Steps:
-#     1. Parse XML and check file references.
-#     2. Return missing files if any.
+#     1. Parse XML and check file references
+#     2. Return missing files if any
 ##
 def check_config_file_references(config_path):
     
@@ -599,17 +601,17 @@ def check_config_file_references(config_path):
         return False, []
 
 ##
-# @brief Create a temporary config file without GUI elements and with essential simulation parameters.
+# @brief Create a temporary config file without GUI elements and with essential simulation parameters
 #
-# @param original_config_path Path to original SUMO config file.
-# @return tuple (str, str) - Path to temp config file, output directory.
+# @param original_config_path Path to original SUMO config file
+# @return tuple (str, str) - Path to temp config file, output directory
 #
 # @details
 #   Steps:
-#     1. Remove GUI elements.
-#     2. Convert relative paths to absolute.
-#     3. Add time and report settings.
-#     4. Write to temp file.
+#     1. Remove GUI elements
+#     2. Convert relative paths to absolute
+#     3. Add time and report settings
+#     4. Write to temp file
 ##
 def create_non_gui_config(original_config_path):
     
@@ -778,16 +780,16 @@ def create_non_gui_config(original_config_path):
 
 
 ##
-# @brief Start the SUMO process with the specified network file and port.
+# @brief Start the SUMO process with the specified network file and port
 #
 # @return tuple: (proc, sumo_binary, SUMO_NET_FILE)
 #
 # @details
 #   Steps:
-#     1. Build SUMO command.
-#     2. Start SUMO process.
-#     3. Wait for process to start.
-#     4. Return process and info.
+#     1. Build SUMO command
+#     2. Start SUMO process
+#     3. Wait for process to start
+#     4. Return process and info
 ##
 def start_sumo():
     
@@ -848,12 +850,12 @@ def start_sumo():
         
         
 ##
-# @brief Ensure any existing TraCI connection is properly closed.
+# @brief Ensure any existing TraCI connection is properly closed
 #
 # @details
 #   Steps:
-#     1. Import traci and close connection if loaded.
-#     2. Wait for cleanup.
+#     1. Import traci and close connection if loaded
+#     2. Wait for cleanup
 ##
 def cleanup_traci_connection():
     
@@ -891,17 +893,17 @@ def cleanup_traci_connection():
 
 
 ##
-# @brief Start the SUMO process with the specified config file and port.
+# @brief Start the SUMO process with the specified config file and port
 #
 # @return tuple (proc, sumo_binary, config_file, temp_config, temp_output_dir)
 #
 # @details
 #   Steps:
-#     1. Create a temporary config file without GUI elements.
-#     2. Build SUMO command.
-#     3. Start SUMO process.
-#     4. Wait for process to start.
-#     5. Return process and info.
+#     1. Create a temporary config file without GUI elements
+#     2. Build SUMO command
+#     3. Start SUMO process
+#     4. Wait for process to start
+#     5. Return process and info
 ##
 def start_sumo_with_config(port, sumo_config_file):
     # Create a modified configuration file without GUI elements
@@ -1017,16 +1019,16 @@ def start_sumo_with_config(port, sumo_config_file):
 
 
 ##
-# @brief Clean up SUMO process and TraCI connection.
-# @param proc SUMO process.
-# @param port Port used by TraCI.
-# @param traci_module TraCI module.
+# @brief Clean up SUMO process and TraCI connection
+# @param proc SUMO process
+# @param port Port used by TraCI
+# @param traci_module TraCI module
 #
 # @details
 #   Steps:
-#     1. Close TraCI connection if active.
-#     2. Terminate SUMO process.
-#     3. Kill any processes still using the port.
+#     1. Close TraCI connection if active
+#     2. Terminate SUMO process
+#     3. Kill any processes still using the port
 ##
 def cleanup_sumo_and_traci(proc, port, traci_module=None):
     try:
@@ -1045,18 +1047,28 @@ def cleanup_sumo_and_traci(proc, port, traci_module=None):
     kill_processes_on_port(port)
     time.sleep(1)
 
+
 ##
-# @brief Start a SUMO simulation with flexible configuration.
+# @brief Start a SUMO simulation with flexible configuration
 #
-# @param file_path Path to SUMO network file or config file.
-# @param is_config If True, file_path is treated as a config file; otherwise as a network file.
-# @param port Port to use for TraCI connection.
-# @param sumo_binary SUMO binary to use ('sumo' or 'sumo-gui').
-# @param connect_traci If True, establishes TraCI connection.
-# @param step_length Simulation step length in seconds.
-# @param additional_args Dictionary of additional command-line arguments.
-# @param sumo_tools_path Path to SUMO tools directory.
+# @param file_path Path to SUMO network file or config file
+# @param is_config If True, file_path is treated as a config file; otherwise as a network file
+# @param port Port to use for TraCI connection
+# @param sumo_binary SUMO binary to use ('sumo' or 'sumo-gui')
+# @param connect_traci If True, establishes TraCI connection
+# @param step_length Simulation step length in seconds
+# @param additional_args Dictionary of additional command-line arguments
+# @param sumo_tools_path Path to SUMO tools directory
 # @return tuple (proc, traci_module, config_file, temp_config, temp_output_dir)
+#
+# @details
+#   Steps:
+#     1. Cleans up any existing processes using the specified port
+#     2. Optionally imports TraCI module for connection
+#     3. Creates a temporary non-GUI config file if a config file is specified
+#     4. Builds the SUMO command with the network or config file and additional options
+#     5. Starts the SUMO process and waits for initialization
+#     6. If requested, establishes a TraCI connection to the running SUMO instance
 ##
 def start_sumo_simulation(
     file_path,
@@ -1072,13 +1084,18 @@ def start_sumo_simulation(
     if sumo_tools_path is None:
         sumo_tools_path = SUMO_TOOLS_PATH
 
+    # Kill any processes using the specified port to avoid conflicts
     kill_processes_on_port(port)
+    # Clean up any existing TraCI connections
     cleanup_traci_connection()
+    # Wait for the port to become available, with a timeout
     if not wait_for_port_available(port, timeout=15):
         print(f"[SUMO Simulation] Port {port} is not available after cleanup attempts.")
         return None, None, None, None, None
 
+    # Initialize traci_module to None
     traci_module = None
+    # If TraCI connection is requested, import traci from SUMO tools path
     if connect_traci:
         sys.path.append(sumo_tools_path)
         try:
@@ -1088,12 +1105,15 @@ def start_sumo_simulation(
             print(f"[SUMO Simulation] Could not import traci: {e}")
             return None, None, None, None, None
 
+    # Initialize temp_config and temp_output_dir to None
     temp_config = None
     temp_output_dir = None
+    # Start building the SUMO command with the chosen binary
     sumo_cmd = [sumo_binary]
 
+    # If using a config file, handle accordingly
     if is_config:
-        # For config files, create a temporary non-GUI config if using non-GUI SUMO
+        # For non-GUI SUMO, create a temporary config without GUI elements
         if sumo_binary == "sumo":
             temp_config, temp_output_dir = create_non_gui_config(file_path)
             if temp_config:
@@ -1101,14 +1121,19 @@ def start_sumo_simulation(
             else:
                 sumo_cmd.extend(["-c", file_path])
         else:
+            # For GUI SUMO, use the original config file
             sumo_cmd.extend(["-c", file_path])
     else:
+        # If using a network file, add it to the command
         sumo_cmd.extend(["-n", file_path])
 
+    # Add step length argument if specified
     if step_length is not None:
         sumo_cmd.extend(["--step-length", str(step_length)])
+    # Add remote port argument
     sumo_cmd.extend(["--remote-port", str(port)])
 
+    # Add any additional command-line arguments
     if additional_args:
         for arg, value in additional_args.items():
             if value is None:
@@ -1116,12 +1141,16 @@ def start_sumo_simulation(
             else:
                 sumo_cmd.extend([f"--{arg}", str(value)])
 
+    # Print the full SUMO command if debug mode is enabled
     if DEBUG_MODE:
         print(f"[SUMO Simulation] Starting SUMO with command: {' '.join(sumo_cmd)}")
 
     try:
+        # Start the SUMO process as a subprocess
         proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # Wait for SUMO to initialize
         time.sleep(3)
+        # If SUMO exited early, print error output and clean up
         if proc.poll() is not None:
             stderr = proc.stderr.read().decode()
             stdout = proc.stdout.read().decode()
@@ -1136,8 +1165,10 @@ def start_sumo_simulation(
                 try: shutil.rmtree(temp_output_dir)
                 except: pass
             return None, None, None, None, None
+        # Print process ID if debug mode is enabled
         if DEBUG_MODE:
             print(f"[SUMO Simulation] SUMO process started with PID {proc.pid}")
+        # If TraCI connection is requested, initialize it
         if connect_traci and traci_module:
             try:
                 traci_module.init(port=port)
@@ -1147,8 +1178,10 @@ def start_sumo_simulation(
                 print(f"[SUMO Simulation] Failed to connect to TraCI: {e}")
                 proc.terminate()
                 return None, None, None, None, None
+        # Return process, traci module, file path, temp config, and temp output directory
         return proc, traci_module, file_path, temp_config, temp_output_dir
     except Exception as e:
+        # Handle any exceptions during SUMO startup
         print(f"[SUMO Simulation] Failed to start SUMO: {e}")
         if temp_config:
             try: os.unlink(temp_config)
@@ -1158,16 +1191,25 @@ def start_sumo_simulation(
             except: pass
         return None, None, None, None, None
 
+
 ##
-# @brief Run a SUMO simulation for a specified number of steps and collect vehicle data, with flexible options.
+# @brief Run a SUMO simulation for a specified number of steps and collect vehicle data, with flexible options
 #
-# @param traci TraCI module instance with an active connection.
-# @param steps Number of simulation steps to run.
+# @param traci TraCI module instance with an active connection
+# @param steps Number of simulation steps to run
 # @param print_data If True, print simulation data to screen.
 # @param collect_data List of data types to collect (e.g. ["position", "speed", "color"])
-# @param step_delay Time in seconds to wait between steps.
-# @param vehicle_callbacks Dictionary of callback functions to execute on vehicles.
-# @return List of dictionaries containing simulation data for each step.
+# @param step_delay Time in seconds to wait between steps
+# @param vehicle_callbacks Dictionary of callback functions to execute on vehicles
+# @return List of dictionaries containing simulation data for each step
+#
+# @details
+#   Steps:
+#     1. Advances the simulation by the specified number of steps
+#     2. Collects data for each vehicle at each step, including position, speed, color, lane, and lane position
+#     3. Executes any specified callback functions for each vehicle at each step
+#     4. Optionally prints the collected data to the screen
+#     5. Waits for the specified delay between steps
 ##
 def run_sumo_simulation_flexible(
     traci,
@@ -1182,40 +1224,66 @@ def run_sumo_simulation_flexible(
     if vehicle_callbacks is None:
         vehicle_callbacks = {}
 
+    # List to store data from each simulation step
     sim_data = []
+    
+    # Execute the specified number of simulation steps
     for step_num in range(steps):
+        # Advance SUMO simulation by one step
         traci.simulationStep()
+        
+        # Get current simulation time and list of vehicles
         sim_time = traci.simulation.getTime()
         veh_ids = traci.vehicle.getIDList()
+        
+        # Initialize data structure for this step
         step_data = {
             "time": sim_time,
             "vehicle_ids": veh_ids,
         }
+        
+        # Collect requested data types for each vehicle
         for data_type in collect_data:
             if data_type == "position":
+                # Get (x,y) coordinates for each vehicle
                 step_data["position"] = {vid: traci.vehicle.getPosition(vid) for vid in veh_ids}
             elif data_type == "speed":
+                # Get current speed for each vehicle
                 step_data["speed"] = {vid: traci.vehicle.getSpeed(vid) for vid in veh_ids}
             elif data_type == "color":
+                # Get RGB color values for each vehicle
                 step_data["color"] = {vid: traci.vehicle.getColor(vid) for vid in veh_ids}
             elif data_type == "lane":
+                # Get current lane ID for each vehicle
                 step_data["lane"] = {vid: traci.vehicle.getLaneID(vid) for vid in veh_ids}
             elif data_type == "lane_position":
+                # Get position along current lane for each vehicle
                 step_data["lane_position"] = {vid: traci.vehicle.getLanePosition(vid) for vid in veh_ids}
+        
+        # Execute any provided callback functions on each vehicle
         for callback_name, callback_func in vehicle_callbacks.items():
             for vid in veh_ids:
                 try:
+                    # Call the callback with traci instance, vehicle ID and step number
                     callback_func(traci, vid, step_num)
                 except Exception as e:
+                    # Log callback failures if in debug mode
                     if DEBUG_MODE:
                         print(f"Callback {callback_name} failed for vehicle {vid}: {e}")
+        
+        # Store this step's data in the simulation history
         sim_data.append(step_data)
+        
+        # Optionally print the collected data
         if print_data:
             print(f"\nTime: {sim_time}, Vehicles: {veh_ids}")
             for data_type in collect_data:
                 if data_type in step_data and step_data[data_type]:
                     print(f"{data_type.capitalize()}: {step_data[data_type]}")
+        
+        # Add delay between steps if specified
         if step_delay > 0:
             time.sleep(step_delay)
+    # Return the complete simulation data history
     return sim_data
 

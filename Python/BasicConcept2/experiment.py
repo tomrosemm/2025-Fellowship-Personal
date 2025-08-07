@@ -7,63 +7,66 @@
 #   involving vehicles, RSUs, ZoKrates circuits, and blockchain verification.
 #
 # @details
-#   - Supports both simulated and ZoKrates-based ZKP workflows.
-#   - Integrates with vehicle and RSU classes for authentication.
-#   - Optionally performs blockchain verification and logging.
-#   - Designed for flexible experiment setup and reporting.
+#   - Supports both simulated and ZoKrates-based ZKP workflows
+#   - Integrates with vehicle and RSU classes for authentication
+#   - Optionally performs blockchain verification and logging
+#   - Designed for flexible experiment setup and reporting
 ##
 
-# Imports
+## Imports
+# Libraries
+# import secrets
 import random
 import os
-import secrets
 import time
 import logging
 import datetime
 from pathlib import Path
 
+# Classes and functions
 from vehicle import Vehicle
 from rsu import RSU
 from blockchain import simulate_blockchain_verification
 from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE
 
 from zokrates_interface import (
+    # hex_to_field_array,
     run_zokrates_compile,
     run_zokrates_setup,
     run_zokrates_compute_witness,
     run_zokrates_generate_proof,
     run_zokrates_verify
-    # hex_to_field_array,
+
 )
 
 
 ##
 # @class Experiment
-# @brief Encapsulates logic for running and reporting ZKP/blockchain experiments.
+# @brief Encapsulates logic for running and reporting ZKP/blockchain experiments
 ##
 class Experiment:
     
     ## @var DEBUG_MODE
-    ## @brief Control debug output.
+    ## @brief Control debug output
     DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 
     ##
-    # @brief Initialize an Experiment instance.
-    # @param name Name of the experiment.
-    # @param vehicle_id Vehicle identifier.
-    # @param rsu_id RSU identifier.
-    # @param zokrates_circuit_path Path to ZoKrates circuit file (optional).
-    # @param use_zokrates Whether to use ZoKrates workflow.
-    # @param use_blockchain Whether to use blockchain verification.
+    # @brief Initialize an Experiment instance
+    # @param name Name of the experiment
+    # @param vehicle_id Vehicle identifier
+    # @param rsu_id RSU identifier
+    # @param zokrates_circuit_path Path to ZoKrates circuit file (optional)
+    # @param use_zokrates Whether to use ZoKrates workflow
+    # @param use_blockchain Whether to use blockchain verification
     # @details
-    #   - Stores all provided parameters as instance attributes.
-    #   - Initializes result, timestamp, vehicle, and rsu to None.
-    #   - Sets up logging for the experiment.
+    #   - Stores all provided parameters as instance attributes
+    #   - Initializes result, timestamp, vehicle, and rsu to None
+    #   - Sets up logging for the experiment
     ##
     def __init__(self, name, vehicle_id, rsu_id, zokrates_circuit_path=None, use_zokrates=True, use_blockchain=True):
         
-        # Initialize experiment parameters with provided values
+        # Initialize experiment parameters with any provided values
         self.name = name
         self.vehicle_id = vehicle_id
         self.rsu_id = rsu_id
@@ -80,19 +83,21 @@ class Experiment:
         # Set up logging
         self.setup_logging()
 
+
     ##
-    # @brief Set up logging for the experiment.
+    # @brief Set up logging for the experiment
     # @details
-    #   - Creates a logs directory if it doesn't exist.
-    #   - Configures a logger with a timestamped filename.
-    #   - Sets up logging level and format.
+    #   - Creates a logs directory if it doesn't exist
+    #   - Configures a logger with a timestamped filename
+    #   - Sets up logging level and format
     ##
     def setup_logging(self):
+        
         # Create logs directory if it doesn't exist
         logs_dir = Path("logs")
         logs_dir.mkdir(exist_ok=True)
         
-        # Create timestamped filename for this experiment's log
+        # Create timestamped filename for this experiment's log using the current date and time
         timestamp_str = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         sanitized_name = self.name.replace(' ', '_').replace('/', '_')
         log_filename = f"{timestamp_str}_{sanitized_name}.log"
@@ -123,6 +128,7 @@ class Experiment:
         self.logger.addHandler(file_handler)
         self.logger.addHandler(console_handler)
         
+        # Log messages
         self.logger.info(f"Experiment {self.name} initialized")
         self.logger.debug(f"Vehicle ID: {self.vehicle_id}, RSU ID: {self.rsu_id}")
         self.logger.debug(f"ZoKrates circuit: {self.zokrates_circuit_path}")
@@ -130,17 +136,18 @@ class Experiment:
 
 
     ##
-    # @brief Run the ZoKrates workflow for the experiment.
-    # @param vehicle Vehicle instance to use for the workflow.
+    # @brief Run the ZoKrates workflow for the experiment
+    # @param vehicle Vehicle instance to use for the workflow
     # @return tuple (success (bool), otp (str), timestamp (int))
     # @details
     #   Steps:
-    #     1. Determine circuit type and prepare arguments.
-    #     2. Compile, setup, compute witness, generate proof, and verify using ZoKrates CLI.
-    #     3. Return success status, OTP, and timestamp.
+    #     1. Determine circuit type and prepare arguments
+    #     2. Compile, setup, compute witness, generate proof, and verify using ZoKrates CLI
+    #     3. Return success status, OTP, and timestamp
     ##
     def run_zokrates_workflow(self, vehicle):
         
+        # Log the start of the ZoKrates workflow
         self.logger.info("Starting ZoKrates workflow")
         
         # Check if ZoKrates circuit path is provided
@@ -156,7 +163,7 @@ class Experiment:
         circuit_name = os.path.basename(self.zokrates_circuit_path)
         self.logger.debug(f"Using circuit: {circuit_name}")
         
-        # Based on the circuit, behave differently
+        ## Based on the circuit, behave differently
         # For dummy.zok, we will use a simple addition circuit
         if circuit_name == "dummy.zok":
             
@@ -170,17 +177,16 @@ class Experiment:
             timestamp = int(time.time())
             args = [str(a), str(b)]
             
+            # Log the arguments used for the dummy circuit
             self.logger.debug(f"dummy.zok arguments: a={a}, b={b}, otp={otp}, timestamp={timestamp}")
             
             # Print debug information if DEBUG_MODE is enabled
             if self.DEBUG_MODE:
                 print(f"[Experiment] Dummy.zok arguments: {args}, otp: {otp}, timestamp: {timestamp}")
         
-        # For auth.zok, we will use a more complex authentication circuit        
+        # For auth.zok, we will use a more complex authentication circuit; secret, timestamp, otp (all fields, as sum)        
         elif circuit_name == "auth.zok":
-            
-            # For auth.zok: secret, timestamp, otp (all fields, as sum)
-            
+
             # Generate a random secret integer to use as vehicle secret and a timestamp
             secret_int = random.randint(1, 100000)
             vehicle.secret = str(secret_int)
@@ -192,6 +198,7 @@ class Experiment:
             # Prepare the arguments for ZoKrates
             args = [str(secret_int), str(timestamp), str(otp_int)]
             
+            # Log the arguments used for the auth circuit
             self.logger.debug(f"auth.zok arguments: secret={secret_int}, timestamp={timestamp}, otp={otp_int}")
             
             # Convert the OTP to a string for output
@@ -213,13 +220,13 @@ class Experiment:
             # Calculate commitment
             commitment = (sk * sk) + vid
             
+            # Log the parameters used for the VtoI_test circuit
             self.logger.debug(f"VtoI_test.zok parameters: sk={sk}, vid={vid}, commitment={commitment}")
             
             # Prepare arguments
             args = [str(sk), str(vid), str(commitment)]
             
-            # For blockchain verification
-            # Use commitment as OTP for this circuit and set timestamp to current time
+            # For blockchain verification; Use commitment as OTP for this circuit and set timestamp to current time
             otp = str(commitment)
             timestamp = int(time.time())
         
@@ -230,7 +237,7 @@ class Experiment:
             print(error_msg)
             return False, None, None
         
-        # Run the ZoKrates workflow steps
+        ## Run the ZoKrates workflow steps
         # Attempt to compile the ZoKrates circuit, printing an error and returning False, None, None if it fails
         self.logger.info("Compiling ZoKrates circuit")
         if not run_zokrates_compile(self.zokrates_circuit_path):
@@ -277,38 +284,45 @@ class Experiment:
 
 
     ##
-    # @brief Run blockchain verification and logging for the experiment.
-    # @param vehicle Vehicle instance.
-    # @param rsu RSU instance.
-    # @param otp One-time password.
-    # @param timestamp Timestamp used for OTP.
-    # @return Outcome of blockchain verification (bool).
+    # @brief Run blockchain verification and logging for the experiment
+    # @param vehicle Vehicle instance
+    # @param rsu RSU instance
+    # @param otp One-time password
+    # @param timestamp Timestamp used for OTP
+    # @return Outcome of blockchain verification (bool)
     # @details
     #   Steps:
-    #     1. Prepare ZKP proof based on circuit type.
-    #     2. RSU verifies ZKP.
-    #     3. Simulate blockchain verification and logging.
-    #     4. Return outcome.
+    #     1. Prepare ZKP proof based on circuit type
+    #     2. RSU verifies ZKP
+    #     3. Simulate blockchain verification and logging
+    #     4. Return outcome
     ##
     def run_blockchain_verification(self, vehicle, rsu, otp, timestamp):
         
+        # Log the start of blockchain verification
         self.logger.info("Starting blockchain verification")
         
         # If a ZoKrates circuit path is not set, print error and return False, otherwise store the circuit basename
         circuit_name = os.path.basename(self.zokrates_circuit_path) if self.zokrates_circuit_path else ""
         
-        # Based on the circuit, behave differently
+        ## Based on the circuit, behave differently
         # For dummy.zok, we will use the sum (a + b = otp)
         if circuit_name == "dummy.zok":
             
+            # Set zkp_proof to otp
             zkp_proof = otp
+            
+            # Log the proof used for the dummy circuit
             self.logger.debug(f"Using dummy.zok proof: {zkp_proof}")
         
         # For auth.zok, we will use a tuple (secret, timestamp, otp)
         elif circuit_name == "auth.zok":
             
+            # Set zkp_proof to a tuple of vehicle secret, timestamp, and otp
             zkp_proof = (vehicle.secret, timestamp, otp)
             rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
+            
+            # Log the arguments used for the auth circuit
             self.logger.debug(f"Using auth.zok proof: secret={vehicle.secret}, timestamp={timestamp}, otp={otp}")
         
         # For VtoI_test.zok, we'll use a tuple (sk, vid, commitment)
@@ -324,6 +338,8 @@ class Experiment:
             
             # Create ZKP proof as tuple
             zkp_proof = (sk, vid, commitment)
+            
+            # Log the parameters used for the VtoI_test circuit
             self.logger.debug(f"Using VtoI_test.zok proof: sk={sk}, vid={vid}, commitment={commitment}")
         
         # If the circuit isn't recognized
@@ -331,17 +347,27 @@ class Experiment:
             
             # Set zkp_proof to vehicle.create_zkp(otp, timestamp, self.zokrates_circuit_path)
             zkp_proof = vehicle.create_zkp(otp, timestamp, self.zokrates_circuit_path)
+            
+            # Log the generic proof used for unrecognized circuits
             self.logger.debug(f"Using generic proof: {zkp_proof}")
         
-        # Set verification result by calling rsu.verify_zkp with vehicle_id, zkp_proof, timestamp, and zokrates_circuit_path
+        # Log the vehicle ID the ZKP proof is being verified for
         self.logger.info(f"RSU verifying ZKP for vehicle {self.vehicle_id}")
+        
+        # Set verification result by calling rsu.verify_zkp with vehicle_id, zkp_proof, timestamp, and zokrates_circuit_path
         verification_result = rsu.verify_zkp(self.vehicle_id, zkp_proof, timestamp, self.zokrates_circuit_path)
+        
+        # Log the verification result
         self.logger.debug(f"RSU verification result: {verification_result}")
+        
+        # Log the simulation of blockchain verification
+        self.logger.info("Simulating blockchain verification")
         
         # Set the outcome of blockchain verification by calling simulate_blockchain_verification with vehicle_id, zkp_proof
         # (converted to string), timestamp, and verification_result, and then returning it
-        self.logger.info("Simulating blockchain verification")
         outcome = simulate_blockchain_verification(self.vehicle_id, str(zkp_proof), timestamp, verification_result)
+        
+        # Log the outcome of the blockchain verification
         self.logger.info(f"Blockchain verification outcome: {outcome}")
         
         # Return the outcome of the blockchain verification
@@ -349,18 +375,20 @@ class Experiment:
 
 
     ##
-    # @brief Run the experiment workflow.
+    # @brief Run the experiment workflow
     # @details
     #   Steps:
-    #     1. Set up vehicle and RSU instances.
-    #     2. Run ZoKrates workflow if enabled.
-    #     3. Run blockchain verification if enabled and ZoKrates succeeded.
-    #     4. Store and print results.
+    #     1. Set up vehicle and RSU instances
+    #     2. Run ZoKrates workflow if enabled
+    #     3. Run blockchain verification if enabled and ZoKrates succeeded
+    #     4. Store and print results
     ##
     def run(self):
         
         # Print the experiment name to indicate it is running
         print(f"Running Experiment: {self.name}")
+        
+        # Log the start of the experiment
         self.logger.info(f"Running experiment: {self.name}")
         
         # If a ZoKrates circuit path is not set, print error and return False, otherwise store the circuit basename
@@ -384,10 +412,11 @@ class Experiment:
         # Handle any other circuit type with a default secret
         else:
             secret = str(random.randint(1, 1000))
-    
+
+        # Log the initialization of the vehicle with the secret
         self.logger.debug(f"Initializing vehicle {self.vehicle_id} with secret {secret}")
         
-        # Initialize the vehicle and RSU instances with the provided vehicle_id and secret
+        # Initialize the vehicle and RSU instances with the provided vehicle_id and secret and store them in the experiment
         vehicle = Vehicle(self.vehicle_id, secret)
         rsu = RSU({self.vehicle_id: secret})
         self.vehicle = vehicle
@@ -401,19 +430,24 @@ class Experiment:
         # If ZoKrates is enabled, run the ZoKrates workflow
         if self.use_zokrates:
             
-            # Run the ZoKrates workflow and store the success status, otp, and timestamp
+            # Log the start of the ZoKrates workflow
             self.logger.info("Running ZoKrates workflow")
+            
+            # Run the ZoKrates workflow and store the success status, otp, and timestamp
             success, otp, timestamp = self.run_zokrates_workflow(vehicle)
             
             # If the circuit is auth.zok and the ZoKrates workflow succeeded, store the vehicle secret in the RSU
             # This is done to ensure that the RSU has the vehicle's secret for future authentication
             if circuit_name == "auth.zok" and success:
                 rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
+                
+                # Log the storage of the vehicle secret in the RSU
                 self.logger.debug(f"Stored vehicle secret {vehicle.secret} in RSU for vehicle {self.vehicle_id}")
             
             # If the ZoKrates workflow failed, print an error and set the result to False
             # This indicates that the experiment could not be completed successfully
             if not success:
+                # Log the failure of the ZoKrates workflow
                 self.logger.error("ZoKrates workflow failed")
                 self.result = False
                 return
@@ -423,22 +457,30 @@ class Experiment:
         # If the ZoKrates workflow was not successful, this step is skipped
         if self.use_blockchain and otp is not None and timestamp is not None:
             
+            # Log the start of blockchain verification
+            self.logger.info("Running blockchain verification")
+            
             # Run the blockchain verification and store the result and timestamp
             # This step simulates the verification of the ZKP proof on a blockchain
-            self.logger.info("Running blockchain verification")
             self.result = self.run_blockchain_verification(vehicle, rsu, otp, timestamp)
             self.timestamp = timestamp
             
             # If the verification was successful, print a success message
             if self.result:
                 success_msg = f"Experiment '{self.name}' completed successfully."
+                
+                # Log the success of the experiment
                 self.logger.info(success_msg)
+                
                 print(success_msg)
             
             # If the verification failed, print an error message
             else:
                 error_msg = f"Experiment '{self.name}' failed during blockchain verification."
+                
+                # Log the failure of the experiment
                 self.logger.error(error_msg)
+                
                 print(error_msg)
         
         # If blockchain verification is not enabled or the ZoKrates workflow did not succeed, set the result and timestamp
@@ -447,23 +489,28 @@ class Experiment:
             self.timestamp = timestamp
             
             msg = f"Experiment '{self.name}' completed with ZoKrates only."
+            
+            # Log the completion of the experiment with ZoKrates only
             self.logger.info(msg)
             print(msg)
 
 
     ##
-    # @brief Print a report of the experiment results.
+    # @brief Print a report of the experiment results
     # @details
     #   Steps:
-    #     1. Print experiment result and timestamp.
-    #     2. Optionally rerun ZoKrates and blockchain workflows for reporting.
-    #     3. Print completion status.
+    #     1. Print experiment result and timestamp
+    #     2. Optionally rerun ZoKrates and blockchain workflows for reporting
+    #     3. Print completion status
     ##
     def report(self):
         
         # Print the experiment name, result, and timestamp
         report_msg = f"Experiment '{self.name}' result: {self.result}, timestamp: {self.timestamp}"
+        
+        # Log the report message
         self.logger.info(report_msg)
+        
         print(report_msg)
         
         # Set the vehicle and RSU instances from the experiment
@@ -477,20 +524,26 @@ class Experiment:
         # This is done to ensure that the ZoKrates workflow is run again for reporting purposes
         if self.use_zokrates:
             
-            # Run the ZoKrates workflow and store the success status, otp, and timestamp
+            # Log the re-running of the ZoKrates workflow for report
             self.logger.info("Re-running ZoKrates workflow for report")
+            
+            # Run the ZoKrates workflow and store the success status, otp, and timestamp
             success, otp, timestamp = self.run_zokrates_workflow(vehicle)
             
             # If the circuit is auth.zok and the ZoKrates workflow succeeded, store the vehicle secret in the RSU
             # This is done to ensure that the RSU has the vehicle's secret for future authentication
             if circuit_name == "auth.zok" and success:
                 rsu.vehicle_secrets[self.vehicle_id] = vehicle.secret
+                
+                # Log the storage of the vehicle secret in the RSU
                 self.logger.debug(f"Stored vehicle secret {vehicle.secret} in RSU for vehicle {self.vehicle_id}")
             
             # If the ZoKrates workflow failed, print an error and set the result to False
             # This indicates that the experiment could not be completed successfully
             if not success:
                 error_msg = "ZoKrates workflow failed during report generation"
+                
+                # Log the failure of the ZoKrates workflow
                 self.logger.error(error_msg)
                 self.result = False
                 return
@@ -498,20 +551,26 @@ class Experiment:
         # If blockchain verification is enabled and otp and timestamp are not None, run the blockchain verification
         if self.use_blockchain and otp is not None and timestamp is not None:
             
-            # Run the blockchain verification and store the result and timestamp
+            # Log the re-running of blockchain verification for report
             self.logger.info("Re-running blockchain verification for report")
+            
+            # Run the blockchain verification and store the result and timestamp
             self.result = self.run_blockchain_verification(vehicle, rsu, otp, timestamp)
             self.timestamp = timestamp
             
             # If the verification was successful, print a success message
             if self.result:
                 success_msg = f"Experiment '{self.name}' completed successfully."
+                
+                # Log the success of the experiment
                 self.logger.info(success_msg)
                 print(success_msg)
                 
             # If the verification failed, print an error message
             else:
                 error_msg = f"Experiment '{self.name}' failed during blockchain verification."
+                
+                # Log the failure of the experiment
                 self.logger.error(error_msg)
                 print(error_msg)
         
@@ -523,6 +582,8 @@ class Experiment:
             
             # Print a message indicating that the experiment was completed with ZoKrates only
             msg = f"Experiment '{self.name}' completed with ZoKrates only."
+            
+            # Log the completion of the experiment with ZoKrates only
             self.logger.info(msg)
             print(msg)
 
