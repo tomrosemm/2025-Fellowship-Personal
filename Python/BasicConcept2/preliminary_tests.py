@@ -1803,6 +1803,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         car_route = "route1"
         finished_cars = 0
         rsu_car_close_flag = False  # Flag for RSU-car proximity
+        rsu_car_slowing_down = False  # New flag to prevent repeated slowDown/speedUp
 
         for step in range(total_steps):
             # --- Move RSU-car distance logic to top level of loop ---
@@ -1823,7 +1824,9 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             rsu_car_close_flag = True
                             print(f"*** FLAG RAISED: RSU and car are within 100 meters at step {step} (distance: {dist:.2f} m) ***")
                             flags_raised += 1
-                            # Slow down car to 1.0 m/s over 0.01 second
+                        # Only slow down if not already in process
+                        if not rsu_car_slowing_down:
+                            rsu_car_slowing_down = True
                             try:
                                 traci.vehicle.slowDown(car_ids[0], 1.0, 0.01)  # This is correct - slowing down
                                 if print_data:
@@ -1835,7 +1838,9 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             rsu_car_close_flag = False
                             print(f"*** FLAG LOWERED: RSU and car are now farther than 125 meters at step {step} (distance: {dist:.2f} m) ***")
                             flags_lowered += 1
-                            # Speed up car to 45.0 m/s over 0.01 second
+                        # Only speed up if was previously slowed down
+                        if rsu_car_slowing_down:
+                            rsu_car_slowing_down = False
                             try:
                                 traci.vehicle.slowDown(car_ids[0], 45.0, 0.01)
                                 if print_data:
@@ -1889,6 +1894,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
             if step % 1000 == 0:
                 print(f"Step {step}: Active cars: {list(active_cars.keys())}, Total finished cars: {finished_cars}")
                 
+
 
             # Print vehicle list and position for debugging if requested
             if print_data and DEBUG_MODE:
