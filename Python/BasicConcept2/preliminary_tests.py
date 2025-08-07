@@ -1803,6 +1803,8 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         car_route = "route1"
         finished_cars = 0
         rsu_car_close_flag = False  # Flag for RSU-car proximity
+        proximity_threshold = 125   # Make threshold consistent and explicit
+        last_speed_change_step = -1000  # Track when we last changed speed
 
         for step in range(total_steps):
             # --- Move RSU-car distance logic to top level of loop ---
@@ -1817,31 +1819,66 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                     dx = rsu_pos[0] - car_pos[0]
                     dy = rsu_pos[1] - car_pos[1]
                     dist = (dx**2 + dy**2) ** 0.5
-                    # --- Flag logic ---
-                    if dist < 125:
+                    
+                    # Get current car speed before any changes
+                    try:
+                        current_speed = traci.vehicle.getSpeed(car_ids[0])
+                        if step % 100 == 0:
+                            print(f"Step {step}: Current speed of {car_ids[0]}: {current_speed:.2f} m/s")
+                    except Exception as e:
+                        current_speed = None
+                        if step % 100 == 0:
+                            print(f"Step {step}: Could not get current speed: {e}")
+                    
+                    # --- Flag logic with more effective speed control ---
+                    if dist < proximity_threshold:
                         if not rsu_car_close_flag:
                             rsu_car_close_flag = True
-                            print(f"*** FLAG RAISED: RSU and car are within 100 meters at step {step} (distance: {dist:.2f} m) ***")
+                            print(f"*** FLAG RAISED: RSU and car are within {proximity_threshold} meters at step {step} (distance: {dist:.2f} m) ***")
                             flags_raised += 1
-                            # Slow down car to 1.0 m/s over 0.01 second
-                            try:
-                                traci.vehicle.slowDown(car_ids[0], 1.0, 0.01)  # This is correct - slowing down
-                                if print_data:
-                                    print(f"Slowing down {car_ids[0]} to 1.0 m/s over 0.01 second")
-                            except Exception as e:
-                                print(f"Could not slow down car {car_ids[0]}: {e}")
+                            
+                            # Only change speed if we haven't changed it recently (at least 50 steps ago)
+                            if step - last_speed_change_step > 50:
+                                try:
+                                    # Use a longer duration for more reliable speed changes
+                                    traci.vehicle.slowDown(car_ids[0], 1.0, 1.0)  # Target speed: 1.0 m/s, Duration: 1.0 second
+                                    last_speed_change_step = step
+                                    print(f"Command sent to slow down {car_ids[0]} to 1.0 m/s over 1.0 second")
+                                    
+                                    # Add multiple steps to allow command to take effect
+                                    for _ in range(5):
+                                        traci.simulationStep()
+                                    
+                                    # Verify the speed change
+                                    new_speed = traci.vehicle.getSpeed(car_ids[0])
+                                    print(f"After slow down: {car_ids[0]} speed is now {new_speed:.2f} m/s")
+                                except Exception as e:
+                                    print(f"Could not slow down car {car_ids[0]}: {e}")
                     else:
                         if rsu_car_close_flag:
                             rsu_car_close_flag = False
-                            print(f"*** FLAG LOWERED: RSU and car are now farther than 125 meters at step {step} (distance: {dist:.2f} m) ***")
+                            print(f"*** FLAG LOWERED: RSU and car are now farther than {proximity_threshold} meters at step {step} (distance: {dist:.2f} m) ***")
                             flags_lowered += 1
-                            # Speed up car to 45.0 m/s over 0.01 second
-                            try:
-                                traci.vehicle.slowDown(car_ids[0], 45.0, 0.01)
-                                if print_data:
-                                    print(f"Speeding up {car_ids[0]} to 45.0 m/s over 0.01 second")
-                            except Exception as e:
-                                print(f"Could not speed up car {car_ids[0]}: {e}")
+                            
+                            # Only change speed if we haven't changed it recently
+                            if step - last_speed_change_step > 50:
+                                try:
+                                    # Use a longer duration for more reliable speed changes
+                                    traci.vehicle.slowDown(car_ids[0], 45.0, 1.0)  # Target speed: 45.0 m/s, Duration: 1.0 second
+                                    last_speed_change_step = step
+                                    print(f"Command sent to speed up {car_ids[0]} to 45.0 m/s over 1.0 second")
+                                    
+                                    # Add multiple steps to allow command to take effect
+                                    for _ in range(5):
+                                        traci.simulationStep()
+                                    
+                                    # Verify the speed change
+                                    new_speed = traci.vehicle.getSpeed(car_ids[0])
+                                    print(f"After speed up: {car_ids[0]} speed is now {new_speed:.2f} m/s")
+                                except Exception as e:
+                                    print(f"Could not speed up car {car_ids[0]}: {e}")
+                    
+                    # Print status at regular intervals
                     if step % 100 == 0:
                         print(f"Step {step}: Distance between RSU ({rsu_ids[0]}) and car ({car_ids[0]}): {dist:.2f} m")
                         try:
