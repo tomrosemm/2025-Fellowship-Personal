@@ -1836,19 +1836,23 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             rsu_car_close_flag = True
                             print(f"*** FLAG RAISED: RSU and car are within {proximity_threshold} meters at step {step} (distance: {dist:.2f} m) ***")
                             flags_raised += 1
-                            
+
                             # Only change speed if we haven't changed it recently (at least 50 steps ago)
                             if step - last_speed_change_step > 50:
                                 try:
-                                    # Use a longer duration for more reliable speed changes
-                                    traci.vehicle.slowDown(car_ids[0], 1.0, 1.0)  # Target speed: 1.0 m/s, Duration: 1.0 second
-                                    last_speed_change_step = step
-                                    print(f"Command sent to slow down {car_ids[0]} to 1.0 m/s over 1.0 second")
-                                    
+                                    # Get current speed
+                                    current_speed = traci.vehicle.getSpeed(car_ids[0])
+                                    target_speed = 1.0
+                                    # Only slow down if current speed is significantly higher than target
+                                    if current_speed > target_speed + 0.5:
+                                        traci.vehicle.slowDown(car_ids[0], target_speed, 1.0)
+                                        last_speed_change_step = step
+                                        print(f"Command sent to slow down {car_ids[0]} to {target_speed} m/s over 1.0 second")
+                                    else:
+                                        print(f"{car_ids[0]} already at or below target slow speed ({current_speed:.2f} m/s)")
                                     # Add multiple steps to allow command to take effect
                                     for _ in range(5):
                                         traci.simulationStep()
-                                    
                                     # Verify the speed change
                                     new_speed = traci.vehicle.getSpeed(car_ids[0])
                                     print(f"After slow down: {car_ids[0]} speed is now {new_speed:.2f} m/s")
@@ -1859,20 +1863,21 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             rsu_car_close_flag = False
                             print(f"*** FLAG LOWERED: RSU and car are now farther than {proximity_threshold} meters at step {step} (distance: {dist:.2f} m) ***")
                             flags_lowered += 1
-                            
+
                             # Only change speed if we haven't changed it recently
                             if step - last_speed_change_step > 50:
                                 try:
-                                    # Use a longer duration for more reliable speed changes
-                                    traci.vehicle.slowDown(car_ids[0], 45.0, 1.0)  # Target speed: 45.0 m/s, Duration: 1.0 second
-                                    last_speed_change_step = step
-                                    print(f"Command sent to speed up {car_ids[0]} to 45.0 m/s over 1.0 second")
-                                    
-                                    # Add multiple steps to allow command to take effect
+                                    current_speed = traci.vehicle.getSpeed(car_ids[0])
+                                    target_speed = 45.0
+                                    # Only speed up if current speed is significantly lower than target
+                                    if current_speed < target_speed - 0.5:
+                                        traci.vehicle.slowDown(car_ids[0], target_speed, 1.0)
+                                        last_speed_change_step = step
+                                        print(f"Command sent to speed up {car_ids[0]} to {target_speed} m/s over 1.0 second")
+                                    else:
+                                        print(f"{car_ids[0]} already at or above target fast speed ({current_speed:.2f} m/s)")
                                     for _ in range(5):
                                         traci.simulationStep()
-                                    
-                                    # Verify the speed change
                                     new_speed = traci.vehicle.getSpeed(car_ids[0])
                                     print(f"After speed up: {car_ids[0]} speed is now {new_speed:.2f} m/s")
                                 except Exception as e:
