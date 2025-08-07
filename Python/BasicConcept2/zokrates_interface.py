@@ -23,10 +23,10 @@ from settings import (
 
 # ## Unused, Leftover Functions
 # ##
-# # @brief Convert a hex string to an array of 4 field elements (each 64 bits).
+# # @brief Convert a hex string to an array of 4 field elements (each 64 bits)
 # #
-# # @param hex_str Hexadecimal string to convert.
-# # @return List of 4 integers representing field elements.
+# # @param hex_str Hexadecimal string to convert
+# # @return List of 4 integers representing field elements
 # ##
 # def hex_to_field_array(hex_str):
     
@@ -45,12 +45,12 @@ from settings import (
 
 
 ## @var DEBUG_MODE
-## @brief Global variable to control debug output.
+## @brief Global variable to control debug output
 DEBUG_MODE = DEFAULT_DEBUG_MODE
 
 ##
-# @brief Enable or disable debug mode for detailed output.
-# @param enabled True to enable debug mode, False to disable.
+# @brief Enable or disable debug mode for detailed output
+# @param enabled True to enable debug mode, False to disable
 ##
 def set_debug_mode(enabled):
     
@@ -59,7 +59,7 @@ def set_debug_mode(enabled):
     DEBUG_MODE = enabled
 
 ##
-# @brief Remove ZoKrates-generated files from the current directory.
+# @brief Remove ZoKrates-generated files from the current directory
 ##
 def cleanup_zokrates_files():
     
@@ -77,14 +77,14 @@ def cleanup_zokrates_files():
 
 
 ##
-# @brief Compile a ZoKrates circuit file.
+# @brief Compile a ZoKrates circuit file
 #
-# @param circuit_path Path to the ZoKrates .zok circuit file.
-# @return True if compilation succeeds, False otherwise.
+# @param circuit_path Path to the ZoKrates .zok circuit file
+# @return True if compilation succeeds, False otherwise
 #
 # @details
 #   Side Effects:
-#     Prints ZoKrates CLI output or error message.
+#     Prints ZoKrates CLI output or error message
 #
 #   Steps:
 #     1. Run the ZoKrates compile command with the given circuit file
@@ -118,13 +118,13 @@ def run_zokrates_compile(circuit_path):
 
 
 ##
-# @brief Run ZoKrates setup to generate proving and verification keys.
+# @brief Run ZoKrates setup to generate proving and verification keys
 #
-# @return True if setup succeeds, False otherwise.
+# @return True if setup succeeds, False otherwise
 #
 # @details
 #   Side Effects:
-#     Prints ZoKrates CLI output or error message.
+#     Prints ZoKrates CLI output or error message
 #
 #   Steps:
 #     1. Run the ZoKrates setup command
@@ -158,14 +158,14 @@ def run_zokrates_setup():
 
 
 ##
-# @brief Compute the witness for a ZoKrates circuit.
+# @brief Compute the witness for a ZoKrates circuit
 #
-# @param args List of arguments to pass to the circuit (e.g., private/public inputs).
-# @return True if witness computation succeeds, False otherwise.
+# @param args List of arguments to pass to the circuit (e.g., private/public inputs)
+# @return True if witness computation succeeds, False otherwise
 #
 # @details
 #   Side Effects:
-#     Prints ZoKrates CLI output or error message.
+#     Prints ZoKrates CLI output or error message
 #
 #   Steps:
 #     1. Run the ZoKrates compute-witness command with arguments
@@ -200,13 +200,13 @@ def run_zokrates_compute_witness(args):
 
 
 ##
-# @brief Generate a ZoKrates proof using the computed witness and setup keys.
+# @brief Generate a ZoKrates proof using the computed witness and setup keys
 #
-# @return True if proof generation succeeds, False otherwise.
+# @return True if proof generation succeeds, False otherwise
 #
 # @details
 #   Side Effects:
-#     Prints ZoKrates CLI output or error message.
+#     Prints ZoKrates CLI output or error message
 #
 #   Steps:
 #     1. Run the ZoKrates generate-proof command
@@ -240,13 +240,13 @@ def run_zokrates_generate_proof():
 
 
 ##
-# @brief Verify a ZoKrates proof using the verification key.
+# @brief Verify a ZoKrates proof using the verification key
 #
-# @return True if the proof is valid, False otherwise.
+# @return True if the proof is valid, False otherwise
 #
 # @details
 #   Side Effects:
-#     Prints ZoKrates CLI output or error message.
+#     Prints ZoKrates CLI output or error message
 #
 #   Steps:
 #     1. Run the ZoKrates verify command
@@ -295,23 +295,37 @@ def run_zokrates_verify():
 #   6. Clean up artifacts
 ##
 def run_zokrates_workflow(circuit_path, args):
+    
+    # Step 1: Compile the ZoKrates circuit
     if not run_zokrates_compile(circuit_path):
         print("[ZoKrates] Compilation failed.")
         return False
+    
+    # Step 2: Run ZoKrates setup to generate keys
     if not run_zokrates_setup():
         print("[ZoKrates] Setup failed.")
         cleanup_zokrates_files()
         return False
+    
+    # Step 3: Compute witness with provided arguments
     if not run_zokrates_compute_witness(args):
         print("[ZoKrates] Compute witness failed.")
         cleanup_zokrates_files()
         return False
+    
+    # Step 4: Generate proof using computed witness and setup keys
     if not run_zokrates_generate_proof():
         print("[ZoKrates] Proof generation failed.")
         cleanup_zokrates_files()
         return False
+    
+    # Step 5: Verify the generated proof
     verification_result = run_zokrates_verify()
+    
+    # Step 6: Clean up ZoKrates-generated files
     cleanup_zokrates_files()
+    
+    # Return verification result (True if proof is valid, False otherwise)
     return verification_result
 
 

@@ -1798,17 +1798,23 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
 #   6. Clean up after simulation
 ##
 def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(print_data=True):
+    
     # Print test header
     print("\n=== Live Manipulation - Rsu Message With Delay; (using straightaway6.sumocfg) Test ===")
+    
     global tested, passed
     tested += 1
+    
+    ## @var flags_raised Number of times a car was stopped by RSU
+    # @brief Used to track how many times cars were stopped by RSU
     flags_raised = 0
-    flags_lowered = 0
+    # flags_lowered = 0
 
+    # Start the timer for this test
     timer = Timer("Live Manipulation - Rsu Message With Delay; (using straightaway6.sumocfg) Test Timer")
     timer.start()
 
-    # Use the correct config file path and port
+    # Build and use the correct config file path and port
     sumo_cfg = os.path.join(
         os.path.dirname(__file__),
         "..", "..", "SUMO", "Built Sims", "StraightAway6", "straightaway6.sumocfg"
@@ -1816,7 +1822,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
     sumo_cfg = os.path.abspath(sumo_cfg)
     port = SUMO_PORT_RSUWITHDELAY
 
-    # Check config file exists
+    # Check config file exists, return if not
     if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
         return
 
@@ -1827,7 +1833,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         port=port,
         sumo_binary="sumo",
         connect_traci=True,
-        step_length=0.01,  # Added step_length parameter
+        step_length=0.01,
         sumo_tools_path=SUMO_TOOLS_PATH
     )
 
@@ -1835,6 +1841,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
     if proc is None or traci is None:
         return
 
+    # Initialize variables for the simulation
     try:
         total_steps = 51000
         car_counter = 0
@@ -1843,55 +1850,81 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         car_route = "route1"
         finished_cars = 0
         
-        # Track which cars have triggered the stop flag
+        # Used to track which cars have triggered the stop flag
         cars_that_triggered_stop = set()
         
-        # Track cars that are currently stopped and when they should resume
-        stopped_cars = {}  # car_id -> step to resume at
+        # Used to track cars that are currently stopped and when they should resume
+        # car_id -> step to resume at
+        stopped_cars = {}
 
         # Main simulation loop
         for step in range(total_steps):
-            # --- Handle cars that need to resume after stop ---
+            
+            ## Handle cars that need to resume after stop
+            # Iterate through stopped cars and check if they can resume
             for car_id in list(stopped_cars.keys()):
+                
+                # Check if it's time to resume this car
                 if step >= stopped_cars[car_id]:
-                    # Time to resume this car
+
+                    # Try to resume the car
                     try:
+                        
+                        # Check if the car is still in the simulation
                         if car_id in traci.vehicle.getIDList():
-                            traci.vehicle.setSpeed(car_id, -1)  # Resume normal speed
+                            
+                            # Resume the car's speed
+                            traci.vehicle.setSpeed(car_id, -1)
+                            
+                            # If print_data is True, print the resuming action
                             if print_data:
                                 print(f"*** RESUMING: Car {car_id} is resuming normal speed at step {step} ***")
+                    
+                    # If any error occurs while resuming, print the error
                     except Exception as e:
                         print(f"Could not resume car {car_id}: {e}")
                     
                     # Remove from stopped cars dict
                     del stopped_cars[car_id]
             
-            # --- RSU-car interaction logic ---
+            ## RSU-car interaction logic
+            # Initialize lists to hold RSU and car IDs
             rsu_ids = []
             car_ids = []
+            
+            # Try to get RSU and car IDs from the simulation
             try:
+                
                 # Get RSU and car IDs from simulation
                 rsu_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "rsu"]
                 car_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "car" and vid not in cars_that_triggered_stop]
                 
-                # Process only cars that haven't triggered a stop before
+                # Iterate over each car and check distance to RSU
                 for car_id in car_ids:
+                    
+                    # Skip cars that are currently stopped
                     if car_id in stopped_cars:
-                        continue  # Skip cars that are currently stopped
-                        
+                        continue
+                    
+                    # Skip if no RSUs
                     if not rsu_ids:
-                        continue  # Skip if no RSUs
-                        
+                        continue
+                    
+                    # Get the position of the first RSU and the car
                     rsu_pos = traci.vehicle.getPosition(rsu_ids[0])
                     car_pos = traci.vehicle.getPosition(car_id)
+                    
+                    # Calculate distance between car and RSU with Euclidean distance formula (sqrt((x2 - x1)^2 + (y2 - y1)^2))
                     dx = rsu_pos[0] - car_pos[0]
                     dy = rsu_pos[1] - car_pos[1]
                     dist = (dx**2 + dy**2) ** 0.5
                     
                     # Check if car is within threshold distance
                     if dist < 125:
-                        # Stop the car for 2 seconds (200 steps at 0.01s per step)
+                        
+                        # Try to stop the car for 2 seconds (200 steps at 0.01s per step)
                         try:
+                            
                             # Get current speed for debug info
                             current_speed = traci.vehicle.getSpeed(car_id)
                             
@@ -1911,34 +1944,42 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             # Debug output
                             print(f"*** STOPPING: Car {car_id} at step {step} (distance: {dist:.2f} m, speed: {current_speed:.2f} m/s) ***")
                             print(f"*** Will resume at step {resume_step} ***")
-                            
+                        
+                        # If any error occurs while stopping the car, print the error
                         except Exception as e:
                             print(f"Could not stop car {car_id}: {e}")
             
+            # If any error occurs while getting RSU-car interactions, print the error on a step divisible by 1000
             except Exception as e:
                 if step % 1000 == 0:
                     print(f"Step {step}: Could not compute RSU-car interactions: {e}")
 
-            # Exit if we've reached total_steps
+            # Exit if total_steps is reached
             if step >= total_steps - 1:
+                
+                # Print final summary before exiting
                 print(f"\nReached max steps ({total_steps}). Ending simulation.")
                 print(f"Total cars finished: {finished_cars}")
                 print(f"Flags raised (cars stopped): {flags_raised}")
                 print(f"Cars that triggered stop: {len(cars_that_triggered_stop)}")
                 break
-
+            
+            # Run the simulation step and get the current simulation time
             traci.simulationStep()
             sim_time = traci.simulation.getTime()
 
-            # Check for cars that have finished their routes
+            # Check for cars that have finished their routes, remove them from active_cars, and increment finished_cars
             for car_id in list(active_cars.keys()):
+                
                 if car_id not in traci.vehicle.getIDList():
                     finished_cars += 1
+                    
                     if print_data:
                         print(f"{car_id} finished at step {step}")
+                        
                     del active_cars[car_id]
 
-            # Spawn a new car if no active cars are present and we're at or past step 1000
+            # Spawn a new car if no active cars are present and we're at or past step 1000, increment car_counter, and set new car ID
             if not active_cars and step >= 1000:
                 car_counter += 1
                 new_car_id = f"car{car_counter}"
@@ -1950,7 +1991,11 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                     typeID=car_type,
                     depart=sim_time
                 )
+                
+                # Add the new car to active_cars
                 active_cars[new_car_id] = step
+                
+                # If print_data is True, print the spawning action
                 if print_data:
                     print(f"Spawned {new_car_id} at step {step}")
                     
@@ -1962,30 +2007,48 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
             if print_data and DEBUG_MODE:
                 veh_ids = traci.vehicle.getIDList()
                 print(f"Step {step}: Vehicles in sim: {veh_ids}")
+                
                 for car_id in veh_ids:
+                    
+                    # Try to get the position of each car
                     try:
                         pos = traci.vehicle.getPosition(car_id)
                         print(f"Step {step}: {car_id} position: {pos}")
+                        
+                    # If any error occurs while getting position, print the error
                     except Exception as e:
                         print(f"Step {step}: Could not get position for {car_id}: {e}")
+                        
+        # If we reach here, the simulation completed without errors, so we passed_local to True
+        passed_local = True
 
-        passed_local = True  # Test passes if it completes all steps
-
+    # If any exception occurs during the simulation process print it and set passed_local to False
     except Exception as e:
         print(f"[Live Manipulation - Rsu Message With Delay] Error: {e}")
         passed_local = False
 
+    # Use finally and the utility function to clean up SUMO and TraCI connections and temporary files regardless of success or failure
     finally:
+        
         # Clean up SUMO and TraCI connections and temporary files
         cleanup_sumo_and_traci(proc, port, traci)
+        
+        # If temp_config and temp_output_dir were created, remove them
         if temp_config and os.path.exists(temp_config):
-            try: os.unlink(temp_config)
+            
+            # Attempt to remove the temporary config file
+            try: 
+                os.unlink(temp_config)
             except: pass
+            
         if temp_output_dir and os.path.exists(temp_output_dir):
-            try: shutil.rmtree(temp_output_dir)
+            
+            # Attempt to remove the temporary output directory
+            try: 
+                shutil.rmtree(temp_output_dir)
             except: pass
 
-    # Print test result
+    # Print test result and increment passed count if the test was successful
     if passed_local:
         passed += 1
         print("[Live Manipulation - Rsu Message With Delay] Test succeeded!\n")

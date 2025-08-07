@@ -430,7 +430,7 @@ def run_test_1_level_2_experiment(print_data=True):
     timer = Timer(f"{name} Timer")
     timer.start()
 
-    # Use the correct config file path and port
+    # Build and use the correct config file path and port
     sumo_cfg = os.path.join(
         os.path.dirname(__file__),
         "..", "..", "SUMO", "Built Sims", "StraightAway6", "straightaway6.sumocfg"
@@ -438,13 +438,13 @@ def run_test_1_level_2_experiment(print_data=True):
     sumo_cfg = os.path.abspath(sumo_cfg)
     port = SUMO_PORT_RSUWITHDELAY
 
-    # Check config file exists
+    # Check config file exists, return if not
     if not check_file_exists(sumo_cfg, "SUMO straightaway6 configuration file"):
         if logger:
             logger.error(f"Config file not found: {sumo_cfg}")
         return
 
-    # Start SUMO and connect via TraCI
+    # Start SUMO and connect via TraCI using the unified function
     proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
         file_path=sumo_cfg,
         is_config=True,
@@ -461,6 +461,7 @@ def run_test_1_level_2_experiment(print_data=True):
             logger.error("Failed to start SUMO or connect to TraCI.")
         return
 
+    # Initialize variables for the simulation
     flags_raised = 0
     # flags_lowered = 0
     throughput = 0
@@ -472,8 +473,12 @@ def run_test_1_level_2_experiment(print_data=True):
         car_route = "route1"
         finished_cars = 0
 
+        # Used to track which cars have triggered the stop flag
         cars_that_triggered_stop = set()
-        stopped_cars = {}  # car_id -> step to resume at
+
+        # Used to track cars that are currently stopped and when they should resume
+        # car_id -> step to resume at
+        stopped_cars = {}
 
         # Main simulation loop
         for step in range(total_steps):
@@ -506,7 +511,7 @@ def run_test_1_level_2_experiment(print_data=True):
                     dx = rsu_pos[0] - car_pos[0]
                     dy = rsu_pos[1] - car_pos[1]
                     dist = (dx**2 + dy**2) ** 0.5
-                    # Stop car if within RSU range
+                    # Check if car is within threshold distance
                     if dist < TEST_1_LEVEL_2_RSU_RANGE:
                         try:
                             current_speed = traci.vehicle.getSpeed(car_id)
