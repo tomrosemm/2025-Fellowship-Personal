@@ -101,9 +101,9 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1fe0432b9bad1214a52b283d44ac4af3" id="r_a1fe0432b9bad1214a52b283d44ac4af3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fe0432b9bad1214a52b283d44ac4af3">__init__</a> (self, <a class="el" href="#a6f66f921fb336b87f38907d1cf839ef1">vehicle_id</a>, <a class="el" href="#ad98221bb33cb9193e00fc7ac1e0e02a9">secret</a>)</td></tr>
-<tr class="memdesc:a1fe0432b9bad1214a52b283d44ac4af3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a <a class="el" href="classvehicle_1_1_vehicle.html" title="Represents a vehicle entity capable of generating one-time passwords (OTPs) and creating zero-knowled...">Vehicle</a> instance.  <br /></td></tr>
-<tr class="separator:a1fe0432b9bad1214a52b283d44ac4af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2aec678b484e499a03cc96ac1067ba99" id="r_a2aec678b484e499a03cc96ac1067ba99"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2aec678b484e499a03cc96ac1067ba99">__init__</a> (self, <a class="el" href="#a6f66f921fb336b87f38907d1cf839ef1">vehicle_id</a>, <a class="el" href="#ad98221bb33cb9193e00fc7ac1e0e02a9">secret</a>, <a class="el" href="#afb27b8837a247dd81bfb0ed1742c2c13">detection_range</a>=500)</td></tr>
+<tr class="memdesc:a2aec678b484e499a03cc96ac1067ba99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a <a class="el" href="classvehicle_1_1_vehicle.html" title="Represents a vehicle entity capable of generating one-time passwords (OTPs) and creating zero-knowled...">Vehicle</a> instance.  <br /></td></tr>
+<tr class="separator:a2aec678b484e499a03cc96ac1067ba99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ccfb7683ea65671d0a7496d3b7452b4" id="r_a9ccfb7683ea65671d0a7496d3b7452b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ccfb7683ea65671d0a7496d3b7452b4">create_zkp</a> (self, <a class="el" href="namespacevehicle.html#a8712cb73a4d6b370658d8bc9a77fba3e">otp</a>, <a class="el" href="namespacevehicle.html#a71e24db6312e99e75bdc49e89d65948e">timestamp</a>, circuit_path)</td></tr>
 <tr class="memdesc:a9ccfb7683ea65671d0a7496d3b7452b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a zero-knowledge proof (ZKP) for the OTP and timestamp using a ZoKrates circuit.  <br /></td></tr>
 <tr class="separator:a9ccfb7683ea65671d0a7496d3b7452b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -116,6 +116,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:afb27b8837a247dd81bfb0ed1742c2c13" id="r_afb27b8837a247dd81bfb0ed1742c2c13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb27b8837a247dd81bfb0ed1742c2c13">detection_range</a> = detection_range</td></tr>
+<tr class="separator:afb27b8837a247dd81bfb0ed1742c2c13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad98221bb33cb9193e00fc7ac1e0e02a9" id="r_ad98221bb33cb9193e00fc7ac1e0e02a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad98221bb33cb9193e00fc7ac1e0e02a9">secret</a> = secret</td></tr>
 <tr class="separator:ad98221bb33cb9193e00fc7ac1e0e02a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f66f921fb336b87f38907d1cf839ef1" id="r_a6f66f921fb336b87f38907d1cf839ef1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f66f921fb336b87f38907d1cf839ef1">vehicle_id</a> = vehicle_id</td></tr>
@@ -137,8 +139,8 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1fe0432b9bad1214a52b283d44ac4af3" name="a1fe0432b9bad1214a52b283d44ac4af3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fe0432b9bad1214a52b283d44ac4af3">&#9670;&#160;</a></span>__init__()</h2>
+<a id="a2aec678b484e499a03cc96ac1067ba99" name="a2aec678b484e499a03cc96ac1067ba99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2aec678b484e499a03cc96ac1067ba99">&#9670;&#160;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -156,7 +158,12 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>secret</em></span>&#160;)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>secret</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>detection_range</em></span><span class="paramdefsep"> = </span><span class="paramdefval">500</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -281,6 +288,20 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="afb27b8837a247dd81bfb0ed1742c2c13" name="afb27b8837a247dd81bfb0ed1742c2c13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb27b8837a247dd81bfb0ed1742c2c13">&#9670;&#160;</a></span>detection_range</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">detection_range = detection_range</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ad98221bb33cb9193e00fc7ac1e0e02a9" name="ad98221bb33cb9193e00fc7ac1e0e02a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad98221bb33cb9193e00fc7ac1e0e02a9">&#9670;&#160;</a></span>secret</h2>
 

@@ -101,15 +101,17 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afb924c6944c3bb9c43b837731e3f87de" id="r_afb924c6944c3bb9c43b837731e3f87de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb924c6944c3bb9c43b837731e3f87de">__init__</a> (self, <a class="el" href="#ac507a88f172a32d93b55d9a79445ae9a">vehicle_secrets</a>)</td></tr>
-<tr class="memdesc:afb924c6944c3bb9c43b837731e3f87de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an <a class="el" href="classrsu_1_1_r_s_u.html" title="Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledg...">RSU</a> instance.  <br /></td></tr>
-<tr class="separator:afb924c6944c3bb9c43b837731e3f87de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadb2b92125b76fd29d2191173817151b" id="r_aadb2b92125b76fd29d2191173817151b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aadb2b92125b76fd29d2191173817151b">__init__</a> (self, <a class="el" href="#ac507a88f172a32d93b55d9a79445ae9a">vehicle_secrets</a>, <a class="el" href="#aeb41b4f236a1b0c9ab732e67112adcbd">broadcast_range</a>=500)</td></tr>
+<tr class="memdesc:aadb2b92125b76fd29d2191173817151b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an <a class="el" href="classrsu_1_1_r_s_u.html" title="Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledg...">RSU</a> instance.  <br /></td></tr>
+<tr class="separator:aadb2b92125b76fd29d2191173817151b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7052ed02d85a27c7833d221458fcb74" id="r_ac7052ed02d85a27c7833d221458fcb74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7052ed02d85a27c7833d221458fcb74">verify_zkp</a> (self, <a class="el" href="namespacersu.html#a637a7c4120be8e409508079c099e716d">vehicle_id</a>, zkp_proof, <a class="el" href="namespacersu.html#a71e24db6312e99e75bdc49e89d65948e">timestamp</a>, circuit_path)</td></tr>
 <tr class="memdesc:ac7052ed02d85a27c7833d221458fcb74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify the ZKP proof from a vehicle using a ZoKrates circuit.  <br /></td></tr>
 <tr class="separator:ac7052ed02d85a27c7833d221458fcb74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:aeb41b4f236a1b0c9ab732e67112adcbd" id="r_aeb41b4f236a1b0c9ab732e67112adcbd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb41b4f236a1b0c9ab732e67112adcbd">broadcast_range</a> = broadcast_range</td></tr>
+<tr class="separator:aeb41b4f236a1b0c9ab732e67112adcbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac507a88f172a32d93b55d9a79445ae9a" id="r_ac507a88f172a32d93b55d9a79445ae9a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac507a88f172a32d93b55d9a79445ae9a">vehicle_secrets</a> = vehicle_secrets</td></tr>
 <tr class="separator:ac507a88f172a32d93b55d9a79445ae9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -128,8 +130,8 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="afb924c6944c3bb9c43b837731e3f87de" name="afb924c6944c3bb9c43b837731e3f87de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb924c6944c3bb9c43b837731e3f87de">&#9670;&#160;</a></span>__init__()</h2>
+<a id="aadb2b92125b76fd29d2191173817151b" name="aadb2b92125b76fd29d2191173817151b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadb2b92125b76fd29d2191173817151b">&#9670;&#160;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -142,7 +144,12 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>vehicle_secrets</em></span>&#160;)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>vehicle_secrets</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>broadcast_range</em></span><span class="paramdefsep"> = </span><span class="paramdefval">500</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -217,6 +224,20 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="aeb41b4f236a1b0c9ab732e67112adcbd" name="aeb41b4f236a1b0c9ab732e67112adcbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb41b4f236a1b0c9ab732e67112adcbd">&#9670;&#160;</a></span>broadcast_range</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">broadcast_range = broadcast_range</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ac507a88f172a32d93b55d9a79445ae9a" name="ac507a88f172a32d93b55d9a79445ae9a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac507a88f172a32d93b55d9a79445ae9a">&#9670;&#160;</a></span>vehicle_secrets</h2>
 

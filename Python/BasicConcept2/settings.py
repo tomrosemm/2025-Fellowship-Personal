@@ -49,6 +49,16 @@ SUMO_STRAIGHTAWAY3_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway3", "straig
 # Path to SUMO straightaway4 configuration
 SUMO_STRAIGHTAWAY4_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway4", "straightaway4.sumocfg")
 
+## Test Settings
+
+## Experiment Settings
+TEST_1_LEVEL_1_TOTAL_STEPS = 1010
+TEST_1_LEVEL_1_SPAWN_STEP = 10
+TEST_1_LEVEL_2_STEP_LENGTH = 0.01
+TEST_1_LEVEL_2_TOTAL_STEPS = 51000
+TEST_1_LEVEL_2_TIME_TO_WAIT = 200 # SECONDS * 100, # OF 10MS STEPS
+TEST_1_LEVEL_2_SPAWN_STEP = 100
+TEST_1_LEVEL_2_RSU_RANGE = 125
 
 ## Network Settings
 # TraCI ports for SUMO connections

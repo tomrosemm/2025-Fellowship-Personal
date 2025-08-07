@@ -62,7 +62,14 @@ from settings import (
     SUMO_PORT_DATA_CONFIG,
     SUMO_TOOLS_PATH,
     SUMO_PORT_DYNAMIC_SPAWN,
-    SUMO_PORT_RSUWITHDELAY
+    SUMO_PORT_RSUWITHDELAY,
+    TEST_1_LEVEL_1_TOTAL_STEPS,
+    TEST_1_LEVEL_1_SPAWN_STEP,
+    TEST_1_LEVEL_2_STEP_LENGTH,
+    TEST_1_LEVEL_2_TOTAL_STEPS,
+    TEST_1_LEVEL_2_TIME_TO_WAIT,
+    TEST_1_LEVEL_2_SPAWN_STEP,
+    TEST_1_LEVEL_2_RSU_RANGE
 )
 
 # Uncomment if blockchain_interface is used
@@ -130,6 +137,7 @@ def setup_logging():
     
     logger.info("Experiment runner initialized")
     return logger
+
 
 ##
 # @brief Enable or disable debug mode for detailed output.
@@ -262,12 +270,13 @@ def run_auth_experiment():
     cleanup_zokrates_files()
 
 
+"""
+Experiment: Test_1_Level_1
+Spawns cars dynamically in SUMO (straightaway5.sumocfg), tracks throughput (number of cars completing their routes).
+Reports and logs throughput at the end.
+"""
 def run_test_1_level_1_experiment(print_data=True):
-    """
-    Experiment: Test_1_Level_1
-    Spawns cars dynamically in SUMO (straightaway5.sumocfg), tracks throughput (number of cars completing their routes).
-    Reports and logs throughput at the end.
-    """
+
     global experiment_count
     experiment_count += 1
     name = f"Test_1_Level_1_{experiment_count}"
@@ -309,7 +318,7 @@ def run_test_1_level_1_experiment(print_data=True):
 
     throughput = 0
     try:
-        total_steps = 1010
+        total_steps = TEST_1_LEVEL_1_TOTAL_STEPS
         car_counter = 0
         active_cars = {}  # Track active cars and their spawn times
         car_type = "car"
@@ -332,7 +341,7 @@ def run_test_1_level_1_experiment(print_data=True):
                     del active_cars[car_id]
 
             # Spawn a new car if no active cars are present and we're past step 10
-            if not active_cars and step >= 10:
+            if not active_cars and step >= TEST_1_LEVEL_1_SPAWN_STEP:
                 car_counter += 1
                 new_car_id = f"car{car_counter}"
                 traci.vehicle.add(
@@ -370,13 +379,14 @@ def run_test_1_level_1_experiment(print_data=True):
     print(f"\n{name} completed in {timer.elapsed():.8f} seconds.\n")
 
 
+"""
+Experiment: Test_1_Level_2
+Connects to straightaway6.sumocfg, spawns a car at step 1000, and whenever a car completes its route,
+immediately spawns another identical car, for 51000 steps.
+Implements RSU-car proximity logic: stops car for 2 seconds when within 125m of RSU, then resumes.
+"""
 def run_test_1_level_2_experiment(print_data=True):
-    """
-    Experiment: Test_1_Level_2
-    Connects to straightaway6.sumocfg, spawns a car at step 1000, and whenever a car completes its route,
-    immediately spawns another identical car, for 51000 steps.
-    Implements RSU-car proximity logic: stops car for 2 seconds when within 125m of RSU, then resumes.
-    """
+
     global experiment_count
     experiment_count += 1
     name = f"Test_1_Level_2_{experiment_count}"
@@ -408,7 +418,7 @@ def run_test_1_level_2_experiment(print_data=True):
         port=port,
         sumo_binary="sumo",
         connect_traci=True,
-        step_length=0.01,
+        step_length=TEST_1_LEVEL_2_STEP_LENGTH,
         sumo_tools_path=SUMO_TOOLS_PATH
     )
 
@@ -418,10 +428,10 @@ def run_test_1_level_2_experiment(print_data=True):
         return
 
     flags_raised = 0
-    flags_lowered = 0
+    # flags_lowered = 0
     throughput = 0
     try:
-        total_steps = 51000
+        total_steps = TEST_1_LEVEL_2_TOTAL_STEPS
         car_counter = 0
         active_cars = {}
         car_type = "car"
@@ -460,11 +470,11 @@ def run_test_1_level_2_experiment(print_data=True):
                     dx = rsu_pos[0] - car_pos[0]
                     dy = rsu_pos[1] - car_pos[1]
                     dist = (dx**2 + dy**2) ** 0.5
-                    if dist < 125:
+                    if dist < TEST_1_LEVEL_2_RSU_RANGE:
                         try:
                             current_speed = traci.vehicle.getSpeed(car_id)
                             traci.vehicle.setSpeed(car_id, 0)
-                            resume_step = step + 1000
+                            resume_step = step + TEST_1_LEVEL_2_TIME_TO_WAIT
                             stopped_cars[car_id] = resume_step
                             cars_that_triggered_stop.add(car_id)
                             flags_raised += 1
@@ -497,7 +507,7 @@ def run_test_1_level_2_experiment(print_data=True):
                     del active_cars[car_id]
 
             # Spawn a new car if no active cars are present and we're past step 1000
-            if not active_cars and step >= 100:
+            if not active_cars and step >= TEST_1_LEVEL_2_SPAWN_STEP:
                 car_counter += 1
                 new_car_id = f"car{car_counter}"
                 traci.vehicle.add(
