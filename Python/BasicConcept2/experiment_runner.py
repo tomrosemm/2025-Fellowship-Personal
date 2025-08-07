@@ -62,7 +62,7 @@ from settings import (
     SUMO_PORT_DATA_CONFIG,
     SUMO_TOOLS_PATH,
     SUMO_PORT_DYNAMIC_SPAWN,
-    
+    SUMO_PORT_RSUWITHDELAY
 )
 
 # Uncomment if blockchain_interface is used
