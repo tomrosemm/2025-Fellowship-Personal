@@ -1802,67 +1802,87 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         car_type = "car"
         car_route = "route1"
         finished_cars = 0
-        rsu_car_close_flag = False  # Flag for RSU-car proximity
-        rsu_car_slowing_down = False  # New flag to prevent repeated slowDown/speedUp
+        
+        # Track which cars have triggered the stop flag
+        cars_that_triggered_stop = set()
+        
+        # Track cars that are currently stopped and when they should resume
+        stopped_cars = {}  # car_id -> step to resume at
 
         for step in range(total_steps):
-            # --- Move RSU-car distance logic to top level of loop ---
+            # --- Handle cars that need to resume after stop ---
+            for car_id in list(stopped_cars.keys()):
+                if step >= stopped_cars[car_id]:
+                    # Time to resume this car
+                    try:
+                        if car_id in traci.vehicle.getIDList():
+                            traci.vehicle.setSpeed(car_id, -1)  # Resume normal speed
+                            if print_data:
+                                print(f"*** RESUMING: Car {car_id} is resuming normal speed at step {step} ***")
+                    except Exception as e:
+                        print(f"Could not resume car {car_id}: {e}")
+                    
+                    # Remove from stopped cars dict
+                    del stopped_cars[car_id]
+            
+            # --- RSU-car interaction logic ---
             rsu_ids = []
             car_ids = []
             try:
                 rsu_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "rsu"]
-                car_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "car"]
-                if rsu_ids and car_ids:
+                car_ids = [vid for vid in traci.vehicle.getIDList() if traci.vehicle.getTypeID(vid) == "car" and vid not in cars_that_triggered_stop]
+                
+                # Process only cars that haven't triggered a stop before
+                for car_id in car_ids:
+                    if car_id in stopped_cars:
+                        continue  # Skip cars that are currently stopped
+                        
+                    if not rsu_ids:
+                        continue  # Skip if no RSUs
+                        
                     rsu_pos = traci.vehicle.getPosition(rsu_ids[0])
-                    car_pos = traci.vehicle.getPosition(car_ids[0])
+                    car_pos = traci.vehicle.getPosition(car_id)
                     dx = rsu_pos[0] - car_pos[0]
                     dy = rsu_pos[1] - car_pos[1]
                     dist = (dx**2 + dy**2) ** 0.5
-                    # --- Flag logic ---
+                    
+                    # Check if car is within threshold distance
                     if dist < 125:
-                        if not rsu_car_close_flag:
-                            rsu_car_close_flag = True
-                            print(f"*** FLAG RAISED: RSU and car are within 100 meters at step {step} (distance: {dist:.2f} m) ***")
-                            flags_raised += 1
-                        # Only slow down if not already in process
-                        if not rsu_car_slowing_down:
-                            rsu_car_slowing_down = True
-                            try:
-                                traci.vehicle.slowDown(car_ids[0], 1.0, 0.01)  # This is correct - slowing down
-                                if print_data:
-                                    print(f"Slowing down {car_ids[0]} to 1.0 m/s over 0.01 second")
-                            except Exception as e:
-                                print(f"Could not slow down car {car_ids[0]}: {e}")
-                    else:
-                        if rsu_car_close_flag:
-                            rsu_car_close_flag = False
-                            print(f"*** FLAG LOWERED: RSU and car are now farther than 125 meters at step {step} (distance: {dist:.2f} m) ***")
-                            flags_lowered += 1
-                        # Only speed up if was previously slowed down
-                        if rsu_car_slowing_down:
-                            rsu_car_slowing_down = False
-                            try:
-                                traci.vehicle.slowDown(car_ids[0], 45.0, 0.01)
-                                if print_data:
-                                    print(f"Speeding up {car_ids[0]} to 45.0 m/s over 0.01 second")
-                            except Exception as e:
-                                print(f"Could not speed up car {car_ids[0]}: {e}")
-                    if step % 100 == 0:
-                        print(f"Step {step}: Distance between RSU ({rsu_ids[0]}) and car ({car_ids[0]}): {dist:.2f} m")
+                        # Stop the car for 2 seconds (200 steps at 0.01s per step)
                         try:
-                            car_speed = traci.vehicle.getSpeed(car_ids[0])
-                            print(f"Step {step}: Speed of car ({car_ids[0]}): {car_speed:.2f} m/s")
+                            # Get current speed for debug info
+                            current_speed = traci.vehicle.getSpeed(car_id)
+                            
+                            # Stop the car
+                            traci.vehicle.setSpeed(car_id, 0)
+                            
+                            # Calculate resume step (2 seconds later)
+                            resume_step = step + 200
+                            stopped_cars[car_id] = resume_step
+                            
+                            # Mark this car as having triggered a stop
+                            cars_that_triggered_stop.add(car_id)
+                            
+                            # Increment flag count
+                            flags_raised += 1
+                            
+                            # Debug output
+                            print(f"*** STOPPING: Car {car_id} at step {step} (distance: {dist:.2f} m, speed: {current_speed:.2f} m/s) ***")
+                            print(f"*** Will resume at step {resume_step} ***")
+                            
                         except Exception as e:
-                            print(f"Step {step}: Could not get speed for car {car_ids[0]}: {e}")
+                            print(f"Could not stop car {car_id}: {e}")
+            
             except Exception as e:
                 if step % 1000 == 0:
-                    print(f"Step {step}: Could not compute RSU-car distance: {e}")
+                    print(f"Step {step}: Could not compute RSU-car interactions: {e}")
 
             # Exit if we've reached total_steps
             if step >= total_steps - 1:
                 print(f"\nReached max steps ({total_steps}). Ending simulation.")
                 print(f"Total cars finished: {finished_cars}")
-                print(f"Flags raised: {flags_raised}, Flags lowered: {flags_lowered}")
+                print(f"Flags raised (cars stopped): {flags_raised}")
+                print(f"Cars that triggered stop: {len(cars_that_triggered_stop)}")
                 break
 
             traci.simulationStep()
