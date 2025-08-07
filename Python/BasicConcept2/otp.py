@@ -12,7 +12,8 @@
 #   - Returns both the OTP and the timestamp used for generation.
 ##
 
-# Imports
+## Imports
+#Libraries
 import time
 import hashlib
 

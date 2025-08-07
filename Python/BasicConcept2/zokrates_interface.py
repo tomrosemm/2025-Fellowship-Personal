@@ -3,12 +3,12 @@
 # @author Tom Rose
 #
 # @brief
-#   Provides an interface for generating and verifying zero-knowledge proofs (ZKPs) using ZoKrates, both in simulation and via CLI commands.
+#   Provides an interface for generating and verifying zero-knowledge proofs (ZKPs) using ZoKrates, both in simulation form and via CLI commands
 #
 # @details
-#   - Simulates ZKP generation by hashing OTP and timestamp.
-#   - Provides wrapper functions to compile ZoKrates circuits, set up keys, compute witnesses, generate proofs, and verify proofs using the ZoKrates CLI.
-#   - Designed to be used by Vehicle and RSU classes for proof generation and verification.
+#   - Simulates ZKP generation by hashing OTP and timestamp
+#   - Provides wrapper functions to compile ZoKrates circuits, set up keys, compute witnesses, generate proofs, and verify proofs using the ZoKrates CLI
+#   - Designed to be used by Vehicle and RSU classes for proof generation and verification
 ##
 
 # Imports
