@@ -645,7 +645,7 @@ def test_EndToEnd_MultipleVehicles_Simulated():
     # Variables to hold vehicles and RSU secrets
     num_vehicles = 3
     vehicles = {}
-    rsu_secrets = {}
+    # unused_rsu_secrets = {}
     
     # For each vehicle, create a unique ID and secret
     for i in range(num_vehicles):
@@ -942,6 +942,9 @@ def test_DataTransfer_SumoAndTraCI_UsingSimpleNet(print_data=True):
         print("[SUMO TraCI Test] Data transfer test failed.\n")
     
     timer.stop()
+    
+    kill_processes_on_port(port)
+    
     # Print elapsed time for the test
     print(timer)
 
@@ -1017,6 +1020,9 @@ def test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(print_data=True):
         print("[SUMO TraCI Test] .sumocfg data transfer test failed.\n")
 
     timer.stop()
+    
+    kill_processes_on_port(port)
+    
     # Print elapsed time for the test
     print(timer)
 
@@ -1094,6 +1100,9 @@ def test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(print_data=True):
         print("[SUMO TraCI Test] intersection2.sumocfg data transfer test failed.\n")
     
     timer.stop()
+    
+    kill_processes_on_port(port)
+    
     # Print elapsed time for the test
     print(timer)
 
@@ -1170,6 +1179,9 @@ def test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(print_data=True):
         print("[SUMO TraCI Test] straightaway1.sumocfg data transfer test failed.\n")
     
     timer.stop()
+    
+    kill_processes_on_port(port)
+    
     # Print elapsed time for the test
     print(timer)
 
@@ -1245,6 +1257,9 @@ def test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(print_data=True):
         print("[SUMO TraCI Test] straightaway2.sumocfg data transfer test failed.\n")
     
     timer.stop()
+    
+    kill_processes_on_port(port)
+    
     # Print elapsed time for the test
     print(timer)
 
@@ -1436,6 +1451,9 @@ def test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(print_data=True)
         print("[SUMO Manipulation Test] Vehicle manipulation test failed.")
     
     timer.stop()
+    
+    kill_processes_on_port(port)
+    
     print(timer)
 
 
@@ -1645,6 +1663,8 @@ def test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(prin
     
     timer.stop()
     
+    kill_processes_on_port(port)
+    
     # Print elapsed time for the test
     print(timer)
 
@@ -1699,6 +1719,7 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
     if proc is None or traci is None:
         return
 
+    # Initialize variables for the simulation
     try:
         total_steps = 1010
         car_counter = 0
@@ -1779,6 +1800,9 @@ def test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(p
         print("[SUMO Dynamic Car Spawning Test] Test failed.\n")
 
     timer.stop()
+    
+    kill_processes_on_port(port)
+    
     print(timer)
 
 
@@ -1931,6 +1955,7 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
                             # Stop the car
                             traci.vehicle.setSpeed(car_id, 0)
                             
+
                             # Calculate resume step (2 seconds later)
                             resume_step = step + 200
                             stopped_cars[car_id] = resume_step
@@ -2056,6 +2081,9 @@ def test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(pr
         print("[Live Manipulation - Rsu Message With Delay] Test failed.\n")
 
     timer.stop()
+    
+    kill_processes_on_port(port)
+    
     print(timer)
 
 
@@ -2081,125 +2109,63 @@ def testAndScenarioRunner():
     timer = Timer("Test and Scenario Runner Timer")
     timer.start()
 
-    # 3 - Run Simulated ZKP Test
-    test_VehicleRsuBasicInteraction_SimulatedZkp()
-    time.sleep(.5)
-    # clear_console()
+    # Define list of all test functions and their print_data parameter if needed
+    test_functions = [
+        (test_VehicleRsuBasicInteraction_SimulatedZkp, None),
+        (test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain, None),
+        (test_EndToEnd_SimulatedZkpAndBlockchain_Success, None),
+        (test_EndToEnd_SimulatedZkpAndBlockchain_Failure, None),
+        (test_PartialWorkflow_RealZokrates_UsingDummyCircuit, None),
+        (test_PartialWorkflow_MultipleVehicles_Simulated, None),
+        (test_EndToEnd_MultipleVehicles_Simulated, None),
+        (test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit, None),
+        (test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit, None),
+        (lambda: test_sumo_connection_wrapper(tested, passed), None),
+        (test_Zokrates_BasicConnectionTest_UsingDummyCircuit, None),
+        (test_DataTransfer_SumoAndTraCI_UsingSimpleNet, True),
+        (test_DataTransfer_SumoAndTraCI_UsingIntersection1Config, True),
+        (test_DataTransfer_SumoAndTraCI_UsingIntersection2Config, True),
+        (test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config, True),
+        (test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config, True),
+        (test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config, True),
+        (test_Zokrates_UsingVtoICircuit, None),
+        (test_Zokrates_UsingAuthCircuit, None),
+        (test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config, True),
+        (test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5, True),
+        (test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6, True)
+    ]
 
-    # 4 - Run Simulated Blockchain ZKP Test
-    test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain()
-    time.sleep(.5)
-    # clear_console()
-
-    # 5 - Run Simulated End-to-End Scenario: Successful Authentication
-    test_EndToEnd_SimulatedZkpAndBlockchain_Success()
-    time.sleep(.5)
-    # clear_console()
-
-    # 6 - Run Simulated End-to-End Scenario: Failed Authentication
-    test_EndToEnd_SimulatedZkpAndBlockchain_Failure()
-    time.sleep(.5)
-    # clear_console()
-
-    # 7 - Run Real ZoKrates End-to-End Test with dummy.zok
-    test_PartialWorkflow_RealZokrates_UsingDummyCircuit()
-    time.sleep(.5)
-    # clear_console()
-
-    # 8 - Simulated ZKP Isolated Test: Multiple Vehicles
-    test_PartialWorkflow_MultipleVehicles_Simulated()
-    time.sleep(.5)
-    # clear_console()
-
-    # 9 - Simulated End-to-End Test: Multiple Vehicles
-    test_EndToEnd_MultipleVehicles_Simulated()
-    time.sleep(.5)
-    # clear_console()
-
-    # 10 - ZoKrates-Integrated Isolated Test: Multiple Vehicles
-    test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit()
-    time.sleep(.5)
-    # clear_console()
-
-    # 11 - ZoKrates-Integrated End-to-End Test: Multiple Vehicles
-    test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit()
-    time.sleep(.5)
-    # clear_console()
-
-    # 12 - Run SUMO Connection Tests (Basic Network + Configuration File)
-    tested, passed = test_sumo_connection_wrapper(tested, passed)
-    time.sleep(.5)
-    # clear_console()
-
-    # 13 - Run ZoKrates CLI Connection Test
-    test_Zokrates_BasicConnectionTest_UsingDummyCircuit()
-    time.sleep(.5)
-    # clear_console()
-
-    # 14 - Run SUMO TraCI Data Transfer Test
-    test_DataTransfer_SumoAndTraCI_UsingSimpleNet(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 15 - Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)
-    test_DataTransfer_SumoAndTraCI_UsingIntersection1Config(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 15b - Run SUMO TraCI Data Transfer Test (intersection2.sumocfg, explicit vehicles)
-    test_DataTransfer_SumoAndTraCI_UsingIntersection2Config(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 15c - Run SUMO TraCI Data Transfer Test (straightaway1.sumocfg)
-    test_DataTransfer_SumoAndTraCI_UsingStraightaway1Config(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 15d - Run SUMO TraCI Data Transfer Test (straightaway2.sumocfg)
-    test_DataTransfer_SumoAndTraCI_UsingStraightaway2Config(True)
-    time.sleep(.5)
-    # clear_console()
+    # Run each test function in sequence
+    for test_func, print_data in test_functions:
+        if print_data is not None:
+            test_func(print_data)
+        else:
+            test_func()
+        time.sleep(.5)
+        # clear_console() # Commented out as it was commented in original
     
-    # 15e - Run SUMO Live Vehicle Manipulation Test (straightaway1.sumocfg)
-    test_LiveManipulation_SumoAndTraCI_UsingStraightaway1Config(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 16 - Run Vehicle-to-Infrastructure ZKP Test with the
-    # zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication
-    test_Zokrates_UsingVtoICircuit()
-    time.sleep(.5)
-    # clear_console()
-    
-    # 17 - Run Authentication Circuit Test with auth.zok
-    test_Zokrates_UsingAuthCircuit()
-    time.sleep(.5)
-    # clear_console()
-    
-    # 18 - Run SUMO Small Step Length Test (10ms steps)
-    test_DataTransfer_SumoAndTraCI_SmallStepLength_UsingStraightaway1Config(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # --- Add any tests not already in the runner ---
-
-    # 19 - Run Dynamic Car Spawning (using straightaway5.sumocfg) Test
-    test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(True)
-    time.sleep(.5)
-    # clear_console()
-
-    # 20 - Run RSU Message With Delay (using straightaway5.sumocfg) Test
-    test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(True)
-    time.sleep(.5)
-    # clear_console()
-    
-    # SUMO cleanup after connection tests
+    # SUMO/TraCI cleanup after tests
     cleanup_traci_connection()
-    kill_processes_on_port(SUMO_PORT_BASIC)
-    kill_processes_on_port(SUMO_PORT_CONFIG)
-    kill_processes_on_port(SUMO_PORT_DATA)
-    kill_processes_on_port(SUMO_PORT_DYNAMIC_SPAWN)
+    
+    # List of ports to clean up
+    ports_to_cleanup = [
+        SUMO_PORT_DATA,
+        SUMO_PORT_DATA_CONFIG,
+        SUMO_PORT_BASIC,
+        SUMO_PORT_CONFIG,
+        SUMO_PORT_DYNAMIC_SPAWN,
+        SUMO_PORT_LIVE_MANIPULATION,
+        SUMO_PORT_SMALL_STEP,
+        SUMO_PORT_DATA_INTERSECTION2_CONFIG,
+        SUMO_PORT_DATA_STRAIGHTAWAY1_CONFIG,
+        SUMO_PORT_DATA_STRAIGHTAWAY2_CONFIG,
+        SUMO_PORT_RSUWITHDELAY
+    ]
+
+    # Clean up all ports
+    for port in ports_to_cleanup:
+        kill_processes_on_port(port)
+    
     time.sleep(2)
 
     # Stop timer and print elapsed time for the test suite
