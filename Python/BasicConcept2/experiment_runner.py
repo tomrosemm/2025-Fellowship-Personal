@@ -298,20 +298,33 @@ def run_test_1_level_1_experiment(print_data=True):
     timer = Timer(f"{name} Timer")
     timer.start()
 
-    # Use the correct config file path and port
+    # # Use the correct config file path and port
+    # sumo_cfg = os.path.join(
+    #     os.path.dirname(__file__),
+    #     "..", "..", "SUMO", "Built Sims", "StraightAway5", "straightaway5.sumocfg"
+    # )
+    
+        # Use the correct config file path and port
     sumo_cfg = os.path.join(
         os.path.dirname(__file__),
-        "..", "..", "SUMO", "Built Sims", "StraightAway5", "straightaway5.sumocfg"
+        "..", "..", "SUMO", "Built Sims", "StraightAway6", "straightaway6.sumocfg"
     )
+    
     sumo_cfg = os.path.abspath(sumo_cfg)
     port = SUMO_PORT_DYNAMIC_SPAWN
 
+    # # Check config file exists
+    # if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
+    #     if logger:
+    #         logger.error(f"Config file not found: {sumo_cfg}")
+    #     return
+
     # Check config file exists
-    if not check_file_exists(sumo_cfg, "SUMO straightaway5 configuration file"):
+    if not check_file_exists(sumo_cfg, "SUMO straightaway6 configuration file"):
         if logger:
             logger.error(f"Config file not found: {sumo_cfg}")
         return
-
+    
     # Start SUMO and connect via TraCI
     proc, traci, _, temp_config, temp_output_dir = start_sumo_simulation(
         file_path=sumo_cfg,

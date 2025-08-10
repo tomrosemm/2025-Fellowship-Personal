@@ -13,6 +13,8 @@
 #   - Lists files to clean up for ZoKrates
 ##
 
+## Imports
+# Libraries
 import os
 
 ## Base Directories
@@ -52,7 +54,8 @@ SUMO_STRAIGHTAWAY4_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway4", "straig
 ## Test Settings
 
 ## Experiment Settings
-TEST_1_LEVEL_1_TOTAL_STEPS = 1010
+# TEST_1_LEVEL_1_TOTAL_STEPS = 1010
+TEST_1_LEVEL_1_TOTAL_STEPS = 510
 TEST_1_LEVEL_1_SPAWN_STEP = 10
 TEST_1_LEVEL_2_STEP_LENGTH = 0.01
 TEST_1_LEVEL_2_TOTAL_STEPS = 51000
@@ -61,7 +64,7 @@ TEST_1_LEVEL_2_SPAWN_STEP = 100
 TEST_1_LEVEL_2_RSU_RANGE = 125
 
 ## Network Settings
-# TraCI ports for SUMO connections
+# Ports for SUMO/TraCI connections
 SUMO_PORT_BASIC = 8813
 SUMO_PORT_CONFIG = 8814
 SUMO_PORT_DATA = 8815

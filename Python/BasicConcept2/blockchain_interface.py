@@ -18,7 +18,10 @@ from web3 import Web3
 import json
 
 # Classes and functions
-from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE, BLOCKCHAIN_PROVIDER_URL
+from settings import (
+    DEBUG_MODE as DEFAULT_DEBUG_MODE,
+    BLOCKCHAIN_PROVIDER_URL
+)
 
 ## @var DEBUG_MODE
 ## @brief Global variable to control debug output.
