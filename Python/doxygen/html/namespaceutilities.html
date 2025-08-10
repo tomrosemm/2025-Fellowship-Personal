@@ -94,6 +94,7 @@ $(function(){ initResizable(false); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ab99e9ac28d1b1b530844ef8925d90b67" id="r_ab99e9ac28d1b1b530844ef8925d90b67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab99e9ac28d1b1b530844ef8925d90b67">check_file_exists</a> (filepath, description)</td></tr>
+<tr class="memdesc:ab99e9ac28d1b1b530844ef8925d90b67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a file exists and return the result, printing an error if not.  <br /></td></tr>
 <tr class="separator:ab99e9ac28d1b1b530844ef8925d90b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3cb49217c699d57b77f5d7d1be8a317" id="r_af3cb49217c699d57b77f5d7d1be8a317"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3cb49217c699d57b77f5d7d1be8a317">clear_console</a> ()</td></tr>
 <tr class="memdesc:af3cb49217c699d57b77f5d7d1be8a317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the console screen based on the operating system.  <br /></td></tr>
@@ -114,6 +115,7 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a84cb21ca8841a588311a03bd9c054d76" id="r_a84cb21ca8841a588311a03bd9c054d76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84cb21ca8841a588311a03bd9c054d76">DEBUG_MODE</a> = DEFAULT_DEBUG_MODE</td></tr>
+<tr class="memdesc:a84cb21ca8841a588311a03bd9c054d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variable to control debug output.  <br /></td></tr>
 <tr class="separator:a84cb21ca8841a588311a03bd9c054d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -136,6 +138,20 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Check if a file exists and return the result, printing an error if not. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filepath</td><td>Path to the file to check </td></tr>
+    <tr><td class="paramname">description</td><td>Description of the file for error output </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if file exists, False otherwise</dd></dl>
+<p>Steps:</p><ol type="1">
+<li>Check if the file exists at the given path</li>
+<li>Print an error message if not found </li>
+</ol>
+
 </div>
 </div>
 <a id="af3cb49217c699d57b77f5d7d1be8a317" name="af3cb49217c699d57b77f5d7d1be8a317"></a>
@@ -154,10 +170,10 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clears the console screen based on the operating system. </p>
-<p>Clears the console using the appropriate command for the OS.</p>
+<p>Clears the console using the appropriate command for the OS</p>
 <p>Steps:</p><ol type="1">
-<li>If Windows, use 'cls'.</li>
-<li>Otherwise, use 'clear'. </li>
+<li>If Windows, use 'cls'</li>
+<li>Otherwise, use 'clear' </li>
 </ol>
 
 </div>
@@ -180,14 +196,14 @@ Variables</h2></td></tr>
 <p>Check if a port is available for use. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">port</td><td>Port number to check. </td></tr>
+    <tr><td class="paramname">port</td><td>Port number to check </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if port is available, False otherwise.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if bind succeeds and port is available, False otherwise</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Attempt to bind to the port.</li>
-<li>Return True if successful, False otherwise. </li>
+<li>Attempt to bind to the port</li>
+<li>Return True if successful, False otherwise </li>
 </ol>
 
 </div>
@@ -210,14 +226,14 @@ Variables</h2></td></tr>
 <p>Kill any processes using the specified port. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">port</td><td>Port number to clean up. </td></tr>
+    <tr><td class="paramname">port</td><td>Port number to clean up </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if any processes were killed, False otherwise.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if any processes were killed, False otherwise</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Iterate over processes and kill those using the port.</li>
-<li>Wait for OS to release the port if any were killed. </li>
+<li>Iterate over processes and kill those using the port</li>
+<li>Wait for OS to release the port if any were killed </li>
 </ol>
 
 </div>
@@ -240,12 +256,12 @@ Variables</h2></td></tr>
 <p>Enable or disable debug mode for detailed output. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">enabled</td><td>True to enable debug mode, False to disable.</td></tr>
+    <tr><td class="paramname">enabled</td><td>- True to enable debug mode, False to disable</td></tr>
   </table>
   </dd>
 </dl>
 <p>Steps:</p><ol type="1">
-<li>Set the global DEBUG_MODE variable to the provided value. </li>
+<li>Set the global DEBUG_MODE variable to the provided value </li>
 </ol>
 
 </div>
@@ -272,15 +288,15 @@ Variables</h2></td></tr>
 <p>Wait for a port to become available, forcefully cleaning if needed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">port</td><td>Port number to wait for. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Timeout in seconds. </td></tr>
+    <tr><td class="paramname">port</td><td>Port number to wait for </td></tr>
+    <tr><td class="paramname">timeout</td><td>Timeout in seconds </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if port becomes available, False otherwise.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if port becomes available, False otherwise</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Check port availability in a loop.</li>
-<li>After 3 failed attempts, try to kill processes on the port. </li>
+<li>Check port availability in a loop</li>
+<li>After 3 failed attempts, try to kill processes on the port </li>
 </ol>
 
 </div>
@@ -297,6 +313,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Global variable to control debug output. </p>
 
 </div>
 </div>

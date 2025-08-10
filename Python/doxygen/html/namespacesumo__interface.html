@@ -155,14 +155,14 @@ Variables</h2></td></tr>
 <p>Check if all files referenced in the configuration file exist. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config_path</td><td>Path to SUMO configuration file. </td></tr>
+    <tr><td class="paramname">config_path</td><td>Path to SUMO configuration file </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>tuple (bool, list) - True if all files exist, list of missing files.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>tuple (bool, list) - True if all files exist, list of missing files</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Parse XML and check file references.</li>
-<li>Return missing files if any. </li>
+<li>Parse XML and check file references</li>
+<li>Return missing files if any </li>
 </ol>
 
 </div>
@@ -194,16 +194,16 @@ Variables</h2></td></tr>
 <p>Clean up SUMO process and TraCI connection. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">proc</td><td>SUMO process. </td></tr>
-    <tr><td class="paramname">port</td><td>Port used by TraCI. </td></tr>
-    <tr><td class="paramname">traci_module</td><td>TraCI module.</td></tr>
+    <tr><td class="paramname">proc</td><td>SUMO process </td></tr>
+    <tr><td class="paramname">port</td><td>Port used by TraCI </td></tr>
+    <tr><td class="paramname">traci_module</td><td>TraCI module</td></tr>
   </table>
   </dd>
 </dl>
 <p>Steps:</p><ol type="1">
-<li>Close TraCI connection if active.</li>
-<li>Terminate SUMO process.</li>
-<li>Kill any processes still using the port. </li>
+<li>Close TraCI connection if active</li>
+<li>Terminate SUMO process</li>
+<li>Kill any processes still using the port </li>
 </ol>
 
 </div>
@@ -225,8 +225,8 @@ Variables</h2></td></tr>
 
 <p>Ensure any existing TraCI connection is properly closed. </p>
 <p>Steps:</p><ol type="1">
-<li>Import traci and close connection if loaded.</li>
-<li>Wait for cleanup. </li>
+<li>Import traci and close connection if loaded</li>
+<li>Wait for cleanup </li>
 </ol>
 
 </div>
@@ -249,16 +249,16 @@ Variables</h2></td></tr>
 <p>Create a temporary config file without GUI elements and with essential simulation parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">original_config_path</td><td>Path to original SUMO config file. </td></tr>
+    <tr><td class="paramname">original_config_path</td><td>Path to original SUMO config file </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>tuple (str, str) - Path to temp config file, output directory.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>tuple (str, str) - Path to temp config file, output directory</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Remove GUI elements.</li>
-<li>Convert relative paths to absolute.</li>
-<li>Add time and report settings.</li>
-<li>Write to temp file. </li>
+<li>Remove GUI elements</li>
+<li>Convert relative paths to absolute</li>
+<li>Add time and report settings</li>
+<li>Write to temp file </li>
 </ol>
 
 </div>
@@ -305,16 +305,23 @@ Variables</h2></td></tr>
 <p>Run a SUMO simulation for a specified number of steps and collect vehicle data, with flexible options. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">traci</td><td>TraCI module instance with an active connection. </td></tr>
-    <tr><td class="paramname">steps</td><td>Number of simulation steps to run. </td></tr>
+    <tr><td class="paramname">traci</td><td>TraCI module instance with an active connection </td></tr>
+    <tr><td class="paramname">steps</td><td>Number of simulation steps to run </td></tr>
     <tr><td class="paramname">print_data</td><td>If True, print simulation data to screen. </td></tr>
     <tr><td class="paramname">collect_data</td><td>List of data types to collect (e.g. ["position", "speed", "color"]) </td></tr>
-    <tr><td class="paramname">step_delay</td><td>Time in seconds to wait between steps. </td></tr>
-    <tr><td class="paramname">vehicle_callbacks</td><td>Dictionary of callback functions to execute on vehicles. </td></tr>
+    <tr><td class="paramname">step_delay</td><td>Time in seconds to wait between steps </td></tr>
+    <tr><td class="paramname">vehicle_callbacks</td><td>Dictionary of callback functions to execute on vehicles </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>List of dictionaries containing simulation data for each step. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>List of dictionaries containing simulation data for each step</dd></dl>
+<p>Steps:</p><ol type="1">
+<li>Advances the simulation by the specified number of steps</li>
+<li>Collects data for each vehicle at each step, including position, speed, color, lane, and lane position</li>
+<li>Executes any specified callback functions for each vehicle at each step</li>
+<li>Optionally prints the collected data to the screen</li>
+<li>Waits for the specified delay between steps </li>
+</ol>
 
 </div>
 </div>
@@ -336,12 +343,12 @@ Variables</h2></td></tr>
 <p>Enable or disable debug mode for detailed output. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">enabled</td><td>True to enable debug mode, False to disable.</td></tr>
+    <tr><td class="paramname">enabled</td><td>True to enable debug mode, False to disable</td></tr>
   </table>
   </dd>
 </dl>
 <p>Steps:</p><ol type="1">
-<li>Set the global DEBUG_MODE variable to the provided value. </li>
+<li>Set the global DEBUG_MODE variable to the provided value </li>
 </ol>
 
 </div>
@@ -364,10 +371,10 @@ Variables</h2></td></tr>
 <p>Start the SUMO process with the specified network file and port. </p>
 <dl class="section return"><dt>Returns</dt><dd>tuple: (proc, sumo_binary, SUMO_NET_FILE)</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Build SUMO command.</li>
-<li>Start SUMO process.</li>
-<li>Wait for process to start.</li>
-<li>Return process and info. </li>
+<li>Build SUMO command</li>
+<li>Start SUMO process</li>
+<li>Wait for process to start</li>
+<li>Return process and info </li>
 </ol>
 
 </div>
@@ -424,18 +431,26 @@ Variables</h2></td></tr>
 <p>Start a SUMO simulation with flexible configuration. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">file_path</td><td>Path to SUMO network file or config file. </td></tr>
-    <tr><td class="paramname">is_config</td><td>If True, file_path is treated as a config file; otherwise as a network file. </td></tr>
-    <tr><td class="paramname">port</td><td>Port to use for TraCI connection. </td></tr>
-    <tr><td class="paramname">sumo_binary</td><td>SUMO binary to use ('sumo' or 'sumo-gui'). </td></tr>
-    <tr><td class="paramname">connect_traci</td><td>If True, establishes TraCI connection. </td></tr>
-    <tr><td class="paramname">step_length</td><td>Simulation step length in seconds. </td></tr>
-    <tr><td class="paramname">additional_args</td><td>Dictionary of additional command-line arguments. </td></tr>
-    <tr><td class="paramname">sumo_tools_path</td><td>Path to SUMO tools directory. </td></tr>
+    <tr><td class="paramname">file_path</td><td>Path to SUMO network file or config file </td></tr>
+    <tr><td class="paramname">is_config</td><td>If True, file_path is treated as a config file; otherwise as a network file </td></tr>
+    <tr><td class="paramname">port</td><td>Port to use for TraCI connection </td></tr>
+    <tr><td class="paramname">sumo_binary</td><td>SUMO binary to use ('sumo' or 'sumo-gui') </td></tr>
+    <tr><td class="paramname">connect_traci</td><td>If True, establishes TraCI connection </td></tr>
+    <tr><td class="paramname">step_length</td><td>Simulation step length in seconds </td></tr>
+    <tr><td class="paramname">additional_args</td><td>Dictionary of additional command-line arguments </td></tr>
+    <tr><td class="paramname">sumo_tools_path</td><td>Path to SUMO tools directory </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>tuple (proc, traci_module, config_file, temp_config, temp_output_dir) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>tuple (proc, traci_module, config_file, temp_config, temp_output_dir)</dd></dl>
+<p>Steps:</p><ol type="1">
+<li>Cleans up any existing processes using the specified port</li>
+<li>Optionally imports TraCI module for connection</li>
+<li>Creates a temporary non-GUI config file if a config file is specified</li>
+<li>Builds the SUMO command with the network or config file and additional options</li>
+<li>Starts the SUMO process and waits for initialization</li>
+<li>If requested, establishes a TraCI connection to the running SUMO instance </li>
+</ol>
 
 </div>
 </div>
@@ -461,11 +476,11 @@ Variables</h2></td></tr>
 <p>Start the SUMO process with the specified config file and port. </p>
 <dl class="section return"><dt>Returns</dt><dd>tuple (proc, sumo_binary, config_file, temp_config, temp_output_dir)</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Create a temporary config file without GUI elements.</li>
-<li>Build SUMO command.</li>
-<li>Start SUMO process.</li>
-<li>Wait for process to start.</li>
-<li>Return process and info. </li>
+<li>Create a temporary config file without GUI elements</li>
+<li>Build SUMO command</li>
+<li>Start SUMO process</li>
+<li>Wait for process to start</li>
+<li>Return process and info </li>
 </ol>
 
 </div>
@@ -486,12 +501,12 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Test the connection to SUMO using a .sumocfg configuration file. </p>
-<dl class="section return"><dt>Returns</dt><dd>True if connection succeeded, False otherwise.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if connection succeeded, False otherwise</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Aggressively clean up port and connections.</li>
-<li>Start SUMO with config file.</li>
-<li>Attempt to connect via TraCI.</li>
-<li>Clean up after test. </li>
+<li>Aggressively clean up port and connections</li>
+<li>Start SUMO with config file</li>
+<li>Attempt to connect via TraCI</li>
+<li>Clean up after test </li>
 </ol>
 
 </div>
@@ -512,12 +527,12 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Test the connection to SUMO using TraCI. </p>
-<dl class="section return"><dt>Returns</dt><dd>True if connection succeeded, False otherwise.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if connection succeeded, False otherwise</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Aggressively clean up port and connections.</li>
-<li>Start SUMO with network file.</li>
-<li>Attempt to connect via TraCI.</li>
-<li>Clean up after test. </li>
+<li>Aggressively clean up port and connections</li>
+<li>Start SUMO with network file</li>
+<li>Attempt to connect via TraCI</li>
+<li>Clean up after test </li>
 </ol>
 
 </div>
@@ -544,12 +559,12 @@ Variables</h2></td></tr>
 <p>Run both SUMO connection tests and count as tests. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tested</td><td>Current count of tests run. </td></tr>
-    <tr><td class="paramname">passed</td><td>Current count of tests passed. </td></tr>
+    <tr><td class="paramname">tested</td><td>Current count of tests run </td></tr>
+    <tr><td class="paramname">passed</td><td>Current count of tests passed </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>tuple (tested, passed) Updated counts of tests run and passed. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>tuple (tested, passed) Updated counts of tests run and passed </dd></dl>
 
 </div>
 </div>
@@ -571,12 +586,12 @@ Variables</h2></td></tr>
 autotoc_md0</h2>
 <h1><a class="anchor" id="autotoc_md1"></a>
 autotoc_md1</h1>
-<p>Start SUMO and connect via TraCI. </p>
+<p>Start SUMO and connect via TraCI </p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 autotoc_md2</h1>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sumo_cmd</td><td>SUMO command list. </td></tr>
+    <tr><td class="paramname">sumo_cmd</td><td>SUMO command list </td></tr>
   </table>
   </dd>
 </dl>
@@ -584,7 +599,7 @@ autotoc_md2</h1>
 autotoc_md3</h1>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">port</td><td>Port to use for TraCI connection. </td></tr>
+    <tr><td class="paramname">port</td><td>Port to use for TraCI connection </td></tr>
   </table>
   </dd>
 </dl>
@@ -592,31 +607,31 @@ autotoc_md3</h1>
 autotoc_md4</h1>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sumo_tools_path</td><td>Path to SUMO tools directory. </td></tr>
+    <tr><td class="paramname">sumo_tools_path</td><td>Path to SUMO tools directory </td></tr>
   </table>
   </dd>
 </dl>
 <h1><a class="anchor" id="autotoc_md5"></a>
 autotoc_md5</h1>
-<dl class="section return"><dt>Returns</dt><dd>tuple (proc, traci_module) - SUMO process and TraCI module. # </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>tuple (proc, traci_module) - SUMO process and TraCI module # </dd></dl>
 <h1><a class="anchor" id="autotoc_md6"></a>
 autotoc_md6</h1>
 <h1><a class="anchor" id="autotoc_md7"></a>
 Steps:</h1>
 <h1><a class="anchor" id="autotoc_md8"></a>
-1. Add SUMO tools to path.</h1>
+1. Add SUMO tools to path</h1>
 <h1><a class="anchor" id="autotoc_md9"></a>
-2. Import TraCI.</h1>
+2. Import TraCI</h1>
 <h1><a class="anchor" id="autotoc_md10"></a>
-3. Start SUMO process.</h1>
+3. Start SUMO process</h1>
 <h1><a class="anchor" id="autotoc_md11"></a>
-4. Connect via TraCI.</h1>
+4. Connect via TraCI</h1>
 <h1><a class="anchor" id="autotoc_md12"></a>
-5. Return process and TraCI module.</h1>
+5. Return process and TraCI module</h1>
 <h2><a class="anchor" id="autotoc_md13"></a>
 autotoc_md13</h2>
 <p>def start_sumo_and_traci(sumo_cmd, port, sumo_tools_path): sys.path.append(sumo_tools_path) try: import traci except ImportError: print("[SUMO TraCI Test] Could not import traci. Check SUMO_TOOLS_PATH.") return None, None proc = subprocess.Popen(sumo_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE) time.sleep(3) if proc.poll() is not None: stderr = proc.stderr.read().decode() print(f"[SUMO TraCI Test] SUMO exited early. STDERR:\n{stderr}") return None, None traci.init(port=port) time.sleep(1) return proc, traci</p>
-<p>Global variable to control debug output. </p>
+<p>Global variable to control debug output </p>
 
 </div>
 </div>

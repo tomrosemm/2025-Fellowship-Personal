@@ -4,10 +4,10 @@
 #
 # @brief
 #   Centralizes configuration settings for the project, including debug flags,
-#   file paths, network settings, and cleanup configuration.
+#   file paths, network settings, and cleanup configurations
 #
 # @details
-#   - Provides global debug settings for all modules
+#   - Provides global debug setting(s)
 #   - Defines path configuration for SUMO and ZoKrates files
 #   - Specifies network ports for various services
 #   - Lists files to clean up for ZoKrates
@@ -17,6 +17,10 @@
 # Libraries
 import os
 
+## Debug Setting(s) (Can move more here if helpful)
+# Global debug mode flag
+DEBUG_MODE = False
+
 ## Base Directories
 # Project base directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -25,20 +29,16 @@ SUMO_DIR = os.path.join(BASE_DIR, "sumo")
 # Directory for ZoKrates files
 ZOKRATES_DIR = os.path.join(BASE_DIR, "zokrates")
 
-## Debug Settings
-# Global debug mode flag
-DEBUG_MODE = False
-
-## SUMO Settings
+## SUMO Setting(s) and Paths
 # Global flag to control printing of data in the SUMO interface
 PRINT_DATA = True
 # SUMO tools path from environment or default
 SUMO_TOOLS_PATH = os.getenv("SUMO_TOOLS_PATH", "/home/admin/sumo/tools")
 # Path to basic SUMO network file
 SUMO_SIMPLE_NET_FILE = os.path.join(SUMO_DIR, "simple.net.xml")
-# Path to SUMO configuration file for 3x3 city block
+# Path to SUMO configuration file for 3x3 city block 1
 SUMO_CITY_CONFIG_FILE = os.path.join(SUMO_DIR, "3x3 city block 1", "threebythreecityblock1.sumocfg")
-# Path to SUMO intersection configuration
+# Path to SUMO intersection 1 configuration
 SUMO_INTERSECTION_CONFIG_FILE = os.path.join(SUMO_DIR, "Intersection 1", "intersection1.sumocfg")
 # Path to SUMO intersection2 configuration
 SUMO_INTERSECTION2_CONFIG_FILE = os.path.join(SUMO_DIR, "Intersection 2", "intersection2.sumocfg")
@@ -51,20 +51,20 @@ SUMO_STRAIGHTAWAY3_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway3", "straig
 # Path to SUMO straightaway4 configuration
 SUMO_STRAIGHTAWAY4_CONFIG_FILE = os.path.join(SUMO_DIR, "StraightAway4", "straightaway4.sumocfg")
 
-## Test Settings
+## Test Settings (Not currently used, but here for future reference)
 
 ## Experiment Settings
-# TEST_1_LEVEL_1_TOTAL_STEPS = 1010
+# TEST_1_LEVEL_1_TOTAL_STEPS = 1010 # Old value, kept for reference
 TEST_1_LEVEL_1_TOTAL_STEPS = 510
 TEST_1_LEVEL_1_SPAWN_STEP = 10
 TEST_1_LEVEL_2_STEP_LENGTH = 0.01
 TEST_1_LEVEL_2_TOTAL_STEPS = 51000
-TEST_1_LEVEL_2_TIME_TO_WAIT = 200 # SECONDS * 100, # OF 10MS STEPS
+TEST_1_LEVEL_2_TIME_TO_WAIT = 200 # SECONDS = # * 100, # OF 10MS STEPS
 TEST_1_LEVEL_2_SPAWN_STEP = 100
 TEST_1_LEVEL_2_RSU_RANGE = 125
 
 ## Network Settings
-# Ports for SUMO/TraCI connections
+# Ports for SUMO/TraCI connections - Not all are used, but didn't get around to chasing down the inactive ones yet
 SUMO_PORT_BASIC = 8813
 SUMO_PORT_CONFIG = 8814
 SUMO_PORT_DATA = 8815
@@ -97,8 +97,4 @@ ZOKRATES_CLEANUP_FILES = [
     "proof.json",
     "abi.json"
 ]
-
-## Blockchain Settings
-# Default provider URL
-BLOCKCHAIN_PROVIDER_URL = "http://127.0.0.1:8545"
 

@@ -7,5 +7,5 @@ var searchData=
   ['vehicle_5fsecrets_4',['vehicle_secrets',['../classrsu_1_1_r_s_u.html#ac507a88f172a32d93b55d9a79445ae9a',1,'rsu::RSU']]],
   ['verification_5fresult_5',['verification_result',['../namespaceblockchain.html#addab3116668991b67afb940ddff3bb9d',1,'blockchain']]],
   ['verify_5fzkp_6',['verify_zkp',['../classrsu_1_1_r_s_u.html#ac7052ed02d85a27c7833d221458fcb74',1,'rsu::RSU']]],
-  ['via_20traci_7',['4. Connect via TraCI.',['../namespacesumo__interface.html#autotoc_md11',1,'']]]
+  ['via_20traci_7',['4. Connect via TraCI',['../namespacesumo__interface.html#autotoc_md11',1,'']]]
 ];

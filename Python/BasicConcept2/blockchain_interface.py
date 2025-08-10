@@ -10,6 +10,9 @@
 #   - Initializes a Web3 connection and contract instance using provided ABI and address
 #   - Provides a method to log authentication attempts by calling the smart contract's logAuth function
 #   - Handles transaction signing and sending using a provided private key
+#
+# @note
+#   - Currently not used, implemented, or tested; serves as a template for future actual blockchain interactions, if decision is made to use blockchain for logging
 ##
 
 ## Imports
@@ -18,10 +21,7 @@ from web3 import Web3
 import json
 
 # Classes and functions
-from settings import (
-    DEBUG_MODE as DEFAULT_DEBUG_MODE,
-    BLOCKCHAIN_PROVIDER_URL
-)
+from settings import DEBUG_MODE as DEFAULT_DEBUG_MODE
 
 ## @var DEBUG_MODE
 ## @brief Global variable to control debug output.
@@ -128,21 +128,25 @@ class BlockchainInterface:
 ## Example usage after deployment
 if __name__ == "__main__":
     
+    ## @var provider_url
+    ## @brief The HTTP provider URL for the blockchain node
     # After deploying, update these variables with our blockchain details
-    # Use provider URL from settings
-    provider_url = BLOCKCHAIN_PROVIDER_URL
+    provider_url = "http://127.0.0.1:8545"
     
-    # contract_address = "0x..."  # Use the address from deployment output
+    ## @var contract_address
+    ## @brief The deployed contract address
+    # Use the address from deployment output
     contract_address = "0x..."
     
-    # Load the ABI from the compiled contract JSON file
+    # Load the ABI from the compiled contract JSON file ( doesn't currently exist, this fact will cause the test on main to fail but it should work once the actual contract, url, and json file are provided)
     with open("path/to/AuthLogger.json") as f:
         abi = json.load(f)["abi"]
     
     # Set debug mode
     set_debug_mode(True)
     
-    # Instantiate the BlockchainInterface
+    ## @var interface
+    ## @brief Instance of the BlockchainInterface
     interface = BlockchainInterface(provider_url, contract_address, abi)
     
     # Print a message indicating successful instantiation

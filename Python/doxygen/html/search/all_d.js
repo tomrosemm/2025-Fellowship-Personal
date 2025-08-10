@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['import_20traci_0',['2. Import TraCI.',['../namespacesumo__interface.html#autotoc_md9',1,'']]],
+  ['import_20traci_0',['2. Import TraCI',['../namespacesumo__interface.html#autotoc_md9',1,'']]],
   ['individual_5fexperiments_5fmenu_1',['individual_experiments_menu',['../namespacemain.html#af40c0fb51b91635e2959ca4e442c4e48',1,'main']]],
   ['individual_5ftests_5fmenu_2',['individual_tests_menu',['../namespacemain.html#a6e0cb9505ed6ad3f879dd2e522c73402',1,'main']]],
   ['interface_3',['interface',['../namespaceblockchain__interface.html#ae6deea6e7d03b5d4db98ea209159e57f',1,'blockchain_interface']]],

@@ -96,7 +96,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Provides a function to generate a one-time password (OTP) using a secret and the current timestamp. Used by vehicle and authentication modules to create time-based OTPs for secure authentication workflows.  
+<p>Provides functionality to generate a one-time password (OTP) from a secret and the current timestamp Used by vehicle and authentication modules to create time-based OTPs for secure authentication workflows.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -113,19 +113,22 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a8712cb73a4d6b370658d8bc9a77fba3e" id="r_a8712cb73a4d6b370658d8bc9a77fba3e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceotp.html#a8712cb73a4d6b370658d8bc9a77fba3e">otp</a></td></tr>
+<tr class="memdesc:a8712cb73a4d6b370658d8bc9a77fba3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate OTP using the test secret.  <br /></td></tr>
 <tr class="separator:a8712cb73a4d6b370658d8bc9a77fba3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ababbc4d27f88e5ebc0af662787d83e16" id="r_ababbc4d27f88e5ebc0af662787d83e16"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceotp.html#ababbc4d27f88e5ebc0af662787d83e16">secret</a> = &quot;mysecret&quot;</td></tr>
+<tr class="memdesc:ababbc4d27f88e5ebc0af662787d83e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test secret key for OTP generation.  <br /></td></tr>
 <tr class="separator:ababbc4d27f88e5ebc0af662787d83e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71e24db6312e99e75bdc49e89d65948e" id="r_a71e24db6312e99e75bdc49e89d65948e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceotp.html#a71e24db6312e99e75bdc49e89d65948e">timestamp</a></td></tr>
+<tr class="memdesc:a71e24db6312e99e75bdc49e89d65948e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current timestamp used for OTP generation.  <br /></td></tr>
 <tr class="separator:a71e24db6312e99e75bdc49e89d65948e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides a function to generate a one-time password (OTP) using a secret and the current timestamp. Used by vehicle and authentication modules to create time-based OTPs for secure authentication workflows. </p>
+<div class="textblock"><p>Provides functionality to generate a one-time password (OTP) from a secret and the current timestamp Used by vehicle and authentication modules to create time-based OTPs for secure authentication workflows. </p>
 <dl class="section author"><dt>Author</dt><dd>Tom Rose</dd></dl>
 <ul>
-<li>Concatenates the provided secret with the current Unix timestamp.</li>
-<li>Hashes the result using SHA-256 to produce a unique OTP for each time interval.</li>
-<li>Returns both the OTP and the timestamp used for generation. </li>
+<li>Concatenates the provided secret with the current Unix timestamp</li>
+<li>Hashes the result using SHA-256 to produce a unique OTP for each time interval</li>
+<li>Returns both the OTP and the timestamp used for generation, so that same OTP can be verified later elsewhere </li>
 </ul>
 </div></div><!-- contents -->
 <!-- start footer part -->

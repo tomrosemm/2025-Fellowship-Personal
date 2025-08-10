@@ -96,7 +96,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledge proofs (ZKPs).  
+<p>Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledge proofs (ZKPs)  
  <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -116,16 +116,16 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ac507a88f172a32d93b55d9a79445ae9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledge proofs (ZKPs). </p>
+<div class="textblock"><p>Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledge proofs (ZKPs) </p>
 <ul>
-<li>Initialized with a mapping of vehicle IDs to their corresponding secrets.</li>
-<li>Upon receiving a ZKP proof, reconstructs the expected OTP and ZKP using the stored secret and provided timestamp.</li>
-<li>Compares the received ZKP to the expected value to determine authentication success.</li>
+<li>Initialized with a mapping of vehicle IDs to their corresponding secrets</li>
+<li>Upon receiving a ZKP proof, reconstructs the expected OTP and ZKP using the stored secret and provided timestamp</li>
+<li>Compares the received ZKP to the expected value to determine authentication success</li>
 </ul>
 <p>Usage: rsu = RSU(vehicle_secrets) is_valid = rsu.verify_zkp(vehicle_id, zkp_proof, timestamp)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vehicle_secrets</td><td>Mapping from vehicle_id (str) to secret (str). </td></tr>
+    <tr><td class="paramname">vehicle_secrets</td><td>Mapping from vehicle_id (str) to secret (str) </td></tr>
   </table>
   </dd>
 </dl>
@@ -157,12 +157,12 @@ Public Attributes</h2></td></tr>
 <p>Initialize an <a class="el" href="classrsu_1_1_r_s_u.html" title="Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledg...">RSU</a> instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vehicle_secrets</td><td>Mapping from vehicle_id to secret.</td></tr>
+    <tr><td class="paramname">vehicle_secrets</td><td>Mapping from vehicle_id to secret</td></tr>
   </table>
   </dd>
 </dl>
 <p>Steps:</p><ol type="1">
-<li>Store the mapping of vehicle IDs to secrets. </li>
+<li>Store the mapping of vehicle IDs to secrets </li>
 </ol>
 
 </div>
@@ -205,20 +205,20 @@ Public Attributes</h2></td></tr>
 <p>Verify the ZKP proof from a vehicle using a ZoKrates circuit. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vehicle_id</td><td>The vehicle's unique identifier. </td></tr>
-    <tr><td class="paramname">zkp_proof</td><td>The ZKP proof to verify. </td></tr>
-    <tr><td class="paramname">timestamp</td><td>The timestamp used in OTP generation. </td></tr>
-    <tr><td class="paramname">circuit_path</td><td>Path to the ZoKrates .zok circuit file.</td></tr>
+    <tr><td class="paramname">vehicle_id</td><td>The vehicle's unique identifier </td></tr>
+    <tr><td class="paramname">zkp_proof</td><td>The ZKP proof to verify </td></tr>
+    <tr><td class="paramname">timestamp</td><td>The timestamp used in OTP generation </td></tr>
+    <tr><td class="paramname">circuit_path</td><td>Path to the ZoKrates .zok circuit file</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the proof is valid, False otherwise.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the proof is valid, False otherwise</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Retrieve the secret for the vehicle.</li>
-<li>Determine circuit type and verify accordingly.</li>
-<li>For auth.zok, check tuple values.</li>
-<li>For dummy.zok, accept any digit string.</li>
-<li>For other circuits, use real ZKP logic. </li>
+<li>Retrieve the secret for the vehicle</li>
+<li>Determine circuit type and verify accordingly</li>
+<li>For auth.zok, check tuple values</li>
+<li>For dummy.zok, accept any digit string</li>
+<li>For other circuits, use real ZKP logic </li>
 </ol>
 
 </div>

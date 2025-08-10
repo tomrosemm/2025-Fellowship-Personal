@@ -144,9 +144,9 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a named timer object for measuring elapsed time. </p>
 <ul>
-<li>Each <a class="el" href="classtimer_1_1_timer.html" title="Represents a named timer object for measuring elapsed time.">Timer</a> instance can be started, stopped, reset, or edited.</li>
-<li>Elapsed time can be queried at any point.</li>
-<li>Supports checking if the timer is currently running.</li>
+<li>Each <a class="el" href="classtimer_1_1_timer.html" title="Represents a named timer object for measuring elapsed time.">Timer</a> instance can be started, stopped, reset, or edited</li>
+<li>Elapsed time can be queried at any point</li>
+<li>Supports checking if the timer is currently running</li>
 </ul>
 <p>Usage: timer = <a class="el" href="classtimer_1_1_timer.html" title="Represents a named timer object for measuring elapsed time.">Timer</a>("MyTimer") timer.start() ... do work ... timer.stop() elapsed = timer.elapsed() </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -177,8 +177,8 @@ Protected Attributes</h2></td></tr>
 <p>Initialize a <a class="el" href="classtimer_1_1_timer.html" title="Represents a named timer object for measuring elapsed time.">Timer</a> instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>Name of the timer. </td></tr>
-    <tr><td class="paramname">start_time</td><td>Initial elapsed time (default 0). </td></tr>
+    <tr><td class="paramname">name</td><td>Name of the timer </td></tr>
+    <tr><td class="paramname">start_time</td><td>Initial elapsed time (default 0) </td></tr>
   </table>
   </dd>
 </dl>
@@ -202,7 +202,8 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>String representation of the <a class="el" href="classtimer_1_1_timer.html" title="Represents a named timer object for measuring elapsed time.">Timer</a>. </p>
-<dl class="section return"><dt>Returns</dt><dd>String with timer name, elapsed time, and running status. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>String with timer name, elapsed time, and running status</dd></dl>
+<p>Usage: print(timer) # Outputs: &lt;Timer name=MyTimer, elapsed=5.0, running=True&gt;&gt; </p>
 
 </div>
 </div>
@@ -228,11 +229,11 @@ Protected Attributes</h2></td></tr>
 <p>Edit the elapsed time. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">new_time</td><td>New elapsed time to set.</td></tr>
+    <tr><td class="paramname">new_time</td><td>New elapsed time to set</td></tr>
   </table>
   </dd>
 </dl>
-<p>Sets elapsed time; if running, restarts timing from now. </p>
+<p>Sets elapsed time; if running, restarts timing from now </p>
 
 </div>
 </div>
@@ -252,7 +253,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the current elapsed time. </p>
-<dl class="section return"><dt>Returns</dt><dd>Elapsed time in seconds (float). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Elapsed time in seconds (float) </dd></dl>
 
 </div>
 </div>
@@ -272,7 +273,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check if the timer is currently running. </p>
-<dl class="section return"><dt>Returns</dt><dd>True if running, False otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if running, False otherwise </dd></dl>
 
 </div>
 </div>
@@ -298,11 +299,11 @@ Protected Attributes</h2></td></tr>
 <p>Reset the timer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">new_time</td><td>New elapsed time to set (default 0).</td></tr>
+    <tr><td class="paramname">new_time</td><td>New elapsed time to set (default 0)</td></tr>
   </table>
   </dd>
 </dl>
-<p>Resets elapsed time and stops the timer. </p>
+<p>Resets elapsed time and stops the timer </p>
 
 </div>
 </div>
@@ -322,7 +323,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Start the timer. </p>
-<p>Starts timing if not already running. </p>
+<p>Starts timer if not already running </p>
 
 </div>
 </div>
@@ -342,7 +343,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Stop the timer. </p>
-<p>Stops timing and accumulates elapsed time. </p>
+<p>Stops timer if running and accumulates elapsed time </p>
 
 </div>
 </div>

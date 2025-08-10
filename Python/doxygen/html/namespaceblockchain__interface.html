@@ -109,14 +109,17 @@ Variables</h2></td></tr>
 <tr class="memitem:a4ffbe35a28505921bd64d4d21a944861" id="r_a4ffbe35a28505921bd64d4d21a944861"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ffbe35a28505921bd64d4d21a944861">abi</a> = json.load(f)[&quot;abi&quot;]</td></tr>
 <tr class="separator:a4ffbe35a28505921bd64d4d21a944861"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a8c57ad76f99bca990762a4984e7307" id="r_a9a8c57ad76f99bca990762a4984e7307"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a8c57ad76f99bca990762a4984e7307">contract_address</a> = &quot;0x...&quot;</td></tr>
+<tr class="memdesc:a9a8c57ad76f99bca990762a4984e7307"><td class="mdescLeft">&#160;</td><td class="mdescRight">The deployed contract address Use the address from deployment output.  <br /></td></tr>
 <tr class="separator:a9a8c57ad76f99bca990762a4984e7307"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84cb21ca8841a588311a03bd9c054d76" id="r_a84cb21ca8841a588311a03bd9c054d76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84cb21ca8841a588311a03bd9c054d76">DEBUG_MODE</a> = DEFAULT_DEBUG_MODE</td></tr>
 <tr class="memdesc:a84cb21ca8841a588311a03bd9c054d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variable to control debug output.  <br /></td></tr>
 <tr class="separator:a84cb21ca8841a588311a03bd9c054d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6deea6e7d03b5d4db98ea209159e57f" id="r_ae6deea6e7d03b5d4db98ea209159e57f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6deea6e7d03b5d4db98ea209159e57f">interface</a> = <a class="el" href="classblockchain__interface_1_1_blockchain_interface.html">BlockchainInterface</a>(<a class="el" href="#a0dfc25644067776fa8e662304648a3da">provider_url</a>, <a class="el" href="#a9a8c57ad76f99bca990762a4984e7307">contract_address</a>, <a class="el" href="#a4ffbe35a28505921bd64d4d21a944861">abi</a>)</td></tr>
+<tr class="memitem:ae6deea6e7d03b5d4db98ea209159e57f" id="r_ae6deea6e7d03b5d4db98ea209159e57f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6deea6e7d03b5d4db98ea209159e57f">interface</a> = <a class="el" href="classblockchain__interface_1_1_blockchain_interface.html">BlockchainInterface</a>(<a class="el" href="#acc6c9018a2b8944c41283f0cf75b3c86">provider_url</a>, <a class="el" href="#a9a8c57ad76f99bca990762a4984e7307">contract_address</a>, <a class="el" href="#a4ffbe35a28505921bd64d4d21a944861">abi</a>)</td></tr>
+<tr class="memdesc:ae6deea6e7d03b5d4db98ea209159e57f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance of the <a class="el" href="classblockchain__interface_1_1_blockchain_interface.html" title="Interface for interacting with a blockchain smart contract for authentication event logging.">BlockchainInterface</a>.  <br /></td></tr>
 <tr class="separator:ae6deea6e7d03b5d4db98ea209159e57f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dfc25644067776fa8e662304648a3da" id="r_a0dfc25644067776fa8e662304648a3da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0dfc25644067776fa8e662304648a3da">provider_url</a> = BLOCKCHAIN_PROVIDER_URL</td></tr>
-<tr class="separator:a0dfc25644067776fa8e662304648a3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc6c9018a2b8944c41283f0cf75b3c86" id="r_acc6c9018a2b8944c41283f0cf75b3c86"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc6c9018a2b8944c41283f0cf75b3c86">provider_url</a> = &quot;http://127.0.0.1:8545&quot;</td></tr>
+<tr class="memdesc:acc6c9018a2b8944c41283f0cf75b3c86"><td class="mdescLeft">&#160;</td><td class="mdescRight">The HTTP provider URL for the blockchain node After deploying, update these variables with our blockchain details.  <br /></td></tr>
+<tr class="separator:acc6c9018a2b8944c41283f0cf75b3c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="afe50dc83f1d29648965392032fdfbd20" name="afe50dc83f1d29648965392032fdfbd20"></a>
@@ -137,12 +140,12 @@ Variables</h2></td></tr>
 <p>Enable or disable debug mode for detailed output. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">enabled</td><td>True to enable debug mode, False to disable.</td></tr>
+    <tr><td class="paramname">enabled</td><td>True to enable debug mode, False to disable</td></tr>
   </table>
   </dd>
 </dl>
 <p>Steps:</p><ol type="1">
-<li>Set the global DEBUG_MODE variable to the provided value. </li>
+<li>Set the global DEBUG_MODE variable to the provided value </li>
 </ol>
 
 </div>
@@ -174,6 +177,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The deployed contract address Use the address from deployment output. </p>
+
 </div>
 </div>
 <a id="a84cb21ca8841a588311a03bd9c054d76" name="a84cb21ca8841a588311a03bd9c054d76"></a>
@@ -199,25 +204,28 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">interface = <a class="el" href="classblockchain__interface_1_1_blockchain_interface.html">BlockchainInterface</a>(<a class="el" href="#a0dfc25644067776fa8e662304648a3da">provider_url</a>, <a class="el" href="#a9a8c57ad76f99bca990762a4984e7307">contract_address</a>, <a class="el" href="#a4ffbe35a28505921bd64d4d21a944861">abi</a>)</td>
+          <td class="memname">interface = <a class="el" href="classblockchain__interface_1_1_blockchain_interface.html">BlockchainInterface</a>(<a class="el" href="#acc6c9018a2b8944c41283f0cf75b3c86">provider_url</a>, <a class="el" href="#a9a8c57ad76f99bca990762a4984e7307">contract_address</a>, <a class="el" href="#a4ffbe35a28505921bd64d4d21a944861">abi</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Instance of the <a class="el" href="classblockchain__interface_1_1_blockchain_interface.html" title="Interface for interacting with a blockchain smart contract for authentication event logging.">BlockchainInterface</a>. </p>
+
 </div>
 </div>
-<a id="a0dfc25644067776fa8e662304648a3da" name="a0dfc25644067776fa8e662304648a3da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0dfc25644067776fa8e662304648a3da">&#9670;&#160;</a></span>provider_url</h2>
+<a id="acc6c9018a2b8944c41283f0cf75b3c86" name="acc6c9018a2b8944c41283f0cf75b3c86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc6c9018a2b8944c41283f0cf75b3c86">&#9670;&#160;</a></span>provider_url</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">provider_url = BLOCKCHAIN_PROVIDER_URL</td>
+          <td class="memname">str provider_url = &quot;http://127.0.0.1:8545&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="test"><dt><b><a class="el" href="test.html#_test000002">Test</a></b></dt><dd>Example usage after deployment </dd></dl>
+
+<p>The HTTP provider URL for the blockchain node After deploying, update these variables with our blockchain details. </p>
 
 </div>
 </div>

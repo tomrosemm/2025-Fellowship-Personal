@@ -100,10 +100,13 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a8712cb73a4d6b370658d8bc9a77fba3e" id="r_a8712cb73a4d6b370658d8bc9a77fba3e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8712cb73a4d6b370658d8bc9a77fba3e">otp</a></td></tr>
+<tr class="memdesc:a8712cb73a4d6b370658d8bc9a77fba3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate OTP using the test secret.  <br /></td></tr>
 <tr class="separator:a8712cb73a4d6b370658d8bc9a77fba3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ababbc4d27f88e5ebc0af662787d83e16" id="r_ababbc4d27f88e5ebc0af662787d83e16"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ababbc4d27f88e5ebc0af662787d83e16">secret</a> = &quot;mysecret&quot;</td></tr>
+<tr class="memdesc:ababbc4d27f88e5ebc0af662787d83e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test secret key for OTP generation.  <br /></td></tr>
 <tr class="separator:ababbc4d27f88e5ebc0af662787d83e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71e24db6312e99e75bdc49e89d65948e" id="r_a71e24db6312e99e75bdc49e89d65948e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71e24db6312e99e75bdc49e89d65948e">timestamp</a></td></tr>
+<tr class="memdesc:a71e24db6312e99e75bdc49e89d65948e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current timestamp used for OTP generation.  <br /></td></tr>
 <tr class="separator:a71e24db6312e99e75bdc49e89d65948e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -125,16 +128,16 @@ Variables</h2></td></tr>
 <p>Generate a one-time password (OTP) using the provided secret and current timestamp. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">secret</td><td>Secret key unique to the vehicle. </td></tr>
+    <tr><td class="paramname">secret</td><td>Secret key unique to the vehicle </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>tuple (otp (str), timestamp (int))</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Get current Unix timestamp as integer.</li>
-<li>Concatenate secret and timestamp, encode to bytes.</li>
-<li>Hash the input to create the OTP.</li>
-<li>Return the OTP and timestamp. </li>
+<li>Get current Unix timestamp as an integer</li>
+<li>Concatenate secret and timestamp, then encode to bytes</li>
+<li>Hash the bytes using SHA-256 and get the hex digest as OTP</li>
+<li>Return the OTP and timestamp </li>
 </ol>
 
 </div>
@@ -152,6 +155,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Generate OTP using the test secret. </p>
+
 </div>
 </div>
 <a id="ababbc4d27f88e5ebc0af662787d83e16" name="ababbc4d27f88e5ebc0af662787d83e16"></a>
@@ -165,7 +170,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="test"><dt><b><a class="el" href="test.html#_test000003">Test</a></b></dt><dd>Simple test for OTP generation </dd></dl>
+
+<p>Test secret key for OTP generation. </p>
 
 </div>
 </div>
@@ -180,6 +186,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Get the current timestamp used for OTP generation. </p>
 
 </div>
 </div>

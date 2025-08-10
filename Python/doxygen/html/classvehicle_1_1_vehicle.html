@@ -126,15 +126,15 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a vehicle entity capable of generating one-time passwords (OTPs) and creating zero-knowledge proofs (ZKPs) for authentication in a secure protocol. </p>
 <ul>
-<li>Initialized with a unique vehicle ID and secret key.</li>
-<li>Generates an OTP by hashing its secret with the current Unix timestamp.</li>
-<li>Creates a ZKP for the OTP and timestamp using a ZoKrates interface (or a simulated function).</li>
+<li>Initialized with a unique vehicle ID and secret key</li>
+<li>Generates an OTP by hashing its secret with the current Unix timestamp</li>
+<li>Creates a ZKP for the OTP and timestamp using a ZoKrates interface (or a simulated function)</li>
 </ul>
 <p>Usage: vehicle = Vehicle(vehicle_id, secret) otp, timestamp = vehicle.generate_otp() zkp_proof = vehicle.create_zkp(otp, timestamp)</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vehicle_id</td><td>Unique identifier for the vehicle. </td></tr>
-    <tr><td class="paramname">secret</td><td>Secret key unique to the vehicle. </td></tr>
+    <tr><td class="paramname">vehicle_id</td><td>Unique identifier for the vehicle </td></tr>
+    <tr><td class="paramname">secret</td><td>Secret key unique to the vehicle </td></tr>
   </table>
   </dd>
 </dl>
@@ -171,8 +171,8 @@ Public Attributes</h2></td></tr>
 <p>Initialize a <a class="el" href="classvehicle_1_1_vehicle.html" title="Represents a vehicle entity capable of generating one-time passwords (OTPs) and creating zero-knowled...">Vehicle</a> instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vehicle_id</td><td>Unique identifier for the vehicle. </td></tr>
-    <tr><td class="paramname">secret</td><td>Secret key unique to the vehicle.</td></tr>
+    <tr><td class="paramname">vehicle_id</td><td>Unique identifier for the vehicle </td></tr>
+    <tr><td class="paramname">secret</td><td>Secret key unique to the vehicle</td></tr>
   </table>
   </dd>
 </dl>
@@ -216,13 +216,13 @@ Public Attributes</h2></td></tr>
 <p>Create a zero-knowledge proof (ZKP) for the OTP and timestamp using a ZoKrates circuit. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">otp</td><td>The generated OTP. </td></tr>
-    <tr><td class="paramname">timestamp</td><td>The timestamp used for OTP. </td></tr>
-    <tr><td class="paramname">circuit_path</td><td>Path to the ZoKrates .zok circuit file.</td></tr>
+    <tr><td class="paramname">otp</td><td>The generated OTP </td></tr>
+    <tr><td class="paramname">timestamp</td><td>The timestamp used for OTP </td></tr>
+    <tr><td class="paramname">circuit_path</td><td>Path to the ZoKrates .zok circuit file</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if proof is valid, False otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if proof is valid, False otherwise </dd></dl>
 
 </div>
 </div>
@@ -274,7 +274,7 @@ Public Attributes</h2></td></tr>
 <p>Generate an OTP as a simple sum for auth.zok experiments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">timestamp</td><td>The timestamp to use for OTP. Defaults to None. </td></tr>
+    <tr><td class="paramname">timestamp</td><td>The timestamp to use for OTP. Defaults to None </td></tr>
   </table>
   </dd>
 </dl>

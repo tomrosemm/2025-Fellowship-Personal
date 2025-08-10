@@ -3,7 +3,7 @@ var searchData=
   ['report_0',['report',['../classexperiment_1_1_experiment.html#a32b773fc56a3ade0665c27101d61045a',1,'experiment::Experiment']]],
   ['reset_1',['reset',['../classtimer_1_1_timer.html#ac2da9f24f47b842843fa77f6ea25627f',1,'timer::Timer']]],
   ['result_2',['result',['../classexperiment_1_1_experiment.html#a130e491240aed55596bb3a8f2b9b4a6f',1,'experiment.Experiment.result'],['../classexperiment_1_1_experiment.html#a130e491240aed55596bb3a8f2b9b4a6f',1,'experiment.Experiment.result'],['../namespaceblockchain.html#a937d4dd628a8858b443a399410d2600b',1,'blockchain.result'],['../namespacersu.html#a937d4dd628a8858b443a399410d2600b',1,'rsu.result']]],
-  ['return_20process_20and_20traci_20module_3',['5. Return process and TraCI module.',['../namespacesumo__interface.html#autotoc_md12',1,'']]],
+  ['return_20process_20and_20traci_20module_3',['5. Return process and TraCI module',['../namespacesumo__interface.html#autotoc_md12',1,'']]],
   ['row_5fof_5fstars_4',['row_of_stars',['../namespacemain.html#aeffa519388b44c335e580d46e96b6f20',1,'main']]],
   ['rsu_5',['RSU',['../classrsu_1_1_r_s_u.html',1,'rsu']]],
   ['rsu_6',['rsu',['../namespacersu.html',1,'rsu'],['../classexperiment_1_1_experiment.html#ad4322b2209715e3daec48d9606e04a3c',1,'experiment.Experiment.rsu'],['../namespacersu.html#ad4322b2209715e3daec48d9606e04a3c',1,'rsu.rsu']]],

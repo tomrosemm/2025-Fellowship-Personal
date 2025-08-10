@@ -20,10 +20,10 @@ from settings import (
     SUMO_PORT_DATA
 )
 
-
 ## @var row_of_stars
-# @brief Row of stars for menu formatting
+## @brief Row of stars for menu formatting
 row_of_stars = "*********************************************************************"
+
 
 ##
 # @brief Top-level command-line interface menu for organizing protocol simulation tests and experiments

@@ -96,7 +96,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Provides routines to run and report on ZKP/blockchain experiments using the Experiment class. Supports running experiments with different ZoKrates circuits and configurations for automated testing.  
+<p>Provides routines to run and report on ZKP/blockchain experiments using the Experiment class Supports running experiments with different ZoKrates circuits and configurations for automated testing.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -107,6 +107,7 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a80591c5484a0f636e620a2210dc006ec" id="r_a80591c5484a0f636e620a2210dc006ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#a80591c5484a0f636e620a2210dc006ec">base_experiments_test</a> ()</td></tr>
+<tr class="memdesc:a80591c5484a0f636e620a2210dc006ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs all base experiments for ZKP/blockchain and SUMO throughput/proximity logic.  <br /></td></tr>
 <tr class="separator:a80591c5484a0f636e620a2210dc006ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa02005f204f79085adf55e06106ce205" id="r_aa02005f204f79085adf55e06106ce205"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#aa02005f204f79085adf55e06106ce205">run_auth_experiment</a> ()</td></tr>
 <tr class="memdesc:aa02005f204f79085adf55e06106ce205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run an experiment using the zokrates/auth.zok circuit which provides a simple field-based proof.  <br /></td></tr>
@@ -115,8 +116,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:aaf5382ca655543a0a001306254c895ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a demo experiment using the Experiment class with zokrates/dummy.zok.  <br /></td></tr>
 <tr class="separator:aaf5382ca655543a0a001306254c895ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a477aaf7fee0f0ec20ada78335e2863ef" id="r_a477aaf7fee0f0ec20ada78335e2863ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#a477aaf7fee0f0ec20ada78335e2863ef">run_test_1_level_1_experiment</a> (print_data=True)</td></tr>
+<tr class="memdesc:a477aaf7fee0f0ec20ada78335e2863ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run Test_1_Level_1 experiment: dynamic car spawning throughput in SUMO.  <br /></td></tr>
 <tr class="separator:a477aaf7fee0f0ec20ada78335e2863ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2501410722cbba9cc3d0a9033d82b73f" id="r_a2501410722cbba9cc3d0a9033d82b73f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#a2501410722cbba9cc3d0a9033d82b73f">run_test_1_level_2_experiment</a> (print_data=True)</td></tr>
+<tr class="memdesc:a2501410722cbba9cc3d0a9033d82b73f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run Test_1_Level_2 experiment: RSU-car proximity logic and throughput in SUMO.  <br /></td></tr>
 <tr class="separator:a2501410722cbba9cc3d0a9033d82b73f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae54124082ae7a45cfa6b2cb321e285dc" id="r_ae54124082ae7a45cfa6b2cb321e285dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceexperiment__runner.html#ae54124082ae7a45cfa6b2cb321e285dc">run_test_1_level_3_experiment</a> (print_data=True)</td></tr>
 <tr class="separator:ae54124082ae7a45cfa6b2cb321e285dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,13 +148,13 @@ Variables</h2></td></tr>
 <tr class="separator:a202b369a9c8ae3ed4de6b31303759a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides routines to run and report on ZKP/blockchain experiments using the Experiment class. Supports running experiments with different ZoKrates circuits and configurations for automated testing. </p>
+<div class="textblock"><p>Provides routines to run and report on ZKP/blockchain experiments using the Experiment class Supports running experiments with different ZoKrates circuits and configurations for automated testing. </p>
 <dl class="section author"><dt>Author</dt><dd>Tom Rose</dd></dl>
 <ul>
-<li>Sets up and runs experiments with dummy.zok and auth.zok circuits.</li>
-<li>Integrates with vehicle, RSU, ZoKrates, and blockchain modules.</li>
-<li>Supports debug mode and cleanup of ZoKrates artifacts.</li>
-<li>Logs experiment execution and results to files in the logs/ directory. </li>
+<li>Sets up and runs experiments with dummy.zok and auth.zok circuits</li>
+<li>Integrates with vehicle, RSU, ZoKrates, and blockchain modules</li>
+<li>Supports debug mode and cleanup of ZoKrates artifacts</li>
+<li>Logs experiment execution and results to files in the logs/ directory </li>
 </ul>
 </div></div><!-- contents -->
 <!-- start footer part -->

@@ -96,7 +96,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Provides functions for generating zero-knowledge proofs (ZKPs) for authentication workflows. Supports both simulated (hash-based) and real (ZoKrates CLI) ZKP generation and verification.  
+<p>Provides functions for generating zero-knowledge proofs (ZKPs) for authentication workflows Supports both simulated (hash-based) and real (ZoKrates CLI) ZKP generation and verification.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -110,25 +110,28 @@ Functions</h2></td></tr>
 <tr class="memdesc:ac6222a0f6ecdf04acaf89434471ce086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a real ZKP proof using the ZoKrates CLI interface.  <br /></td></tr>
 <tr class="separator:ac6222a0f6ecdf04acaf89434471ce086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad39f87b3318dfbbebe2e17e68a78dd8b" id="r_ad39f87b3318dfbbebe2e17e68a78dd8b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacezkp.html#ad39f87b3318dfbbebe2e17e68a78dd8b">generate_zkp_proof_simulated</a> (<a class="el" href="namespacezkp.html#ac35cb4db03562b73ac2c9ff9eb957c68">otp</a>, <a class="el" href="namespacezkp.html#aa434daa60aff3350306abb5bda360060">timestamp</a>)</td></tr>
-<tr class="memdesc:ad39f87b3318dfbbebe2e17e68a78dd8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulate ZoKrates proof generation (hash-based).  <br /></td></tr>
+<tr class="memdesc:ad39f87b3318dfbbebe2e17e68a78dd8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulate ZoKrates proof generation (hash-based)  <br /></td></tr>
 <tr class="separator:ad39f87b3318dfbbebe2e17e68a78dd8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:ac35cb4db03562b73ac2c9ff9eb957c68" id="r_ac35cb4db03562b73ac2c9ff9eb957c68"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacezkp.html#ac35cb4db03562b73ac2c9ff9eb957c68">otp</a> = &quot;testotp&quot;</td></tr>
+<tr class="memdesc:ac35cb4db03562b73ac2c9ff9eb957c68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test OTP value.  <br /></td></tr>
 <tr class="separator:ac35cb4db03562b73ac2c9ff9eb957c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7bc06438c4738df41835e3c3ee1171b2" id="r_a7bc06438c4738df41835e3c3ee1171b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacezkp.html#a7bc06438c4738df41835e3c3ee1171b2">proof</a> = <a class="el" href="namespacezkp.html#ad39f87b3318dfbbebe2e17e68a78dd8b">generate_zkp_proof_simulated</a>(<a class="el" href="namespacezkp.html#ac35cb4db03562b73ac2c9ff9eb957c68">otp</a>, <a class="el" href="namespacezkp.html#aa434daa60aff3350306abb5bda360060">timestamp</a>)</td></tr>
+<tr class="memdesc:a7bc06438c4738df41835e3c3ee1171b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulated ZKP proof for testing.  <br /></td></tr>
 <tr class="separator:a7bc06438c4738df41835e3c3ee1171b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa434daa60aff3350306abb5bda360060" id="r_aa434daa60aff3350306abb5bda360060"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacezkp.html#aa434daa60aff3350306abb5bda360060">timestamp</a> = 1234567890</td></tr>
+<tr class="memdesc:aa434daa60aff3350306abb5bda360060"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test timestamp value.  <br /></td></tr>
 <tr class="separator:aa434daa60aff3350306abb5bda360060"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides functions for generating zero-knowledge proofs (ZKPs) for authentication workflows. Supports both simulated (hash-based) and real (ZoKrates CLI) ZKP generation and verification. </p>
+<div class="textblock"><p>Provides functions for generating zero-knowledge proofs (ZKPs) for authentication workflows Supports both simulated (hash-based) and real (ZoKrates CLI) ZKP generation and verification. </p>
 <dl class="section author"><dt>Author</dt><dd>Tom Rose</dd></dl>
 <ul>
-<li>Simulates ZKP generation by hashing OTP and timestamp for rapid prototyping and testing.</li>
-<li>Provides wrapper functions to interact with ZoKrates CLI for real ZKP workflows.</li>
-<li>Designed to be used by Vehicle and RSU classes for proof generation and verification. </li>
+<li>Simulates ZKP generation by hashing OTP and timestamp for rapid prototyping and testing</li>
+<li>Provides wrapper functions to interact with ZoKrates CLI for real ZKP workflows</li>
+<li>Designed to be used by Vehicle and RSU classes for proof generation and verification </li>
 </ul>
 </div></div><!-- contents -->
 <!-- start footer part -->

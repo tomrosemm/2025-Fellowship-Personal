@@ -150,6 +150,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a6f66f921fb336b87f38907d1cf839ef1" id="r_a6f66f921fb336b87f38907d1cf839ef1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f66f921fb336b87f38907d1cf839ef1">vehicle_id</a> = vehicle_id</td></tr>
 <tr class="separator:a6f66f921fb336b87f38907d1cf839ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b75d8636a0e74d990464d70944fc1be" id="r_a4b75d8636a0e74d990464d70944fc1be"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b75d8636a0e74d990464d70944fc1be">zokrates_circuit_path</a> = zokrates_circuit_path</td></tr>
+<tr class="memdesc:a4b75d8636a0e74d990464d70944fc1be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the ZoKrates workflow steps Attempt to compile the ZoKrates circuit, printing an error and returning False, None, None if it fails.  <br /></td></tr>
 <tr class="separator:a4b75d8636a0e74d990464d70944fc1be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6522e43f3b247a69da4930093f13b89" id="r_ac6522e43f3b247a69da4930093f13b89"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6522e43f3b247a69da4930093f13b89">zokrates_circuit_path</a> = &quot;No ZoKrates circuit path provided.&quot;</td></tr>
 <tr class="separator:ac6522e43f3b247a69da4930093f13b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -210,19 +211,19 @@ Static Public Attributes</h2></td></tr>
 <p>Initialize an <a class="el" href="classexperiment_1_1_experiment.html" title="Encapsulates logic for running and reporting ZKP/blockchain experiments.">Experiment</a> instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>Name of the experiment. </td></tr>
-    <tr><td class="paramname">vehicle_id</td><td>Vehicle identifier. </td></tr>
-    <tr><td class="paramname">rsu_id</td><td>RSU identifier. </td></tr>
-    <tr><td class="paramname">zokrates_circuit_path</td><td>Path to ZoKrates circuit file (optional). </td></tr>
-    <tr><td class="paramname">use_zokrates</td><td>Whether to use ZoKrates workflow. </td></tr>
-    <tr><td class="paramname">use_blockchain</td><td>Whether to use blockchain verification.</td></tr>
+    <tr><td class="paramname">name</td><td>Name of the experiment </td></tr>
+    <tr><td class="paramname">vehicle_id</td><td>Vehicle identifier </td></tr>
+    <tr><td class="paramname">rsu_id</td><td>RSU identifier </td></tr>
+    <tr><td class="paramname">zokrates_circuit_path</td><td>Path to ZoKrates circuit file (optional) </td></tr>
+    <tr><td class="paramname">use_zokrates</td><td>Whether to use ZoKrates workflow </td></tr>
+    <tr><td class="paramname">use_blockchain</td><td>Whether to use blockchain verification</td></tr>
   </table>
   </dd>
 </dl>
 <ul>
-<li>Stores all provided parameters as instance attributes.</li>
-<li>Initializes result, timestamp, vehicle, and rsu to None.</li>
-<li>Sets up logging for the experiment. </li>
+<li>Stores all provided parameters as instance attributes</li>
+<li>Initializes result, timestamp, vehicle, and rsu to None</li>
+<li>Sets up logging for the experiment </li>
 </ul>
 
 </div>
@@ -245,9 +246,9 @@ Static Public Attributes</h2></td></tr>
 
 <p>Print a report of the experiment results. </p>
 <p>Steps:</p><ol type="1">
-<li>Print experiment result and timestamp.</li>
-<li>Optionally rerun ZoKrates and blockchain workflows for reporting.</li>
-<li>Print completion status. </li>
+<li>Print experiment result and timestamp</li>
+<li>Optionally rerun ZoKrates and blockchain workflows for reporting</li>
+<li>Print completion status </li>
 </ol>
 
 </div>
@@ -269,10 +270,10 @@ Static Public Attributes</h2></td></tr>
 
 <p>Run the experiment workflow. </p>
 <p>Steps:</p><ol type="1">
-<li>Set up vehicle and RSU instances.</li>
-<li>Run ZoKrates workflow if enabled.</li>
-<li>Run blockchain verification if enabled and ZoKrates succeeded.</li>
-<li>Store and print results. </li>
+<li>Set up vehicle and RSU instances</li>
+<li>Run ZoKrates workflow if enabled</li>
+<li>Run blockchain verification if enabled and ZoKrates succeeded</li>
+<li>Store and print results </li>
 </ol>
 
 </div>
@@ -314,19 +315,19 @@ Static Public Attributes</h2></td></tr>
 <p>Run blockchain verification and logging for the experiment. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vehicle</td><td>Vehicle instance. </td></tr>
-    <tr><td class="paramname">rsu</td><td>RSU instance. </td></tr>
-    <tr><td class="paramname">otp</td><td>One-time password. </td></tr>
-    <tr><td class="paramname">timestamp</td><td>Timestamp used for OTP. </td></tr>
+    <tr><td class="paramname">vehicle</td><td>Vehicle instance </td></tr>
+    <tr><td class="paramname">rsu</td><td>RSU instance </td></tr>
+    <tr><td class="paramname">otp</td><td>One-time password </td></tr>
+    <tr><td class="paramname">timestamp</td><td>Timestamp used for OTP </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Outcome of blockchain verification (bool).</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Outcome of blockchain verification (bool)</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Prepare ZKP proof based on circuit type.</li>
-<li>RSU verifies ZKP.</li>
-<li>Simulate blockchain verification and logging.</li>
-<li>Return outcome. </li>
+<li>Prepare ZKP proof based on circuit type</li>
+<li>RSU verifies ZKP</li>
+<li>Simulate blockchain verification and logging</li>
+<li>Return outcome </li>
 </ol>
 
 </div>
@@ -353,15 +354,15 @@ Static Public Attributes</h2></td></tr>
 <p>Run the ZoKrates workflow for the experiment. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vehicle</td><td>Vehicle instance to use for the workflow. </td></tr>
+    <tr><td class="paramname">vehicle</td><td>Vehicle instance to use for the workflow </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>tuple (success (bool), otp (str), timestamp (int))</dd></dl>
 <p>Steps:</p><ol type="1">
-<li>Determine circuit type and prepare arguments.</li>
-<li>Compile, setup, compute witness, generate proof, and verify using ZoKrates CLI.</li>
-<li>Return success status, OTP, and timestamp. </li>
+<li>Determine circuit type and prepare arguments</li>
+<li>Compile, setup, compute witness, generate proof, and verify using ZoKrates CLI</li>
+<li>Return success status, OTP, and timestamp </li>
 </ol>
 
 </div>
@@ -383,9 +384,9 @@ Static Public Attributes</h2></td></tr>
 
 <p>Set up logging for the experiment. </p>
 <ul>
-<li>Creates a logs directory if it doesn't exist.</li>
-<li>Configures a logger with a timestamped filename.</li>
-<li>Sets up logging level and format. </li>
+<li>Creates a logs directory if it doesn't exist</li>
+<li>Configures a logger with a timestamped filename</li>
+<li>Sets up logging level and format </li>
 </ul>
 
 </div>
@@ -608,6 +609,8 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Run the ZoKrates workflow steps Attempt to compile the ZoKrates circuit, printing an error and returning False, None, None if it fails. </p>
 
 </div>
 </div>
