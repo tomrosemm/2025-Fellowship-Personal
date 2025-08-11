@@ -1,0 +1,4 @@
+"Roadside Unit (RSU) communication range can vary, but typically falls within the range of 300 meters to 500 meters" - Summary Quote on Google, supported somewhat by
+the ranges in https://www.mdpi.com/2071-1050/15/14/11112#:~:text=These%20revealed%20the%20following:,flow%20density%20of%20future%20highways but not directly stated
+
+"~8000 ft (2500 meter) range, open-field, line-of-sight" - Connected Vehicle Roadside Unit (RSU) Data sheet

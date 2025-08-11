@@ -3,7 +3,7 @@
 # @author Tom Rose
 #
 # @brief
-#   Provides a Timer class for creating named timer objects with start, stop, reset, and edit functionality
+#   Provides a Timer class for creating named timer objects with start, stop, reset, edit, and string representation functionality
 #
 # @details
 #   - Allows creation of named timers for tracking elapsed time
@@ -24,6 +24,7 @@ import time
 #   - Each Timer instance can be started, stopped, reset, or edited
 #   - Elapsed time can be queried at any point
 #   - Supports checking if the timer is currently running
+#   - Timer can be represented as a string for easy debugging and logging
 #
 # Usage:
 #   timer = Timer("MyTimer")
@@ -41,9 +42,12 @@ class Timer:
     # @param start_time Initial elapsed time (default 0)
     ##
     def __init__(self, name, start_time=0):
+        
+        # Store the timer name and initial elapsed time
         self.name = name
         self._elapsed = start_time
-        # Set initial _start to None to represent not running
+        
+        # Set initial _start to None and _running to False to represent the timer not running
         self._start = None
         self._running = False
 
@@ -54,6 +58,8 @@ class Timer:
     #   Starts timer if not already running
     ##
     def start(self):
+        
+        # If the timer is not running, set start time and mark as running
         if not self._running:
             self._start = time.time()
             self._running = True
@@ -65,6 +71,8 @@ class Timer:
     #   Stops timer if running and accumulates elapsed time
     ##
     def stop(self):
+        
+        # If the timer is running, calculate elapsed time and mark as stopped
         if self._running:
             self._elapsed += time.time() - self._start
             self._start = None
@@ -78,9 +86,12 @@ class Timer:
     #   Resets elapsed time and stops the timer
     ##
     def reset(self, new_time=0):
+        
+        # Stop the timer, reset elapsed time to new_time, and clear start time
+        self._running = False
         self._elapsed = new_time
         self._start = None
-        self._running = False
+        
 
 
     ##
@@ -90,7 +101,11 @@ class Timer:
     #   Sets elapsed time; if running, restarts timing from now
     ##
     def edit(self, new_time):
+        
+        # Set the elapsed time to new_time
         self._elapsed = new_time
+        
+        # If the timer is running, reset the start time to now
         if self._running:
             self._start = time.time()
 
@@ -100,15 +115,21 @@ class Timer:
     # @return Elapsed time in seconds (float)
     ##
     def elapsed(self):
+        
+        # If the timer is running, calculate elapsed time since start and return it. If not running, return the accumulated elapsed time
         if self._running:
             return self._elapsed + (time.time() - self._start)
+        
         return self._elapsed
+
 
     ##
     # @brief Check if the timer is currently running
     # @return True if running, False otherwise
     ##
     def is_running(self):
+        
+        # Return the running status of the timer
         return self._running
 
     ##

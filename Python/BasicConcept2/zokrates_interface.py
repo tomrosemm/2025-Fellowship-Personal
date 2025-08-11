@@ -11,10 +11,12 @@
 #   - Designed to be used by Vehicle and RSU classes for proof generation and verification
 ##
 
-# Imports
+## Imports
+# Libraries
 import subprocess
 import os
 
+# Classes and Functions
 from settings import (
     DEBUG_MODE as DEFAULT_DEBUG_MODE,
     ZOKRATES_CLEANUP_FILES
@@ -22,7 +24,7 @@ from settings import (
 
 
 # ## Unused, Leftover Functions
-# ##
+# # This function is not used in the current implementation, but was used in the past with ZoKrates 
 # # @brief Convert a hex string to an array of 4 field elements (each 64 bits)
 # #
 # # @param hex_str Hexadecimal string to convert
@@ -43,10 +45,10 @@ from settings import (
 #     # Return the list of field elements
 #     return arr
 
-
 ## @var DEBUG_MODE
 ## @brief Global variable to control debug output
 DEBUG_MODE = DEFAULT_DEBUG_MODE
+
 
 ##
 # @brief Enable or disable debug mode for detailed output
@@ -58,12 +60,13 @@ def set_debug_mode(enabled):
     global DEBUG_MODE
     DEBUG_MODE = enabled
 
+
 ##
 # @brief Remove ZoKrates-generated files from the current directory
 ##
 def cleanup_zokrates_files():
     
-    # Use files list from settings
+    # files_to_remove - List of files to clean up from settings
     files_to_remove = ZOKRATES_CLEANUP_FILES
     
     # Iterate through the list and remove each file if it exists
@@ -83,7 +86,6 @@ def cleanup_zokrates_files():
 # @return True if compilation succeeds, False otherwise
 #
 # @details
-#   Side Effects:
 #     Prints ZoKrates CLI output or error message
 #
 #   Steps:
@@ -93,10 +95,10 @@ def cleanup_zokrates_files():
 ##
 def run_zokrates_compile(circuit_path):
     
-    # Try to run the ZoKrates compile command
+    # Try to run the ZoKrates compile command using subprocess with the given circuit file, return True if successful (based on no exceptions)
     try:
         
-        # Run the ZoKrates compile command using subprocess with the given circuit file and return True
+        # result - Result of the subprocess call
         result = subprocess.run(
             ["zokrates", "compile", "-i", circuit_path],
             capture_output=True, text=True, check=True
@@ -123,7 +125,6 @@ def run_zokrates_compile(circuit_path):
 # @return True if setup succeeds, False otherwise
 #
 # @details
-#   Side Effects:
 #     Prints ZoKrates CLI output or error message
 #
 #   Steps:
@@ -133,10 +134,10 @@ def run_zokrates_compile(circuit_path):
 ##
 def run_zokrates_setup():
     
-    # Try to run the ZoKrates setup command
+    # Try to run the ZoKrates setup command using subprocess and return True if successful (based on no exceptions)
     try:
         
-        # Run the ZoKrates setup command using subprocess and return True
+        # result - Result of the subprocess call
         result = subprocess.run(
             ["zokrates", "setup"],
             capture_output=True, text=True, check=True
@@ -164,7 +165,6 @@ def run_zokrates_setup():
 # @return True if witness computation succeeds, False otherwise
 #
 # @details
-#   Side Effects:
 #     Prints ZoKrates CLI output or error message
 #
 #   Steps:
@@ -174,10 +174,10 @@ def run_zokrates_setup():
 ##
 def run_zokrates_compute_witness(args):
     
-    # Try to run the ZoKrates compute-witness command with the provided arguments
+    # Try to run the ZoKrates compute-witness command with the provided arguments via subprocess and return True if successful (based on no exceptions)
     try:
         
-        # Run the ZoKrates compute-witness command with arguments via subprocess and return True
+        # result - Result of the subprocess call
         result = subprocess.run(
             ["zokrates", "compute-witness", "-a"] + args,
             capture_output=True, text=True, check=True
@@ -205,7 +205,6 @@ def run_zokrates_compute_witness(args):
 # @return True if proof generation succeeds, False otherwise
 #
 # @details
-#   Side Effects:
 #     Prints ZoKrates CLI output or error message
 #
 #   Steps:
@@ -215,10 +214,10 @@ def run_zokrates_compute_witness(args):
 ##
 def run_zokrates_generate_proof():
     
-    # Try to run the ZoKrates generate-proof command
+    # Try to run the ZoKrates generate-proof command using subprocess and return True if successful (based on no exceptions)
     try:
         
-        # Run the ZoKrates generate-proof command using subprocess and return True
+        # result - Result of the subprocess call
         result = subprocess.run(
             ["zokrates", "generate-proof"],
             capture_output=True, text=True, check=True
@@ -245,7 +244,6 @@ def run_zokrates_generate_proof():
 # @return True if the proof is valid, False otherwise
 #
 # @details
-#   Side Effects:
 #     Prints ZoKrates CLI output or error message
 #
 #   Steps:
@@ -255,7 +253,7 @@ def run_zokrates_generate_proof():
 ##
 def run_zokrates_verify():
     
-    # Try to run the ZoKrates verify command
+    # Try to run the ZoKrates verify command using subprocess and capture the output, return True if proof is valid (based on output content)
     try:
         
         # Run the ZoKrates verify command using subprocess and capture the output
@@ -296,33 +294,33 @@ def run_zokrates_verify():
 ##
 def run_zokrates_workflow(circuit_path, args):
     
-    # Step 1: Compile the ZoKrates circuit
+    # Try to compile the ZoKrates circuit, return False and print error if it fails
     if not run_zokrates_compile(circuit_path):
         print("[ZoKrates] Compilation failed.")
         return False
     
-    # Step 2: Run ZoKrates setup to generate keys
+    # Try to run ZoKrates setup to generate keys, return False and print error if it fails
     if not run_zokrates_setup():
         print("[ZoKrates] Setup failed.")
         cleanup_zokrates_files()
         return False
     
-    # Step 3: Compute witness with provided arguments
+    # Try to compute witness with provided arguments, return False and print error if it fails
     if not run_zokrates_compute_witness(args):
         print("[ZoKrates] Compute witness failed.")
         cleanup_zokrates_files()
         return False
     
-    # Step 4: Generate proof using computed witness and setup keys
+    # Try to generate proof using computed witness and setup keys, return False and print error if it fails
     if not run_zokrates_generate_proof():
         print("[ZoKrates] Proof generation failed.")
         cleanup_zokrates_files()
         return False
     
-    # Step 5: Verify the generated proof
+    # verification_result - Result of proof verification (True if valid, False otherwise)
     verification_result = run_zokrates_verify()
     
-    # Step 6: Clean up ZoKrates-generated files
+    # Clean up ZoKrates-generated files
     cleanup_zokrates_files()
     
     # Return verification result (True if proof is valid, False otherwise)
@@ -332,10 +330,8 @@ def run_zokrates_workflow(circuit_path, args):
 ## Main function to test the ZoKrates interface functionality.
 if __name__ == "__main__":
     
-    ## @test Main test for ZoKrates interface functionality
-    
-    # Set debug mode to True for detailed output
-    set_debug_mode(True)
+    # Uncomment the following line to enable debug mode for detailed output
+    # set_debug_mode(True) # Set debug mode to True for detailed output
     
     # Print initial message
     print("Compiling dummy.zok...")

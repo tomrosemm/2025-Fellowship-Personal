@@ -11,18 +11,13 @@
 #   - The RSU compares the received ZKP to the expected value to determine authentication success
 ##
 
-# "Roadside Unit (RSU) communication range can vary, but typically falls within the range of 300 meters to 500 meters" - Summary Quote on Google, supported somewhat by
-# the ranges in https://www.mdpi.com/2071-1050/15/14/11112#:~:text=These%20revealed%20the%20following:,flow%20density%20of%20future%20highways but not directly stated
-
-# "~8000 ft (2500 meter) range, open-field, line-of-sight" - Connected Vehicle Roadside Unit (RSU) Data sheet
-
 ## Imports
 # Libraries
 import os
 import hashlib
 
 # Classes and Functions
-# from otp import generate_otp
+# from otp import generate_otp  # Unused currently, but could be used for OTP generation on the RSU side to enable passing less/less final data between vehicle and RSU
 from zkp import generate_zkp_proof_real
 from vehicle import Vehicle
 
@@ -49,6 +44,7 @@ class RSU:
     # @brief Initialize an RSU instance
     #
     # @param vehicle_secrets Mapping from vehicle_id to secret
+    # @param broadcast_range Distance in meters within which RSU can communicate with vehicles (default: 500)
     #
     # @details
     #   Steps:
@@ -56,14 +52,15 @@ class RSU:
     ##
     def __init__(self, vehicle_secrets, broadcast_range=500):
         
-        ## @var vehicle_secrets is a dict mapping vehicle_id to secret
+        # vehicle_secrets - a dict mapping vehicle_id to secret
         self.vehicle_secrets = vehicle_secrets
         
+        # broadcast_range - distance in meters within which RSU can communicate with vehicles
         self.broadcast_range = broadcast_range
 
 
     ##
-    # @brief Verify the ZKP proof from a vehicle using a ZoKrates circuit
+    # @brief Verify the ZKP proof from a vehicle using a ZoKrates circuit - used primarily by experiments ecosystem (I couldn't think of a better word, feel free to change)
     #
     # @param vehicle_id The vehicle's unique identifier
     # @param zkp_proof The ZKP proof to verify
@@ -82,7 +79,7 @@ class RSU:
     ##
     def verify_zkp(self, vehicle_id, zkp_proof, timestamp, circuit_path):
         
-        # Retrieve the secret for the vehicle
+        # secret - the secret for the vehicle
         secret = self.vehicle_secrets.get(vehicle_id)
         
         # If no secret is found, return False
@@ -90,7 +87,13 @@ class RSU:
             return False
         
         # Determine the circuit type based on the provided path, default to empty string if None
-        circuit_name = os.path.basename(circuit_path) if circuit_path else ""
+        if circuit_path:
+            
+            # circuit_name - the name of the circuit file
+            circuit_name = os.path.basename(circuit_path)
+        
+        else:
+            circuit_name = ""
         
         # Handle different circuit types
         # If circuit name is auth.zok, expect a tuple (secret, timestamp, otp)
@@ -102,6 +105,7 @@ class RSU:
                 # Unpack the ZKP proof
                 secret_val, ts_val, otp_val = zkp_proof
                 
+                # expected_otp - the expected OTP value based on the secret and timestamp
                 # Convert values to strings for comparison
                 expected_otp = str(int(secret_val) + int(ts_val))
                 
@@ -118,27 +122,20 @@ class RSU:
         # If circuit name is dummy.zok, accept any digit string as valid
         elif circuit_name == "dummy.zok":
             
-            ## @note
-            # For dummy.zok, zkp_proof is the sum (a + b) as a string
-            # Accept any sum as valid (since a and b are random and not known to RSU)
-            # Optionally, we could pass a and b as part of the proof for stricter checking
-            # But for this, we just check that it's a digit
+            # For dummy.zok, zkp_proof is the sum (a + b) as a string; accept any sum as valid (since a and b are random and not known to RSU)
+            # Optionally, we could pass a and b as part of the proof for stricter checking, but for this, we just check that it's a digit
             return str(zkp_proof).isdigit()
         
-        # If circuit name is VtoI_test.zok, expect a tuple (sk, vid, commitment)
+        # If circuit name is VtoI_test.zok, expect a tuple (sk, vid, commitment) where sk is the secret key, vid is the vehicle ID, and commitment is the computed value
         elif circuit_name == "VtoI_test.zok":
             
-            ## @note
-            # For VtoI_test.zok, zkp_proof is a tuple (sk, vid, commitment)
-            # where sk is the secret key, vid is the vehicle ID, and commitment is the computed value
-            
-            # Extract values from proof
             # Check if zkp_proof is a tuple with 3 elements
             if isinstance(zkp_proof, tuple) and len(zkp_proof) == 3:
                 
                 # Unpack the ZKP proof
                 sk_val, vid_val, commitment_val = zkp_proof
                 
+                # computed_commitment - compute the commitment using the secret key and vehicle ID
                 # Verify the commitment matches
                 computed_commitment = (int(sk_val) * int(sk_val)) + int(vid_val)
                 
@@ -150,10 +147,10 @@ class RSU:
         # By default, use real ZKP logic
         else:
             
-            # Generate the expected OTP using the secret and timestamp and encoding them
+            # otp_input - the input for OTP generation, which is an encoded combination of the secret and timestamp
             otp_input = f"{secret}{timestamp}".encode()
             
-            # Generate the OTP using SHA-256
+            # otp - Generate the OTP using SHA-256 and hexdigest
             otp = hashlib.sha256(otp_input).hexdigest()
             
             # Generate and return the ZKP proof using the ZoKrates interface
@@ -162,19 +159,33 @@ class RSU:
 ## Simple test for RSU class
 if __name__ == "__main__":
     
-    # Create a test vehicle with an id and secret
+    ## @var vehicle_id
+    ## @brief Test vehicle ID
+    ## @var secret
+    ## @brief Test secret for the vehicle
+    ## @var vehicle
+    ## @brief Vehicle instance for testing
     vehicle_id = "TEST_VEHICLE"
     secret = "mysecret"
     vehicle = Vehicle(vehicle_id, secret)
     
-    # Generate an OTP and ZKP proof
+    ## @var otp
+    ## @brief OTP generated by the vehicle
+    ## @var timestamp
+    ## @brief Timestamp used for OTP generation
     otp, timestamp = vehicle.generate_otp()
+    
+    ## @var zkp
+    ## @brief Zero-knowledge proof generated by the vehicle
     zkp = vehicle.create_zkp(otp, timestamp, "dummy.zok")
     
-    # Create an RSU with the vehicle's secret
+    ## @var rsu
+    ## @brief RSU instance for testing with the vehicle's secret
     rsu = RSU({vehicle_id: secret})
     
-    # Verify the ZKP proof and print the result
+    ## @var result
+    ## @brief Result of the ZKP verification by the RSU
     result = rsu.verify_zkp(vehicle_id, zkp, timestamp, "dummy.zok")
+    
     print(f"[RSU] Verification result: {result}")
 

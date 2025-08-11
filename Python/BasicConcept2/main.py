@@ -6,6 +6,7 @@
 #   Orchestrates the simulation of a privacy-preserving vehicle authentication protocol using One-Time Passwords (OTP), Zero-Knowledge 
 #   Proofs (ZKP) and blockchain logging. Demonstrates both simulated and real workflows for ZoKrates-based ZKPs, blockchain 
 #   verification and event logging, and SUMO integration for vehicle-RSU interactions.
+#   The SUMO test wrapper tests could stand to be integrated into preliminary_tests instead of sumo_interface
 ##
 
 # Imports
@@ -13,6 +14,7 @@ import time
 
 import preliminary_tests
 import sumo_interface
+import experiment_runner
 
 from settings import (
     SUMO_PORT_BASIC,
@@ -26,7 +28,7 @@ row_of_stars = "****************************************************************
 
 
 ##
-# @brief Top-level command-line interface menu for organizing protocol simulation tests and experiments
+# @brief Top-level command-line interface menu for organizing tests and experiments
 #
 # @details
 #   Provides hierarchical navigation through:
@@ -39,7 +41,7 @@ row_of_stars = "****************************************************************
 ##
 def main_menu():
     
-    # Define menu actions as a dictionary
+    # menu_actions - A dictionary to map user input to corresponding functions
     menu_actions = {
         "1": entire_groups_tests_menu,
         "2": subgroups_tests_menu,
@@ -75,7 +77,7 @@ def main_menu():
         print("dboff - Disable Debug Mode")
         print("e - Exit\n")
         
-        # Accept user input
+        # choice - A variable to store user input
         choice = input("Enter your choice: ").strip().lower()
         
         # Process user choice using the dictionary
@@ -88,6 +90,8 @@ def main_menu():
             
             # Otherwise, call the corresponding function
             else:
+                
+                # action - The function to be called based on user input
                 action = menu_actions[choice]
                 
                 # If the action is a function, call it
@@ -103,8 +107,10 @@ def main_menu():
 # @brief Menu for entire groups of tests
 ##
 def entire_groups_tests_menu():
+    
     # unused_print_sumo_data = True
 
+    # menu_actions - A dictionary to map user input to corresponding functions
     menu_actions = {
         "1": lambda: (preliminary_tests.set_debug_mode(False), preliminary_tests.testAndScenarioRunner()),
         "2": lambda: (preliminary_tests.set_debug_mode(True), preliminary_tests.testAndScenarioRunner(), preliminary_tests.set_debug_mode(False)),
@@ -134,13 +140,13 @@ def entire_groups_tests_menu():
         print("b - Back to Main Menu")
         print("e - Exit\n")
         
-        # Accept user input
+        # choice - A variable to store user input
         choice = input("Enter your choice: ").strip().lower()
         
         # Process user choice using the dictionary
         if choice in menu_actions:
             
-            # If the action is a function, call it
+            # action - The function to be called based on user input
             action = menu_actions[choice]
             
             # If the action is 'back', return to the main menu
@@ -160,10 +166,13 @@ def entire_groups_tests_menu():
         else:
             print("Invalid choice. Please try again.")
 
+
 ##
-# @brief Menu for subgroups of tests.
+# @brief Menu for subgroups of tests
 ##
 def subgroups_tests_menu():
+    
+    # menu_actions - A dictionary to map user input to corresponding functions
     menu_actions = {
         "1": fully_simulated_tests,
         "2": zokrates_integration_tests,
@@ -173,8 +182,17 @@ def subgroups_tests_menu():
         "b": "back",
         "e": "exit"
     }
+    
     while True:
-        print("\n*** Subgroups of Tests Menu ***")
+        
+        # Print menu header
+        print("\n")
+        print(row_of_stars)
+        print("*** Subgroups of Tests Menu ***")
+        print(row_of_stars)
+        print("\n")
+        
+        # Display menu options
         print("1 - Fully Simulated Tests")
         print("2 - Zokrates Integration Tests")
         print("3 - SUMO and TraCI Tests")
@@ -182,23 +200,41 @@ def subgroups_tests_menu():
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
+        
+        # choice - A variable to store user input
         choice = input("Enter your choice: ").strip().lower()
+        
+        # Process user choice using the dictionary
         if choice in menu_actions:
+            
+            # action - The function to be called based on user input
             action = menu_actions[choice]
+            
+            # If the action is 'back', return to the main menu
             if action == "back":
                 return
+            
+            # If the action is 'exit', exit the program
             elif action == "exit":
                 print("Exiting.")
                 exit()
+            
+            # If the action is a function, call it
             elif callable(action):
                 action()
+                
+        # If the choice is not recognized, print an error message
         else:
             print("Invalid choice. Please try again.")
 
+
 ##
-# @brief Menu for individual tests.
+# @brief Menu for individual tests
+#   Options could stand to be ordered into like groups
 ##
 def individual_tests_menu():
+    
+    # menu_actions - A dictionary to map user input to corresponding functions
     menu_actions = {
         "1": preliminary_tests.test_VehicleRsuBasicInteraction_SimulatedZkp,
         "2": preliminary_tests.test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain,
@@ -229,7 +265,15 @@ def individual_tests_menu():
     }
     
     while True:
-        print("\n*** Individual Tests Menu ***")
+        
+        # Print menu header
+        print("\n")
+        print(row_of_stars)
+        print("*** Individual Tests Menu ***")
+        print(row_of_stars)
+        print("\n")
+        
+        # Display menu options
         print("1 - Run Vehicle - Rsu Basic Interaction; Simulated Zkp Test")
         print("2 - Run Vehicle - Rsu Basic Interaction; Simulated Zkp And Blockchain Test")
         print("3 - Run End - To - End; Simulated Zkp And Blockchain; Success Test")
@@ -256,110 +300,185 @@ def individual_tests_menu():
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
+        
+        # choice - A variable to store user input
         choice = input("Enter your choice: ").strip().lower()
+        
+        # Process user choice using the dictionary
         if choice in menu_actions:
+            
+            # action - The function to be called based on user input
             action = menu_actions[choice]
+            
+            # If the action is 'back', return to the main menu
             if action == "back":
                 return
+            
+            # If the action is 'exit', exit the program
             elif action == "exit":
                 print("Exiting.")
                 exit()
+            
+            # If the action is a function, call it
             elif callable(action):
                 action()
+        
+        # If the choice is not recognized, print an error message
         else:
             print("Invalid choice. Please try again.")
 
+
 ##
-# @brief Menu for entire groups of experiments.
+# @brief Menu for entire groups of experiments
+#  Not yet implemented
 ##
 def entire_groups_experiments_menu():
+    
+    # menu_actions - A dictionary to map user input to corresponding functions
     menu_actions = {
         "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
         "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
         "b": "back",
         "e": "exit"
     }
+    
     while True:
+        
         print("\n*** Entire Groups of Experiments Menu ***")
-        print("Implementation pending")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
+        
+        # choice - A variable to store user input
         choice = input("Enter your choice: ").strip().lower()
+        
+        # Process user choice using the dictionary
         if choice in menu_actions:
+            
+            # action - The function to be called based on user input
             action = menu_actions[choice]
+            
+            # If the action is 'back', return to the main menu
             if action == "back":
                 return
+            
+            # If the action is 'exit', exit the program
             elif action == "exit":
                 print("Exiting.")
                 exit()
+            
+            # If the action is a function, call it
             elif callable(action):
                 action()
+                
+        # If the choice is not recognized, print an error message
         else:
             print("Invalid choice. Please try again.")
 
+
 ##
-# @brief Menu for subgroups of experiments.
+# @brief Menu for subgroups of experiments
+#  Not yet implemented
 ##
 def subgroups_experiments_menu():
+    
+    # menu_actions - A dictionary to map user input to corresponding functions
     menu_actions = {
         "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
         "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
         "b": "back",
         "e": "exit"
     }
+    
     while True:
+        
         print("\n*** Subgroups of Experiments Menu ***")
-        print("Implementation pending")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
+        
+        # choice - A variable to store user input
         choice = input("Enter your choice: ").strip().lower()
+        
+        # Process user choice using the dictionary
         if choice in menu_actions:
+            
+            # action - The function to be called based on user input
             action = menu_actions[choice]
+            
+            # If the action is 'back', return to the main menu
             if action == "back":
                 return
+            
+            # If the action is 'exit', exit the program
             elif action == "exit":
                 print("Exiting.")
                 exit()
+            
+            # If the action is a function, call it
             elif callable(action):
                 action()
+                
+        # If the choice is not recognized, print an error message
         else:
             print("Invalid choice. Please try again.")
 
+
 ##
-# @brief Menu for individual experiments.
+# @brief Menu for individual experiments
 ##
 def individual_experiments_menu():
+    
+    # menu_actions - A dictionary to map user input to corresponding functions
     menu_actions = {
         "dbon": lambda: (preliminary_tests.set_debug_mode(True), print("Debug mode enabled.\n")),
         "dboff": lambda: (preliminary_tests.set_debug_mode(False), print("Debug mode disabled.\n")),
         "b": "back",
         "e": "exit"
     }
+    
     while True:
+        
         print("\n*** Individual Experiments Menu ***")
-        print("Implementation pending")
         print("dbon - Enable Debug Mode")
         print("dboff - Disable Debug Mode")
         print("b - Back to Main Menu")
         print("e - Exit\n")
+        
+        # choice - A variable to store user input
         choice = input("Enter your choice: ").strip().lower()
+        
+        # Process user choice using the dictionary
         if choice in menu_actions:
+            
+            # action - The function to be called based on user input
             action = menu_actions[choice]
+            
+            # If the action is 'back', return to the main menu
             if action == "back":
                 return
+            
+            # If the action is 'exit', exit the program
             elif action == "exit":
                 print("Exiting.")
                 exit()
+            
+            # If the action is a function, call it
             elif callable(action):
                 action()
+                
+        # If the choice is not recognized, print an error message
         else:
             print("Invalid choice. Please try again.")
 
-## Test SubGroups
+## Test SubGroups - Need to be updated with new tests
+
+
+##
+# @ @brief Runs fully simulated tests
+##
 def fully_simulated_tests():
     
     # Print menu header
@@ -369,6 +488,7 @@ def fully_simulated_tests():
     print(row_of_stars)
     print("\n")
     
+    # Print simulated tests
     print("Simulated ZKP Test")
     print("Simulated Blockchain ZKP Test")
     print("Simulated End-to-End Scenario: Successful Authentication")
@@ -376,6 +496,7 @@ def fully_simulated_tests():
     print("Simulated ZKP Isolated Test: Multiple Vehicles")
     print("Simulated End-to-End Test: Multiple Vehicles")
     
+    # Run the tests
     preliminary_tests.test_VehicleRsuBasicInteraction_SimulatedZkp()
     preliminary_tests.test_VehicleRsuBasicInteraction_SimulatedZkpAndBlockchain()
     preliminary_tests.test_EndToEnd_SimulatedZkpAndBlockchain_Success()
@@ -383,7 +504,10 @@ def fully_simulated_tests():
     preliminary_tests.test_PartialWorkflow_MultipleVehicles_Simulated()
     preliminary_tests.test_EndToEnd_MultipleVehicles_Simulated()
                 
-                
+
+##
+# @brief Runs ZoKrates integration tests
+##
 def zokrates_integration_tests():
     
     # Print menu header
@@ -393,6 +517,7 @@ def zokrates_integration_tests():
     print(row_of_stars)
     print("\n")
     
+    # Print ZoKrates integration tests
     print("Run Real ZoKrates End-to-End Test with dummy.zok")
     print("ZoKrates-Integrated Isolated Test: Multiple Vehicles")
     print("ZoKrates-Integrated End-to-End Test: Multiple Vehicles")
@@ -400,6 +525,7 @@ def zokrates_integration_tests():
     print("Run Vehicle-to-Infrastructure ZKP Test with VtoI_test.zok")
     print("Run Authentication Circuit Test with auth.zok")
     
+    # Run the tests
     preliminary_tests.test_PartialWorkflow_RealZokrates_UsingDummyCircuit()
     preliminary_tests.test_PartialWorkflow_RealZokrates_MultipleVehicles_UsingDummyCircuit()
     preliminary_tests.test_PartialWorkflow_RealZokratesSimulatedBlockchain_MultipleVehicles_UsingDummyCircuit()
@@ -408,6 +534,9 @@ def zokrates_integration_tests():
     preliminary_tests.test_Zokrates_UsingAuthCircuit()
 
 
+##
+# @brief Runs SUMO and TraCI integration tests
+##
 def sumo_and_traci_tests(print_sumo_data=True):
     
     # Print menu header
@@ -417,6 +546,7 @@ def sumo_and_traci_tests(print_sumo_data=True):
     print(row_of_stars)
     print("\n")
     
+    # Print SUMO and TraCI integration tests
     print("Run SUMO Connection Tests (Basic Network + Configuration File)")
     print("Run SUMO TraCI Data Transfer Test (simple.net)")
     print("Run SUMO TraCI Data Transfer Test (.sumocfg, 100 steps)")
@@ -428,6 +558,7 @@ def sumo_and_traci_tests(print_sumo_data=True):
     print("Run SUMO Dynamic Car Spawning Test (straightaway5.sumocfg)")
     print("Run SUMO RSU Message With Delay Test (straightaway5.sumocfg)")
     
+    # Run the tests
     preliminary_tests.tested, preliminary_tests.passed = preliminary_tests.test_sumo_connection_wrapper(
         preliminary_tests.tested, preliminary_tests.passed
     )
@@ -441,7 +572,10 @@ def sumo_and_traci_tests(print_sumo_data=True):
     preliminary_tests.test_LiveManipulation_SumoAndTraCI_SpawnCarsDynamically_UsingStraightaway5(print_data=print_sumo_data)
     preliminary_tests.test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6(print_data=print_sumo_data)
 
-    
+
+##
+# @brief Runs the 'Progress Presentation Suite' (Not up to date as far as most recently achieved progress)
+##
 def progressPresentationSuite():
     
     # Instead of initializing local counters, use the ones from preliminary_tests module
@@ -522,9 +656,8 @@ def progressPresentationSuite():
     time.sleep(2)
 
 
-## Main entry point for the script
-# If this script is run directly, start the main menu
+## Main entry point for the script; if this script is run directly, start the main menu
 if __name__ == "__main__":
     
-    ## @brief Main entry point for running the protocol simulation tests.
     main_menu()
+

@@ -58,21 +58,19 @@ def set_debug_mode(enabled):
 ##
 def kill_processes_on_port(port):
     
-    # Initialize killed_any flag as False to track if any processes were killed
+    # killed_any - Flag to track if any processes were killed
     killed_any = False
 
-    # Try to iterate over all running processes
-    # This may raise exceptions if a process ends or is inaccessible
+    # Try to iterate over all running processes; this may raise exceptions if a process ends or is inaccessible
     try:
         
         # Iterate over each running process, requesting pid, name, and connections info
         for proc in psutil.process_iter(['pid', 'name', 'connections']):
             
-            # Try to access the process's connections
-            # This may raise exceptions if the process has ended or is inaccessible
+            # Try to access the process's connections; this may raise exceptions if the process has ended or is inaccessible
             try:
                 
-                # Get the list of connections for current process
+                # connections - List of connections for the current process
                 connections = proc.info['connections']
 
                 # If the process has any connections
@@ -109,8 +107,7 @@ def kill_processes_on_port(port):
             print(f"[Port Cleanup] Error during port cleanup: {e}")
 
     # If any processes were killed, wait for the OS to release the port
-    # The entire time of 10 seconds is probably unnecessary for most cases, but allows
-    # The testing suite to run back to back without errors
+    # The time of 10 seconds is unnecessary for most cases, but allows the testing suite to run back to back without errors, so it's a padding that is reused around the codebase
     if killed_any:
         print("Wait time begins for processes to die and OS to release port")
         time.sleep(10)
@@ -169,8 +166,10 @@ def is_port_available(port):
 ##
 def wait_for_port_available(port, timeout=15):
     
-    # Record the start time for timeout calculation and initialize attempt counter
+    # start_time - Record the start time for timeout calculation
     start_time = time.time()
+    
+    # attempts - Counter for the number of attempts to check the port
     attempts = 0
 
     # Loop until timeout expires
@@ -192,7 +191,7 @@ def wait_for_port_available(port, timeout=15):
             if DEBUG_MODE:
                 print(f"[Port Management] Port {port} still busy, attempting to kill processes")
             
-            # Attempt to kill processes on the port
+            # killed - Flag to track if any processes were killed after attempting to kill processes on the port
             killed = kill_processes_on_port(port)
             
             # If processes were killed and debug mode is enabled, print debug info
