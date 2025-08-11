@@ -1,0 +1,7 @@
+// A simple circuit: checks if hash(secret, timestamp) == otp
+// Since ZoKrates doesn't have built-in SHA256, use a simple sum for demonstration
+
+def main(private field secret, field timestamp, field otp) -> bool {
+    field computed = secret + timestamp;
+    return computed == otp;
+}

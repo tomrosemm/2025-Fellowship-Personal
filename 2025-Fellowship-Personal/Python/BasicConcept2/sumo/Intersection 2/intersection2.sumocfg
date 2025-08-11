@@ -1,0 +1,13 @@
+<configuration>
+
+    <input>
+        <net-file value="intersection2.net.xml"/>
+        <route-files value="intersection2.rou.xml"/>
+    </input>
+    
+    <time>
+        <begin value="0"/>
+        <end value="400"/>
+    </time>
+
+</configuration>

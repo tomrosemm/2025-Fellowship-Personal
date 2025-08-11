@@ -1,0 +1,13 @@
+Software and Possible Alternatives
+
+SUMO:
+Traffic Sim (To Be Used)
+
+Mininet:									<-------------->	OMNeT++:
+Network Sim												Network Sim
+
+Proprietary Python Code:							<-------------->	Veins:
+Connect SUMO and chosen Network Sim									Connect SUMO and chosen Network Sim
+
+Ganache/Truffle:								<-------------->	Hardhat:
+Blockchain/Ethereum Dev (Sunset, but in use)								Blockchain/Ethereum Dev

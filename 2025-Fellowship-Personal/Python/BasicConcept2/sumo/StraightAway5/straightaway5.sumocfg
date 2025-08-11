@@ -1,0 +1,13 @@
+<configuration>
+    <input>
+        <net-file value="straightaway5.net.xml"/>
+        <route-files value="straightaway5.rou.xml"/>
+        <additional-files value="straightaway5.add.xml"/>
+    </input>
+    
+    <time>
+        <begin value="0"/>
+        <end value="1000"/>
+    </time>
+
+</configuration>

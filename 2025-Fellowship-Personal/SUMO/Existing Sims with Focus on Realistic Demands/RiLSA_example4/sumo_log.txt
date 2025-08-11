@@ -1,0 +1,31 @@
+Loading net-file from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example4\rilsa4.net.xml' ... done (8ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example4\vtypes.add.xml' ...
+Warning: The shape 'transport' for vType 'LKW' is deprecated, use 'truck' instead.
+ done (4ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example4\rilsa4_tls.add.xml' ... done (4ms).
+Loading route-files incrementally from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example4\genroutes.rou.xml'
+Loading done.
+Simulation started with time: 0.00.
+Warning: Vehicle 'wm2msLKW.0' performs emergency braking on lane ':0_9_0' with decel=9.00, wished=4.50, severity=1.00, time=38.00.
+Warning: Vehicle 'sm2mnPKW.1' performs emergency braking on lane ':0_7_0' with decel=9.00, wished=4.50, severity=1.00, time=64.00.
+Warning: Vehicle 'em2msPKW.4' performs emergency braking on lane ':0_5_0' with decel=9.00, wished=4.50, severity=1.00, time=337.00.
+Warning: Vehicle 'em2msPKW.6' performs emergency braking on lane ':0_5_0' with decel=9.00, wished=4.50, severity=1.00, time=486.00.
+Warning: Vehicle 'em2msPKW.19' performs emergency braking on lane ':0_5_0' with decel=9.00, wished=4.50, severity=1.00, time=1462.00.
+Warning: Vehicle 'wm2mnPKW.31' performs emergency braking on lane ':0_11_0' with decel=9.00, wished=4.50, severity=1.00, time=1931.00.
+Warning: Vehicle 'wm2mnPKW.34' performs emergency braking on lane ':0_11_0' with decel=9.00, wished=4.50, severity=1.00, time=2115.00.
+Warning: Vehicle 'wm2msPKW.126' performs emergency braking on lane 'wm_0' with decel=9.00, wished=4.50, severity=1.00, time=2511.00.
+Warning: Vehicle 'sm2mnPKW.102' performs emergency braking on lane ':0_7_0' with decel=9.00, wished=4.50, severity=1.00, time=2624.00.
+Warning: Vehicle 'em2msPKW.38' performs emergency braking on lane ':0_5_0' with decel=9.00, wished=4.50, severity=1.00, time=2886.00.
+Warning: Vehicle 'em2mwPKW.473' performs emergency braking on lane ':0_4_0' with decel=9.00, wished=4.50, severity=1.00, time=3150.00.
+Warning: Vehicle 'em2msPKW.47' performs emergency braking on lane 'em_1' with decel=9.00, wished=4.50, severity=1.00, time=3557.00.
+Simulation ended at time: 3709.00.
+Reason: All vehicles have left the simulation.
+Performance:
+ Duration: 27.17s
+ Real time factor: 136.521
+ UPS: 8772.968198
+Vehicles:
+ Inserted: 2334
+ Running: 0
+ Waiting: 0
+ Emergency Braking: 12

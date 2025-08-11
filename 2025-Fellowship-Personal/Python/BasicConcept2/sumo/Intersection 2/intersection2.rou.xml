@@ -1,0 +1,110 @@
+<routes>
+    
+    <vType id="car" accel="0.8" decel="4.5" sigma="0.5" length="5" maxSpeed="35"/>
+
+    <!-- Route definitions -->
+    <route id="route1" edges="Wenter E4 E12 E15 E7 Sexit"/>
+    <route id="route2" edges="Wenter E4 E12 E14 E6 Eexit"/>
+    <route id="route3" edges="Wenter E4 E12 E10 E4.34 Nexit"/>
+    <route id="route4" edges="Senter E8 E16 E2 E3 Wexit"/>
+    <route id="route5" edges="Senter E8 E16 E14 E6 Eexit"/>
+    <route id="route6" edges="Senter E8 E16 E10 E4.34 Nexit"/>
+    <route id="route7" edges="Eenter E5 E13 E2 E3 Wexit"/>
+    <route id="route8" edges="Eenter E5 E13 E15 E7 Sexit"/>
+    <route id="route9" edges="Eenter E5 E13 E10 E4.34 Nexit"/>
+    <route id="route10" edges="Nenter E1 E9 E2 E3 Wexit"/>
+    <route id="route11" edges="Nenter E1 E9 E15 E7 Sexit"/>
+    <route id="route12" edges="Nenter E1 E9 E14 E6 Eexit"/>
+
+    <!-- Vehicles sorted by departure time -->
+    <vehicle id="veh1_1" type="car" route="route1" depart="0"/>
+    <vehicle id="veh2_1" type="car" route="route2" depart="2"/>
+    <vehicle id="veh3_1" type="car" route="route3" depart="4"/>
+    <vehicle id="veh10_1" type="car" route="route10" depart="6"/>
+    <vehicle id="veh5_1" type="car" route="route5" depart="8"/>
+    <vehicle id="veh11_1" type="car" route="route11" depart="10"/>
+    <vehicle id="veh7_1" type="car" route="route7" depart="12"/>
+    <vehicle id="veh12_1" type="car" route="route12" depart="14"/>
+    <vehicle id="veh9_1" type="car" route="route9" depart="16"/>
+    <vehicle id="veh1_2" type="car" route="route1" depart="20"/>
+    <vehicle id="veh2_2" type="car" route="route2" depart="22"/>
+    <vehicle id="veh3_2" type="car" route="route3" depart="24"/>
+    <vehicle id="veh10_2" type="car" route="route10" depart="26"/>
+    <vehicle id="veh5_2" type="car" route="route5" depart="28"/>
+    <vehicle id="veh11_2" type="car" route="route11" depart="30"/>
+    <vehicle id="veh7_2" type="car" route="route7" depart="32"/>
+    <vehicle id="veh12_2" type="car" route="route12" depart="34"/>
+    <vehicle id="veh9_2" type="car" route="route9" depart="36"/>
+    <vehicle id="veh1_3" type="car" route="route1" depart="40"/>
+    <vehicle id="veh2_3" type="car" route="route2" depart="42"/>
+    <vehicle id="veh3_3" type="car" route="route3" depart="44"/>
+    <vehicle id="veh10_3" type="car" route="route10" depart="46"/>
+    <vehicle id="veh5_3" type="car" route="route5" depart="48"/>
+    <vehicle id="veh11_3" type="car" route="route11" depart="50"/>
+    <vehicle id="veh7_3" type="car" route="route7" depart="52"/>
+    <vehicle id="veh12_3" type="car" route="route12" depart="54"/>
+    <vehicle id="veh9_3" type="car" route="route9" depart="56"/>
+    <vehicle id="veh1_4" type="car" route="route1" depart="60"/>
+    <vehicle id="veh2_4" type="car" route="route2" depart="62"/>
+    <vehicle id="veh3_4" type="car" route="route3" depart="64"/>
+    <vehicle id="veh10_4" type="car" route="route10" depart="66"/>
+    <vehicle id="veh5_4" type="car" route="route5" depart="68"/>
+    <vehicle id="veh11_4" type="car" route="route11" depart="70"/>
+    <vehicle id="veh7_4" type="car" route="route7" depart="72"/>
+    <vehicle id="veh12_4" type="car" route="route12" depart="74"/>
+    <vehicle id="veh9_4" type="car" route="route9" depart="76"/>
+    <vehicle id="veh1_5" type="car" route="route1" depart="80"/>
+    <vehicle id="veh2_5" type="car" route="route2" depart="82"/>
+    <vehicle id="veh3_5" type="car" route="route3" depart="84"/>
+    <vehicle id="veh10_5" type="car" route="route10" depart="86"/>
+    <vehicle id="veh5_5" type="car" route="route5" depart="88"/>
+    <vehicle id="veh11_5" type="car" route="route11" depart="90"/>
+    <vehicle id="veh7_5" type="car" route="route7" depart="92"/>
+    <vehicle id="veh12_5" type="car" route="route12" depart="94"/>
+    <vehicle id="veh9_5" type="car" route="route9" depart="96"/>
+    <vehicle id="veh1_6" type="car" route="route1" depart="100"/>
+    <vehicle id="veh2_6" type="car" route="route2" depart="102"/>
+    <vehicle id="veh3_6" type="car" route="route3" depart="104"/>
+    <vehicle id="veh10_6" type="car" route="route10" depart="106"/>
+    <vehicle id="veh5_6" type="car" route="route5" depart="108"/>
+    <vehicle id="veh11_6" type="car" route="route11" depart="110"/>
+    <vehicle id="veh7_6" type="car" route="route7" depart="112"/>
+    <vehicle id="veh12_6" type="car" route="route12" depart="114"/>
+    <vehicle id="veh9_6" type="car" route="route9" depart="116"/>
+    <vehicle id="veh1_7" type="car" route="route1" depart="120"/>
+    <vehicle id="veh2_7" type="car" route="route2" depart="122"/>
+    <vehicle id="veh3_7" type="car" route="route3" depart="124"/>
+    <vehicle id="veh10_7" type="car" route="route10" depart="126"/>
+    <vehicle id="veh5_7" type="car" route="route5" depart="128"/>
+    <vehicle id="veh11_7" type="car" route="route11" depart="130"/>
+    <vehicle id="veh7_7" type="car" route="route7" depart="132"/>
+    <vehicle id="veh12_7" type="car" route="route12" depart="134"/>
+    <vehicle id="veh9_7" type="car" route="route9" depart="136"/>
+    <vehicle id="veh1_8" type="car" route="route1" depart="140"/>
+    <vehicle id="veh2_8" type="car" route="route2" depart="142"/>
+    <vehicle id="veh3_8" type="car" route="route3" depart="144"/>
+    <vehicle id="veh10_8" type="car" route="route10" depart="146"/>
+    <vehicle id="veh5_8" type="car" route="route5" depart="148"/>
+    <vehicle id="veh11_8" type="car" route="route11" depart="150"/>
+    <vehicle id="veh7_8" type="car" route="route7" depart="152"/>
+    <vehicle id="veh12_8" type="car" route="route12" depart="154"/>
+    <vehicle id="veh9_8" type="car" route="route9" depart="156"/>
+    <vehicle id="veh1_9" type="car" route="route1" depart="160"/>
+    <vehicle id="veh2_9" type="car" route="route2" depart="162"/>
+    <vehicle id="veh3_9" type="car" route="route3" depart="164"/>
+    <vehicle id="veh10_9" type="car" route="route10" depart="166"/>
+    <vehicle id="veh5_9" type="car" route="route5" depart="168"/>
+    <vehicle id="veh11_9" type="car" route="route11" depart="170"/>
+    <vehicle id="veh7_9" type="car" route="route7" depart="172"/>
+    <vehicle id="veh12_9" type="car" route="route12" depart="174"/>
+    <vehicle id="veh9_9" type="car" route="route9" depart="176"/>
+    <vehicle id="veh1_10" type="car" route="route1" depart="180"/>
+    <vehicle id="veh2_10" type="car" route="route2" depart="182"/>
+    <vehicle id="veh3_10" type="car" route="route3" depart="184"/>
+    <vehicle id="veh10_10" type="car" route="route10" depart="186"/>
+    <vehicle id="veh5_10" type="car" route="route5" depart="188"/>
+    <vehicle id="veh11_10" type="car" route="route11" depart="190"/>
+    <vehicle id="veh7_10" type="car" route="route7" depart="192"/>
+    <vehicle id="veh12_10" type="car" route="route12" depart="194"/>
+    <vehicle id="veh9_10" type="car" route="route9" depart="196"/>
+</routes>

@@ -1,0 +1,8 @@
+There is definitely duplication in the codebase due to, in part, breaking down the framework/simulation into pieces smaller than being connected enough to exchange information as intended,
+and making ways for different pieces to access or recreate needed info to the extent needed to pass a test. I've worked towards retroactively consolidating logic, but there are still
+places to keep an eye out for duplicated logic, the one's I've noted off the bat are:
+- DEBUG_MODE is present in, at the very least, one more place than needed, and probably more. I kept adding and integrating DEBUG_MODE constants for file-scoped testing/debugging, but the
+            integration of it across the codebase is sloppy. It works as intended, just can be tweaked to be less... dumb.
+- Most cleanup, either port, process, or file, is duplicated in some way or another, generally in separate parts of codebase. Doesn't cause issues (at least currently) but certainly reduces performance
+- The different functions for running SUMO are unneeded in the grand scheme,  specific tests use different run/sumo functions, so to keep all the tests passing, they are still in place. Refactoring into 
+            all of the tests using one function is a good move at some point

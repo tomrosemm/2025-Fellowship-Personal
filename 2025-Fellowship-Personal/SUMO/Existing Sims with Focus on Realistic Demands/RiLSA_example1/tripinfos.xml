@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-05-27 23:33:00 by Eclipse SUMO GUI Version 1.23.1
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="C:\Users\trose\Workspace\Fellowship &apos;25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\rilsa1.net.xml"/>
+        <route-files value="C:\Users\trose\Workspace\Fellowship &apos;25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\genroutes.rou.xml"/>
+        <additional-files value="C:\Users\trose\Workspace\Fellowship &apos;25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\vtypes.add.xml,C:\Users\trose\Workspace\Fellowship &apos;25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\rilsa1_tls.add.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="C:\Users\trose\Workspace\Fellowship &apos;25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\tripinfos.xml"/>
+    </output>
+
+    <report>
+        <log value="C:\Users\trose\Workspace\Fellowship &apos;25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\RiLSA_example1\sumo_log.txt"/>
+    </report>
+
+</sumoConfiguration>
+-->
+
+<tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+</tripinfos>

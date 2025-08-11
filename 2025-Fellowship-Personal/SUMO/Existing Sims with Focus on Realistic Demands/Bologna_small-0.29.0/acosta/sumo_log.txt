@@ -1,0 +1,32 @@
+Loading net-file from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta\acosta_buslanes.net.xml' ... done (19ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta\acosta_vtypes.add.xml' ...
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'P_7_7'. Starting with SUMO 1.24 this will be an error.
+Warning: Emission classes should always use the model as a prefix, please recheck 'HDV_6_2'. Starting with SUMO 1.24 this will be an error.
+ done (6ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta\acosta_detectors.add.xml' ... done (5ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta\acosta_bus_stops.add.xml' ... done (5ms).
+Loading additional-files from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta\acosta_tls.add.xml' ... done (5ms).
+Loading route-files incrementally from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta\acosta.rou.xml'
+Loading route-files incrementally from 'C:\Users\trose\Workspace\Fellowship '25 Personal\2025-Fellowship-Personal\SUMO\Existing Sims with Focus on Realistic Demands\Bologna_small-0.29.0\acosta\acosta_busses.rou.xml'
+Loading done.
+Simulation started with time: 0.00.
+Simulation ended at time: 706.00.
+Performance:
+ Duration: 44.00s
+ Real time factor: 16.0473
+ UPS: 6925.627912
+Vehicles:
+ Inserted: 1657 (Loaded: 1956)
+ Running: 546
+ Waiting: 53

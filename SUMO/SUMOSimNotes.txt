@@ -1,4 +1,4 @@
-For each sim, if you have SUMO installed correctly, downloading the whole folder(, extracting,) and then launching the .sumocfg file inside will launch the visual sim, and allowing it to finish (sped up by moving delay to 0) generates the output files
+For each sim, if you have SUMO installed correctly, downloading the whole folder(, extracting,) and then launching the .sumocfg file inside will launch the sim, and allowing it to finish (sped up by moving delay to 0) generates the output files.
 
 Basics of a Sim:
 
