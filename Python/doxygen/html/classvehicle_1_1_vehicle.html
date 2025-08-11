@@ -111,7 +111,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a932146dd33ebfb8a79bc224281dc8523"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a one-time password (OTP) using the vehicle's secret and current timestamp.  <br /></td></tr>
 <tr class="separator:a932146dd33ebfb8a79bc224281dc8523"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16e235e4229293f3421cf7d8ae1842bf" id="r_a16e235e4229293f3421cf7d8ae1842bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16e235e4229293f3421cf7d8ae1842bf">generate_otp_sum</a> (self, <a class="el" href="namespacevehicle.html#a71e24db6312e99e75bdc49e89d65948e">timestamp</a>=None)</td></tr>
-<tr class="memdesc:a16e235e4229293f3421cf7d8ae1842bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate an OTP as a simple sum for auth.zok experiments.  <br /></td></tr>
+<tr class="memdesc:a16e235e4229293f3421cf7d8ae1842bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate an OTP as a simple sum for use with auth.zok.  <br /></td></tr>
 <tr class="separator:a16e235e4229293f3421cf7d8ae1842bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -172,7 +172,8 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vehicle_id</td><td>Unique identifier for the vehicle </td></tr>
-    <tr><td class="paramname">secret</td><td>Secret key unique to the vehicle</td></tr>
+    <tr><td class="paramname">secret</td><td>Secret key unique to the vehicle </td></tr>
+    <tr><td class="paramname">detection_range</td><td>Range within which the vehicle can detect RSUs (default is 500)</td></tr>
   </table>
   </dd>
 </dl>
@@ -242,13 +243,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Generate a one-time password (OTP) using the vehicle's secret and current timestamp. </p>
-<dl class="section return"><dt>Returns</dt><dd>tuple (otp (str), timestamp (int))</dd></dl>
-<ol type="1">
-<li>Get current Unix timestamp as integer</li>
-<li>Concatenate secret and timestamp, encode to bytes</li>
-<li>Hash the input to create the OTP</li>
-<li>Return the OTP and timestamp </li>
-</ol>
+<dl class="section return"><dt>Returns</dt><dd>tuple (otp (str), timestamp (int)) </dd></dl>
 
 </div>
 </div>
@@ -271,7 +266,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Generate an OTP as a simple sum for auth.zok experiments. </p>
+<p>Generate an OTP as a simple sum for use with auth.zok. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">timestamp</td><td>The timestamp to use for OTP. Defaults to None </td></tr>

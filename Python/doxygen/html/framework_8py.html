@@ -94,7 +94,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Framework module to.  
+<p>Framework module to hold the proper implementation of the framework, and then draw on it for testing/experiments Currently, this is a placeholder file, as there are enough details about vehicle and rsu behavior that still need to be worked out that attempts to implement it properly would be premature. The logic in the run_test_1_level_2_experiment() function is a starting point for the basic implementation, though it doesn't use the vehicle or RSU classes yet, just direct execution of the behavior desired. generate_otp() and create_zkp() can then be used to build out the OTP and ZKP portions of the framework, with the blockchain interactions available and very roughly in place to be integrated later.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -103,8 +103,21 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Framework module to. </p>
-<dl class="section author"><dt>Author</dt><dd>Tom Rose </dd></dl>
+<div class="textblock"><p>Framework module to hold the proper implementation of the framework, and then draw on it for testing/experiments Currently, this is a placeholder file, as there are enough details about vehicle and rsu behavior that still need to be worked out that attempts to implement it properly would be premature. The logic in the run_test_1_level_2_experiment() function is a starting point for the basic implementation, though it doesn't use the vehicle or RSU classes yet, just direct execution of the behavior desired. generate_otp() and create_zkp() can then be used to build out the OTP and ZKP portions of the framework, with the blockchain interactions available and very roughly in place to be integrated later. </p>
+<dl class="section author"><dt>Author</dt><dd>Tom Rose</dd></dl>
+<p>Breakdown of the workflow, based on the original paper's description:</p>
+<p>Part One</p><ol type="1">
+<li>Vehicle generates an OTP using unique secret and timestamp</li>
+<li>OTP is embedded into a ZKP, proving the OTP valid without revealing the secret</li>
+<li>ZKP is sent to the RSU, where it is verified</li>
+<li>Upon successful verification, the RSU sends a signal to the vehicle authenticating it and proceeding with session</li>
+</ol>
+<p>Part Two</p><ol type="1">
+<li>ZKP-OTP proof is submitted to RSU</li>
+<li>RSU invokes a smart contract on the blockchain, verifying the ZKP-OTP proof</li>
+<li>The blockchain logs the event, including anonymized record of the vehicle’s identity and authentication status</li>
+<li>The outcome is returned to the infrastructure, which grants or denies access. </li>
+</ol>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

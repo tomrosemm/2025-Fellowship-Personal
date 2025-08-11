@@ -114,13 +114,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:afa6d7f89582719d933df0035b5ed1c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test connecting to SUMO via TraCI using straightaway2.sumocfg.  <br /></td></tr>
 <tr class="separator:afa6d7f89582719d933df0035b5ed1c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1719bd5a3c910e27eeae741b3778ca3" id="r_ab1719bd5a3c910e27eeae741b3778ca3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1719bd5a3c910e27eeae741b3778ca3">test_EndToEnd_MultipleVehicles_Simulated</a> ()</td></tr>
-<tr class="memdesc:ab1719bd5a3c910e27eeae741b3778ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulated end-to-end test with multiple vehicles (RSU + blockchain)  <br /></td></tr>
+<tr class="memdesc:ab1719bd5a3c910e27eeae741b3778ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulated end-to-end test with multiple vehicles.  <br /></td></tr>
 <tr class="separator:ab1719bd5a3c910e27eeae741b3778ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c4e23de2937c2cf25ed50ac32f9f525" id="r_a7c4e23de2937c2cf25ed50ac32f9f525"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c4e23de2937c2cf25ed50ac32f9f525">test_EndToEnd_SimulatedZkpAndBlockchain_Failure</a> ()</td></tr>
 <tr class="memdesc:a7c4e23de2937c2cf25ed50ac32f9f525"><td class="mdescLeft">&#160;</td><td class="mdescRight">End-to-end scenario: Vehicle fails authentication due to wrong secret.  <br /></td></tr>
 <tr class="separator:a7c4e23de2937c2cf25ed50ac32f9f525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acfe564bf0205adfc0c1cab525005c181" id="r_acfe564bf0205adfc0c1cab525005c181"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfe564bf0205adfc0c1cab525005c181">test_EndToEnd_SimulatedZkpAndBlockchain_Success</a> ()</td></tr>
-<tr class="memdesc:acfe564bf0205adfc0c1cab525005c181"><td class="mdescLeft">&#160;</td><td class="mdescRight">End-to-end scenario: Vehicle authenticates successfully and is granted access.  <br /></td></tr>
+<tr class="memdesc:acfe564bf0205adfc0c1cab525005c181"><td class="mdescLeft">&#160;</td><td class="mdescRight">End-to-end scenario: Vehicle authenticates successfully and is logged on blockchain.  <br /></td></tr>
 <tr class="separator:acfe564bf0205adfc0c1cab525005c181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2065755131cc0abc19ef00b5d03f1818" id="r_a2065755131cc0abc19ef00b5d03f1818"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2065755131cc0abc19ef00b5d03f1818">test_LiveManipulation_SumoAndTraCI_RsuMessageWithDelay_UsingStraightaway6</a> (print_data=True)</td></tr>
 <tr class="memdesc:a2065755131cc0abc19ef00b5d03f1818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test RSU message delay and car stopping in SUMO using straightaway6.sumocfg.  <br /></td></tr>
@@ -168,11 +168,13 @@ Variables</h2></td></tr>
 <tr class="memdesc:a84cb21ca8841a588311a03bd9c054d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variable to control debug output.  <br /></td></tr>
 <tr class="separator:a84cb21ca8841a588311a03bd9c054d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a561a5450b127e97c5ca67d0b349747a8" id="r_a561a5450b127e97c5ca67d0b349747a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a561a5450b127e97c5ca67d0b349747a8">passed</a> = 0</td></tr>
+<tr class="memdesc:a561a5450b127e97c5ca67d0b349747a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variable to track the number of tests that passed.  <br /></td></tr>
 <tr class="separator:a561a5450b127e97c5ca67d0b349747a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9e79b5d2884cd8ac50eecac329107d1" id="r_ac9e79b5d2884cd8ac50eecac329107d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9e79b5d2884cd8ac50eecac329107d1">PRINT_DATA</a> = DEFAULT_PRINT_DATA</td></tr>
 <tr class="memdesc:ac9e79b5d2884cd8ac50eecac329107d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variable to control whether to print data in the SUMO interface.  <br /></td></tr>
 <tr class="separator:ac9e79b5d2884cd8ac50eecac329107d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a202b369a9c8ae3ed4de6b31303759a1a" id="r_a202b369a9c8ae3ed4de6b31303759a1a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a202b369a9c8ae3ed4de6b31303759a1a">tested</a> = 0</td></tr>
+<tr class="memdesc:a202b369a9c8ae3ed4de6b31303759a1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global variable to track the number of tests executed.  <br /></td></tr>
 <tr class="separator:a202b369a9c8ae3ed4de6b31303759a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -406,13 +408,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Simulated end-to-end test with multiple vehicles (RSU + blockchain) </p>
+<p>Simulated end-to-end test with multiple vehicles. </p>
 <p>Simulates authentication and blockchain verification for multiple vehicles</p>
 <p>Steps:</p><ol type="1">
 <li>Create multiple vehicles, each with a unique secret</li>
-<li>Each vehicle generates OTP and timestamp, creates ZKP proof</li>
-<li>RSU verifies each ZKP proof</li>
-<li>Blockchain verification is performed if DEBUG_MODE is enabled</li>
+<li>For each vehicle, generate OTP and timestamp, create simulated ZKP proof</li>
+<li>Verify each ZKP proof by comparing with expected proof</li>
+<li>Simulate blockchain verification if DEBUG_MODE is enabled</li>
 <li>Print whether all vehicles were granted access by infrastructure </li>
 </ol>
 
@@ -436,12 +438,12 @@ Variables</h2></td></tr>
 <p>End-to-end scenario: Vehicle fails authentication due to wrong secret. </p>
 <p>Simulates a failed authentication scenario for a vehicle with incorrect secret</p>
 <p>Steps:</p><ol type="1">
-<li>Create vehicle with wrong secret and RSU with correct secret</li>
+<li>Create vehicle with wrong secret and generate correct secret for comparison</li>
 <li>Vehicle generates OTP and timestamp</li>
-<li>Vehicle creates ZKP proof</li>
-<li>Verify ZKP proof using expected secret</li>
-<li>Blockchain verification is performed if DEBUG_MODE is enabled</li>
-<li>Print expected denial of infrastructure access </li>
+<li>Vehicle creates simulated ZKP proof</li>
+<li>Generate expected ZKP proof using correct secret and compare</li>
+<li>Simulate blockchain verification if DEBUG_MODE is enabled</li>
+<li>Output expected denial of infrastructure access </li>
 </ol>
 
 </div>
@@ -461,15 +463,15 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>End-to-end scenario: Vehicle authenticates successfully and is granted access. </p>
+<p>End-to-end scenario: Vehicle authenticates successfully and is logged on blockchain. </p>
 <p>Simulates a successful authentication scenario for a vehicle</p>
 <p>Steps:</p><ol type="1">
-<li>Create vehicle and RSU with matching secrets</li>
+<li>Create vehicle with random secret</li>
 <li>Vehicle generates OTP and timestamp</li>
-<li>Vehicle creates ZKP proof</li>
-<li>Verifies ZKP proof</li>
-<li>Blockchain verification is performed if DEBUG_MODE is enabled</li>
-<li>Print the result of the infrastructure access decision </li>
+<li>Vehicle creates simulated ZKP proof</li>
+<li>Verify ZKP proof by comparing with expected proof</li>
+<li>Simulate blockchain verification if DEBUG_MODE is enabled</li>
+<li>Output the result of the infrastructure access decision </li>
 </ol>
 
 </div>
@@ -596,8 +598,8 @@ Variables</h2></td></tr>
 <p>Simulates authentication for multiple vehicles using hash-based ZKP</p>
 <p>Steps:</p><ol type="1">
 <li>Create multiple vehicles, each with a unique secret</li>
-<li>Each vehicle generates OTP and timestamp, creates ZKP proof</li>
-<li>Each ZKP proof is verified</li>
+<li>For each vehicle, generate OTP and timestamp, create simulated ZKP proof</li>
+<li>Verify each ZKP proof by comparing with expected proof</li>
 <li>Print whether all vehicles authenticated successfully </li>
 </ol>
 
@@ -646,13 +648,8 @@ Variables</h2></td></tr>
 <p>Simulates a real ZKP workflow using the ZoKrates CLI</p>
 <p>Steps:</p><ol type="1">
 <li>Generate random field inputs for dummy.zok</li>
-<li>Compile circuit</li>
-<li>Run setup</li>
-<li>Compute witness</li>
-<li>Generate proof</li>
-<li>Verify proof</li>
-<li>Clean up ZoKrates artifacts after test</li>
-<li>Print the result of the workflow </li>
+<li>Run ZoKrates workflow (compile, setup, compute witness, generate proof, verify)</li>
+<li>Print verification result and output workflow result </li>
 </ol>
 
 </div>
@@ -675,8 +672,10 @@ Variables</h2></td></tr>
 <p>ZoKrates-integrated end-to-end test with multiple vehicles (zokrates/dummy.zok + simulated blockchain) </p>
 <p>Runs ZoKrates workflow and blockchain verification for multiple vehicles</p>
 <p>Steps:</p><ol type="1">
-<li>For each vehicle: a. Generate random inputs b. Compile ZoKrates circuit c. Run setup d. Compute witness e. Generate proof f. Verify proof g. Simulate blockchain verification if DEBUG_MODE is enabled h. Clean up ZoKrates artifacts</li>
-<li>Print whether all vehicles' proofs and blockchain logs succeeded </li>
+<li>For each vehicle, generate random inputs</li>
+<li>Run ZoKrates workflow (compile, setup, compute witness, generate proof, verify)</li>
+<li>Simulate blockchain verification if DEBUG_MODE is enabled</li>
+<li>Print verification and blockchain result for each vehicle and output overall result </li>
 </ol>
 
 </div>
@@ -699,11 +698,9 @@ Variables</h2></td></tr>
 <p>Test the workflow using a simulated ZKP (hash-based) </p>
 <p>Simulates authentication between a vehicle and RSU using a hash-based ZKP</p>
 <p>Steps:</p><ol type="1">
-<li>Generate a random vehicle secret and create Vehicle and RSU entities</li>
+<li>Generate a random vehicle secret and create Vehicle entity</li>
 <li>Vehicle generates an OTP and timestamp</li>
-<li>Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp</li>
-<li>Verify the ZKP proof using the known vehicle secret and timestamp</li>
-<li>Output the result of the verification and authentication status </li>
+<li>Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp </li>
 </ol>
 
 </div>
@@ -726,11 +723,11 @@ Variables</h2></td></tr>
 <p>Simulate the full workflow, using simulated ZKP and simulated blockchain verification and logging. </p>
 <p>Simulates authentication and blockchain verification using hash-based ZKP</p>
 <p>Steps:</p><ol type="1">
-<li>Generate a random vehicle secret and create Vehicle and RSU entities</li>
+<li>Generate a random vehicle secret and create Vehicle entity</li>
 <li>Vehicle generates an OTP and timestamp</li>
 <li>Vehicle creates a simulated ZKP proof (hash-based) for the OTP and timestamp</li>
-<li>Verify the ZKP proof using the known vehicle secret and timestamp</li>
-<li>Simulate blockchain smart contract verification and logging of the authentication attempt</li>
+<li>Verify the ZKP proof by comparing with expected proof</li>
+<li>Simulate blockchain verification and logging if DEBUG_MODE is enabled</li>
 <li>Output the result of the infrastructure access decision </li>
 </ol>
 
@@ -754,13 +751,9 @@ Variables</h2></td></tr>
 <p>Test the connection and workflow with ZoKrates CLI using zokrates/dummy.zok. </p>
 <p>Runs ZoKrates CLI workflow with fixed inputs</p>
 <p>Steps:</p><ol type="1">
-<li>Compile the ZoKrates circuit</li>
-<li>Run setup</li>
-<li>Compute witness (inputs: a=3, b=4)</li>
-<li>Generate proof</li>
-<li>Verify proof</li>
-<li>Clean up ZoKrates artifacts after test</li>
-<li>Print the result of the ZoKrates workflow </li>
+<li>Set circuit path and fixed inputs (a=3, b=4)</li>
+<li>Run ZoKrates workflow (compile, setup, compute witness, generate proof, verify)</li>
+<li>Print verification result and output workflow result </li>
 </ol>
 
 </div>
@@ -783,9 +776,12 @@ Variables</h2></td></tr>
 <p>Test the authentication circuit (auth.zok) for field-based proof. </p>
 <p>Tests the authentication circuit which uses simple field arithmetic for authentication</p>
 <p>Steps:</p><ol type="1">
-<li>Create an experiment with the auth.zok circuit</li>
-<li>Run the experiment with a random vehicle ID and secret</li>
-<li>Check if the verification was successful </li>
+<li>Prepare the auth.zok circuit</li>
+<li>Generate random secret and timestamp</li>
+<li>Calculate the OTP</li>
+<li>Run the ZoKrates workflow with the circuit and arguments</li>
+<li>Check if the verification was successful</li>
+<li>Clean up </li>
 </ol>
 
 </div>
@@ -808,9 +804,12 @@ Variables</h2></td></tr>
 <p>Test the zokrates/VtoI_test.zok circuit for vehicle-to-infrastructure authentication. </p>
 <p>Tests the vehicle-to-infrastructure authentication circuit which uses a commitment scheme</p>
 <p>Steps:</p><ol type="1">
-<li>Create an experiment with the VtoI_test.zok circuit</li>
-<li>Run the experiment with a vehicle ID, secret key, and commitment</li>
-<li>Check if the verification was successful </li>
+<li>Prepare the VtoI_test.zok circuit</li>
+<li>Generate random secret key and vehicle ID</li>
+<li>Calculate the commitment</li>
+<li>Run the ZoKrates workflow with the circuit and arguments</li>
+<li>Check if the verification was successful</li>
+<li>Clean up </li>
 </ol>
 
 </div>
@@ -870,6 +869,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Global variable to track the number of tests that passed. </p>
+
 </div>
 </div>
 <a id="ac9e79b5d2884cd8ac50eecac329107d1" name="ac9e79b5d2884cd8ac50eecac329107d1"></a>
@@ -899,6 +900,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Global variable to track the number of tests executed. </p>
 
 </div>
 </div>

@@ -105,7 +105,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aadb2b92125b76fd29d2191173817151b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an <a class="el" href="classrsu_1_1_r_s_u.html" title="Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledg...">RSU</a> instance.  <br /></td></tr>
 <tr class="separator:aadb2b92125b76fd29d2191173817151b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7052ed02d85a27c7833d221458fcb74" id="r_ac7052ed02d85a27c7833d221458fcb74"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7052ed02d85a27c7833d221458fcb74">verify_zkp</a> (self, <a class="el" href="namespacersu.html#a637a7c4120be8e409508079c099e716d">vehicle_id</a>, zkp_proof, <a class="el" href="namespacersu.html#a71e24db6312e99e75bdc49e89d65948e">timestamp</a>, circuit_path)</td></tr>
-<tr class="memdesc:ac7052ed02d85a27c7833d221458fcb74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify the ZKP proof from a vehicle using a ZoKrates circuit.  <br /></td></tr>
+<tr class="memdesc:ac7052ed02d85a27c7833d221458fcb74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify the ZKP proof from a vehicle using a ZoKrates circuit - used primarily by experiments ecosystem (I couldn't think of a better word, feel free to change)  <br /></td></tr>
 <tr class="separator:ac7052ed02d85a27c7833d221458fcb74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -157,7 +157,8 @@ Public Attributes</h2></td></tr>
 <p>Initialize an <a class="el" href="classrsu_1_1_r_s_u.html" title="Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledg...">RSU</a> instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vehicle_secrets</td><td>Mapping from vehicle_id to secret</td></tr>
+    <tr><td class="paramname">vehicle_secrets</td><td>Mapping from vehicle_id to secret </td></tr>
+    <tr><td class="paramname">broadcast_range</td><td>Distance in meters within which <a class="el" href="classrsu_1_1_r_s_u.html" title="Represents a roadside infrastructure unit responsible for authenticating vehicles using zero-knowledg...">RSU</a> can communicate with vehicles (default: 500)</td></tr>
   </table>
   </dd>
 </dl>
@@ -202,7 +203,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Verify the ZKP proof from a vehicle using a ZoKrates circuit. </p>
+<p>Verify the ZKP proof from a vehicle using a ZoKrates circuit - used primarily by experiments ecosystem (I couldn't think of a better word, feel free to change) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vehicle_id</td><td>The vehicle's unique identifier </td></tr>
